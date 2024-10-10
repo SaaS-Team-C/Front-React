@@ -1,11 +1,12 @@
-import React from 'react';
-import logo from './logo.svg';
+import { Route, Routes } from 'react-router-dom';
 import './App.css';
+import Main from './views/Main';
 
-function App() {
+export default function App() {
   return (
-    <>안녕</>
+    <Routes>
+      <Route path='/main' element={<Main />}/>
+    </Routes>
+
   );
 }
-
-export default App;
