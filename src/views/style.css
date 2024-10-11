@@ -22,6 +22,80 @@
   
   }
   
+  .wrapper-head {
+    position: fixed;
+    display: flex;
+    justify-content: space-between;
+  
+    background-color: #FFF;
+    
+    width: 1800px;
+    height: 100px;
+  
+  }
+  
+  .logo {
+    margin: 30px 50px 0px 100px;
+    display: flex;
+    justify-content: space-between;
+    user-select: none;
+  }
+  
+  .logo-icon {
+    margin-right: 10px;
+    width: 50px;
+    height: 50px;
+    background-image: url(../../public/images/Vector.jpg);
+  }
+  
+  .logo-name {
+    width: 200px;
+    height: 50px;
+    font-size: 30px;
+  }
+  
+  .sign {
+    margin: 25px 50px 0px 100px;
+    display: flex;
+    justify-content: space-between;
+  }
+  
+  .sign-in {
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: solid 3px #BCBCBC;
+    border-radius: 15px;
+    margin-right: 15px;
+  
+    font-size: 20px;
+    font-weight: 700;
+    color: #BCBCBC;
+  
+    width: 112px;
+    height: 50px;
+  
+  }
+  
+  .sign-up-button {
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: solid 3px #00ACCF;
+    background-color: #00ACCF;
+    border-radius: 15px;
+    margin-right: 15px;
+  
+    font-size: 20px;
+    font-weight: 700;
+    color: #FFF;
+  
+    width: 112px;
+    height: 50px;
+  }
+  
   .main-top {
     flex-direction: column;
     justify-content: center;
