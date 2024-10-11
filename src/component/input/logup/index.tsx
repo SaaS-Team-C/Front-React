@@ -27,15 +27,18 @@ export default function InputBox({
 }: Props) {
 
     return (
-        <div className="input-box">
-            <label>{label}</label>
-            <div className="input-with-button">
-                <input type={type} value={value} placeholder={placeholder} onChange={onChange} />
-                {buttonName && <button onClick={onButtonClick}>{buttonName}</button>}
+
+            <div className="input-container">
+                <label>{label}</label>
+                <div className="input-with-button">
+                    <input type={type} value={value} placeholder={placeholder} onChange={onChange} />
+                    {buttonName && <button onClick={onButtonClick}>{buttonName}</button>}
+                </div>
+                {message && <p className="message">{message}</p>}
+                {messageError && <p className="messageError">{messageError}</p>}
             </div>
-            {message && <p className="message">{message}</p>}
-            {messageError && <p className="messageError">{messageError}</p>}
-        </div>
+
+
     );
 };
 
