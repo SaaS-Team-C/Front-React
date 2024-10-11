@@ -2,6 +2,7 @@ import { useNavigate } from 'react-router';
 import './style.css';
 import { ChangeEvent, useRef, useState } from 'react';
 import Topbar from '../component/topbar';
+import WidthScroll from 'src/component/widthscroll';
 
 
 
@@ -39,6 +40,7 @@ export default function Main() {
                     <button className='search-button' />
                 </div>
             </div>
+            <WidthScroll/>
         </div>
     )
 

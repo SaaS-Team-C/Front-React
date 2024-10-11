@@ -8,10 +8,10 @@ const bearerAuthorization = (accessToken: string) => ({headers: {'Authorization'
 
 // ! 중복되는 성공에 대한 함수를 따로 만들었음.
 // function : response data 처리 함수 //
-const responseDataHandler = <T>(response: AxiosResponse<T, any>) => {
-        const { data } = response;
-        return data;
-}
+// const responseDataHandler = <T>(response: AxiosResponse<T, any>) => {
+//         const { data } = response;
+//         return data;
+// }
 
 //! 중복되는 error에 대한 함수를 따로 만들었음.
 // function : Response Error 처리 함수 //

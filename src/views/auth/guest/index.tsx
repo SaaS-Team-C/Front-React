@@ -5,12 +5,14 @@ import InputBox from 'src/component/input/logup';
 // import { useNavigate } from 'react-router';
 
 
-type AuthPath = '회원가입' | '로그인';
+// type AuthPath = '회원가입' | '로그인';
 
-// interface SnsContainerProps {
-//     type: AuthPath;
-// }
+// // interface SnsContainerProps {
+// //     type: AuthPath;
+// // }
 
+// // // component: SNS 로그인 회원가입 컴포넌트 //
+// // function SnsContainer({ type }: SnsContainerProps) {
 // // // component: SNS 로그인 회원가입 컴포넌트 //
 // // function SnsContainer({ type }: SnsContainerProps) {
 
@@ -32,8 +34,8 @@ type AuthPath = '회원가입' | '로그인';
 
 
 interface AuthComponentProps {
-    onPathChange: (path: AuthPath) => void;
-}
+    onPathChange: (path: null) => void;
+} // null -> authPath 달아야함 
 
 
 // component: 회원가입 화면 컴포넌트 //
@@ -218,7 +220,7 @@ export default function SignUp({ onPathChange }: AuthComponentProps) {
                 </div>
                 <div className="button-container">
                     <div>회원가입</div>
-                    <div className="link" onClick={() => onPathChange('로그인')}>로그인</div>
+                    {/* <div className="link" onClick={() => onPathChange()}>로그인</div> */}
                 </div>
             </div>
 
