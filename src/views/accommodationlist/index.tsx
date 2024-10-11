@@ -1,6 +1,7 @@
 import React from 'react'
 import './style.css';
 import './pricerage.js';
+import Topbar from 'src/component/topbar';
 
 
 // component: 숙소 리스트 화면 컴포넌트 //
@@ -11,8 +12,7 @@ export default function AccommodationList() {
   return (
     <>
 
-    <div className="navbar">네비게이션 바 삭제 예정</div>
-
+    <Topbar/>
     <div id='sidebar'>
 
         <div className='first-box'>
@@ -24,14 +24,6 @@ export default function AccommodationList() {
             <div className='search-restart'>검색 초기화</div>
             <div className='restart-image'></div>
         </div>
-
-
-
-
-
-
-
-
 
 
 
