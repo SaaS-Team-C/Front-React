@@ -30,7 +30,7 @@
     margin-right: 10px;
     width: 50px;
     height: 50px;
-    background-image: url(../../public/image/Vector.jpg);
+    background-image: url(../../public/images/Vector.jpg);
   }
   
   .logo-name {
@@ -97,7 +97,7 @@
   
     border-radius: 30px;
   
-    background-image: url(../../public/image/travel.jpg);
+    background-image: url(../../public/images/travel.jpg);
   
   }
   
@@ -181,7 +181,7 @@
   .log-in-close {
   margin-top: 15px;
   cursor: pointer;
-  background-image: url(../../public/image/close.jpg);
+  background-image: url(../../public/images/close.jpg);
   width: 70px;
   height: 100px;
   }
@@ -192,7 +192,7 @@
   }
 
   .log-in-id-icon{
-  background-image: url(../../public/image/Email.jpg);
+  background-image: url(../../public/images/Email.jpg);
   width: 60px;
   height: 70px;    
   }
@@ -205,7 +205,7 @@
   }
 
   .log-in-pw-icon{
-  background-image: url(../../public/image/Padlock.jpg);
+  background-image: url(../../public/images/Padlock.jpg);
   width: 60px;
   height: 70px;    
   }

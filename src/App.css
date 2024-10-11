@@ -10,9 +10,14 @@
 }
 
 :root {
-    --main-first-color: rgba(0,172,207,1);
-    --main-second-color: rgba(255,255,255,1);
-    --gray-color: rgba(157,160,165,1);
+    --main-button-color: rgba(0,172,207,1);
+    --main-button-text-color: rgba(255,255,255,1);
+
+    --input-solid-color: rgba(188,188,188,1);
+    --input-text-color: rgbargba(201,201,201,1);
+
+    
+    --diable-button-color: rgba(157,160,165,1);
     --error-color: rgba(255, 84, 64, 1);
     --dark-gray-title-color: rgba(56,76,96,1);
 
