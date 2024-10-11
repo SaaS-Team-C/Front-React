@@ -1,24 +1,24 @@
-import { IdCheckRequestDto, SignInRequestDto, SignUpRequestDto, TelAuthCheckRequestDto, TelAuthRequestDto } from "./dto/request/auth/G";
-import { ResponseDto } from "./dto/response";
+import { IdCheckRequestDto, SignInRequestDto, SignUpRequestDto, TelAuthCheckRequestDto, TelAuthRequestDto } from "./dto/request/auth/guest";
+// import { ResponseDto } from "./dto/response";
 
 
 // function : Authorization Bearer 헤더 //
-const bearerAuthorization = (accessToken: string) => ({headers: {'Authorization': `Bearer ${accessToken}`}})
+// const bearerAuthorization = (accessToken: string) => ({headers: {'Authorization': `Bearer ${accessToken}`}})
 
 // ! 중복되는 성공에 대한 함수를 따로 만들었음.
-// function : response data 처리 함수 //
-const responseDataHandler = <T>(response: AxiosResponse<T, any>) => {
-        const { data } = response;
-        return data;
-}
+// // function : response data 처리 함수 //
+// const responseDataHandler = <T>(response: AxiosResponse<T, any>) => {
+//         const { data } = response;
+//         return data;
+// }
 
 // ! 중복되는 error에 대한 함수를 따로 만들었음.
-// function : Response Error 처리 함수 //
-const responseErrorHandler = (error: any) =>{ 
-    if(!error.response) return null; 
-    const { data } = error.response;
-    return data as ResponseDto;
-}
+// // function : Response Error 처리 함수 //
+// const responseErrorHandler = (error: any) =>{ 
+//     if(!error.response) return null; 
+//     const { data } = error.response;
+//     return data as ResponseDto;
+// }
 
 // function : id check api 요청함수 //
 export const idCheckRequest = async (requestBody:IdCheckRequestDto) => {
