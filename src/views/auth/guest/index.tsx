@@ -1,8 +1,8 @@
+import { ResponseDto } from 'src/apis/dto/response';
 import './style.css';
 import { ChangeEvent, useState } from "react";
+import InputBox from 'src/component/input/logup';
 // import { useNavigate } from 'react-router';
-import { ResponseDto } from '../../../apis/dto/response';
-import InputBox from '../../../components/InputBox';
 
 
 type AuthPath = '회원가입' | '로그인';
@@ -11,25 +11,25 @@ type AuthPath = '회원가입' | '로그인';
 //     type: AuthPath;
 // }
 
-// // component: SNS 로그인 회원가입 컴포넌트 //
-// function SnsContainer({ type }: SnsContainerProps) {
+// // // component: SNS 로그인 회원가입 컴포넌트 //
+// // function SnsContainer({ type }: SnsContainerProps) {
 
-//     // event handler: SNS 버튼 클릭 이벤트 처리 //
-//     const onSnsButtonClickHandler = (sns: 'kakao' | 'google') => {
-//         window.location.href = `http://localhost:3000/api/v1/auth/sns-sign-in/${sns}`;
-//     };
+// // event handler: SNS 버튼 클릭 이벤트 처리 //
+// const onSnsButtonClickHandler = (sns: 'kakao' | 'google') => {
+//     window.location.href = `http://localhost:3000/api/v1/auth/sns-sign-in/${sns}`;
+// };
 
-//     // render: SNS 로그인 회원가입 컴포넌트 렌더링 //
-//     return (
-//         <div className="sns-container">
-//             <div className="title">SNS {type}</div>
-//             <div className="sns-button-container">
-//                 <div className={`sns-button ${type === '회원가입' ? 'md ' : ''}kakao`} onClick={() => onSnsButtonClickHandler('kakao')}></div>
-//                 <div className={`sns-button ${type === '회원가입' ? 'md ' : ''}naver`} onClick={() => onSnsButtonClickHandler('google')}></div>
-//             </div>
+// // render: SNS 로그인 회원가입 컴포넌트 렌더링 //
+// return (
+//     <div className="sns-container">
+//         <div className="title">SNS {type}</div>
+//         <div className="sns-button-container">
+//             <div className={`sns-button ${type === '회원가입' ? 'md ' : ''}kakao`} onClick={() => onSnsButtonClickHandler('kakao')}></div>
+//             <div className={`sns-button ${type === '회원가입' ? 'md ' : ''}naver`} onClick={() => onSnsButtonClickHandler('google')}></div>
 //         </div>
-//     );
-// }
+//     </div>
+// );
+
 
 interface AuthComponentProps {
     onPathChange: (path: AuthPath) => void;
@@ -151,74 +151,77 @@ export default function SignUp({ onPathChange }: AuthComponentProps) {
 
     // render: 회원가입 화면 컴포넌트 렌더링 //
     return (
-        <div className="input-container">
-        <InputBox
-            messageError={nameMessageError}
-            message={nameMessage}
-            value={guestName}
-            label="이름"
-            type="text"
-            placeholder="이름을 입력해주세요."
-            onChange={onNameChangeHandler}
-        />
-        <InputBox
-            messageError={idMessageError}
-            message={idMessage}
-            value={guestId}
-            label="아이디"
-            type="text"
-            placeholder="아이디를 입력해주세요."
-            buttonName="중복 확인"
-            onChange={onIdChangeHandler}
-            onButtonClick={onIdCheckClickHandler}
-        />
-        <InputBox
-            messageError={passwordMessageError}
-            message={passwordMessage}
-            value={guestPassword}
-            label="비밀번호"
-            type="password"
-            placeholder="비밀번호"
-            onChange={onPasswordChangeHandler}
-        />
-            <InputBox
-            messageError={passwordCheckMessageError}
-            message={passwordCheckMessage}
-            value={guestPasswordCheck}
-            label="비밀번호 확인"
-            type="password"
-            placeholder="비밀번호 확인"
-            onChange={onPasswordCheckChangeHandler}
-        />
-        <InputBox
-            messageError={telNumberMessageError}
-            message={telNumberMessage}
-            value={guestTelNumber}
-            label="전화번호"
-            type="text"
-            placeholder="-빼고 입력해주세요."
-            buttonName="전화번호 인증"
-            onChange={onTelNumberChangeHandler}
-            onButtonClick={onTelNumberSendClickHandler}
-        />
-            <InputBox
-                messageError={authNumberMessageError}
-                message={authNumberMessage}
-                value={guestAuthNumber}
-                label="인증번호"
-                type="text"
-                placeholder="인증번호 4자리를 입력해주세요."
-                buttonName="인증 확인"
-                onChange={onAuthNumberChangeHandler}
-                onButtonClick={onAuthNumberCheckClickHandler}
-            />
-    </div>
-    /* <div className="button-container">
-                <div className={`button ${isComplete ? 'primary' : 'disable'} full-width`} onClick={onSignUpButtonHandler}>회원가입</div>
-                <div className="link" onClick={() => onPathChange('로그인')}>로그인</div>
-            </div> */
-           
-       
+
+            <div className='input-box-signup'>
+                <div className='title'>Sign up</div>
+                <div className="input-container">
+                    <InputBox
+                        messageError={nameMessageError}
+                        message={nameMessage}
+                        value={guestName}
+                        label="이름"
+                        type="text"
+                        placeholder="이름을 입력해주세요."
+                        onChange={onNameChangeHandler}
+                    />
+                    <InputBox
+                        messageError={idMessageError}
+                        message={idMessage}
+                        value={guestId}
+                        label="아이디"
+                        type="text"
+                        placeholder="아이디를 입력해주세요."
+                        buttonName="중복 확인"
+                        onChange={onIdChangeHandler}
+                        onButtonClick={onIdCheckClickHandler}
+                    />
+                    <InputBox
+                        messageError={passwordMessageError}
+                        message={passwordMessage}
+                        value={guestPassword}
+                        label="비밀번호"
+                        type="password"
+                        placeholder="비밀번호"
+                        onChange={onPasswordChangeHandler}
+                    />
+                    <InputBox
+                        messageError={passwordCheckMessageError}
+                        message={passwordCheckMessage}
+                        value={guestPasswordCheck}
+                        label="비밀번호 확인"
+                        type="password"
+                        placeholder="비밀번호 확인"
+                        onChange={onPasswordCheckChangeHandler}
+                    />
+                    <InputBox
+                        messageError={telNumberMessageError}
+                        message={telNumberMessage}
+                        value={guestTelNumber}
+                        label="전화번호"
+                        type="text"
+                        placeholder="-빼고 입력해주세요."
+                        buttonName="전화번호 인증"
+                        onChange={onTelNumberChangeHandler}
+                        onButtonClick={onTelNumberSendClickHandler}
+                    />
+                    <InputBox
+                        messageError={authNumberMessageError}
+                        message={authNumberMessage}
+                        value={guestAuthNumber}
+                        label="인증번호"
+                        type="text"
+                        placeholder="인증번호 4자리를 입력해주세요."
+                        buttonName="인증 확인"
+                        onChange={onAuthNumberChangeHandler}
+                        onButtonClick={onAuthNumberCheckClickHandler}
+                    />
+                </div>
+                <div className="button-container">
+                    <div>회원가입</div>
+                    <div className="link" onClick={() => onPathChange('로그인')}>로그인</div>
+                </div>
+            </div>
+
     );
 
 }
