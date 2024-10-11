@@ -12,7 +12,10 @@ export default function AccommodationList() {
   return (
     <>
 
-    <Topbar/>
+<div id='main-wrapper'>
+<Topbar/>
+
+ 
     <div id='sidebar'>
 
         <div className='first-box'>
@@ -27,7 +30,7 @@ export default function AccommodationList() {
 
 
 
-        <div className='sidebar-container'>
+        <div className='sidebar-container-1'>
 
               <div className='title-box'>
                 <div className='title'>Filter Price</div>
@@ -42,20 +45,58 @@ export default function AccommodationList() {
                   </div>
 
                   <div className='button-box'>
-                    <div className='button-clear'>Clear</div>
-                    <div className='button-apply'>Apply</div>
+                    <button className='button-clear'>Clear</button>
+                    <button className='button-apply'>Apply</button>
                   </div>  
 
         </div>
 
-        <div className='sidebar-container'>
+        <div className='sidebar-container-2'>
                 <div className='title-box'>
                   <div className='title'>Review Score</div>
                   <div className='arrow-above'></div>
                 </div>
 
-                  <input/>
-                
+                <input type='checkbox'/>
+                <div>★★★★★</div>
+                <input type='checkbox'/>
+                <div>★★★★</div>
+                <input type='checkbox'/>
+                <div>★★★</div>
+                <input type='checkbox'/>
+                <div>★★</div>
+                <input type='checkbox'/>
+                <div>★</div>
+
+        </div>
+
+        <div className='sidebar-container-3'>
+                <div className='title-box'>
+                  <div className='title'>Accommodation Type</div>
+                  <div className='arrow-above'></div>
+                </div>
+
+                <input className= 'rate' type='checkbox'/>
+                <input className= 'rate' type='checkbox'/>
+                <input className= 'rate' type='checkbox'/>
+
+        </div>
+
+        <div className='sidebar-container-3'>
+                <div className='title-box'>
+                  <div className='title'>Facilities</div>
+                  <div className='arrow-above'></div>
+                </div>
+
+                <input className= 'rate' type='checkbox'/>
+                <input className= 'rate' type='checkbox'/>
+                <input className= 'rate' type='checkbox'/>
+
+                <button className='More'></button>
+
+        </div>
+
+
 
         </div>
 

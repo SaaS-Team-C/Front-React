@@ -12,7 +12,7 @@
 
   --default-color: rgba(35, 45, 66, 1);
 }
-
+/* 
 #main-wrapper {
     display: flex;
     align-items: center;
@@ -20,7 +20,7 @@
     width: 1920px;
     height: 5000px;
   
-  }
+  } */
   
   .wrapper-head {
     position: fixed;
