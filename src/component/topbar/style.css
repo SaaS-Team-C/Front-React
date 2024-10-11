@@ -1,0 +1,195 @@
+.wrapper-head {
+    position: fixed;
+    display: flex;
+    justify-content: space-between;
+  
+    background-color: #FFF;
+    
+    width: 1800px;
+    height: 100px;
+  
+  }
+  
+  .logo {
+    margin: 30px 50px 0px 100px;
+    display: flex;
+    justify-content: space-between;
+    user-select: none;
+  }
+  
+  .logo-icon {
+    margin-right: 10px;
+    width: 50px;
+    height: 50px;
+    background-image: url(/public/images/Vector.jpg);
+  }
+  
+  .logo-name {
+    width: 200px;
+    height: 50px;
+    font-size: 30px;
+  }
+  
+  .sign {
+    margin: 25px 50px 0px 100px;
+    display: flex;
+    justify-content: space-between;
+  }
+  
+  .sign-in {
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: solid 3px var(--input-solid-color);
+    border-radius: 15px;
+    margin-right: 15px;
+  
+    font-size: 20px;
+    font-weight: 700;
+    color: var(--input-text-color);
+  
+    width: 112px;
+    height: 50px;
+  
+  }
+  
+  .sign-up-button {
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: solid 3px var(--main-button-color);
+    background-color: var(--main-button-color);
+    border-radius: 15px;
+    margin-right: 15px;
+  
+    font-size: 20px;
+    font-weight: 700;
+    color: var(--main-button-text-color);
+  
+    width: 112px;
+    height: 50px;
+  }
+
+.modal-container {
+    width: 100%;
+    height: 100%;
+    position: fixed;
+    top: 0;
+    left: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: rgba(0, 0, 0, 0.5);
+  }
+
+  .modal-content {
+  background-color: rgba(255,255,255,1);
+  display: flex;
+  flex-direction:column;
+  align-items: center;
+  border-radius: 30px;
+
+
+  width: 350px;
+  height: 350px;
+  padding: 15px;
+  }
+
+  .log-in {
+  display: flex;
+  justify-content: space-between;
+  width: 300px;
+
+  }
+
+  .log-in-word {
+  margin-top: 15px;
+  font-size: 30px;
+
+  }
+
+  .log-in-close {
+  margin-top: -10px;
+  margin-left: 0px;
+  cursor: pointer;
+  background-image: url(/public/images/close.jpg);
+  width: 60px;
+  height: 70px;
+  }
+
+  .input-log {
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .log-in-id-icon{
+  background-image: url(/public/images/Email.jpg);
+  margin-top: 18px;
+  width: 40px;
+  height: 30px;    
+  }
+
+
+  .log-in-pw-icon{
+  background-image: url(/public/images/Lock.jpg);
+  margin-top: 18px;
+  width: 40px;
+  height: 30px;    
+  }
+
+  .log-in-button {
+    margin: 10px;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    width: 200px;
+    height: 40px;
+    background-color: var(--main-button-color);
+    border-radius: 10px;
+
+    font-size: 20px;
+    font-weight: 700;
+    color: var(--main-button-text-color);
+  }
+  
+  .find {
+    display: flex;
+  }
+
+  .find-id {
+    margin-top: 5px;
+    margin-right: 50px;
+    cursor: pointer;
+    font-size: 12px;
+    color: var(--input-solid-color);
+
+  }
+
+  .find-pw {
+    margin-top: 5px;
+    cursor: pointer;
+    font-size: 12px;
+    color: var(--input-solid-color);
+
+  }
+
+  .sign-up {
+    margin-top: 15px;
+    display: flex;
+  }
+
+  .sign-up-text {
+    margin-right: 20px;
+    font-size: 20px;
+    font-weight: 600;
+  }
+  
+  .sign-up-text-button {
+    cursor: pointer;
+    font-size: 20px;
+    color: var(--main-button-color);
+  }

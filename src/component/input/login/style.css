@@ -1,0 +1,88 @@
+:root {
+    --main-button-color: rgba(0,172,207,1);
+    --main-button-text-color: rgba(255,255,255,1);
+  
+    --input-solid-color: rgba(188,188,188,1);
+    --input-text-color: rgba(201,201,201,1);
+  
+    
+    --diable-button-color: rgba(157,160,165,1);
+    --error-color: rgba(255, 84, 64, 1);
+    --dark-gray-title-color: rgba(56,76,96,1);
+  
+    --default-color: rgba(35, 45, 66, 1);
+  }
+
+.input-box {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.input-box .input-area {
+    display: flex;
+    gap: 10px;
+}
+
+.input-box input {
+    flex: 1;
+    margin-top: 10px;
+    
+    width: 220px;
+    height: 30px;
+
+    background: none;
+    border: none;
+    outline: none;
+
+    border: 1px solid var(--input-solid-color);
+    border-radius: 6px;
+    padding: 8px 16px;
+
+    background-color: rgba(255, 255, 255, 1);
+
+    font-family: 'Inter', sans-serif;
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 175%;
+    color: rgba(0, 0, 0, 1);
+}
+
+input::placeholder {
+    color: var(--input-text-color);
+}
+
+.input-box .input-button {
+    border-radius: 6px;
+    padding: 8px 0;
+    width: 110px;
+
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 175%;
+    color: var(--gray-color);
+    text-align: center;
+}
+
+.input-button.disable {
+    background-color: rgba(238, 238, 238, 1);
+    color: var(--gray-color);
+}
+
+.input-button.active {
+    background-color: var(--primary-10-color);
+    color: var(--primary-color);
+}
+
+.input-button.active:hover {
+    background-color: var(--primary-20-color);
+    cursor: pointer;
+}
+
+.input-box .message {
+    margin-top: -4px;
+    height: 16px;
+
+    font-size: 13px;
+    font-weight: 400;
+}
