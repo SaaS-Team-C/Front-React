@@ -1,0 +1,36 @@
+
+#accomodationlist-wrapper{
+    display: flex;
+    width: 1730px;
+    height: 3000px;
+
+}
+
+#accomodationlist-wrapper .top{
+
+    display: flex;
+
+    background-color: pink;
+    width: 1730px;
+    height: 150px;
+
+    margin-top: 200px;
+    margin-left: 50px; 
+
+    line-height: 150px;
+}
+
+#accomodationlist-wrapper .serch-result-text{
+    display: flex;
+    justify-content: center;
+    font-size: 25px;
+}
+
+#accomodationlist-wrapper .total-serched-mount{
+    font-weight: 500;
+}
+
+#accomodationlist-wrapper .dropdown{
+    background-color: aquamarine;
+}
+
