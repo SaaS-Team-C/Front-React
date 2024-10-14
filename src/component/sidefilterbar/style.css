@@ -58,7 +58,7 @@
 
     width: 7px;
     height: 30px;
-    background-image: url("../../../public/images/Line01.png");
+    background-image: url("/public/images/accommodationlist/Line01.png");
     background-size: cover;
 
 }
@@ -97,7 +97,7 @@
 
     width: 30px;
     height: 30px;
-    background-image: url("../../../public/images/Restart.png");
+    background-image: url("/public/images/accommodationlist/Restart.png");
     background-size: cover;
 
     margin: 0px 10px;
@@ -182,8 +182,7 @@
 
     margin-top: 35px; 
     margin-left: 50px;
-
-    background-image: url(../../../public/images/Chevron\ Up.png);
+    background-image: url(/public//images/accommodationlist/Chevron\ Up.png);
     width: 20px;
     height: 20px;
     background-repeat: no-repeat;
