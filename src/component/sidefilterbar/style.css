@@ -1,0 +1,359 @@
+:root {
+    --main-button-color: rgba(0,172,207,1);
+    --main-button-text-color: rgba(255,255,255,1);
+
+    --input-solid-color: rgba(188,188,188,1);
+    --input-text-color: rgba(201,201,201,1);
+
+    
+    --diable-button-color: rgba(157,160,165,1);
+    --error-color: rgba(255, 84, 64, 1);
+    --dark-gray-title-color: rgba(56,76,96,1);
+
+    --default-color: rgba(35, 45, 66, 1);
+}
+
+@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
+
+*{
+    font-family: "Roboto", sans-serif;
+    box-sizing: border-box;
+}
+
+/* #main-wrapper {
+    display: flex;
+    align-items: center;
+    flex-direction:column;
+    width: 1920px;
+    height: 5000px;
+  } */
+
+#sidebar{
+
+    float: left;
+    width: 350px;
+    height: 2085px;
+    margin-top: 120px;
+    margin-left: 50px;
+
+}
+
+#sidebar .sidebar-wrapper{
+
+    width: 400px;
+    height: 2085px;
+    border-right: 1px solid var(--input-solid-color);
+
+    padding-right: 50px;
+}
+
+#sidebar .first-box{
+    display: flex;
+    width: 300px;
+    margin-left: 30px;
+}
+
+#sidebar .line01{
+    margin-top: 10px;    
+
+    width: 7px;
+    height: 30px;
+    background-image: url("../../../public/images/Line01.png");
+    background-size: cover;
+
+}
+
+#sidebar .filter-By{
+
+    margin-top: 10px; 
+    margin-left: 15px;
+
+    font-family: "Roboto", sans-serif;
+    font-size: 25px;
+    font-weight: 700;
+    font-style: normal;
+
+}
+
+#sidebar .second-box{
+
+    margin-top: 50px;
+    display: flex;
+    height: 30px;
+    justify-content: end;
+}
+
+#sidebar .search-restart{
+
+    font-family: "Roboto", sans-serif;
+    font-size: 25px;
+    color: var(--input-text-color);
+    font-weight: 700;
+    font-style: normal; 
+
+}
+
+#sidebar .restart-image{
+
+    width: 30px;
+    height: 30px;
+    background-image: url("../../../public/images/Restart.png");
+    background-size: cover;
+
+    margin: 0px 10px;
+}
+
+#sidebar .sidebar-container-1 {
+
+    display: flex;
+    flex-direction: column;
+    margin-top: 20px;
+    height: 300px;
+    border: 1px solid var(--input-solid-color);
+    border-radius: 10px;
+
+}
+
+#sidebar .sidebar-container-2 {
+
+    display: flex;
+    flex-direction: column;
+    margin-top: 20px;
+    height: 310px;
+    border: 2px solid var(--input-solid-color);
+    border-radius: 10px;
+
+}
+
+#sidebar .sidebar-container-3 {
+
+    display: flex;
+    flex-direction: column;
+    margin-top: 20px;
+    height: 265px;
+    border: 2px solid var(--input-solid-color);
+    border-radius: 10px;
+
+}
+
+
+#sidebar .sidebar-container-4 {
+
+    display: flex;
+    flex-direction: column;
+    margin-top: 20px;
+    height: 550px;
+    border: 2px solid var(--input-solid-color);
+    border-radius: 10px;
+
+}
+
+
+#sidebar .title-box{
+
+    display: flex;
+
+    width: 350px;
+    height: 80px;
+
+}
+
+#sidebar .title{
+
+    margin-top: 35px; 
+    margin-left: 30px;
+
+    font-family: "Roboto", sans-serif; 
+    font-size: 25px;
+    font-weight: 700;
+    font-style: normal;
+
+}
+
+#sidebar .per-day{
+    margin-top: 40px; 
+    margin-left: 15px;
+    
+    color: var(--input-text-color);
+    
+}
+
+#sidebar .arrow-dropdown{
+
+    margin-top: 35px; 
+    margin-left: 50px;
+
+    background-image: url(../../../public/images/Chevron\ Up.png);
+    width: 20px;
+    height: 20px;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+#sidebar .price-range-bar{
+    height: 100px;
+    background-color: white;
+}
+
+#sidebar .price-result-box{
+    display: flex;
+}
+
+#sidebar .button-box{
+    margin-top: 30px;
+
+    display: flex;
+    justify-content: center;
+    justify-content: space-evenly;
+}
+
+#sidebar .button-clear{
+
+    justify-content: center;
+    text-align: center;
+
+    font-size: 16px;
+    font-weight: 500;
+
+    width: 80px;
+    height: 45px;
+    background-color: var(--main-button-text-color);
+    color: var(--main-button-color);
+    border: 2px solid var(--main-button-color);
+
+    border-radius: 10px;
+    line-height:40px;
+}
+
+
+#sidebar .button-clear:hover {
+    opacity: 0.9;
+    cursor: pointer;
+}
+
+#sidebar .button-apply{
+
+    justify-content: center;
+    text-align: center;
+
+    font-size: 16px;
+    font-weight: 500;
+
+    width: 80px;
+    height: 45px;
+    background-color: var(--main-button-color);
+    color: var(--main-button-text-color);
+    border: 2px solid var(--main-button-text-color);
+
+    border-radius: 10px;
+    justify-content: center;
+    text-align: center;
+
+    line-height:40px;
+}
+
+#sidebar .button-apply:hover{
+    opacity: 0.9;
+    cursor: pointer;
+}
+
+#sidebar .checkbox-container{
+    display: flex;
+}
+
+#sidebar .checkbox {
+    width: 30px;
+    height: 30px;
+    
+    display: flex;
+    flex-direction: column;  
+    margin-left: 10px;
+}
+
+#sidebar .star {
+
+    color: #FEC830;
+    font-size: 28px;
+    font-weight: 100;
+
+    line-height: 30px;
+    margin-left: 10px;
+    margin-top: 4px;
+}
+
+#sidebar .checkbox-totalcontainer{
+    line-height: 350px;
+    margin-top: 10px;
+    margin-left: 20px;
+}
+
+#sidebar .accommodation-type-box{
+    display: flex;
+
+    margin-top: 10px;
+    margin-left: 20px;
+
+}
+
+#sidebar .accommodation-type{
+
+    margin-top: 5px;
+    margin-left: 15px;
+    font-size: 20px;
+    font-weight: 400;
+
+}
+
+#sidebar .facilities-type-box{
+    display: flex;
+
+    margin-top: 10px;
+    margin-left: 20px;
+
+}
+
+#sidebar .facilities-type{
+
+    margin-top: 5px;
+    margin-left: 15px;
+    font-size: 20px;
+    font-weight: 400;
+
+}
+
+#sidebar .search {
+
+
+    background-color: var(--main-button-color);
+    border-radius: 10px;
+
+    width: 200px;
+    color: var(--main-button-text-color);
+    font-size: large;
+    font-weight: 1000;
+    
+    margin-top: 50px;
+    margin-left: 70px;
+
+    border: 1px solid var(--input-solid-color);
+    cursor: pointer;
+
+    
+}
+
+#sidebar .search:hover {
+    opacity: 0.9;
+    cursor: pointer;
+}
+
+
+
+
+
+
+
+
+
+
+
+
