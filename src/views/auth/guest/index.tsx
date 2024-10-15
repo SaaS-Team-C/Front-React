@@ -2,6 +2,7 @@ import { ResponseDto } from 'src/apis/dto/response';
 import './style.css';
 import { ChangeEvent, useState } from "react";
 import InputBox from 'src/component/input/logup';
+import Topbar from 'src/component/topbar';
 // import { useNavigate } from 'react-router';
 
 
@@ -153,78 +154,103 @@ export default function SignUp({ onPathChange }: AuthComponentProps) {
 
     // render: 회원가입 화면 컴포넌트 렌더링 //
     return (
-
-            <div className='input-box-signup'>
-                <div className='title'>Sign up</div>
-                <div className="input-container">
-                    <InputBox
-                        messageError={nameMessageError}
-                        message={nameMessage}
-                        value={guestName}
-                        label="이름"
-                        type="text"
-                        placeholder="이름을 입력해주세요."
-                        onChange={onNameChangeHandler}
-                    />
-                    <InputBox
-                        messageError={idMessageError}
-                        message={idMessage}
-                        value={guestId}
-                        label="아이디"
-                        type="text"
-                        placeholder="아이디를 입력해주세요."
-                        buttonName="중복 확인"
-                        onChange={onIdChangeHandler}
-                        onButtonClick={onIdCheckClickHandler}
-                    />
-                    <InputBox
-                        messageError={passwordMessageError}
-                        message={passwordMessage}
-                        value={guestPassword}
-                        label="비밀번호"
-                        type="password"
-                        placeholder="비밀번호"
-                        onChange={onPasswordChangeHandler}
-                    />
-                    <InputBox
-                        messageError={passwordCheckMessageError}
-                        message={passwordCheckMessage}
-                        value={guestPasswordCheck}
-                        label="비밀번호 확인"
-                        type="password"
-                        placeholder="비밀번호 확인"
-                        onChange={onPasswordCheckChangeHandler}
-                    />
-                    <InputBox
-                        messageError={telNumberMessageError}
-                        message={telNumberMessage}
-                        value={guestTelNumber}
-                        label="전화번호"
-                        type="text"
-                        placeholder="-빼고 입력해주세요."
-                        buttonName="전화번호 인증"
-                        onChange={onTelNumberChangeHandler}
-                        onButtonClick={onTelNumberSendClickHandler}
-                    />
-                    <InputBox
-                        messageError={authNumberMessageError}
-                        message={authNumberMessage}
-                        value={guestAuthNumber}
-                        label="인증번호"
-                        type="text"
-                        placeholder="인증번호 4자리를 입력해주세요."
-                        buttonName="인증 확인"
-                        onChange={onAuthNumberChangeHandler}
-                        onButtonClick={onAuthNumberCheckClickHandler}
-                    />
-                </div>
-                <div className="button-container">
-                    <div>회원가입</div>
-                    {/* <div className="link" onClick={() => onPathChange()}>로그인</div> */}
-                </div>
+        <>
+          
+            <div
+                style={{
+                    position: 'fixed',
+                    top: 0,
+                    left: 0,
+                    width: '200vw', 
+                    zIndex: 1000,
+                    boxSizing: 'border-box',
+                }}
+            >                <Topbar />
             </div>
 
+            <div style={{ paddingTop: '200px' }}>
+                <div className='login-button'>
+                    <a className="login-button-guest" >Guest</a>
+                    <a className="login-button-host">Host</a>
+                </div>
+                <div className='input-box-signup'>
+                    <div className='inputBox'>
+                        <div className='title'>Sign up</div>
+                        <div className="input-container3">
+                            <InputBox
+                                messageError={nameMessageError}
+                                message={nameMessage}
+                                value={guestName}
+                                label="이름"
+                                type="text"
+                                placeholder="이름을 입력해주세요."
+                                onChange={onNameChangeHandler}
+                            />
+                            <InputBox
+                                messageError={idMessageError}
+                                message={idMessage}
+                                value={guestId}
+                                label="아이디"
+                                type="text"
+                                placeholder="아이디를 입력해주세요."
+                                buttonName="중복 확인"
+                                onChange={onIdChangeHandler}
+                                onButtonClick={onIdCheckClickHandler}
+                            />
+                            <InputBox
+                                messageError={passwordMessageError}
+                                message={passwordMessage}
+                                value={guestPassword}
+                                label="비밀번호"
+                                type="password"
+                                placeholder="비밀번호"
+                                onChange={onPasswordChangeHandler}
+                            />
+                            <InputBox
+                                messageError={passwordCheckMessageError}
+                                message={passwordCheckMessage}
+                                value={guestPasswordCheck}
+                                label="비밀번호 확인"
+                                type="password"
+                                placeholder="비밀번호 확인"
+                                onChange={onPasswordCheckChangeHandler}
+                            />
+                            <InputBox
+                                messageError={telNumberMessageError}
+                                message={telNumberMessage}
+                                value={guestTelNumber}
+                                label="전화번호"
+                                type="text"
+                                placeholder="-빼고 입력해주세요."
+                                buttonName="전화번호 인증"
+                                onChange={onTelNumberChangeHandler}
+                                onButtonClick={onTelNumberSendClickHandler}
+                            />
+                            <InputBox
+                                messageError={authNumberMessageError}
+                                message={authNumberMessage}
+                                value={guestAuthNumber}
+                                label="인증번호"
+                                type="text"
+                                placeholder="인증번호 4자리를 입력해주세요."
+                                buttonName="인증 확인"
+                                onChange={onAuthNumberChangeHandler}
+                                onButtonClick={onAuthNumberCheckClickHandler}
+                            />
+                        </div>
+                    </div>
+                    <div className="button-container2">
+                        <div className='agree'>개인정보 수집 및 이용약관에 동의합니다.</div>
+                        <div className='button-clear'>회원가입</div>
+                        <div className='alreay'>이미 Roomly 회원이신가요?</div>
+                        {/* <div className="link" onClick={() => onPathChange()}>로그인</div> */}
+                    </div>
+                    <div className="button-container3">
+                        <div className='다른 방법으로 회원가입 하기'></div>
+                    </div>
+                </div>
+            </div>
+        </>
     );
-
 }
 
