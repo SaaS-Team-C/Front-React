@@ -99,6 +99,7 @@
     height: 30px;
     background-image: url("/public/images/accommodationlist/Restart.png");
     background-size: cover;
+    border: none;
 
     margin: 0px 10px;
 }

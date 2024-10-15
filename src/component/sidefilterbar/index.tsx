@@ -26,7 +26,7 @@ export default function SideFilterBar() {
 
             <div className='second-box'>
                 <div className='search-restart'>검색 초기화</div>
-                <div className='restart-image'></div>
+                <button className='restart-image'></button>
             </div>
 
 
