@@ -28,7 +28,7 @@ export default function InputBox({
 
     return (
 
-            <div className="input-container">
+            <div className="input-container2">
                 <label>{label}</label>
                 <div className="input-with-button">
                     <input type={type} value={value} placeholder={placeholder} onChange={onChange} />

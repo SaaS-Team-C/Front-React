@@ -1,71 +1,75 @@
-
-.input-container {
+body {
     display: flex;
-    flex-direction: column;
-    gap: 40px;
-    /* 입력 박스 간격 */
-    
-    height: 100px;
-    width: 450px;
-
-     /* margin: 400px 1200px 1000px 1000px;  */
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
 }
 
-.input-container input {
-    width: 100%;
+.input-container2 {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding: 5px;
 
-    height: 50px;
+    border-radius: 8px;
+    background-color: white;
+    width: 100%;
+    max-width: 300px; /* 최대 너비를 설정하여 페이지 전체를 차지하지 않게 */
+
+}
+.input-container2 input {
+
+    width: 150%;
+    height: 40px;
     padding: 12px 15px;
     border: 1px solid rgba(188, 188, 188, 1);
     border-radius: 4px;
-    font-size: 14px;
+    font-size: 12px;
     box-sizing: border-box;
 }
 
-.input-container input:focus {
+.input-container2 input:focus {
     outline: none;
     border-color: rgba(188, 188, 188, 1);
     /* 포커스 시 회색 테두리 */
     box-shadow: 0 0 5px;
 }
 
-.input-container label {
+.input-container2 label {
     font-weight: bold;
-    margin-bottom: 8px;
+    font-size: 12px;
+   
     display: flex;
 }
 
-.input-container .message {
+.input-container2 .message {
     color: hsl(134, 53%, 51%);
     font-size: 14px;
     margin-top: 4px;
 }
 
-.input-container .messageError {
+.input-container2 .messageError {
     color: var(--error-color);
     font-size: 14px;
     margin-top: 4px;
 }
 
-.input-container button {
+.input-container2 button {
 
-    height: 50px;
+    height: 40px;
 
     padding: 12px 15 px;
-    background-color: rgba(157, 160, 165, 1);
-    color: black;
+    background-color: #00ACCF;
+    color: white;
     border: none;
     border-radius: 4px;
     cursor: pointer;
-    font-size: 16px;
+    font-size: 14px;
+    font-weight: bold;
 }
 
-.input-container button:hover {
-    background-color: #df;
-    /* 배경색 수정 필요 */
-}
-
-.input-container button:disabled {
+.input-container2 button:disabled {
     background-color: #6c757d;
     cursor: not-allowed;
 }
@@ -88,4 +92,4 @@
     /* 버튼 크기가 줄어들지 않도록 설정 */
     padding: 10px 16px;
     /* 버튼 크기 조정 */
-}
+} 
