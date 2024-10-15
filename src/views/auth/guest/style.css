@@ -1,107 +1,103 @@
 body {
-    background-color: #09CFCF;
+  /* background-color: #09CFCF; */
 }
 
 .login-button-host {
-    height: 100px;
+  height: 100px;
 
-    flex-direction: column;
-    padding: 20px 20px;
-    background-color: #00ACCF;
-    color: white;
-    border: none;
-    border-radius: 8px;
-    cursor: pointer;
-    font-size: 16px;
+  flex-direction: column;
+  padding: 20px 20px;
+  background-color: #00accf;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 16px;
 }
 /* 로그인하기 버튼을 왼쪽 위에 배치 */
 .login-button-guest {
-    height: 100px;
-    flex-direction: column;
-    padding: 20px 15px;
-    background-color: rgba(157, 160, 165, 1);
-    color: white;
-    border: none;
-    border-radius: 8px;
-    cursor: pointer;
-    font-size: 16px;
+  height: 100px;
+  flex-direction: column;
+  padding: 20px 15px;
+  background-color: rgba(157, 160, 165, 1);
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 16px;
 }
 
 .login-button-guest:hover {
-    background-color: #00ACCF;
+  background-color: #00accf;
 }
 
 .login-button-host:hover {
-    background-color: rgba(157, 160, 165, 1)
+  background-color: rgba(157, 160, 165, 1);
 }
-    
-
 
 /* 로그인하기 버튼을 왼쪽 위에 배치 */
 .login-button-guest {
-    height: 100px;
-    z-index: 2000;
-    flex-direction: column;
-    padding: 20px 15px;
-    background-color: rgba(157, 160, 165, 1);
-    color: white;
-    border: none;
-    border-radius: 8px;
-    cursor: pointer;
-    font-size: 16px;
+  height: 100px;
+  z-index: 2000;
+  flex-direction: column;
+  padding: 20px 15px;
+  background-color: rgba(157, 160, 165, 1);
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 16px;
 }
 
 .login-button:hover {
-    background-color: #00ACCF;
+  background-color: #00accf;
 }
 
-
 .input-box-signup {
-    display: flex;
-    flex-direction: column;
-    width: 100%;
-    max-width: 500px; /* 박스의 최대 너비 */
-    padding: 40px;
-    background-color: white;
-    border: 1px solid #ddd;
-    border-radius: 10px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-    box-sizing: border-box;
-
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  max-width: 500px; /* 박스의 최대 너비 */
+  padding: 40px;
+  background-color: white;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  box-sizing: border-box;
 }
 
 .inputBox {
-    margin-bottom: 30px; /* 간격을 조정 */
+  margin-bottom: 30px; /* 간격을 조정 */
 }
 
 .title {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-size: 24px;
-    font-weight: bold;
-    margin-bottom: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 24px;
+  font-weight: bold;
+  margin-bottom: 20px;
 }
 
 .button-container2 {
-    margin-bottom: 20px; /* 간격을 조정 */
+  margin-bottom: 20px; /* 간격을 조정 */
 }
 
 .agree {
-    margin-bottom: 12px; /* 간격을 조정 */
+  margin-bottom: 12px; /* 간격을 조정 */
 }
 
 .button-container2 .button-clear {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 45px;
-    padding: 12px 15px;
-    background-color: #00ACCF;
-    color: white;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    font-size: 15px;
-    font-weight: bold;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 45px;
+  padding: 12px 15px;
+  background-color: #00accf;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 15px;
+  font-weight: bold;
 }

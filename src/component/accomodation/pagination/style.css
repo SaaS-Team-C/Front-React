@@ -1,0 +1,16 @@
+.pagination-button-box {
+  display: flex;
+
+  width: 1800px;
+  justify-content: center;
+}
+
+.pagination-button {
+  width: 40px;
+  height: 40px;
+
+  font-size: 20px;
+
+  color: #ffff;
+  background-color: #00accf;
+}
