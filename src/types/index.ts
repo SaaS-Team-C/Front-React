@@ -1,5 +1,3 @@
-import AccommodationList from "./accommodation-list.interface";
+import AccommodationListType from "./accommodation-list.interface";
 
-export type {
-    AccommodationList
-}
+export type { AccommodationListType };
