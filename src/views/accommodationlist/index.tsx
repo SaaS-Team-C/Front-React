@@ -1,15 +1,17 @@
 import React, { useState } from 'react'
 import './style.css';
 import Topbar from 'src/component/topbar';
-import SideFilterBar from 'src/component/sidefilterbar';
+import SideFilterBar from 'src/component/accomodation/sidefilterbar';
 import AccommodationListPagination from 'src/component/accomodation/pagination';
 import { useNavigate } from 'react-router';
+
+import PriceFilter from 'src/component/accomodation/sidefilterbar/PriceFilter';
 import SortDropdown from 'src/component/accomodation/accomodationlist';
-import PriceFilter from 'src/component/sidefilterbar/PriceFilter';
 
 
 // interface: 숙소 리스트 아이템 컴포넌트 Properties //
 interface TableAccommodationListProps {
+        
 }
 
 // component: 숙소 리스트 화면 컴포넌트 //
