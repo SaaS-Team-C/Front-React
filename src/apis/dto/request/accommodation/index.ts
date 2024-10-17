@@ -1,6 +1,4 @@
+import SearchedAccommodationRequestDto from "./search-accommodation.request.dto";
+import FilterRequestDto from "./filter.request.dto";
 
-import SearchedAccommodationRequestDto from "./search-accommodation.request.dto"
-
-export type {
-    SearchedAccommodationRequestDto
-}
+export type { SearchedAccommodationRequestDto, FilterRequestDto };

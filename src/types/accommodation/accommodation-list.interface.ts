@@ -1,3 +1,4 @@
+// interface: 숙소 검색 결과 리스트 //
 export default interface AccommodationListType {
   accommodationName: string;
   accommodationMainImage: string;
