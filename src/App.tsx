@@ -15,6 +15,7 @@ export default function App() {
     <Routes>
       <Route path='/main' element={<Main />} />
 
+
       <Route path={ACCOMMODATION_LIST_PATH} element={<AccommodationList />} />
       <Route path={ACCOMMODATION_LIST_DETAIL_PATH(':accommodationName')} element={<AccommodationListDetail />} />
 

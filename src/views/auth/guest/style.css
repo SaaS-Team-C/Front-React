@@ -1,107 +1,172 @@
-<<<<<<< HEAD
-/* body {
-  background-color: #09cfcf;
-} */
-=======
 
->>>>>>> d9f67aa555a28377e830b5c6c846b6ce9c036da8
+#signUp-wrapper {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    width: 1920px;
+    height: 919px;
+    background-color: #09cfcf;
+    position: relative;
+}
+
+.login-button {
+   z-index: 1;
+}
+
+
 
 .login-button-host {
-  height: 100px;
+    height: 100px;
 
-  flex-direction: column;
-  padding: 20px 20px;
-  background-color: #00accf;
-  color: white;
-  border: none;
-  border-radius: 8px;
-  cursor: pointer;
-  font-size: 16px;
+    flex-direction: column;
+    padding: 20px 86px;
+    background-color: #00accf;
+    color: white;
+    border: none;
+    cursor: pointer;
+    font-size: 16px;
 }
+
 /* 로그인하기 버튼을 왼쪽 위에 배치 */
 .login-button-guest {
-  height: 100px;
-  flex-direction: column;
-  padding: 20px 15px;
-  background-color: rgba(157, 160, 165, 1);
-  color: white;
-  border: none;
-  border-radius: 8px;
-  cursor: pointer;
-  font-size: 16px;
+    height: 100px;
+    flex-direction: column;
+
+    padding: 20px 76px;
+    background-color: rgba(157, 160, 165, 1);
+    color: white;
+    border: none;
+    cursor: pointer;
+    font-size: 16px;
 }
 
 .login-button-guest:hover {
-  background-color: #00accf;
+    background-color: #00accf;
 }
 
 .login-button-host:hover {
-  background-color: rgba(157, 160, 165, 1);
-}
-
-/* 로그인하기 버튼을 왼쪽 위에 배치 */
-.login-button-guest {
-  height: 100px;
-  z-index: 2000;
-  flex-direction: column;
-  padding: 20px 15px;
-  background-color: rgba(157, 160, 165, 1);
-  color: white;
-  border: none;
-  border-radius: 8px;
-  cursor: pointer;
-  font-size: 16px;
+    background-color: rgba(157, 160, 165, 1);
 }
 
 .login-button:hover {
-  background-color: #00accf;
+    background-color: #00accf;
 }
 
 .input-box-signup {
-  display: flex;
-  flex-direction: column;
-  width: 100%;
-  max-width: 500px; /* 박스의 최대 너비 */
-  padding: 40px;
-  background-color: white;
-  border: 1px solid #ddd;
-  border-radius: 10px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-  box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    max-width: 400px;
+    max-height: 900px;
+    padding: 50px;
+    background-color: white;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    box-sizing: border-box;
+    justify-content: space-between; /* 위와 아래 사이의 공간을 자동 조정 */
+    z-index: 10;
 }
 
 .inputBox {
-  margin-bottom: 30px; /* 간격을 조정 */
+    margin-bottom: 40px;
+    /* 간격을 조정 */
 }
 
 .title {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  font-size: 24px;
-  font-weight: bold;
-  margin-bottom: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 30px;
 }
 
 .button-container2 {
-  margin-bottom: 20px; /* 간격을 조정 */
+    margin-bottom: 15px;
+    /* 간격을 조정 */
 }
 
 .agree {
-  margin-bottom: 12px; /* 간격을 조정 */
+    display: flex;
+    align-items: center;
+}
+
+.agreeButton {
+    width: 13px;
+    height: 13px;
+    border-radius: 4px;
+    background-color: #ccc;
+    /* 예시로 회색 배경 추가 */
+    margin-right: 5px;
+    /* 버튼과 메시지 사이에 여백 추가 */
+    margin-bottom: 4px;
+    cursor: pointer;
+}
+
+.agreeMessage {
+    font-size: 12px;
+    margin-bottom: 5px;
+    /* 간격을 조정 */
 }
 
 .button-container2 .button-clear {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 45px;
-  padding: 12px 15px;
-  background-color: #00accf;
-  color: white;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-  font-size: 15px;
-  font-weight: bold;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 25px;
+    padding: 12px 15px;
+    background-color: #00accf;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 15px;
+    font-weight: bold;
+    margin-bottom: 10px;
 }
+
+.snsMessage {
+    font-size: 12px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    color: rgba(157, 160, 165, 1);
+
+} 
+
+/* sns-container: 기본 스타일 */
+.sns-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin-top: 20px; /* input-box-signup과의 간격 조절 */
+}
+
+.sns-button-container {
+    display: flex;
+    justify-content: center;
+    gap: 20px; /* 버튼 사이의 간격 */
+    margin-top: 10px; /* sns-container 내에서의 여백 */
+}
+
+/* sns-button: 기본 SNS 버튼 스타일 */
+.sns-button {
+    width: 50px;
+    height: 50px;
+    background-color: lightgray; /* 임시 배경색 */
+    border-radius: 50%;
+    cursor: pointer;
+}
+
+.sns-button.kakao {
+    background-image: url('/public/images/kakao-button.png'); /* 카카오 이미지 경로 설정 */
+    background-size: cover;
+    
+}
+/* 
+.sns-button.google {
+    background-image: url(/public/images/naver-button.png);
+} */
