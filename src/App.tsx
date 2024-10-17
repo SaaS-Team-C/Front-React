@@ -15,8 +15,8 @@ export default function App() {
     <Routes>
       <Route path='/main' element={<Main />} />
 
-      {/* <Route path={ACCOMMODATION_LIST_PATH} element={<AccommodationList />} />
-      <Route path={ACCOMMODATION_LIST_DETAIL_PATH} element={<AccommodationListDetail />} /> */}
+       {/* <Route path={ACCOMMODATION_LIST_PATH} element={<AccommodationList />} /> */}
+      {/*<Route path={ACCOMMODATION_LIST_DETAIL_PATH} element={<AccommodationListDetail />} /> */}
 
       <Route path='/sign-up' element={<SignUp onPathChange={() => { }} />} />
     </Routes>

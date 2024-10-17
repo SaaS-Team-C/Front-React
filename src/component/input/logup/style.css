@@ -1,8 +1,7 @@
-body {
+#logUp-wrapper {
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 100vh;
     margin: 0;
 }
 
@@ -39,7 +38,6 @@ body {
 .input-container2 label {
     font-weight: bold;
     font-size: 12px;
-   
     display: flex;
 }
 

@@ -28,6 +28,7 @@ export default function InputBox({
 
     return (
 
+        <div id='logUp-wrapper'>
             <div className="input-container2">
                 <label>{label}</label>
                 <div className="input-with-button">
@@ -37,6 +38,7 @@ export default function InputBox({
                 {message && <p className="message">{message}</p>}
                 {messageError && <p className="messageError">{messageError}</p>}
             </div>
+        </div>
 
 
     );
