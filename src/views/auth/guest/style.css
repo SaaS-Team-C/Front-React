@@ -1,3 +1,4 @@
+
 #signUp-wrapper {
     display: flex;
     align-items: center;
@@ -11,6 +12,8 @@
 .login-button {
    z-index: 1;
 }
+
+
 
 .login-button-host {
     height: 100px;
