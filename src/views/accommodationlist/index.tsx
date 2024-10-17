@@ -10,6 +10,8 @@ import PriceFilter from 'src/component/accomodation/sidefilterbar/PriceFilter';
 import SortDropdown from 'src/component/accomodation/accomodationlist';
 import { AccommodationListType } from 'src/types';
 import { ACCOMMODATION_LIST_DETAIL_PATH } from 'src/constants';
+import { useEffect, useState } from 'react';
+import axios from 'axios';
 
 // interface: 숙소 리스트 아이템 컴포넌트 Properties //
 interface AccommodationListProps {
@@ -32,9 +34,7 @@ function Accommodationinfo({ type, getAccommodationType }: AccommodationListProp
 
   return (
     <>
-      <Topbar />
-      <SideFilterBar />
-      <div id='accomodationlist-wrapper'>
+        <div id='accomodationlist-wrapper'>
         <div className='top'>
           <div className='serch-result-text'>총 <span className='total-serched-mount'>{type.accommodationScoreSum}</span>개의 검색 결과가 있습니다.</div>
           <SortDropdown />
@@ -92,11 +92,8 @@ function Accommodationinfo({ type, getAccommodationType }: AccommodationListProp
       <PriceFilter onFilterChange={function (filters: { priceRange: { min: number; max: number; }; }): void {
         throw new Error('Function not implemented.');
       }} />
-      <AccommodationListPagination />
+     
     </>
-
-
-
 
   )
 
@@ -105,10 +102,49 @@ function Accommodationinfo({ type, getAccommodationType }: AccommodationListProp
 // component: 숙소 리스트 화면 컴포넌트 //
 export default function AccommodationList() {
 
+  // state: 리스트 불러오기 상태 //
+  const [viewList, setViewList] = useState<AccommodationListType[]>([]); // 리스트 상태
+  const [loading, setLoading] = useState(true); // 로딩 상태
 
-  // function: 네비게이터 함수 //
-  // const navigator = useNavigate();
+  // function: 숙소 리스트 가져오기 함수 //
+  const getAccommodationList = async () => {
+    try {
+      const response = await axios.get('/api/accommodations'); // API 경로는 예시
+      setViewList(response.data);
+      setLoading(false);
+    } catch (error) {
+      console.error('Error fetching accommodation list:', error);
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    getAccommodationList(); // 컴포넌트 마운트 시 API 호출
+  }, []);
+
+  return (
+    <>
+      <Topbar />
+      <SideFilterBar />
+      {loading ? (
+        <div>Loading...</div> // 데이터 로딩 중일 때 표시
+      ) : (
+        viewList.map((type, index) => (
+          <Accommodationinfo
+            key={index}
+            type={type}
+            getAccommodationType={() => {}}
+          />
+        ))
+      )}
+      <AccommodationListPagination />
+    </>
+  );
+}
+
 
   // render: 숙소 리스트 아이템 렌더링 // 
 
-}
+
+
+
