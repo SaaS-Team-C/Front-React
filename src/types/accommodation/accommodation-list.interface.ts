@@ -1,10 +1,10 @@
 // interface: 숙소 검색 결과 리스트 //
-export default interface AccommodationListType {
+export default interface AccommodationDetailListType {
   accommodationName: string;
   accommodationMainImage: string;
   accommodationAddress: string;
   accommodationType: string;
-  accommodationScoreSum: number;
+  accommodationGradeSum: number;
 
   categoryPet: boolean;
   categoryNonSmokingArea: boolean;

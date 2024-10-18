@@ -2,12 +2,13 @@ import axios, {AxiosResponse} from "axios";
 
 import { IdCheckRequestDto, SignInRequestDto, SignUpRequestDto, TelAuthCheckRequestDto, TelAuthRequestDto } from "./dto/request/auth/guest";
 import { ResponseDto } from "./dto/response";
-import { SearchedAccommodationRequestDto } from "./dto/request/accommodation";
+import { FilterRequestDto, SearchedAccommodationRequestDto } from "./dto/request/accommodation";
+import { request } from "http";
 
 // variable: API URL 상수 //
 const ROOMLY_API_DOMAIN = process.env.REACT_APP_API_URL;
 
-const GET_SERCHED_ACCOMMODATION_LIST_API_URL = `${ROOMLY_API_DOMAIN}/api/v1/accommodationName`
+const GET_SERCHED_ACCOMMODATION_LIST_API_URL = `${ROOMLY_API_DOMAIN}/api/v1/search`
 
 
 
@@ -60,11 +61,19 @@ export const getSignInRequest = async (accessToken: string) => {
 };
 
 
-// function: get accommodation list 요청 함수 //
-export const 
-getAccommodationListRequest = async (requestBody: SearchedAccommodationRequestDto) => {
+// function: get searched accommodation list 요청 함수 //
+export const getAccommodationSearchedListRequest = async (requestBody: SearchedAccommodationRequestDto) => {
     const responseBody = await axios.get(GET_SERCHED_ACCOMMODATION_LIST_API_URL)
     .then(responseDataHandler<SearchedAccommodationRequestDto>)
+    .catch(responseErrorHandler);
+    return responseBody;
+
+}
+
+// function: get filtered accommodation list 요청 함수 //
+export const getAccommodationFilteredListRequest = async (requestBody:FilterRequestDto) => {
+    const responseBody = await axios.post(GET_SERCHED_ACCOMMODATION_LIST_API_URL, requestBody)
+    .then(responseDataHandler<FilterRequestDto>)
     .catch(responseErrorHandler);
     return responseBody;
 
