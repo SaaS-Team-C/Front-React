@@ -1,0 +1,133 @@
+#host-signUp-wrapper {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    width: 1920px;
+    height: 919px;
+    background-color: #09cfcf;
+    position: relative;
+    z-index: 1; /* 부모 요소의 z-index 설정 */
+}
+
+.host-input-box-signup {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    max-width: 400px;
+    max-height: 800px;
+    padding: 50px;
+    background-color: white;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    box-sizing: border-box;
+    justify-content: space-between; /* 위와 아래 사이의 공간을 자동 조정 */
+    z-index: 10;
+}
+
+.HostLogin-button-host {
+    height: 100px;
+    flex-direction: column;
+
+    padding: 20px 83px;
+    background-color: #00accf;
+    color: white;
+    border: none;
+    font-size: 16px;
+}
+
+.HostLogin-button-guest {
+    height: 100px;
+    flex-direction: column;
+
+    cursor: pointer;
+    padding: 20px 79px;
+    background-color: rgba(157, 160, 165, 1);
+    color: white;
+    border: none;
+    font-size: 16px;
+}
+
+.HostLogin-button-guest:hover {
+    color: #ccc;
+}
+
+.host-inputBox {
+    margin-bottom: 17px;
+    /* 간격을 조정 */
+}
+
+.host-title {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 20px;
+}
+
+
+.host-button-container2 {
+    margin-bottom: 15px;
+    /* 간격을 조정 */
+}
+
+.host-agree {
+    display: flex;
+    align-items: center;
+    margin-bottom: 1px;
+}
+
+.host-agreeButton {
+    width: 13px;
+    height: 13px;
+    border-radius: 4px;
+    background-color: #ccc;
+    /* 예시로 회색 배경 추가 */
+    margin-right: 5px;
+    /* 버튼과 메시지 사이에 여백 추가 */
+    margin-bottom: 7px;
+    cursor: pointer;
+}
+
+.host-agreeMessage {
+    font-size: 12px;
+    margin-bottom: 5px;
+    /* 간격을 조정 */
+}
+
+.host-button-clear {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 45px;
+    padding: 12px 15px;
+    background-color: #00accf;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 15px;
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+.host-alreay-signIn {
+    margin-bottom: 17px;
+    padding: 0px 0px 0px 17px;
+    display: flex;
+    align-items: center;
+
+    gap: 15px;
+}
+
+.host-alreay {
+    font-size: 11px;
+}
+
+.host-mainPageGo {
+    font-size: 9px;
+    font-weight: bold;
+    cursor: pointer;
+    text-decoration: underline; /* 밑줄 추가 */
+}
