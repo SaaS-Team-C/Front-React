@@ -68,16 +68,26 @@ export default function Topbar() {
         navigator('/find-pw')
     }
 
+    const onIconClickHandler = () => {
+        navigator('/main')   
+    }
 
     return (
-        <div className="wrapper-head">
+    <>
+        <div id="wrapper-head">
+        <div className='top-bar'>
         <div className='logo'>
-            <div className='logo-icon'></div>
-            <div className='logo-name'>Roomly</div>
+            <div className='logo-icon' onClick={onIconClickHandler}></div>
+            <div className='logo-name' onClick={onIconClickHandler}>Roomly</div>
         </div>
         <div className='sign'>
             <div className='sign-in' onClick={() => setModalOpen(true)}>로그인</div>
-            {modalOpen && 
+            
+            <div className='sign-up-button' onClick={onSignupButtonClickHandler}>회원가입</div>
+        </div>
+        </div>
+    </div>
+    {modalOpen && 
             <div className='modal-container' onClick={e => {
                 if (e.target === modalBackground.current) {
                     setModalOpen(false);
@@ -108,9 +118,7 @@ export default function Topbar() {
             </div>
             </div>
             }
-            <div className='sign-up-button' onClick={onSignupButtonClickHandler}>회원가입</div>
-        </div>
-    </div>
+    </>
     )
 
 }
