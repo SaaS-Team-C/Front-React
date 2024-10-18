@@ -14,7 +14,7 @@ interface Props {
     onButtonClick?: () => void;
 }
 
-export default function InputBox({
+export default function InputBox2({
     label,
     type,
     placeholder,
@@ -28,10 +28,10 @@ export default function InputBox({
 
     return (
 
-        <div id='logUp-wrapper'>
-            <div className="input-container2">
+        <div id='host-logUp-wrapper'>
+            <div className="host-input-container2">
                 <label>{label}</label>
-                <div className="input-with-button">
+                <div className="host-input-with-button">
                     <input type={type} value={value} placeholder={placeholder} onChange={onChange} />
                     {buttonName && <button onClick={onButtonClick}>{buttonName}</button>}
                 </div>

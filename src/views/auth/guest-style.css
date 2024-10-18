@@ -1,5 +1,4 @@
-
-#signUp-wrapper {
+#guest-signUp-wrapper {
     display: flex;
     align-items: center;
     flex-direction: column;
@@ -9,18 +8,12 @@
     position: relative;
 }
 
-.login-button {
-   z-index: 1;
-}
-
-
-
-.login-button-host {
+.GuestLogin-button-host {
     height: 100px;
 
     flex-direction: column;
-    padding: 20px 86px;
-    background-color: #00accf;
+    padding: 20px 83px;
+    background-color: rgba(157, 160, 165, 1);
     color: white;
     border: none;
     cursor: pointer;
@@ -28,36 +21,27 @@
 }
 
 /* 로그인하기 버튼을 왼쪽 위에 배치 */
-.login-button-guest {
+.GuestLogin-button-guest {
     height: 100px;
     flex-direction: column;
 
-    padding: 20px 76px;
-    background-color: rgba(157, 160, 165, 1);
+    padding: 20px 79px;
+    background-color: #00accf; 
     color: white;
     border: none;
-    cursor: pointer;
     font-size: 16px;
 }
 
-.login-button-guest:hover {
-    background-color: #00accf;
+.GuestLogin-button-host:hover {
+    color: #ccc;
 }
 
-.login-button-host:hover {
-    background-color: rgba(157, 160, 165, 1);
-}
-
-.login-button:hover {
-    background-color: #00accf;
-}
-
-.input-box-signup {
+.guest-input-box-signup {
     display: flex;
     flex-direction: column;
     width: 100%;
     max-width: 400px;
-    max-height: 900px;
+    max-height: 800px;
     padding: 50px;
     background-color: white;
     border: 1px solid #ddd;
@@ -68,31 +52,33 @@
     z-index: 10;
 }
 
-.inputBox {
-    margin-bottom: 40px;
+.guest-inputBox {
+    margin-bottom: 23px;
     /* 간격을 조정 */
 }
 
-.title {
+.guest-title {
     display: flex;
     justify-content: center;
     align-items: center;
     font-size: 24px;
     font-weight: bold;
-    margin-bottom: 30px;
+    margin-bottom: 20px;
 }
 
-.button-container2 {
+
+.guest-button-container2 {
     margin-bottom: 15px;
     /* 간격을 조정 */
 }
 
-.agree {
+.guest-agree {
     display: flex;
     align-items: center;
+    margin-bottom: 1px;
 }
 
-.agreeButton {
+.guest-agreeButton {
     width: 13px;
     height: 13px;
     border-radius: 4px;
@@ -100,21 +86,21 @@
     /* 예시로 회색 배경 추가 */
     margin-right: 5px;
     /* 버튼과 메시지 사이에 여백 추가 */
-    margin-bottom: 4px;
+    margin-bottom: 7px;
     cursor: pointer;
 }
 
-.agreeMessage {
+.guest-agreeMessage {
     font-size: 12px;
     margin-bottom: 5px;
     /* 간격을 조정 */
 }
 
-.button-container2 .button-clear {
+.guest-button-clear {
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 25px;
+    height: 45px;
     padding: 12px 15px;
     background-color: #00accf;
     color: white;
@@ -123,50 +109,85 @@
     cursor: pointer;
     font-size: 15px;
     font-weight: bold;
-    margin-bottom: 10px;
+    margin-bottom: 5px;
+}
+
+.guest-alreay-signIn {
+    margin-bottom: 17px;
+    padding: 0px 0px 0px 17px;
+    display: flex;
+    align-items: center;
+
+    gap: 15px;
+}
+
+.guest-alreay {
+    font-size: 11px;
+}
+
+.guest-mainPageGo {
+    font-size: 9px;
+    font-weight: bold;
+    cursor: pointer;
+    text-decoration: underline; /* 밑줄 추가 */
 }
 
 .snsMessage {
-    font-size: 12px;
+    font-size: 11px;
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
     align-items: center;
     justify-content: center;
     color: rgba(157, 160, 165, 1);
+    margin-bottom: 15px;
 
 } 
 
-/* sns-container: 기본 스타일 */
-.sns-container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    margin-top: 20px; /* input-box-signup과의 간격 조절 */
+.snsMessage::before,
+.snsMessage::after {
+    content: "";
+    flex: 1;
+    height: 1px;
+    background-color: rgba(157, 160, 165, 1);
+    margin: 0 6px; /* 선과 텍스트 사이의 간격 */
+}
+
+.snsMessage span {
+    font-size: 12px;
+    color: rgba(157, 160, 165, 1);
 }
 
 .sns-button-container {
     display: flex;
     justify-content: center;
-    gap: 20px; /* 버튼 사이의 간격 */
-    margin-top: 10px; /* sns-container 내에서의 여백 */
+    gap: 35px; /* 버튼 사이의 간격 */
+    margin-top: 5px;
 }
 
 /* sns-button: 기본 SNS 버튼 스타일 */
-.sns-button {
-    width: 50px;
-    height: 50px;
-    background-color: lightgray; /* 임시 배경색 */
+.sns-button.kakao {
+
+
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    width: 45px;
+    height: 45px;
     border-radius: 50%;
     cursor: pointer;
+    background-image: url(/public/images/kakao-button.png);
+
 }
 
-.sns-button.kakao {
-    background-image: url('/public/images/kakao-button.png'); /* 카카오 이미지 경로 설정 */
-    background-size: cover;
-    
-}
-/* 
 .sns-button.google {
-    background-image: url(/public/images/naver-button.png);
-} */
+
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
+    cursor: pointer;
+    background-image: url(/public/images/google-button.png);
+    
+}  

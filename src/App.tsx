@@ -3,7 +3,7 @@ import './App.css';
 import Main from './views/Main';
 
 // import SignUp from './views/auth/guest/index';
-import SignUp from './views/auth/guest';
+import SignUp from './views/auth';
 
 import AccommodationList from './views/accommodationlist';
 import { ACCOMMODATION_LIST_DETAIL_PATH, ACCOMMODATION_LIST_PATH } from './constants';
