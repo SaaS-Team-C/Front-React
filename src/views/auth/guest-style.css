@@ -3,7 +3,7 @@
     align-items: center;
     flex-direction: column;
     width: 1920px;
-    height: 919px;
+    height: 1050px;
     background-color: #09cfcf;
     position: relative;
 }
@@ -41,8 +41,8 @@
     flex-direction: column;
     width: 100%;
     max-width: 400px;
-    max-height: 800px;
-    padding: 50px;
+    max-height: 950px; /* 높이를 조정하여 요소가 잘리지 않도록 */
+    padding: 45px; /* 패딩을 조정하여 여유 공간 추가 */
     background-color: white;
     border: 1px solid #ddd;
     border-radius: 10px;
@@ -51,9 +51,8 @@
     justify-content: space-between; /* 위와 아래 사이의 공간을 자동 조정 */
     z-index: 10;
 }
-
 .guest-inputBox {
-    margin-bottom: 23px;
+    margin-bottom: 13px;
     /* 간격을 조정 */
 }
 
@@ -64,10 +63,12 @@
     font-size: 24px;
     font-weight: bold;
     margin-bottom: 20px;
+    margin-top: 5px;
 }
 
 
 .guest-button-container2 {
+    padding: 5px;
     margin-bottom: 15px;
     /* 간격을 조정 */
 }
@@ -100,7 +101,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 45px;
+    height: 26px;
     padding: 12px 15px;
     background-color: #00accf;
     color: white;
@@ -110,6 +111,17 @@
     font-size: 15px;
     font-weight: bold;
     margin-bottom: 5px;
+    transition: background-color 0.3s ease; /* 상태 변화 시 부드러운 전환 */
+}
+
+.guest-button-clear .primary {
+    background-color: #00accf; /* 파란색 */
+}
+
+/* disable 상태 - 회색 */
+.guest-button-clear .disable {
+    background-color: #ccc; /* 회색 */
+    cursor: not-allowed; /* 비활성화 상태 시 커서를 금지 모양으로 변경 */
 }
 
 .guest-alreay-signIn {

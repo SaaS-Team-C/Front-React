@@ -57,7 +57,7 @@ export default function App() {
       {/* <Route path=':accommodationName' element={<AccommodationListDetail />} /> */}
 
 
-      {/* <Route path='/sign-up' element={<SignUp onPathChange={() => { }} />} /> */}
+      <Route path='/sign-up' element={<SignUp onPathChange={() => { }} />} />
       <Route path='*' element={<Index />} />
     </Routes>
 
