@@ -6,9 +6,10 @@ import './style.css';
 interface ImageSliderProps {
   imageContents: { image: string, text: string }[];
   title: string;
+  onClick: (text:string ) => void;
 }
 
-export default function ImageSlider({ imageContents, title }: ImageSliderProps) {
+export default function ImageSlider6({ imageContents, title , onClick }: ImageSliderProps) {
 
   const [startIndex, setStartIndex] = useState<number>(0);
 
@@ -24,6 +25,8 @@ export default function ImageSlider({ imageContents, title }: ImageSliderProps) 
     }
   };
 
+  
+
   const showLeftButton = startIndex > 0; // 시작 인덱스가 0보다 클 때 왼쪽 버튼 표시
   const showRightButton = startIndex < 4; // 시작 인덱스가 4보다 작을 때 오른쪽 버튼 표시
 
@@ -32,11 +35,11 @@ export default function ImageSlider({ imageContents, title }: ImageSliderProps) 
       <div className='left'>
         {showLeftButton && <div className='left-button' onClick={handlePrev}></div>}
       </div>
-      <div className="slider-container">
+      <div className="slider-container" >
         <div className='title'>{title}</div>
         <div className='image-container' style={{ transform: `translateX(-${(startIndex / 6) * 100}%)` }}>
-          {imageContents.slice(0, 10).map(({ image, text }, index) => (
-            <div className='image' key={index}>
+          {imageContents.slice(0, imageContents.length).map(({ image, text }, index) => (
+            <div className='image' key={index} onClick={() => onClick(text)}>
               <img className='slide' src={image} alt={`Image ${index + 1}`} />
               <div className='ranktext'>{text}</div>
             </div>

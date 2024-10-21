@@ -2,6 +2,8 @@
 
 export const ROOT_PATH = "/";
 
+export const MAIN_PATH = "/main"
+
 export const ACCOMMODATION_LIST_PATH = "/accommodationList";
 export const ACCOMMODATION_LIST_DETAIL_PATH = (accommodationName: string) =>`${accommodationName}`;
 
