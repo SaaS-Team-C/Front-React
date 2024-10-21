@@ -144,3 +144,14 @@ export const getAccommodationListRequest = async (
     .catch(responseErrorHandler);
   return responseBody;
 };
+
+
+
+// !옥진서 작업중 //
+// function: Log in  요청 함수 //
+export const logInRequest = async (requestBody: LogInRequestDto) => {
+  const responseBody = await axios.post(LOG_IN_API_URL, requestBody)
+      .then(responseDataHandler<LogInResponseDto>)
+      .catch(responseErrorHandler);
+  return responseBody;
+};
