@@ -6,7 +6,7 @@
 .guest-input-container2 {
     flex-direction: column;
     gap: 10px;
-    padding: 5px;
+    padding: 5px 3px;
 
     border-radius: 8px;
     background-color: white;
@@ -40,14 +40,8 @@
 }
 
 .guest-input-container2 .message {
-    color: hsl(134, 53%, 51%);
-    font-size: 14px;
-    margin-top: 4px;
-}
-
-.guest-input-container2 .messageError {
     color: var(--error-color);
-    font-size: 14px;
+    font-size: 11px;
     margin-top: 4px;
 }
 

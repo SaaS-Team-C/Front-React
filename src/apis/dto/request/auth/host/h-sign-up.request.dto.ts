@@ -1,11 +1,10 @@
 // interface: 회원가입 Reuqest Body Dto //
 
-export default interface SignUpRequestDto {
+export default interface HostSignUpRequestDto {
     hostName: string;
     hostId: string;
     hostPassword: string;
-    hostTelNumber: string;
-    hostAuthNumber: string;
-    hostBusinessImage: string;
-    hostBusinessNumber: string;
+    telNumber: string;
+    authNumber: string;
+    businessNumber: string;
 }
