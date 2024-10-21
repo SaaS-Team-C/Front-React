@@ -9,11 +9,15 @@ import {
 } from "./dto/request/auth/guest";
 import { ResponseDto } from "./dto/response";
 import { SearchedAccommodationRequestDto } from "./dto/request/accommodation";
+import { LogInRequestDto } from "./dto/request/auth/login";
+import { LogInResponseDto } from "./dto/response/auth/login";
 
 // variable: API URL 상수 //
 const ROOMLY_API_DOMAIN = process.env.REACT_APP_API_URL;
 
 const GET_SERCHED_ACCOMMODATION_LIST_API_URL = `${ROOMLY_API_DOMAIN}/api/v1/accommodationName`;
+
+const LOG_IN_API_URL = `${ROOMLY_API_DOMAIN}`
 
 // function : Authorization Bearer 헤더 //
 const bearerAuthorization = (accessToken: string) => ({
@@ -63,5 +67,16 @@ export const getAccommodationListRequest = async (
     .get(GET_SERCHED_ACCOMMODATION_LIST_API_URL)
     .then(responseDataHandler<SearchedAccommodationRequestDto>)
     .catch(responseErrorHandler);
+  return responseBody;
+};
+
+
+
+// !옥진서 작업중 //
+// function: Log in  요청 함수 //
+export const logInRequest = async (requestBody: LogInRequestDto) => {
+  const responseBody = await axios.post(LOG_IN_API_URL, requestBody)
+      .then(responseDataHandler<LogInResponseDto>)
+      .catch(responseErrorHandler);
   return responseBody;
 };

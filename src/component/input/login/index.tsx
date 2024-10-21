@@ -7,28 +7,23 @@ interface Props {
     value: string;
     message: string;
     messageError: boolean;
-    buttonName?: string;
 
     onChange: (event: ChangeEvent<HTMLInputElement>) => void;
-    onButtonClick?: () => void;
 }
 
 export default function InputBox({ 
     type, 
     placeholder, 
     value, 
-    buttonName,
     message,
     messageError,
-    onChange,
-    onButtonClick,
+    onChange
 }: Props) {
 
     return (
         <div className="input-box">
             <div className="input-area">
                 <input value={value} type={type} placeholder={placeholder} onChange={onChange} />
-                {buttonName && <div className={`input-button ${value ? 'active' : 'disable'}`} onClick={onButtonClick}>{buttonName}</div>}
             </div>
             <div className={`message ${messageError ? 'error' : 'primary'}`}>{message}</div>
         </div>
