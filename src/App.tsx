@@ -6,9 +6,8 @@ import Main from './views/Main';
 import SignUp from './views/auth';
 
 import AccommodationList from './views/accommodationlist';
-import { ACCOMMODATION_LIST_DETAIL_PATH, ACCOMMODATION_LIST_PATH } from './constants';
+import { ACCOMMODATION_LIST_DETAIL_PATH, ACCOMMODATION_LIST_PATH, MAIN_PATH } from './constants';
 import AccommodationListDetail from './views/accommodationlist/accommodationlistedetail';
-import ImageSlider from './component/ImageSlider';
 import { regionImages } from './resources/images/region';
 import { useEffect } from 'react';
 import { useCookies } from 'react-cookie';
@@ -47,8 +46,8 @@ export default function App() {
   return (
     <Routes>
       <Route index element={<Index />} />
-      <Route path='/main' element={<Main />} />
-      <Route path='/test' element={<ImageSlider title='국내 인기 여행지' imageContents={regionImages} />} />
+      <Route path={MAIN_PATH}  element={<Main />} />
+      <Route path={ACCOMMODATION_LIST_PATH} element={<Main />} />
 
       {/* <Route path={ACCOMMODATION_LIST_PATH} element={<AccommodationList />}>
         <Route path='detail' element={<AccommodationListDetail />} /> */}
