@@ -13,7 +13,7 @@ import { MAIN_PATH } from 'src/constants';
 export default function Topbar() {
     // 쿠키 상태 초기화
     const [cookies, setCookies, removeCookies] = useCookies(['accessToken']);
-    
+
     // state: 모달창 상태 //
     const [modalOpen, setModalOpen] = useState(false);
 
@@ -73,10 +73,10 @@ export default function Topbar() {
     const logInResponse = (responseBody: LogInResponseDto | ResponseDto | null) => {
         const message =
             !responseBody ? '서버에 문제가 있습니다.' :
-            responseBody.code === 'VF' ? '아이디와 비밀번호를 모두 입력하세요.' :
-            responseBody.code === 'SF' ? '로그인 정보가 일치하지 않습니다.' :
-            responseBody.code === 'TCF' ? '서버에 문제가 있습니다.' :
-            responseBody.code === 'DBE' ? '서버에 문제가 있습니다.' : '';
+                responseBody.code === 'VF' ? '아이디와 비밀번호를 모두 입력하세요.' :
+                    responseBody.code === 'SF' ? '로그인 정보가 일치하지 않습니다.' :
+                        responseBody.code === 'TCF' ? '서버에 문제가 있습니다.' :
+                            responseBody.code === 'DBE' ? '서버에 문제가 있습니다.' : '';
 
         if (responseBody?.code === 'SU') {
             const { accessToken, expiration } = responseBody as LogInResponseDto;

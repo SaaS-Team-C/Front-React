@@ -12,6 +12,7 @@ import { useEffect } from "react";
 import { useCookies } from "react-cookie";
 import { ResponseDto } from "src/apis/dto/response";
 import { GetAccommodationListResponseDto } from "src/apis/dto/response/accommodation";
+import React from "react";
 
 // interface: 숙소 리스트 아이템 컴포넌트 Properties //
 
@@ -41,22 +42,22 @@ export default function AccommodationList({
   };
 
   // function: filter 리스트 불러오기 //
-  const updateAccommodationResponse = (responseBody: GetAccommodationListResponseDto| ResponseDto | null) => {
+  const updateAccommodationResponse = (responseBody: GetAccommodationListResponseDto | ResponseDto | null) => {
     const message =
       // 에러 메세지는 나중에 api 명세서 확정되면 수정 필요
       !responseBody
         ? "서버에 문제가 있습니다."
         : responseBody.code === "VF"
-        ? "잘못된 접근입니다."
-        : responseBody.code === "AF"
-        ? "잘못된 접근입니다."
-        : responseBody.code === "NC"
-        ? "존재하지 않는 고객입니다."
-        : responseBody.code === "NP"
-        ? "권한이 없습니다."
-        : responseBody.code === "DBE"
-        ? "서버에 문제가 있습니다."
-        : "";
+          ? "잘못된 접근입니다."
+          : responseBody.code === "AF"
+            ? "잘못된 접근입니다."
+            : responseBody.code === "NC"
+              ? "존재하지 않는 고객입니다."
+              : responseBody.code === "NP"
+                ? "권한이 없습니다."
+                : responseBody.code === "DBE"
+                  ? "서버에 문제가 있습니다."
+                  : "";
 
     const isSuccessed = responseBody !== null && responseBody.code == "SU";
     if (!isSuccessed) {
