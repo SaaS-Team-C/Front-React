@@ -2,12 +2,13 @@ import { Route, Routes, useNavigate } from 'react-router-dom';
 import './App.css';
 import Main from './views/Main';
 
+
 // import SignUp from './views/auth/guest/index';
 import SignUp from './views/auth';
 
-import AccommodationList from './views/accommodationlist';
+import AccommodationList from './views/accommodation/accommodationlist';
 import { ACCOMMODATION_LIST_DETAIL_PATH, ACCOMMODATION_LIST_PATH } from './constants';
-import AccommodationListDetail from './views/accommodationlist/accommodationlistedetail';
+import AccommodationListDetail from './views/accommodation/accommodationlistedetail';
 import ImageSlider from './component/ImageSlider';
 import { regionImages } from './resources/images/region';
 import { useEffect } from 'react';
@@ -55,6 +56,7 @@ export default function App() {
       {/* </Route> */}
       {/* 숙소데이터 등록 되면 아래 경로로 사용 예정 */}
       {/* <Route path=':accommodationName' element={<AccommodationListDetail />} /> */}
+      <Route path='/detail' element={<AccommodationListDetail/>}/>
 
 
       {/* <Route path='/sign-up' element={<SignUp onPathChange={() => { }} />} /> */}
