@@ -50,7 +50,7 @@ export default function App() {
   return (
     <Routes>
       <Route index element={<Index />} />
-      <Route path={MAIN_PATH}  element={<Main />} />
+      <Route path={MAIN_PATH} element={<Main />} />
       <Route path={ACCOMMODATION_LIST_PATH} element={<Main />} />
 
       {/* <Route path={ACCOMMODATION_LIST_PATH} element={<AccommodationList />}>
@@ -58,7 +58,7 @@ export default function App() {
       {/* </Route> */}
       {/* 숙소데이터 등록 되면 아래 경로로 사용 예정 */}
       {/* <Route path=':accommodationName' element={<AccommodationListDetail />} /> */}
-      <Route path='/detail' element={<AccommodationListDetail/>}/>
+      <Route path='/detail' element={<AccommodationListDetail />} />
 
 
       <Route path='/sign-up' element={<SignUp onPathChange={() => { }} />} />
