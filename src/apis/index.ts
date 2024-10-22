@@ -154,7 +154,7 @@ export const getAccommodationListRequest = async (
 };
 
 // !옥진서 작업중 //
-function: Log in  요청 함수 //
+function:Login  요청 함수 //
 export const logInRequest = async (requestBody: LogInRequestDto) => {
   const responseBody = await axios
     .post(LOG_IN_API_URL, requestBody)
