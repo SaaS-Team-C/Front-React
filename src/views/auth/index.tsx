@@ -37,8 +37,8 @@ function SnsContainer({ type }: SnsContainnerProps) {
 }
 
 interface AuthComponentProps {
-    onPathChange: (path: null) => void;
-} // null -> authPath 달아야함 
+    onPathChange: (path: string) => void;
+} 
 
 
 // component: 회원가입 화면 컴포넌트 //
@@ -52,8 +52,8 @@ export default function SignUp({ onPathChange }: AuthComponentProps) {
 
     // state: Query Parameter 상태 //
     const [queryParam] = useSearchParams();
-    const snsId = queryParam.get('snsId');
-    const joinPath = queryParam.get('joinPath');
+    const snsId = queryParam.get('snsId') ?? '';
+    const joinPath = queryParam.get('joinPath') ?? '';
 
     // state: 공통 입력 정보 상태 //
     const [telNumber, setTelNumber] = useState<string>('');
@@ -71,6 +71,10 @@ export default function SignUp({ onPathChange }: AuthComponentProps) {
     const [hostPassword, setHostPassword] = useState<string>('');
     const [hostPasswordCheck, setHostPasswordCheck] = useState<string>('');
     const [businessNumber, setBusinessNumber] = useState<string>('');
+    const [businessImage, setBusinessImage] =  useState<string>('');
+    const [businessName, setBusinessName] =  useState<string>('');
+    const [businessStartDay, setBusinessStartDay] =  useState<string>('');
+
 
     // state: 입력값 검증 상태 //
     const [isCheckedId, setCheckedId] = useState<boolean>(false);
@@ -99,16 +103,20 @@ export default function SignUp({ onPathChange }: AuthComponentProps) {
 
 
     // variable: SNS 회원가입 여부 //
-    // const isSnsSignUp = snsId !== null && joinPath !== null;
+    const isSnsSignUp = snsId !== null && joinPath !== null;
 
-    // variable: guest 회원가입 가능 여부 //
-    const isCompleteGuest = guestName && guestId && isCheckedId && guestPassword && guestPasswordCheck && isMatchedPassword && isCheckedPassword
-        && telNumber && isSend && authNumber && isCheckedAuthNumber && isAgreed;
+    // variable: 공통 회원가입 타입 //
+    const isCompleteSignUp = (name: string, id: string, password: string, passwordCheck: string) => {
+        return name && id && isCheckedId && password && passwordCheck && isMatchedPassword && isCheckedPassword
+            && telNumber && isSend && authNumber && isCheckedAuthNumber && isAgreed;
+    }
+    
 
+    // variable: guest 회원가입 가능 여부
+    const isCompleteGuest = isCompleteSignUp(guestName, guestId, guestPassword, guestPasswordCheck);
 
-    // variable: host 회원가입 가능 여부 //
-    const isCompleteHost = hostName && hostId && isCheckedId && hostPassword && hostPasswordCheck && isMatchedPassword && isCheckedPassword
-        && telNumber && isSend && authNumber && isCheckedAuthNumber && isAgreed;
+    // variable: host 회원가입 가능 여부
+    const isCompleteHost = isCompleteSignUp(hostName, hostId, hostPassword, hostPasswordCheck) && businessNumber;
 
     // function: 아이디 중복확인 Response 처리 함수 //
     const IdCheckResponse = (responseBody: ResponseDto | null) => {
@@ -158,8 +166,8 @@ export default function SignUp({ onPathChange }: AuthComponentProps) {
         setCheckedAuthNumber(isSuccessed);
     };
 
-    // function : 회원가입 Response 처리 함수 //
-    const signUpResponse = (responseBody: ResponseDto | null) => {
+    // function : guest 회원가입 Response 처리 함수 //
+    const guestSignUpResponse = (responseBody: ResponseDto | null) => {
         const message =
             !responseBody ? '서버에 문제가 있습니다.' :
                 responseBody.code === 'VF' ? '올바른 데이터가 아닙니다.' :
@@ -174,6 +182,39 @@ export default function SignUp({ onPathChange }: AuthComponentProps) {
             return;
         }
     };
+
+        // function : host 회원가입 Response 처리 함수 //
+        const hostSignUpResponse = (responseBody: ResponseDto | null) => {
+            const message =
+                !responseBody ? '서버에 문제가 있습니다.' :
+                    responseBody.code === 'VF' ? '올바른 데이터가 아닙니다.' :
+                        responseBody.code === 'DI' ? '중복된 아이디입니다.' :
+                            responseBody.code === 'DT' ? '중복된 전화번호입니다.' :
+                                responseBody.code === 'TAF' ? '인증번호가 일치하지 않습니다.' :
+                                responseBody.code === 'NB' ? '사업자번호 인증에 실패했습니다.' :
+                                    responseBody.code === 'DBE' ? '서버에 문제가 있습니다.' : '';
+    
+            const isSuccessed = responseBody !== null && responseBody.code === 'SU';
+            if (!isSuccessed) {
+                alert(message);
+                return;
+            }
+        };
+
+        // function : 사업자 번호 전송 Response 처리 함수 //
+        const validateResponse = (responseBody: ResponseDto | null) => {
+            const message =
+                !responseBody ? '서버에 문제가 있습니다.' :
+                    responseBody.code === 'VF' ? '올바른 데이터가 아닙니다.' :
+                    responseBody.code === 'NB' ? '사업자번호 인증에 실패했습니다.' :
+                                    responseBody.code === 'DBE' ? '서버에 문제가 있습니다.' : '';
+    
+            const isSuccessed = responseBody !== null && responseBody.code === 'SU';
+            if (!isSuccessed) {
+                alert(message);
+                return;
+            }
+        };
 
     // event handler: 이름 변경 이벤트 처리 //
     const onNameChangeHandler = (event: ChangeEvent<HTMLInputElement>) => {
@@ -303,12 +344,12 @@ export default function SignUp({ onPathChange }: AuthComponentProps) {
 
         const requestBody: GuestSignUpRequestDto = {
             guestName,
-            guestId: guestId,
+            guestId,
             guestPassword,
-            telNumber,
-            authNumber
+            telNumber, 
+            joinPath 
         }
-        GuestSignUpRequest(requestBody).then(signUpResponse);
+        GuestSignUpRequest(requestBody).then(guestSignUpResponse);
     };
 
     // Event handler: host 회원가입 버튼 클릭 이벤트 처리
@@ -317,13 +358,15 @@ export default function SignUp({ onPathChange }: AuthComponentProps) {
 
         const requestBody: HostSignUpRequestDto = {
             hostName,
-            hostId: guestId,
+            hostId,
             hostPassword,
             telNumber,
-            authNumber,
-            businessNumber
+            businessNumber,
+            businessImage,    
+            businessName,   
+            businessStartDay
         }
-        HostSignUpRequest(requestBody).then(signUpResponse);
+        HostSignUpRequest(requestBody).then(hostSignUpResponse);
     };
 
     // event handler: 상단 게스트 버튼 클릭 이벤트 처리
