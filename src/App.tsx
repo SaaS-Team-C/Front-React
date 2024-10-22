@@ -8,9 +8,8 @@ import SignUp from './views/auth';
 
 
 import AccommodationList from './views/accommodation/accommodationlist';
-import { ACCOMMODATION_LIST_DETAIL_PATH, ACCOMMODATION_LIST_PATH } from './constants';
+import { ACCOMMODATION_LIST_DETAIL_PATH, ACCOMMODATION_LIST_PATH, MAIN_PATH } from './constants';
 import AccommodationListDetail from './views/accommodation/accommodationlistedetail';
-// import ImageSlider from './component/ImageSlider';
 
 import { regionImages } from './resources/images/region';
 import { useEffect } from 'react';
@@ -61,7 +60,7 @@ export default function App() {
       <Route path='/detail' element={<AccommodationListDetail />} />
 
 
-      <Route path='/sign-up' element={<SignUp onPathChange={() => { }} />} />
+      {/* <Route path='/sign-up' element={<SignUp onPathChange={() => { }} />} /> */}
       <Route path='*' element={<Index />} />
     </Routes>
 
