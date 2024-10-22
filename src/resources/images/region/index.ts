@@ -9,7 +9,7 @@ import image8 from './Gapyeong.jpg';
 import image9 from './Yeo_su.jpg';
 import image10 from './Sokcho.jpg';
 
-const regionImages = [
+const RegionImages = [
     {image : image1  , text : '제주도'} ,
     {image : image2  , text : '서울'} ,
     {image : image3  , text : '부산'},
@@ -24,5 +24,5 @@ const regionImages = [
 
 
 export {
-    regionImages
+    RegionImages
 }
