@@ -1,116 +1,74 @@
-import React, { useState, useEffect } from "react";
-import './style.css'
+// import React, { useState } from 'react';
+// import './style.css';
 
-// 숙소 데이터를 정의
-interface Accommodation {
-  id: number;
-  name: string;
-  price: number;
-}
+// // Pagination 컴포넌트
+// const Pagination: React.FC<{
+//   totalItems: number;
+//   itemsPerPage: number;
+//   currentPage: number;
+//   onPageChange: (page: number) => void;
+// }> = ({ totalItems, itemsPerPage, currentPage, onPageChange }) => {
+//   const totalPages = Math.ceil(totalItems / itemsPerPage);
 
-const AccommodationListPagination = () => {
-  // 전체 숙소 데이터를 관리하는 상태
-  const [accommodations, setAccommodations] = useState<Accommodation[]>([]);
+//   return (
+//     <div className="pagination">
+//       {Array.from({ length: totalPages }, (_, i) => (
+//         <button
+//           key={i}
+//           className={`page-btn ${currentPage === i + 1 ? 'active' : ''}`}
+//           onClick={() => onPageChange(i + 1)}
+//         >
+//           {i + 1}
+//         </button>
+//       ))}
+//     </div>
+//   );
+// };
 
-  // 페이지네이션을 위한 상태
-  const [currentPage, setCurrentPage] = useState(1);
-  const resultsPerPage = 10; // 한 페이지에 보여줄 숙소 수
+// const List: React.FC = () => {
+//   const accommodations = [
+//     /* 기존 숙소 데이터 그대로 */
+//   ];
 
-  // 가정: 여기서 모든 데이터를 한 번에 받아온다고 가정
-  useEffect(() => {
-    // 여기서는 서버에서 받아온 전체 데이터를 미리 설정하는 과정
-    const fetchedData = [
-      { id: 1, name: "호텔 A", price: 100 },
-      // { id: 2, name: "호텔 B", price: 200 },
-      // { id: 1, name: "호텔 A", price: 100 },
-      // { id: 2, name: "호텔 B", price: 200 },
-      // { id: 1, name: "호텔 A", price: 100 },
-      // { id: 2, name: "호텔 B", price: 200 },
-      // { id: 1, name: "호텔 A", price: 100 },
-      // { id: 2, name: "호텔 B", price: 200 },
-      // { id: 1, name: "호텔 A", price: 100 },
-      // { id: 2, name: "호텔 B", price: 200 },
-      // { id: 1, name: "호텔 A", price: 100 },
-      // { id: 2, name: "호텔 B", price: 200 },
-      // { id: 1, name: "호텔 A", price: 100 },
-      // { id: 2, name: "호텔 B", price: 200 },
-      // { id: 1, name: "호텔 A", price: 100 },
-      // { id: 2, name: "호텔 B", price: 200 },
-      // { id: 1, name: "호텔 A", price: 100 },
-      // { id: 2, name: "호텔 B", price: 200 },
-      // { id: 1, name: "호텔 A", price: 100 },
-      // { id: 2, name: "호텔 B", price: 200 },
-      // { id: 1, name: "호텔 A", price: 100 },
-      // { id: 2, name: "호텔 B", price: 200 },
-      // { id: 1, name: "호텔 A", price: 100 },
-      // { id: 2, name: "호텔 B", price: 200 },
-      // { id: 1, name: "호텔 A", price: 100 },
-      // { id: 2, name: "호텔 B", price: 200 },
-      // { id: 1, name: "호텔 A", price: 100 },
-      // { id: 2, name: "호텔 B", price: 200 },
-      // { id: 1, name: "호텔 A", price: 100 },
-      // { id: 2, name: "호텔 B", price: 200 },
-      // { id: 1, name: "호텔 A", price: 100 },
-      // { id: 2, name: "호텔 B", price: 200 },
-      // { id: 1, name: "호텔 A", price: 100 },
-      // { id: 2, name: "호텔 B", price: 200 },
-      // { id: 1, name: "호텔 A", price: 100 },
-      // { id: 2, name: "호텔 B", price: 200 },
-      // { id: 1, name: "호텔 A", price: 100 },
-      // { id: 2, name: "호텔 B", price: 200 },
-      // { id: 1, name: "호텔 A", price: 100 },
-      // { id: 2, name: "호텔 B", price: 200 },
-      // { id: 1, name: "호텔 A", price: 100 },
-      // { id: 2, name: "호텔 B", price: 200 },
-      // { id: 1, name: "호텔 A", price: 100 },
-      // { id: 2, name: "호텔 B", price: 200 },
-      // { id: 1, name: "호텔 A", price: 100 },
-      // { id: 2, name: "호텔 B", price: 200 },
-      // { id: 1, name: "호텔 A", price: 100 },
-      // { id: 2, name: "호텔 B", price: 200 },
+//   const [currentPage, setCurrentPage] = useState(1);
+//   const itemsPerPage = 10;
 
-    ];
-    setAccommodations(fetchedData);
-  }, []);
+//   const handlePageChange = (page: number) => {
+//     setCurrentPage(page);
+//   };
 
-  // 현재 페이지에 보여줄 숙소 데이터만 자르기
-  const indexOfLastAccommodation = currentPage * resultsPerPage;
-  const indexOfFirstAccommodation = indexOfLastAccommodation - resultsPerPage;
-  const currentAccommodations = accommodations.slice(indexOfFirstAccommodation, indexOfLastAccommodation);
+//   // 현재 페이지에 보여줄 숙소 리스트
+//   const startIdx = (currentPage - 1) * itemsPerPage;
+//   const currentAccommodations = accommodations.slice(startIdx, startIdx + itemsPerPage);
 
-  // 페이지 변경 함수
-  const handlePageChange = (pageNumber: number) => {
-    setCurrentPage(pageNumber);
-  };
+//   return (
+//     <div className="accommodation-list">
+//       <p>{accommodations.length}개의 검색 결과가 있습니다.</p>
+//       <div className="accommodation-cards">
+//         {currentAccommodations.map((accommodation) => (
+//           <div key={accommodation.id} className="accommodation-card">
+//             <img src={accommodation.imageUrl} alt={accommodation.name} className="accommodation-image" />
+//             <div className="accommodation-info">
+//               <h3>{accommodation.name}</h3>
+//               <p>{accommodation.location}</p>
+//               <p>₩{accommodation.price.toLocaleString()} /박</p>
+//               <p>Rating: {accommodation.rating}</p>
+//               <button className="details-btn">상세보기</button>
+//             </div>
+//           </div>
+//         ))}
+//       </div>
 
-  // 페이지네이션 버튼 만들기
-  const totalPages = Math.ceil(accommodations.length / resultsPerPage);
+//       {/* Pagination 컴포넌트 */}
+//       <Pagination
+//         totalItems={accommodations.length}
+//         itemsPerPage={itemsPerPage}
+//         currentPage={currentPage}
+//         onPageChange={handlePageChange}
+//       />
+//     </div>
+//   );
+// };
 
-  return (
-    <div>
-      {/* 숙소 리스트를 현재 페이지에 맞게 보여줌 */}
-      <div className="ul">
-        {currentAccommodations.map(accommodation => (
-          <div className="li" key={accommodation.id}>
-            {accommodation.name} - ${accommodation.price}
-          </div>
-        ))}
-      </div>
-
-      {/* 페이지네이션 버튼 */}
-      <div className="pagination-button-box">
-        {Array.from({ length: totalPages }, (_, index) => (
-          <button className="pagination-button"
-            key={index}
-            onClick={() => handlePageChange(index + 1)}
-            disabled={currentPage === index + 1}
-          >
-            {index + 1}
-          </button>
-        ))}
-      </div>
-    </div>
-  );
-};
-
-export default AccommodationListPagination;
+// export default List;
+export default{};

@@ -6,15 +6,18 @@ import Main from './views/Main';
 // import SignUp from './views/auth/guest/index';
 import SignUp from './views/auth';
 
-
-import AccommodationList from './views/accommodation/accommodationlist';
-import { ACCOMMODATION_LIST_DETAIL_PATH, ACCOMMODATION_LIST_PATH, MAIN_PATH } from './constants';
+import { ACCOMMODATION_LIST_DETAIL_ACC_SELECT_PATH, ACCOMMODATION_LIST_DETAIL_PATH, ACCOMMODATION_LIST_PATH, MAIN_PATH } from './constants';
 import AccommodationListDetail from './views/accommodation/accommodationlistedetail';
 
 import { RegionImages } from './resources/images/Region';
 import { useEffect } from 'react';
 import { useCookies } from 'react-cookie';
-import CustomCalendar from './component/Calendar';
+
+import AccommodationList from './views/accommodation/accommodationlist';
+import Detail from './component/accomodation/detail';
+
+
+
 
 // component: root path 컴포넌트 //
 function Index() {
@@ -52,14 +55,13 @@ export default function App() {
       <Route index element={<Index />} />
       <Route path='/test' element={<CustomCalendar />} />
       <Route path={MAIN_PATH} element={<Main />} />
-      <Route path={ACCOMMODATION_LIST_PATH} element={<Main />} />
 
-      {/* <Route path={ACCOMMODATION_LIST_PATH} element={<AccommodationList />}>
-        <Route path='detail' element={<AccommodationListDetail />} /> */}
-      {/* </Route> */}
-      {/* 숙소데이터 등록 되면 아래 경로로 사용 예정 */}
-      {/* <Route path=':accommodationName' element={<AccommodationListDetail />} /> */}
-      <Route path='/detail' element={<AccommodationListDetail />} />
+      {/* <Route path={ACCOMMODATION_LIST_PATH} element={<AccommodationList/>}/> */}
+          <Route path={ACCOMMODATION_LIST_DETAIL_PATH} element={<AccommodationListDetail/>} />
+          <Route path="/accommodationList/detail/:name" element={<Detail />} />
+   
+     
+     
 
 
       {/* <Route path='/sign-up' element={<SignUp onPathChange={() => { }} />} /> */}
