@@ -103,10 +103,10 @@ export default function Topbar() {
     // effect: 검색값이 있을 경우 실행할 함수 //
     useEffect(() => {
         // eslint-disable-next-line no-restricted-globals
-        if(urlRegion && urlStart && urlEnd && urlCount && (location.pathname !== '/main') ) {
+        if (urlRegion && urlStart && urlEnd && urlCount && (location.pathname !== '/main')) {
             setSearchBar(true);
             return;
-        
+
         };
 
         setSearchBar(false);
@@ -169,13 +169,13 @@ export default function Topbar() {
                         <div className='logo-name' onClick={onIconClickHandler}>Roomly</div>
                     </div>
                     {searchBar && <div className='top-search-bar-container'>
-                            <div className='top-search-bar-Region'>{urlRegion}</div>
-                            <div className='top-search-bar-solid'></div>
-                            <div className='top-search-bar-start'>{urlStart}</div>
-                            <div className='top-search-bar-solid'></div>
-                            <div className='top-search-bar-end'>{urlEnd}</div>
-                            <div className='top-search-bar-solid'></div>
-                            <div className='top-search-bar-count'>인원 {urlCount}</div>
+                        <div className='top-search-bar-Region'>{urlRegion}</div>
+                        <div className='top-search-bar-solid'></div>
+                        <div className='top-search-bar-start'>{urlStart}</div>
+                        <div className='top-search-bar-solid'></div>
+                        <div className='top-search-bar-end'>{urlEnd}</div>
+                        <div className='top-search-bar-solid'></div>
+                        <div className='top-search-bar-count'>인원 {urlCount}</div>
                     </div>}
                     {cookies.accessToken && <div className='nowlogin'>
                         <div className='my-page' onClick={onMyPageClickHandler}>마이페이지</div>
@@ -234,3 +234,4 @@ export default function Topbar() {
         </>
     );
 }
+
