@@ -9,7 +9,7 @@ interface ImageSliderProps {
     text: string, 
     filter: string, 
     title: string,
-    regon: string, 
+    Region: string, 
     propose: string, 
     price: string }[];
 }
@@ -40,14 +40,14 @@ export default function ImageSlider4({ imageContents }: ImageSliderProps) {
       </div>
       <div className="slider4-container">
         <div className='slider4-image-container' style={{ transform: `translateX(-${(startIndex / 4) * 100}%)` }}>
-          {imageContents.slice(0, imageContents.length+1).map(({ image, filter, title, regon, propose, price}, index) => (
+          {imageContents.slice(0, imageContents.length+1).map(({ image, filter, title, Region, propose, price}, index) => (
             <div className='slider4-image' key={index}>
               <img className='slider4-slide' src={image} alt={`Image ${index + 1}`} /> 
               <div className='slider4-text'>
               <div className='slider4-text-container'>
                 <div className='slider4-text-filter'>{filter}</div>
                 <div className='slider4-text-title'>{title}</div>
-                <div className='slider4-text-regon'>{regon}</div>
+                <div className='slider4-text-Region'>{Region}</div>
                 <div className='slider4-text-propose'>{propose}</div>
               </div>
               <div className='slider4-text-price'>

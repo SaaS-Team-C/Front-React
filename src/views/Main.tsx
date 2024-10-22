@@ -29,7 +29,7 @@ export default function Main() {
 
     const [click, setClick] = useState<string>('전체');
 
-    const [regon, setRegon] = useState<string>('');
+    const [Region, setRegion] = useState<string>('');
     const [start, setStart] = useState<string>(`${year}-${month}-${date}`);
     const [end, setEnd] = useState<string>(`${year}-${month}-${date+1}`);
     const [count, setCount] = useState<string>('2');
@@ -42,9 +42,9 @@ export default function Main() {
         setClick(distimction);
     }
     
-    const onRegonChangeHandler = (event: ChangeEvent<HTMLInputElement>) => {
+    const onRegionChangeHandler = (event: ChangeEvent<HTMLInputElement>) => {
         const { value } =event.target;
-        setRegon(value);
+        setRegion(value);
     }
     const onStartChangeHandler = (event: ChangeEvent<HTMLInputElement>) => {
         const { value } =event.target;
@@ -60,7 +60,7 @@ export default function Main() {
     }
 
     const onSerchButtonClick = () => {
-        if (!regon) {
+        if (!Region) {
             alert('지역을 입력해 주세요!');
             return;
         };
@@ -72,10 +72,10 @@ export default function Main() {
             alert('인원수를 입력해 주세요!')
             return
         };
-        navigator(`${ACCOMMODATION_LIST_PATH}?${regon}&${start}&${end}&${count}`)
+        navigator(`${ACCOMMODATION_LIST_PATH}?${Region}&${start}&${end}&${count}`)
     }
 
-    const onClickSerchRegonChangeHandler = (text:string) => {
+    const onClickSerchRegionChangeHandler = (text:string) => {
         navigator(`${ACCOMMODATION_LIST_PATH}?${text}&${start}&${end}&${count}`)
     }
 
@@ -93,7 +93,7 @@ export default function Main() {
                     <div className='main-search-bar'>
                         <div className='destination'>
                             <div className='word'>지역</div>
-                            <input className='search' value={regon} onChange={onRegonChangeHandler} />
+                            <input className='search' value={Region} onChange={onRegionChangeHandler} />
                         </div>
                         <div className='check-in'>
                             <div className='word'>입실 날짜</div>
@@ -110,7 +110,7 @@ export default function Main() {
                         <button className='search-button' onClick={onSerchButtonClick}>검색 하기</button>
                     </div>
                     <div className='image-slider'>
-                        <ImageSlider6 title='국내 인기 여행지' imageContents={regionImages} onClick={onClickSerchRegonChangeHandler} />
+                        <ImageSlider6 title='국내 인기 여행지' imageContents={regionImages} onClick={onClickSerchRegionChangeHandler} />
                     </div>
                     <div className='distimction-warpper'>
                         <div className='distimction-title'>여행 추천 숙소</div>
