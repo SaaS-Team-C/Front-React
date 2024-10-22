@@ -7,13 +7,11 @@ import TelAuthCheckRequestDto from "./tel-auth-check.request.dto";
 import SignInRequestDto from "./login/login.request.dto";
 
 export type {
-    SignInRequestDto,
-    TelAuthRequestDto,
-    TelAuthCheckRequestDto,
-
-    HostSignUpRequestDto,
-    HostIdCheckRequestDto,
-
-    GuestSignUpRequestDto,
-    GuestIdCheckRequestDto
-}
+  SignInRequestDto,
+  TelAuthRequestDto,
+  TelAuthCheckRequestDto,
+  HostSignUpRequestDto,
+  HostIdCheckRequestDto,
+  GuestSignUpRequestDto,
+  GuestIdCheckRequestDto,
+};

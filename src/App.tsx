@@ -13,6 +13,7 @@ import AccommodationListDetail from './views/accommodation/accommodationlistedet
 import { RegionImages } from './resources/images/Region';
 import { useEffect } from 'react';
 import { useCookies } from 'react-cookie';
+import Detail from './component/accomodation/detail';
 
 
 // component: root path 컴포넌트 //
@@ -52,12 +53,12 @@ export default function App() {
       <Route path='/test' element={<CustomCalendar />} />
       <Route path={MAIN_PATH} element={<Main />} />
 
-      {/* <Route path={ACCOMMODATION_LIST_PATH} element={<AccommodationList/>}/> */}
-          <Route path={ACCOMMODATION_LIST_DETAIL_PATH} element={<AccommodationListDetail/>} />
-          <Route path="/accommodationList/detail/:name" element={<Detail />} />
-   
-     
-     
+      <Route path={ACCOMMODATION_LIST_PATH} element={<AccommodationList />} />
+      <Route path={ACCOMMODATION_LIST_DETAIL_PATH} element={<AccommodationListDetail />} />
+      <Route path="/accommodationList/detail/:name" element={<Detail />} />
+
+
+
 
 
       <Route path='/sign-up' element={<SignUp onPathChange={() => { }} />} />
