@@ -1,6 +1,6 @@
 import { ChangeEvent, useEffect, useState } from 'react';
 import './style.css';
-import { useNavigate } from 'react-router';
+import { useLocation, useNavigate, useParams } from 'react-router';
 import InputBox from '../input/login';
 import { LogInResponseDto } from 'src/apis/dto/response/auth/login';
 import { ResponseDto } from 'src/apis/dto/response';
@@ -8,6 +8,7 @@ import { LogInRequestDto } from 'src/apis/dto/request/auth/login';
 import { logInRequest } from 'src/apis';
 import { useCookies } from 'react-cookie';
 import { MAIN_PATH } from 'src/constants';
+import { useSearchParams } from 'react-router-dom';
 
 // 컴포넌트: 메인페이지 화면 컴포넌트 //
 export default function Topbar() {
@@ -26,6 +27,9 @@ export default function Topbar() {
     const [pwmessage, setPwMessage] = useState<string>('');
     const [errorMessage, setErrorMessage] = useState<boolean>(false);
 
+    // state: url 값 저장 //
+    const [searchParams, setSearchParams] = useSearchParams('');
+    const [searchBar, setSearchBar] = useState<boolean>(false);
     // function: 네비게이터 함수 //
     const navigator = useNavigate();
 
@@ -43,7 +47,7 @@ export default function Topbar() {
         setPassword(value);
     }
 
-    // 로그인 버튼 클릭 이벤트 처리 //
+    // function: 로그인 버튼 클릭 이벤트 처리 //
     const onLoginButtonClickHandler = async () => {
         if (!id) {
             setIdMessage('아이디를 입력해 주세요!');
@@ -69,7 +73,7 @@ export default function Topbar() {
         }
     };
 
-    // 로그인 응답 처리 함수 //
+    // function: 로그인 응답 처리 함수 //
     const logInResponse = (responseBody: LogInResponseDto | ResponseDto | null) => {
         const message =
             !responseBody ? '서버에 문제가 있습니다.' :
@@ -88,6 +92,26 @@ export default function Topbar() {
             setPwMessage(message);
         }
     };
+
+    // function: url 값 가져오기 //
+    const urlRegion = searchParams.get('Region')
+    const urlStart = searchParams.get('start')
+    const urlEnd = searchParams.get('end')
+    const urlCount = searchParams.get('count')
+
+
+    // effect: 검색값이 있을 경우 실행할 함수 //
+    useEffect(() => {
+        // eslint-disable-next-line no-restricted-globals
+        if(urlRegion && urlStart && urlEnd && urlCount && (location.pathname !== '/main') ) {
+            setSearchBar(true);
+            return;
+        
+        };
+
+        setSearchBar(false);
+
+    }, [searchParams])
 
     // effect: 아이디 및 비밀번호 변경시 실행할 함수 //
     useEffect(() => {
@@ -119,14 +143,17 @@ export default function Topbar() {
         navigator('/find-pw');
     };
 
+    // event handler: 마이페이지 버튼 클릭 이벤트 처리 //
     const onMyPageClickHandler = () => {
         navigator('/mypage');
     };
 
+    // event handler: 아이콘 및 로고 클릭 이벤트 처리 //
     const onIconClickHandler = () => {
         navigator('/main');
     };
 
+    // event handler: 로그인 버튼 클릭 이벤트 처리 //
     const onContainerClickHandler = () => {
         if (modalOpen) {
             setModalOpen(false);
@@ -141,11 +168,19 @@ export default function Topbar() {
                         <div className='logo-icon' onClick={onIconClickHandler}></div>
                         <div className='logo-name' onClick={onIconClickHandler}>Roomly</div>
                     </div>
+                    {searchBar && <div className='top-search-bar-container'>
+                            <div className='top-search-bar-Region'>{urlRegion}</div>
+                            <div className='top-search-bar-solid'></div>
+                            <div className='top-search-bar-start'>{urlStart}</div>
+                            <div className='top-search-bar-solid'></div>
+                            <div className='top-search-bar-end'>{urlEnd}</div>
+                            <div className='top-search-bar-solid'></div>
+                            <div className='top-search-bar-count'>인원 {urlCount}</div>
+                    </div>}
                     {cookies.accessToken && <div className='nowlogin'>
                         <div className='my-page' onClick={onMyPageClickHandler}>마이페이지</div>
                         <div className='log-out' onClick={onlogoutButtonClickHandler}>로그아웃</div>
                     </div>}
-
                     {!cookies.accessToken && <div className='sign'>
                         <div className='sign-in' onClick={() => setModalOpen(true)}>로그인</div>
                         <div className='sign-up-button' onClick={onSignupButtonClickHandler}>회원가입</div>

@@ -108,8 +108,6 @@ const AccommodationImages: React.FC<AccommodationImagesProps> = ({ images }) => 
 
 
 
-
-
 // 숙소 정보 카드 //
 
 interface AccommodationDetailProps {
