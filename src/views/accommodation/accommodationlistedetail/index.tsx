@@ -249,7 +249,6 @@ function AccDetailreview() {
 export default function AccommodationListDetail() {
   return (
     <div>
-      {/* <AccDetailTop /> */}
       <AccDetailMiddle />
 
     </div>
