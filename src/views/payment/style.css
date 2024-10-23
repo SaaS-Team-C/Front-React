@@ -1,10 +1,10 @@
-/* 전체 결제 화면 wrapper */
-#payment-wrapper {
-    display: flex; /* 플렉스 박스 사용 */
-    flex-direction: column; /* 세로 방향 */
-    font-family: Arial, sans-serif;
+#payment-top-wrapper {
+    margin: 0 auto; /* 중앙 정렬 */
+    max-width: 1300px;
     padding: 20px;
-    background-color: #f9f9f9; /* 배경색 */
+    background-color: #fff;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* 상단에 그림자 효과 추가 */
+    margin-bottom: 20px; /* 상단 아래쪽에 여백 */
 }
 
 /* 헤더 바 스타일 */
@@ -12,40 +12,57 @@
     display: flex;
     align-items: center;
     background-color: #fff; /* 헤더 배경색 */
-    border-bottom: 20px solid #ddd; /* 하단 경계선 */
-    padding: 20px; /* 패딩 */
-    margin-top: 50px;
-    margin-bottom: 20px;
+    border-bottom: 1px solid #ddd; /* 하단 경계선 */
+    padding: 10px 20px; /* 패딩 */
+    margin-bottom: 10px;
 }
 
-/* SVG 아이콘과 텍스트 간격 */
 .headerBar .text {
     flex-grow: 1; /* 텍스트가 남은 공간을 차지하도록 */
-    font-size: 30px; /* 텍스트 크기 */
+    font-size: 22px; /* 텍스트 크기 */
     font-weight: bold; /* 텍스트 굵기 */
+    color: #333; /* 텍스트 색상 */
+}
+
+#payment-bottom-wrapper {
+    display: flex;
+    justify-content: space-between;
+    max-width: 1200px; /* 페이지 최대 넓이 제한 */
+    margin: 0 auto; /* 중앙 정렬 */
+    gap: 100px;
+    padding: 0 40px; /* 좌우와 하단에 패딩 */
+    background-color: antiquewhite;
+
+
 }
 
 /* 왼쪽 결제 정보 wrapper */
-#payment-left-wrapper {
-    display: flex; /* 플렉스 박스 사용 */
-    flex: 1; /* 남은 공간을 차지 */
-    margin-bottom: 20px; /* 아래쪽 여백 */
-}
-
-/* 페이지 왼쪽 레이아웃 */
 .page-left {
-    flex: 1; /* 전체의 반을 차지 */
-    margin-right: 20px; /* 오른쪽 여백 */
+    height: 1000px;
+    flex: 1; /* 왼쪽 영역이 전체 공간의 50% 차지 */
+    padding-right: 20px; /* 좌측 여백 */
+    margin-right: 50px; /* 우측 여백을 주어서 공간 분리 */
+    background-color: #f9f9f9; /* 시각적인 구분을 위해 연한 배경색 추가 */
+    padding: 50px; /* 내부 패딩 */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* 약간의 그림자 */
 }
 
-/* 페이지 오른쪽 레이아웃 */
-#page-left-wrapper {
-    flex: 1; /* 전체의 반을 차지 */
+
+
+/* 오른쪽 결제 정보 wrapper */
+.page-right {
+    flex: 1; /* 오른쪽 영역이 전체 공간의 50% 차지 */
+    padding-left: 20px; /* 우측 여백 */
+    background-color: #f9f9f9; /* 시각적인 구분을 위해 연한 배경색 추가 */
+    border-radius: 10px; /* 둥근 모서리 */
+    padding: 20px; /* 내부 패딩 */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* 약간의 그림자 */
 }
+
 
 /* 예약자 정보 섹션 스타일 */
 .left-top {
-    margin-bottom: 20px; /* 섹션 간격 */
+    margin-bottom: 5pxpx; /* 섹션 간격 */
 }
 
 .left-top-title {
@@ -56,6 +73,7 @@
 
 /* 입력 필드 컨테이너 */
 .payment-input-container3 {
+    gap: 100px;
     display: flex;
     flex-direction: column; /* 세로 배치 */
 }

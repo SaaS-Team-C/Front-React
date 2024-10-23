@@ -2,7 +2,9 @@ import InputBox3 from 'src/component/payment';
 import './style.css';
 
 import React, { ChangeEvent, useState } from 'react'
-import ResponseDto from 'src/apis/dto/response/response.dto';
+
+import Topbar from 'src/component/topbar';
+import ResponseDto from 'src/apis/signUp/dto/response/response.dto';
 
 interface PaymentComponentProps {
     onPathChange: (path: string) => void;
@@ -79,7 +81,9 @@ export default function Payment({ onPathChange }: PaymentComponentProps) {
 
     // render: 결제 화면 컴포넌트 렌더링 //
     return (
+        
         <div id='payment-wrapper'>
+            <Topbar />
             <div id='payment-top-wrapper'>
                 <div className='headerBar'>
                     <svg
@@ -95,8 +99,9 @@ export default function Payment({ onPathChange }: PaymentComponentProps) {
                     </svg>
                     <div className='text'>예약 확인 및 결제</div>
                 </div>
+            </div>
 
-                <div id='payment-left-wrapper'>
+                <div id='payment-bottom-wrapper'>
                     <div className='page-left'>
                         <div className='left-top'>
                             <div className='left-top-title'>예약자 정보</div>
@@ -143,15 +148,13 @@ export default function Payment({ onPathChange }: PaymentComponentProps) {
                             </div>
                         </div>
                     </div>
-
-                    <div id='page-right-wrapper'>
-                        <div className='page-right'>
-                            <div className='right-top'></div>
-                            <div className='right-bottom'></div>
-                        </div>
+                    <div className='page-right'>
+                        <div className='right-top'></div>
+                        <div className='right-bottom'></div>
                     </div>
                 </div>
             </div>
-        </div>
+
+
     );
 }

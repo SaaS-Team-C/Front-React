@@ -55,6 +55,8 @@ export default function App() {
       <Route path={ACCOMMODATION_LIST_PATH} element={<AccommodationList />} />
       <Route path={ACCOMMODATION_LIST_DETAIL_PATH} element={<AccommodationListDetail />} />
       <Route path="/accommodationList/detail/:name" element={<Detail />} />
+      {/* <Route path='/sign-up' element={<SignUp onPathChange={() => { }} />} />
+      <Route path='/payment' element={<Payment onPathChange={() => {}} />} /> */}
 
 
 
