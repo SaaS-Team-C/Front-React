@@ -67,7 +67,7 @@
 .host-input-with-button {
     display: flex;
     align-items: center;
-    gap: 8px;
+    gap: 12px;
     /* 입력 필드와 버튼 사이 간격 */
 }
 
@@ -79,6 +79,6 @@
 .host-input-with-button button {
     flex-shrink: 0;
     /* 버튼 크기가 줄어들지 않도록 설정 */
-    padding: 10px 8px;
+    padding: 10px 12px;
     /* 버튼 크기 조정 */
 } 
