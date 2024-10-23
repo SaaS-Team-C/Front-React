@@ -9,9 +9,10 @@ import SignUp from './views/auth';
 import { ACCOMMODATION_LIST_DETAIL_ACC_SELECT_PATH, ACCOMMODATION_LIST_DETAIL_PATH, ACCOMMODATION_LIST_PATH, MAIN_PATH } from './constants';
 import AccommodationListDetail from './views/accommodation/accommodationlistedetail';
 
-import { regionImages } from './resources/images/region';
+import { RegionImages } from './resources/images/Region';
 import { useEffect } from 'react';
 import { useCookies } from 'react-cookie';
+import CustomCalendar from './component/Calendar';
 import AccommodationList from './views/accommodation/accommodationlist';
 import Detail from './component/accomodation/detail';
 
@@ -51,6 +52,7 @@ export default function App() {
   return (
     <Routes>
       <Route index element={<Index />} />
+      <Route path='/test' element={<CustomCalendar />} />
       <Route path={MAIN_PATH} element={<Main />} />
 
       {/* <Route path={ACCOMMODATION_LIST_PATH} element={<AccommodationList/>}/> */}
