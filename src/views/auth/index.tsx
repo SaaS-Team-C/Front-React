@@ -1,13 +1,23 @@
-import { ResponseDto } from 'src/apis/dto/response';
+
 import './guest-style.css';
 import './host-style.css';
 import { ChangeEvent, useEffect, useState } from "react";
 import InputBox from 'src/component/input/logup/guest';
 import InputBox2 from 'src/component/input/logup/host';
 import { useSearchParams } from 'react-router-dom';
-import { guestIdCheckRequest, GuestSignUpRequest, hostIdCheckRequest, HostSignUpRequest, telAuthCheckRequest, telAuthRequest } from 'src/apis';
-import { GuestIdCheckRequestDto, GuestSignUpRequestDto, HostIdCheckRequestDto, HostSignUpRequestDto, TelAuthCheckRequestDto, TelAuthRequestDto } from 'src/apis/dto/request/auth';
+import ResponseDto from 'src/apis/signUp/dto/response/response.dto';
+import GuestIdCheckRequestDto from 'src/apis/signUp/dto/request/guest/g-id-check.requst.dto';
+import HostIdCheckRequestDto from 'src/apis/signUp/dto/request/host/h-id-check.requst.dto';
+import { businessNumberCheckRequest, guestIdCheckRequest, guestSignUpRequest, hostIdCheckRequest, hostSignUpRequest, telAuthCheckRequest, telAuthRequest } from 'src/apis/signUp';
+import TelAuthRequestDto from 'src/apis/signUp/dto/request/common/tel-auth.request.dto';
+import TelAuthCheckRequestDto from 'src/apis/signUp/dto/request/common/tel-auth-check.request.dto';
+import GuestSignUpRequestDto from 'src/apis/signUp/dto/request/guest/g-sign-up.request.dto';
+import HostSignUpRequestDto from 'src/apis/signUp/dto/request/host/h-sign-up.request.dto';
 
+import DatePicker from 'react-datepicker';
+import 'react-datepicker/dist/react-datepicker.css';
+import { ko } from 'date-fns/locale'; // 한국어 지원
+import BusinessNumberCheckRequestDto from 'src/apis/signUp/dto/request/host/h-business-number-check.request.dto';
 
 type AuthPath = '회원가입' | '로그인';
 type CurrentView = 'host' | 'guest';
@@ -70,10 +80,9 @@ export default function SignUp({ onPathChange }: AuthComponentProps) {
   const [hostId, setHostId] = useState<string>('');
   const [hostPassword, setHostPassword] = useState<string>('');
   const [hostPasswordCheck, setHostPasswordCheck] = useState<string>('');
-  const [businessNumber, setBusinessNumber] = useState<string>('');
-  const [businessImage, setBusinessImage] = useState<string>('');
   const [businessName, setBusinessName] = useState<string>('');
-  const [businessStartDay, setBusinessStartDay] = useState<string>('');
+  const [businessNumber, setBusinessNumber] = useState<string>('');
+  const [businessStartDay, setBusinessStartDay] = useState<Date | null>(null);
 
 
   // state: 입력값 검증 상태 //
@@ -90,7 +99,11 @@ export default function SignUp({ onPathChange }: AuthComponentProps) {
   const [passwordCheckMessage, setPasswordCheckMessage] = useState<string>('');
   const [telNumberMessage, setTelNumberMessage] = useState<string>('');
   const [authNumberMessage, setAuthNumberMessage] = useState<string>('');
+  const [businessNameCheckMessage, setBusinessNameCheckMessage] = useState<string>('');
   const [businessNumberCheckMessage, setBusinessNumberCheckMessage] = useState<string>('');
+  const [businessStartDayCheckMessage, setBusinessStartDayCheckMessage] = useState<string>('');
+
+
 
   // state: 정보 메세지 에러 상태 //
   const [nameMessageError, setNameMessageError] = useState<boolean>(false);
@@ -99,7 +112,10 @@ export default function SignUp({ onPathChange }: AuthComponentProps) {
   const [passwordCheckMessageError, setPasswordCheckMessageError] = useState<boolean>(false);
   const [telNumberMessageError, setTelNumberMessageError] = useState<boolean>(false);
   const [authNumberMessageError, setAuthNumberMessageError] = useState<boolean>(false);
+  const [businessNameCheckMessageError, setBusinessNameCheckMessageError] = useState<boolean>(false);
   const [businessNumberCheckMessageError, setBusinessNumberCheckMessageError] = useState<boolean>(false);
+  const [businessStartDayCheckMessageError, setBusinessStartDayCheckMessageError] = useState<boolean>(false);
+
 
 
   // variable: SNS 회원가입 여부 //
@@ -202,7 +218,7 @@ export default function SignUp({ onPathChange }: AuthComponentProps) {
   };
 
   // function : 사업자 번호 전송 Response 처리 함수 //
-  const validateResponse = (responseBody: ResponseDto | null) => {
+  const businessNumberCheckResponse = (responseBody: ResponseDto | null) => {
     const message =
       !responseBody ? '서버에 문제가 있습니다.' :
         responseBody.code === 'VF' ? '올바른 데이터가 아닙니다.' :
@@ -278,28 +294,65 @@ export default function SignUp({ onPathChange }: AuthComponentProps) {
     setHostPasswordCheck(value);
   };
 
-  // event handler: 사업자등록번호 변경 이벤트 처리 // 
-  const onBusinessNumberCheckChangeHandler = (event: ChangeEvent<HTMLInputElement>) => {
-    const { value } = event.target; // 입력된 값을 가져옴
-    setBusinessNumber(value); // 상태 업데이트
+  // event handler: 사업자 등록이름 변경 이벤트 처리 // 
+  const onBusinessNameChangeHandler = (event: ChangeEvent<HTMLInputElement>) => {
+    const { value } = event.target;
+    setBusinessName(value);
 
     if (!value) {
-      // 입력이 없을 경우 초기화
-      setBusinessNumberCheckMessage('');
-      setBusinessNumberCheckMessageError(false);
+      // 입력이 없을 경우 오류 메시지 설정
+      setBusinessNameCheckMessage('사업자 등록이름을 입력해주세요');
+      setBusinessNameCheckMessageError(true);
+    } else {
+      // 입력이 있을 경우 오류 메시지 초기화
+      setBusinessNameCheckMessage('');
+      setBusinessNameCheckMessageError(false);
+    }
+  };
+
+
+   // event handler: 사업자 번호 변경 이벤트 처리 //
+  const onBusinessNumberChangeHandler = (event: ChangeEvent<HTMLInputElement>) => {
+    const { value } = event.target; // 입력된 값을 가져옴
+    setBusinessNumber(value); // 상태 업데이트
+  };
+
+  // event handler: 사업자 번호 버튼 클릭 이벤트 처리 //
+  const onBusinessNumberCheckClickHandler = () => {
+    if (!businessNumber) {
+      setBusinessNumberCheckMessage('사업자 번호를 입력하세요.'); // 입력이 없을 경우 메시지 설정
+      setBusinessNumberCheckMessageError(true);
       return;
     }
 
     const pattern = /^[0-9]{10}$/;
-    const isMatched = pattern.test(value);
+    const isMatched = pattern.test(businessNumber);
 
     if (!isMatched) {
       setBusinessNumberCheckMessage('숫자 10자를 입력 해주세요');
       setBusinessNumberCheckMessageError(true);
     } else {
       // 10자 숫자 형식이 맞으면 에러 메시지 초기화
-      setBusinessNumberCheckMessage('');
+      setBusinessNumberCheckMessage('유효한 사업자 번호입니다.');
       setBusinessNumberCheckMessageError(false);
+      
+      const requestBody: BusinessNumberCheckRequestDto = {
+        businessNumber
+      };
+      businessNumberCheckRequest(requestBody).then(businessNumberCheckResponse);
+    }
+  };
+
+  // event handler: 개업일 등록 버튼 클릭 이벤트처리
+  const onBusinessStartDayChangeHandler = (date: Date | null) => {
+    setBusinessStartDay(date);
+
+    if (!date) {
+      setBusinessStartDayCheckMessage('개업일자를 선택해주세요.');
+      setBusinessStartDayCheckMessageError(true);
+    } else {
+      setBusinessStartDayCheckMessage('');
+      setBusinessStartDayCheckMessageError(false);
     }
   };
 
@@ -349,7 +402,7 @@ export default function SignUp({ onPathChange }: AuthComponentProps) {
       telNumber,
       joinPath
     }
-    GuestSignUpRequest(requestBody).then(guestSignUpResponse);
+    guestSignUpRequest(requestBody).then(guestSignUpResponse);
   };
 
   // Event handler: host 회원가입 버튼 클릭 이벤트 처리
@@ -362,11 +415,10 @@ export default function SignUp({ onPathChange }: AuthComponentProps) {
       hostPassword,
       telNumber,
       businessNumber,
-      businessImage,
       businessName,
       businessStartDay
     }
-    HostSignUpRequest(requestBody).then(hostSignUpResponse);
+    hostSignUpRequest(requestBody).then(hostSignUpResponse);
   };
 
   // event handler: 상단 게스트 버튼 클릭 이벤트 처리
@@ -585,14 +637,42 @@ export default function SignUp({ onPathChange }: AuthComponentProps) {
                   onChange={onPasswordCheckChangeHandler}
                 />
                 <InputBox2
+                  messageError={businessNameCheckMessageError}
+                  message={businessNameCheckMessage}
+                  value={businessName}
+                  label="사업자 등록이름"
+                  type="text"
+                  placeholder="사업자 등록이름을 입력해주세요."
+                  onChange={onBusinessNameChangeHandler}
+                />
+                <InputBox2
                   messageError={businessNumberCheckMessageError}
                   message={businessNumberCheckMessage}
                   value={businessNumber}
                   label="사업자 등록번호"
                   type="text"
-                  placeholder="사업자 등록번호 10자리를 입력해주세요."
-                  onChange={onBusinessNumberCheckChangeHandler}
+                  placeholder="사업자 등록번호 10자를 입력해주세요."
+                  buttonName="등록"
+                  onChange={onBusinessNumberChangeHandler}
+                  onButtonClick={onBusinessNumberCheckClickHandler}
                 />
+                <div id='business-wrapper'>
+                  <div className="startDay-container">
+                    <div className="startDay">개업일[선택]</div>
+                    <DatePicker
+                      selected={businessStartDay}
+                      onChange={onBusinessStartDayChangeHandler}
+                      dateFormat="yyyy-MM-dd"
+                      locale={ko}
+                      placeholderText="개업일자 선택"
+                      isClearable
+                      className="host-input-field"
+                    />
+                    {businessStartDayCheckMessageError && (
+                      <div className="error-message">{businessStartDayCheckMessage}</div>
+                    )}
+                  </div>
+                </div>
                 <InputBox2
                   messageError={telNumberMessageError}
                   message={telNumberMessage}

@@ -2,8 +2,8 @@ import { ChangeEvent, useEffect, useState } from 'react';
 import './style.css';
 import { useLocation, useNavigate, useParams } from 'react-router';
 import InputBox from '../input/login';
-import { LogInResponseDto } from 'src/apis/dto/response/auth/login';
-import { ResponseDto } from 'src/apis/dto/response';
+// import { LogInResponseDto } from 'src/apis/login/response';
+// import { ResponseDto } from 'src/apis/dto/response';
 import { useCookies } from 'react-cookie';
 import { MAIN_PATH } from 'src/constants';
 import { useSearchParams } from 'react-router-dom';
@@ -60,24 +60,24 @@ export default function Topbar() {
     }
 
     // function: 로그인 응답 처리 함수 //
-    const logInResponse = (responseBody: LogInResponseDto | ResponseDto | null) => {
-        const message =
-            !responseBody ? '서버에 문제가 있습니다.' :
-                responseBody.code === 'VF' ? '아이디와 비밀번호를 모두 입력하세요.' :
-                    responseBody.code === 'SF' ? '로그인 정보가 일치하지 않습니다.' :
-                        responseBody.code === 'TCF' ? '서버에 문제가 있습니다.' :
-                            responseBody.code === 'DBE' ? '서버에 문제가 있습니다.' : '';
+    // const logInResponse = (responseBody: LogInResponseDto | ResponseDto | null) => {
+    //     const message =
+    //         !responseBody ? '서버에 문제가 있습니다.' :
+    //             responseBody.code === 'VF' ? '아이디와 비밀번호를 모두 입력하세요.' :
+    //                 responseBody.code === 'SF' ? '로그인 정보가 일치하지 않습니다.' :
+    //                     responseBody.code === 'TCF' ? '서버에 문제가 있습니다.' :
+    //                         responseBody.code === 'DBE' ? '서버에 문제가 있습니다.' : '';
 
-        if (responseBody?.code === 'SU') {
-            const { accessToken, expiration } = responseBody as LogInResponseDto;
-            const expires = new Date(Date.now() + (expiration * 1000));
-            setCookies('accessToken', accessToken, { path: MAIN_PATH, expires });
-            navigator('/main'); // 로그인 성공 시 메인 페이지로 이동
-        } else {
-            setIdMessage(message);
-            setPwMessage(message);
-        }
-    };
+    //     if (responseBody?.code === 'SU') {
+    //         const { accessToken, expiration } = responseBody as LogInResponseDto;
+    //         const expires = new Date(Date.now() + (expiration * 1000));
+    //         setCookies('accessToken', accessToken, { path: MAIN_PATH, expires });
+    //         navigator('/main'); // 로그인 성공 시 메인 페이지로 이동
+    //     } else {
+    //         setIdMessage(message);
+    //         setPwMessage(message);
+    //     }
+    // };
 
     // function: url 값 가져오기 //
     const urlRegion = searchParams.get('Region')

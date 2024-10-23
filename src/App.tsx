@@ -8,12 +8,15 @@ import Payment from './views/payment';
 
 import AccommodationList from './views/accommodation/accommodationlist';
 import { ACCOMMODATION_LIST_DETAIL_PATH, ACCOMMODATION_LIST_PATH, MAIN_PATH } from './constants';
-import AccommodationListDetail from './views/accommodation/accommodationlistedetail';
 
 import { RegionImages } from './resources/images/Region';
 import { useEffect } from 'react';
 import { useCookies } from 'react-cookie';
 import Detail from './component/accomodation/detail';
+
+import DetailList from './component/accomodation/detaillist';
+import RoomCard from './component/accomodation/detaillist/middle/roomcard';
+import AccommodationDetailMiddle from './component/accomodation/detaillist/middle';
 
 
 // component: root path 컴포넌트 //
@@ -53,8 +56,10 @@ export default function App() {
       <Route path={MAIN_PATH} element={<Main />} />
 
       <Route path={ACCOMMODATION_LIST_PATH} element={<AccommodationList />} />
-      <Route path={ACCOMMODATION_LIST_DETAIL_PATH} element={<AccommodationListDetail />} />
+      <Route path={ACCOMMODATION_LIST_DETAIL_PATH} element={<DetailList />} />
       <Route path="/accommodationList/detail/:name" element={<Detail />} />
+      {/* <Route path='/sign-up' element={<SignUp onPathChange={() => { }} />} />
+      <Route path='/payment' element={<Payment onPathChange={() => {}} />} /> */}
 
 
 
