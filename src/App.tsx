@@ -50,7 +50,6 @@ export default function App() {
   return (
     <Routes>
       <Route index element={<Index />} />
-      <Route path='/test' element={<CustomCalendar />} />
       <Route path={MAIN_PATH} element={<Main />} />
 
       <Route path={ACCOMMODATION_LIST_PATH} element={<AccommodationList />} />
@@ -61,8 +60,6 @@ export default function App() {
 
 
 
-      <Route path='/sign-up' element={<SignUp onPathChange={() => { }} />} />
-      <Route path='/payment' element={<Payment />} />
       <Route path='*' element={<Index />} />
     </Routes>
 

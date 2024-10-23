@@ -4,8 +4,6 @@ import { useLocation, useNavigate, useParams } from 'react-router';
 import InputBox from '../input/login';
 import { LogInResponseDto } from 'src/apis/dto/response/auth/login';
 import { ResponseDto } from 'src/apis/dto/response';
-import { LogInRequestDto } from 'src/apis/dto/request/auth/login';
-import { logInRequest } from 'src/apis';
 import { useCookies } from 'react-cookie';
 import { MAIN_PATH } from 'src/constants';
 import { useSearchParams } from 'react-router-dom';
@@ -59,19 +57,7 @@ export default function Topbar() {
             setErrorMessage(true);
             return;
         }
-
-        const requestBody: LogInRequestDto = {
-            userId: id,
-            password
-        };
-
-        try {
-            const responseBody = await logInRequest(requestBody);
-            logInResponse(responseBody);
-        } catch (error) {
-            setPwMessage('로그인 중 오류가 발생했습니다.');
-        }
-    };
+    }
 
     // function: 로그인 응답 처리 함수 //
     const logInResponse = (responseBody: LogInResponseDto | ResponseDto | null) => {
