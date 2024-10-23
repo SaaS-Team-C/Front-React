@@ -29,6 +29,7 @@ export default function Main() {
     const year: number = today.getFullYear();
     const month: number = today.getMonth() + 1; // 월은 0~11을 불러오기 떄문에 1을 추가해야한다 //
     const date: number = today.getDate();
+
     const [Region, setRegion] = useState<string>('');
     const [start, setStart] = useState<string>(`${year}-${month}-${date}`);
     const [end, setEnd] = useState<string>(`${year}-${month}-${date + 1}`);
@@ -48,6 +49,7 @@ export default function Main() {
     // event handler: 지역입력값 입력 이벤트 핸들러 //
     const onRegionChangeHandler = (event: ChangeEvent<HTMLInputElement>) => {
         const { value } = event.target;
+
         setRegion(value);
     }
 
@@ -83,12 +85,14 @@ export default function Main() {
             alert('인원수를 입력해 주세요!')
             return
         };
+
         navigator(`${ACCOMMODATION_LIST_PATH}?Region=${Region}&start=${start}&end=${end}&count=${count}`)
     }
 
     // event handler: 인기 지역 클릭 이벤트 핸들러 //
     const onClickSerchRegionChangeHandler = (text: string) => {
         navigator(`${ACCOMMODATION_LIST_PATH}?Region=${text}&start=${start}&end=${end}&count=${count}`)
+
     }
 
     const [openEndCalender, setEndOpenCalender] = useState<boolean>(false);
@@ -111,7 +115,6 @@ export default function Main() {
         }
         setStartOpenCalender(true);
     }
-
 
 
 
@@ -158,7 +161,9 @@ export default function Main() {
                         <button className='search-button' onClick={onSerchButtonClick}>검색 하기</button>
                     </div>
                     <div className='image-slider'>
+
                         <ImageSlider6 title='국내 인기 여행지' imageContents={RegionImages} onClick={onClickSerchRegionChangeHandler} />
+
                     </div>
                     <div className='distimction-warpper'>
                         <div className='distimction-title'>여행 추천 숙소</div>

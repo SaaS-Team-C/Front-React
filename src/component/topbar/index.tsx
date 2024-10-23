@@ -4,8 +4,6 @@ import { useLocation, useNavigate, useParams } from 'react-router';
 import InputBox from '../input/login';
 import { LogInResponseDto } from 'src/apis/dto/response/auth/login';
 import { ResponseDto } from 'src/apis/dto/response';
-import { LogInRequestDto } from 'src/apis/dto/request/auth/login';
-import { logInRequest } from 'src/apis';
 import { useCookies } from 'react-cookie';
 import { MAIN_PATH } from 'src/constants';
 import { useSearchParams } from 'react-router-dom';
@@ -59,19 +57,7 @@ export default function Topbar() {
             setErrorMessage(true);
             return;
         }
-
-        const requestBody: LogInRequestDto = {
-            userId: id,
-            password
-        };
-
-        try {
-            const responseBody = await logInRequest(requestBody);
-            logInResponse(responseBody);
-        } catch (error) {
-            setPwMessage('로그인 중 오류가 발생했습니다.');
-        }
-    };
+    }
 
     // function: 로그인 응답 처리 함수 //
     const logInResponse = (responseBody: LogInResponseDto | ResponseDto | null) => {
@@ -103,10 +89,10 @@ export default function Topbar() {
     // effect: 검색값이 있을 경우 실행할 함수 //
     useEffect(() => {
         // eslint-disable-next-line no-restricted-globals
-        if(urlRegion && urlStart && urlEnd && urlCount && (location.pathname !== '/main') ) {
+        if (urlRegion && urlStart && urlEnd && urlCount && (location.pathname !== '/main')) {
             setSearchBar(true);
             return;
-        
+
         };
 
         setSearchBar(false);
@@ -169,13 +155,13 @@ export default function Topbar() {
                         <div className='logo-name' onClick={onIconClickHandler}>Roomly</div>
                     </div>
                     {searchBar && <div className='top-search-bar-container'>
-                            <div className='top-search-bar-Region'>{urlRegion}</div>
-                            <div className='top-search-bar-solid'></div>
-                            <div className='top-search-bar-start'>{urlStart}</div>
-                            <div className='top-search-bar-solid'></div>
-                            <div className='top-search-bar-end'>{urlEnd}</div>
-                            <div className='top-search-bar-solid'></div>
-                            <div className='top-search-bar-count'>인원 {urlCount}</div>
+                        <div className='top-search-bar-Region'>{urlRegion}</div>
+                        <div className='top-search-bar-solid'></div>
+                        <div className='top-search-bar-start'>{urlStart}</div>
+                        <div className='top-search-bar-solid'></div>
+                        <div className='top-search-bar-end'>{urlEnd}</div>
+                        <div className='top-search-bar-solid'></div>
+                        <div className='top-search-bar-count'>인원 {urlCount}</div>
                     </div>}
                     {cookies.accessToken && <div className='nowlogin'>
                         <div className='my-page' onClick={onMyPageClickHandler}>마이페이지</div>
@@ -234,3 +220,4 @@ export default function Topbar() {
         </>
     );
 }
+

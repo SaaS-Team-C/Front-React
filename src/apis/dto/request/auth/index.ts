@@ -4,16 +4,12 @@ import GuestSignUpRequestDto from "./guest/g-sign-up.request.dto";
 import HostIdCheckRequestDto from "./host/h-id-check.requst.dto";
 import HostSignUpRequestDto from "./host/h-sign-up.request.dto";
 import TelAuthCheckRequestDto from "./tel-auth-check.request.dto";
-import SignInRequestDto from "./sign-in-request.dto";
 
 export type {
-    SignInRequestDto,
-    TelAuthRequestDto,
-    TelAuthCheckRequestDto,
-
-    HostSignUpRequestDto,
-    HostIdCheckRequestDto,
-
-    GuestSignUpRequestDto,
-    GuestIdCheckRequestDto
-}
+  TelAuthRequestDto,
+  TelAuthCheckRequestDto,
+  HostSignUpRequestDto,
+  HostIdCheckRequestDto,
+  GuestSignUpRequestDto,
+  GuestIdCheckRequestDto,
+};

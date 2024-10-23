@@ -12,13 +12,10 @@ import { SignInResponseDto } from "./dto/response/auth";
 import TelAuthCheckRequestDto from "./dto/request/auth/tel-auth-check.request.dto";
 import TelAuthRequestDto from "./dto/request/auth/tel-auth.request.dto";
 import SignInRequestDto from "./dto/request/auth/sign-in-request.dto";
-import { LogInResponseDto } from "./dto/response/auth/login";
-import { LogInRequestDto } from "./dto/request/auth/login";
 
 // variable: API URL 상수 //
 const ROOMLY_API_DOMAIN = process.env.REACT_APP_API_URL;
 
-const LOG_IN_API_URL = `${ROOMLY_API_DOMAIN}/main`
 const GET_SERCHED_ACCOMMODATION_LIST_API_URL = `${ROOMLY_API_DOMAIN}/api/v1/accommodationName`;
 
 const AUTH_MODULE_URL = `${ROOMLY_API_DOMAIN}/api/v1/auth`;
@@ -154,12 +151,4 @@ export const getAccommodationListRequest = async (
   return responseBody;
 };
 
-// !옥진서 작업중 //
-// function: Login  요청 함수 //
-export const logInRequest = async (requestBody: LogInRequestDto) => {
-  const responseBody = await axios
-    .post(LOG_IN_API_URL, requestBody)
-    .then(responseDataHandler<LogInResponseDto>)
-    .catch(responseErrorHandler);
-  return responseBody;
-};
+
