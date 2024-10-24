@@ -1,5 +1,5 @@
 import axios, { AxiosResponse } from "axios";
-import { ResponseDto } from "./dto/response";
+
 import LogInRequestDto from "./dto/request/log-in.request.dto";
 
 // variable: API URL 상수 //

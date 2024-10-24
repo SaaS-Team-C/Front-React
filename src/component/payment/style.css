@@ -5,7 +5,7 @@
 
 .payment-input-container2 {
     flex-direction: column;
-    gap: 10px;
+    gap: 15px;
     padding: 5px 18px;
 
     border-radius: 8px;
@@ -17,12 +17,12 @@
 .payment-input-container2 input {
 
     width: 150%;
-    height: 40px;
+    height: 20px;     /* 이름 / 전화번호 인풋박스 크기조정 */
+    width: 105px;
     padding: 12px 15px;
     border: 1px solid rgba(188, 188, 188, 1);
     border-radius: 4px;
-    font-size: 12px;
-    box-sizing: border-box;
+    font-size: 15px;
 }
 
 .payment-input-container2 input:focus {
@@ -34,9 +34,9 @@
 
 .payment-input-container2 label {
     font-weight: bold;
-    font-size: 12px;
+    font-size: 13px;
     display: flex;
-    margin-bottom: 5px;
+    margin-bottom: 8px;
 }
 
 .payment-input-container2 .message {
