@@ -14,6 +14,7 @@ import { RegionImages } from './resources/images/Region';
 import { useEffect } from 'react';
 import { useCookies } from 'react-cookie';
 import Detail from './component/accomodation/detail';
+import Mypage from './views/mypage/guest';
 
 
 // component: root path 컴포넌트 //
@@ -51,6 +52,7 @@ export default function App() {
     <Routes>
       <Route index element={<Index />} />
       <Route path={MAIN_PATH} element={<Main />} />
+      <Route path='/mypage' element={<Mypage />}/>
 
       <Route path={ACCOMMODATION_LIST_PATH} element={<AccommodationList />} />
       <Route path={ACCOMMODATION_LIST_DETAIL_PATH} element={<AccommodationListDetail />} />

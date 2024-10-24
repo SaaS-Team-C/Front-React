@@ -1,10 +1,10 @@
 import './style.css';
 
-import Topbar from 'src/component/topbar';
-import ImageSlider6 from 'src/component/ImageSlider6';
-import ImageSlider4 from 'src/component/imageSlider4';
-import DistimctionButton from 'src/component/distinctionbutton';
-import CustomCalendar from 'src/component/Calendar';
+import Topbar from 'src/component/mainpage/topbar';
+import ImageSlider6 from 'src/component/mainpage/ImageSlider6';
+import ImageSlider4 from 'src/component/mainpage/imageSlider4';
+import DistimctionButton from 'src/component/mainpage/distinctionbutton';
+import CustomCalendar from 'src/component/mainpage/Calendar';
 
 
 import { useNavigate } from 'react-router';
@@ -15,7 +15,7 @@ import { proposeImages } from 'src/resources/images/propose';
 import { ChangeEvent, useEffect, useState } from 'react';
 import Calendar from 'react-calendar';
 import { getValue } from '@testing-library/user-event/dist/utils';
-import CalendarEnd from 'src/component/Calendar';
+import CalendarEnd from 'src/component/mainpage/Calendar';
 
 
 // component: 메인페이지 화면 컴포턴트 //
@@ -132,10 +132,10 @@ export default function Main() {
                             <div className='word'>지역</div>
                             <input className='search' value={Region} onChange={onRegionChangeHandler} />
                         </div>
-                        {/* <div className='check-in'>
+                        <div className='check-in'>
                             <div className='word'>입실 날짜</div>
                             <input className='search' defaultValue={`${year}-${month}-${date}`} value={start} type='date' placeholder='입실 날짜를 입력하세요' onChange={onStartChangeHandler}/>
-                        </div> */}
+                        </div>
                         <div className='check-out'>
                             <div className='word'>입실 날짜</div>
                             <button className='calendar-button' onClick={ontartClickHandler} >
