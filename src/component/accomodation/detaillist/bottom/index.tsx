@@ -13,102 +13,18 @@ interface Review {
 
 // 초기 리뷰 데이터
 const initialReviewsData: Review[] = [
-  {
-    id: 1,
-    user: '이소진',
-    date: '06/01/2024',
-    rating: 5,
-    content: '안녕하세요, 안녕하세요, 안녕하세요 안녕하세요 안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요 ',
-    likes: 6,
-  },
-  {
-    id: 2,
-    user: '미쳐버린 개발자',
-    date: '06/01/2024',
-    rating: 4,
-    content: '에러 에러 에러 에러 에러 에러 에러 에러 에러 에러 에러 에러 에러 에러 에러  에러 에러 에러 에러 에러  에러 에러 에러 에러 에러  에러 에러 에러 에러 에러 ',
-    likes: 6,
-  },
-  {
-    id: 3,
-    user: 'Customer',
-    date: '06/01/2024',
-    rating: 1,
-    content: 'I hate error I hate error I hate error I hate error I hate error I hate error I hate error I hate error I hate error I hate error I hate error I hate error I hate error I hate error I hate error I hate error I hate error',
-    likes: 6,
-  },
-  {
-    id: 1,
-    user: '이소진',
-    date: '06/01/2024',
-    rating: 3,
-    content: '안녕하세요, 안녕하세요, 안녕하세요 안녕하세요 안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요 ',
-    likes: 6,
-  },
-  {
-    id: 2,
-    user: '미쳐버린 개발자',
-    date: '06/01/2024',
-    rating: 4,
-    content: '에러 에러 에러 에러 에러 에러 에러 에러 에러 에러 에러 에러 에러 에러 에러  에러 에러 에러 에러 에러  에러 에러 에러 에러 에러  에러 에러 에러 에러 에러 ',
-    likes: 6,
-  },
-  {
-    id: 3,
-    user: 'Customer',
-    date: '06/01/2024',
-    rating: 1,
-    content: 'I hate error I hate error I hate error I hate error I hate error I hate error I hate error I hate error I hate error I hate error I hate error I hate error I hate error I hate error I hate error I hate error I hate error',
-    likes: 6,
-  },
-  {
-    id: 1,
-    user: '이소진',
-    date: '06/01/2024',
-    rating: 2,
-    content: '안녕하세요, 안녕하세요, 안녕하세요 안녕하세요 안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요 ',
-    likes: 6,
-  },
-  {
-    id: 2,
-    user: '미쳐버린 개발자',
-    date: '06/01/2024',
-    rating: 2,
-    content: '에러 에러 에러 에러 에러 에러 에러 에러 에러 에러 에러 에러 에러 에러 에러  에러 에러 에러 에러 에러  에러 에러 에러 에러 에러  에러 에러 에러 에러 에러 ',
-    likes: 6,
-  },
-  {
-    id: 3,
-    user: 'Customer',
-    date: '06/01/2024',
-    rating: 1,
-    content: 'I hate error I hate error I hate error I hate error I hate error I hate error I hate error I hate error I hate error I hate error I hate error I hate error I hate error I hate error I hate error I hate error I hate error',
-    likes: 6,
-  },
-  {
-    id: 4,
-    user: 'User4',
-    date: '06/02/2024',
-    rating: 4,
-    content: '이곳은 정말 좋았습니다!',
-    likes: 2,
-  },
-  {
-    id: 5,
-    user: 'User5',
-    date: '06/02/2024',
-    rating: 3,
-    content: '평범한 숙소였습니다.',
-    likes: 1,
-  },
-  {
-    id: 6,
-    user: 'User6',
-    date: '06/02/2024',
-    rating: 5,
-    content: '완벽한 경험이었습니다!',
-    likes: 3,
-  },
+  { id: 1, user: '이소진', date: '06/01/2024', rating: 5, content: '안녕하세요...', likes: 6 },
+  { id: 2, user: '미쳐버린 개발자', date: '06/01/2024', rating: 4, content: '에러 에러 에러...', likes: 6 },
+  { id: 3, user: 'Customer', date: '06/01/2024', rating: 1, content: 'I hate error...', likes: 6 },
+  { id: 4, user: 'a', date: '06/01/2024', rating: 3, content: '안녕하세요...', likes: 6 },
+  { id: 5, user: '미쳐버린 개발자', date: '06/01/2024', rating: 4, content: '에러 에러 에러...', likes: 6 },
+  { id: 6, user: 'Customer', date: '06/01/2024', rating: 1, content: 'I hate error...', likes: 6 },
+  { id: 7, user: '이소진', date: '06/01/2024', rating: 2, content: '안녕하세요...', likes: 6 },
+  { id: 8, user: '미쳐버린 개발자', date: '06/01/2024', rating: 2, content: '에러 에러 에러...', likes: 6 },
+  { id: 9, user: 'Customer', date: '06/01/2024', rating: 1, content: 'I hate error...', likes: 6 },
+  { id: 10, user: 'User4', date: '06/02/2024', rating: 4, content: '이곳은 정말 좋았습니다!', likes: 2 },
+  { id: 11, user: 'User5', date: '06/02/2024', rating: 3, content: '평범한 숙소였습니다.', likes: 1 },
+  { id: 12, user: 'User6', date: '06/02/2024', rating: 5, content: '완벽한 경험이었습니다!', likes: 3 },
 ];
 
 // 리뷰 컴포넌트
@@ -146,12 +62,13 @@ const ReviewList: React.FC = () => {
 
   // 좋아요 수 증가 함수
   const handleLike = (id: number) => {
-    setReviews(prevReviews =>
-      prevReviews.map(review =>
+    setReviews((prevReviews) =>
+      prevReviews.map((review) =>
         review.id === id ? { ...review, likes: review.likes + 1 } : review
       )
     );
   };
+
 
   // 정렬 함수
   const sortReviews = (reviews: Review[]) => {
@@ -178,7 +95,7 @@ const ReviewList: React.FC = () => {
   return (
     <div className="review-list-container">
       <h3>Reviews</h3>
-      
+
       {/* 정렬 기준 선택 */}
       <div className="sort-options">
         <label htmlFor="sort">정렬 기준: </label>
@@ -193,7 +110,7 @@ const ReviewList: React.FC = () => {
           <option value="평점 낮은순">평점 낮은순</option>
         </select>
       </div>
-      
+
       <div className="review-overall">
         <div className="rating-score">5/5</div>
         <div className="rating-text">Excellent</div>

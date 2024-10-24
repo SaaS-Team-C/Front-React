@@ -1,281 +1,272 @@
 #payment-wrapper {
-    display: flex;
+  display: flex;
 
-    flex-direction: column;
-    position: relative;
+  flex-direction: column;
+  position: relative;
 }
 
 #payment-top-wrapper {
-    margin: 0 auto;
-    /* 중앙 정렬 */
-    max-width: 1100px;
-    min-width: 800px;
-    /* 최소 크기 설정 */
-    padding: 20px;
-    background-color: #fff;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    /* 상단에 그림자 효과 추가 */
-    margin-bottom: 40px;
-    /* 상단 아래쪽에 여백 */
+  margin: 0 auto;
+  /* 중앙 정렬 */
+  max-width: 1100px;
+  min-width: 800px;
+  /* 최소 크기 설정 */
+  padding: 20px;
+  background-color: #fff;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  /* 상단에 그림자 효과 추가 */
+  margin-bottom: 40px;
+  /* 상단 아래쪽에 여백 */
 }
 
 /* 헤더 바 스타일 */
 .headerBar {
-    display: flex;
-    align-items: center;
-    background-color: #fff;
-    /* 헤더 배경색 */
+  display: flex;
+  align-items: center;
+  background-color: #fff;
+  /* 헤더 배경색 */
 
-    padding: 10px 20px;
-    /* 패딩 */
-    margin-bottom: 10px;
-    width: 1100px;
-    /* 최소 크기 설정 */
+  padding: 10px 20px;
+  /* 패딩 */
+  margin-bottom: 10px;
+  width: 1100px;
+  /* 최소 크기 설정 */
 }
 
 .headerBar .text {
-    flex-grow: 1;
-    /* 텍스트가 남은 공간을 차지하도록 */
-    font-size: 22px;
-    /* 텍스트 크기 */
-    font-weight: bold;
-    /* 텍스트 굵기 */
-    color: #333;
-    /* 텍스트 색상 */
+  flex-grow: 1;
+  /* 텍스트가 남은 공간을 차지하도록 */
+  font-size: 22px;
+  /* 텍스트 크기 */
+  font-weight: bold;
+  /* 텍스트 굵기 */
+  color: #333;
+  /* 텍스트 색상 */
 }
 
 #payment-bottom-wrapper {
-    max-width: 1100px;
-    min-width: 800px;
-    /* 상단과 동일한 최소 크기 설정 */
-    padding: 20px;
+  max-width: 1100px;
+  min-width: 800px;
+  /* 상단과 동일한 최소 크기 설정 */
+  padding: 20px;
 
-    display: flex;
-    justify-content: space-between;
-    margin: 0 auto;
-    /* 중앙 정렬 */
-    gap: 100px;
+  display: flex;
+  justify-content: space-between;
+  margin: 0 auto;
+  /* 중앙 정렬 */
+  gap: 100px;
 }
 
 /* 왼쪽 결제 정보 wrapper */
 .page-left {
-    height: 1000px;
-    flex: 1;
-    /* 왼쪽 영역이 전체 공간의 50% 차지 */
-    padding-right: 10px;
-    /* 좌측 여백 */
-    min-width: 400px;
-    /* 각 영역의 최소 너비 설정 */
-    margin-top: 20px;
-    margin-right: 10px;
-    /* 우측 여백을 주어서 공간 분리 */
-    background-color: #f9f9f9;
-    /* 시각적인 구분을 위해 연한 배경색 추가 */
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    /* 약간의 그림자 */
+  height: 1000px;
+  flex: 1;
+  /* 왼쪽 영역이 전체 공간의 50% 차지 */
+  padding-right: 10px;
+  /* 좌측 여백 */
+  min-width: 400px;
+  /* 각 영역의 최소 너비 설정 */
+  margin-top: 20px;
+  margin-right: 10px;
+  /* 우측 여백을 주어서 공간 분리 */
+  background-color: #f9f9f9;
+  /* 시각적인 구분을 위해 연한 배경색 추가 */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  /* 약간의 그림자 */
 }
 
 /* 예약자 정보 섹션 스타일 */
 .left-top {
-
-    margin-top: 40px;
+  margin-top: 40px;
 }
 
 .left-top-title {
+  display: flex;
+  font-size: 17px;
+  /* 제목 크기 */
+  margin-top: 30px;
+  margin-bottom: 35px;
+  /* 제목과 입력 필드 간격 */
 
-    display: flex;
-    font-size: 17px;
-    /* 제목 크기 */
-    margin-top: 30px;
-    margin-bottom: 35px;
-    /* 제목과 입력 필드 간격 */
+  padding-right: 100px;
 
-    padding-right: 100px;
-
-    margin-left: 60px;
-    font-weight: bold;
-    /* 제목 굵기 */
+  margin-left: 60px;
+  font-weight: bold;
+  /* 제목 굵기 */
 }
 
 /* 입력 필드 컨테이너 */
 .payment-input-container3 {
-    gap: 80px;
-    display: flex;
-    flex-direction: column;
-    /* 세로 배치 */
-    padding-left: 70px;
-    padding-right: 100px;
-
+  gap: 80px;
+  display: flex;
+  flex-direction: column;
+  /* 세로 배치 */
+  padding-left: 70px;
+  padding-right: 100px;
 }
 
 /* 체크박스 및 버튼 컨테이너 */
 .check-container1 {
-    padding: 5px 18px;
-    display: flex;
-    align-items: center;
+  padding: 5px 18px;
+  display: flex;
+  align-items: center;
 }
 
 .check-container2 {
-    border-radius: 7px;
-    background-color: #ebe7e7ea;
-    padding: 5px 18px;
-    display: flex;
-    width: 370px;
-    margin-top: 10px;
-    /* 위쪽 여백 */
-
+  border-radius: 7px;
+  background-color: #ebe7e7ea;
+  padding: 5px 18px;
+  display: flex;
+  width: 370px;
+  margin-top: 10px;
+  /* 위쪽 여백 */
 }
 
 .toggle-button {
-    height: 20px;
-    width: 20px;
-    color: #fff;
-    /* 버튼 텍스트 색 */
-    border: none;
-    /* 테두리 없음 */
-    border-radius: 4px;
-    /* 둥근 모서리 */
-    padding: 1px 0 0 0;
-    /* 패딩 */
-    cursor: pointer;
-    /* 커서 포인터 */
-    transition: background-color 0.3s;
-    /* 배경색 변화 효과 */
+  height: 20px;
+  width: 20px;
+  color: #fff;
+  /* 버튼 텍스트 색 */
+  border: none;
+  /* 테두리 없음 */
+  border-radius: 4px;
+  /* 둥근 모서리 */
+  padding: 1px 0 0 0;
+  /* 패딩 */
+  cursor: pointer;
+  /* 커서 포인터 */
+  transition: background-color 0.3s;
+  /* 배경색 변화 효과 */
 }
 
 .toggle-button:hover {
-    background-color: #00accf;
+  background-color: #00accf;
 }
 
 .check-message {
-    margin-left: 5px;
-    /* 버튼과 메시지 간격 */
-    margin-top: 2px;
+  margin-left: 5px;
+  /* 버튼과 메시지 간격 */
+  margin-top: 2px;
 }
 
 /* 구분선 */
 .divider {
-    display: flex;
-    height: 1px;
-    /* 구분선 높이 */
-    background-color: #ddd;
-    /* 구분선 색 */
-    margin: 60px 10px 10px;
-    /* 위쪽과 아래쪽 여백 */
-    width: 480px;
+  display: flex;
+  height: 1px;
+  /* 구분선 높이 */
+  background-color: #ddd;
+  /* 구분선 색 */
+  margin: 60px 10px 10px;
+  /* 위쪽과 아래쪽 여백 */
+  width: 480px;
 }
 
 /* 결제 수단 섹션 */
 .left-bottom {
-    margin-top: 20px;
-    /* 위쪽 여백 */
-
+  margin-top: 20px;
+  /* 위쪽 여백 */
 }
 
 .left-bottom-title {
-    display: flex;
-    font-size: 17px;
-    /* 제목 크기 */
-    margin-top: 70px;
-    margin-bottom: 35px;
-    /* 제목과 입력 필드 간격 */
+  display: flex;
+  font-size: 17px;
+  /* 제목 크기 */
+  margin-top: 70px;
+  margin-bottom: 35px;
+  /* 제목과 입력 필드 간격 */
 
-    padding-right: 100px;
+  padding-right: 100px;
 
-    margin-left: 60px;
-    font-weight: bold;
-    /* 제목 굵기 */
-
+  margin-left: 60px;
+  font-weight: bold;
+  /* 제목 굵기 */
 }
 
 .payment-typeList {
-    margin-left: 35px;
-    margin-right: 35px;
-    display: flex;
-    /* 가로 정렬 */
-    justify-content: space-between;
-    /* 각 상자가 균등하게 배치되도록 */
-    gap: 20px;
-    /* 상자들 사이 간격 */
+  margin-left: 35px;
+  margin-right: 35px;
+  display: flex;
+  /* 가로 정렬 */
+  justify-content: space-between;
+  /* 각 상자가 균등하게 배치되도록 */
+  gap: 20px;
+  /* 상자들 사이 간격 */
 }
 
 .payment-typeList div {
-    flex: 1;
-    /* 상자가 균등하게 너비를 차지하도록 설정 */
-    height: 45px;
-    /* 상자의 높이 설정 */
-    background-color: #f0f0f0;
-    /* 상자의 배경색 */
-    border-radius: 8px;
-    /* 모서리 둥글게 */
-    display: flex;
-    /* 상자 내부 정렬을 위해 추가 */
-    align-items: center;
-    /* 상자 내의 컨텐츠 수직 중앙 정렬 */
-    justify-content: center;
-    /* 상자 내의 컨텐츠 수평 중앙 정렬 */
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    /* 상자에 약간의 그림자 효과 */
-    cursor: pointer;
-    /* 마우스를 올리면 포인터 커서로 변경 */
-    transition: transform 0.3s ease, background-color 0.3s ease;
-    /* 호버 시 부드러운 애니메이션 */
+  flex: 1;
+  /* 상자가 균등하게 너비를 차지하도록 설정 */
+  height: 45px;
+  /* 상자의 높이 설정 */
+  background-color: #f0f0f0;
+  /* 상자의 배경색 */
+  border-radius: 8px;
+  /* 모서리 둥글게 */
+  display: flex;
+  /* 상자 내부 정렬을 위해 추가 */
+  align-items: center;
+  /* 상자 내의 컨텐츠 수직 중앙 정렬 */
+  justify-content: center;
+  /* 상자 내의 컨텐츠 수평 중앙 정렬 */
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  /* 상자에 약간의 그림자 효과 */
+  cursor: pointer;
+  /* 마우스를 올리면 포인터 커서로 변경 */
+  transition: transform 0.3s ease, background-color 0.3s ease;
+  /* 호버 시 부드러운 애니메이션 */
 }
 
 .payment-typeList div:hover {
-    transform: translateY(-5px);
-    /* 호버 시 상자가 살짝 위로 이동 */
-    background-color: #e0e0e0;
-    /* 호버 시 배경색 변경 */
+  transform: translateY(-5px);
+  /* 호버 시 상자가 살짝 위로 이동 */
+  background-color: #e0e0e0;
+  /* 호버 시 배경색 변경 */
 }
 
 /* 각 결제 수단 아이콘을 추가하려면 추가적인 스타일을 지정할 수 있습니다 */
 
 .kakaoPay {
-    background-image: url('public/images/kakaoPay.png'); 
-    background-size: contain;
-    background-repeat: no-repeat;
-    background-position: center;
+  background-image: url("public/images/kakaoPay.png");
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
 }
 
 .tossPay {
-    /* background-image: url('tosspay-icon.png'); */
-    background-size: contain;
-    background-repeat: no-repeat;
-    background-position: center;
+  background-image: url("tosspay-icon.png");
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
 }
 
 .naverPay {
-    background-image: url('public/images/naverPay.png');
-    background-size: contain;
-    background-repeat: no-repeat;
-    background-position: center;
+  background-image: url("public/images/naverPay.png");
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
 }
 
 .creditCard {
-    /* background-image: url('creditcard-icon.png'); */
-    background-size: contain;
-    background-repeat: no-repeat;
-    background-position: center;
+  /* background-image: url('creditcard-icon.png'); */
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
 }
-
-
-
 
 /* 오른쪽 결제 정보 wrapper */
 .page-right {
-    flex: 1;
-    /* 오른쪽 영역이 전체 공간의 50% 차지 */
-    height: 1000px;
-    flex: 1;
-    /* 왼쪽 영역이 전체 공간의 50% 차지 */
-    padding-right: 10px;
-    /* 좌측 여백 */
-    min-width: 400px;
-    /* 각 영역의 최소 너비 설정 */
-    margin-top: 20px;
-    background-color: #f9f9f9;
-    /* 시각적인 구분을 위해 연한 배경색 추가 */
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    /* 약간의 그림자 */
+  flex: 1;
+  /* 오른쪽 영역이 전체 공간의 50% 차지 */
+  height: 1000px;
+  flex: 1;
+  /* 왼쪽 영역이 전체 공간의 50% 차지 */
+  padding-right: 10px;
+  /* 좌측 여백 */
+  min-width: 400px;
+  /* 각 영역의 최소 너비 설정 */
+  margin-top: 20px;
+  background-color: #f9f9f9;
+  /* 시각적인 구분을 위해 연한 배경색 추가 */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  /* 약간의 그림자 */
 }

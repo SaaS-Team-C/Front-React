@@ -10,28 +10,28 @@ const LOG_IN_API_URL = `${AUTH_MODULE_URL}/log-in`;
 
 // function : Authorization Bearer 헤더 //
 const bearerAuthorization = (accessToken: string) => ({
-    headers: { Authorization: `Bearer ${accessToken}` },
+  headers: { Authorization: `Bearer ${accessToken}` },
 });
 
 // function : response data 처리 함수 //
 const responseDataHandler = <T>(response: AxiosResponse<T>) => {
-    const { data } = response;
-    return data;
+  const { data } = response;
+  return data;
 };
 
 // function : Response Error 처리 함수 //
 const responseErrorHandler = (error: any) => {
-    if (!error.response) return null;
-    const { data } = error.response;
-    return data as ResponseDto;
+  if (!error.response) return null;
+  const { data } = error.response;
+  return data as ResponseDto;
 };
 
 // function : sign in 요청 함수 //
 export const signInRequest = async (requestBody: LogInRequestDto) => {
-    try {
-        const response = await axios.post(LOG_IN_API_URL, requestBody);
-        return responseDataHandler<ResponseDto>(response);
-    } catch (error) {
-        return responseErrorHandler(error);
-    }
+  try {
+    const response = await axios.post(LOG_IN_API_URL, requestBody);
+    return responseDataHandler<ResponseDto>(response);
+  } catch (error) {
+    return responseErrorHandler(error);
+  }
 };
