@@ -2,7 +2,6 @@ import { Route, Routes, useNavigate } from 'react-router-dom';
 import './App.css';
 import Main from './views/Main';
 
-
 import SignUp from './views/auth';
 import Payment from './views/payment';
 
@@ -15,8 +14,8 @@ import { useCookies } from 'react-cookie';
 import Detail from './component/accomodation/detail';
 
 import DetailList from './component/accomodation/detaillist';
-import RoomCard from './component/accomodation/detaillist/middle/roomcard';
-import AccommodationDetailMiddle from './component/accomodation/detaillist/middle';
+import Admin from './views/admin';
+
 
 
 // component: root path 컴포넌트 //
@@ -58,8 +57,9 @@ export default function App() {
       <Route path={ACCOMMODATION_LIST_PATH} element={<AccommodationList />} />
       <Route path={ACCOMMODATION_LIST_DETAIL_PATH} element={<DetailList />} />
       <Route path="/accommodationList/detail/:name" element={<Detail />} />
-      {/* <Route path='/sign-up' element={<SignUp onPathChange={() => { }} />} />
-      <Route path='/payment' element={<Payment onPathChange={() => {}} />} /> */}
+      {/* <Route path='/sign-up' element={<SignUp onPathChange={() => { }} />} /> */}
+      <Route path='/payment' element={<Payment onPathChange={() => {}} />} />
+      <Route path='/admin' element={<Admin/>}/>
 
 
 

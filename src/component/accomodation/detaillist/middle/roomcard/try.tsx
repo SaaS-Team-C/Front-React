@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom'; 
+import { useNavigate } from 'react-router-dom'; // useHistory를 임포트합니다.
 import './style.css';
 import Modal from 'react-modal';
 import AccommodationDetailTopImages from '../../top/imageslick';
@@ -15,7 +15,7 @@ interface Room {
   images: string[];
 }
 
-// props: 객실 카드 컴포넌트의 props 정의 //
+// 객실 카드 컴포넌트의 props 정의
 interface RoomCardProps {
   room: Room;
   isFullyBooked: boolean; // 객실 매진 여부를 나타내는 props 추가
@@ -54,12 +54,6 @@ const RoomCard: React.FC<RoomCardProps> = ({ room, isFullyBooked }) => {
     navigator('/main'); // 메인 화면으로 이동
   };
 
-    // 숙소 예약 버튼 클릭 핸들러
-    const handleChangebooking = () => {
-      navigator('/payment'); // 메인 화면으로 이동
-    };
-  
-
   return (
     <div className="room-card">
       {isFullyBooked ? ( // 객실이 매진된 경우
@@ -90,9 +84,7 @@ const RoomCard: React.FC<RoomCardProps> = ({ room, isFullyBooked }) => {
             <button className="detail-btn" onClick={handleOpenDetailModal}>
               상세 정보
             </button>
-            <button className="reserve-btn" onClick={handleChangebooking}>
-              숙박 예약
-            </button>
+            <button className="reserve-btn">숙박 예약</button>
             <p className="price">₩{room.price.toLocaleString()}원</p>
           </div>
         </>
@@ -117,7 +109,7 @@ const RoomCard: React.FC<RoomCardProps> = ({ room, isFullyBooked }) => {
           overlayClassName="modal-overlay"
         >
           <h2>{room.type} - 상세정보</h2>
-          <p>{room.description}</p> 
+          <p>{room.description}</p> {/* Room description 출력 */}
           <p>입실 시간: {room.checkInTime}</p>
           <p>퇴실 시간: {room.checkOutTime}</p>
           <p>최대 수용 인원: {room.maxOccupancy}명</p>
