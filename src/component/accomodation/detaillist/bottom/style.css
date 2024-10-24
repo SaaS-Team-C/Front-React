@@ -1,75 +1,74 @@
 .review-list-container {
-    max-width: 800px;
-    margin: 20px auto;
-    padding: 20px;
-    background-color: #fff;
-    border-radius: 8px;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-  }
-  
-  .review-overall {
-    display: flex;
-    align-items: center;
-    margin-bottom: 20px;
-  }
-  
-  .rating-score {
-    font-size: 24px;
-    font-weight: bold;
-    color: #f39c12;
-  }
-  
-  .rating-text {
-    font-size: 18px;
-    margin-left: 10px;
-  }
-  
-  .rating-count {
-    font-size: 14px;
-    margin-left: 10px;
-    color: #888;
-  }
-  
-  .review-card {
-    border-bottom: 1px solid #eee;
-    padding: 10px 0;
-    margin-bottom: 10px;
-  }
-  
-  .review-header {
-    display: flex;
-    justify-content: space-between;
-    margin-bottom: 5px;
-  }
-  
-  .user-name {
-    font-weight: bold;
-    font-size: 16px;
-  }
-  
-  .review-date {
-    font-size: 14px;
-    color: #aaa;
-  }
-  
-  .review-rating {
-    font-size: 18px;
-    color: #f39c12;
-    margin-bottom: 5px;
-  }
-  
-  .review-content {
-    font-size: 14px;
-    line-height: 1.5;
-    margin-bottom: 10px;
-  }
-  
-  .review-footer {
-    font-size: 14px;
-    color: #555;
-  }
-  
-  .review-footer span {
-    margin-right: 5px;
-  }
-  
+  max-width: 800px;
+  margin: 20px auto;
+  padding: 20px;
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.review-overall {
+  display: flex;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.rating-score {
+  font-size: 24px;
+  font-weight: bold;
+  color: #f39c12;
+}
+
+.rating-text {
+  font-size: 18px;
+  margin-left: 10px;
+}
+
+.rating-count {
+  font-size: 14px;
+  margin-left: 10px;
+  color: #888;
+}
+
+.review-card {
+  border-bottom: 1px solid #eee;
+  padding: 10px 0;
+  margin-bottom: 10px;
+}
+
+.review-header {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 5px;
+}
+
+.user-name {
+  font-weight: bold;
+  font-size: 16px;
+}
+
+.review-date {
+  font-size: 14px;
+  color: #aaa;
+}
+
+.review-rating {
+  font-size: 18px;
+  color: #f39c12;
+  margin-bottom: 5px;
+}
+
+.review-content {
+  font-size: 14px;
+  line-height: 1.5;
+  margin-bottom: 10px;
+}
+
+.review-footer {
+  font-size: 14px;
+  color: #555;
+}
+
+.review-footer span {
+  margin-right: 5px;
+}

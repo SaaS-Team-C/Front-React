@@ -6,8 +6,7 @@ import React, { useState, useRef } from 'react';
 import Modal from 'react-modal';
 import Slider from 'react-slick';
 
-
-// 숙소 이미지 모달 + 슬라이더 // 
+// 숙소 이미지 모달 + 슬라이더 //
 interface AccommodationImagesProps {
   images: string[];
 }
@@ -108,7 +107,6 @@ const AccommodationDetailTopImages: React.FC<AccommodationImagesProps> = ({ imag
   );
 };
 
-
 // 숙소 디테일 상단 정보 카드 //
 interface AccommodationDetailTopProps {
   name: string;
@@ -120,6 +118,7 @@ interface AccommodationDetailTopProps {
   services: string[];
   location: string;
   mapLink: string;
+  onReviewButtonClick: () => void; // Add this prop
 }
 
 const AccommodationDetailTopCard: React.FC<AccommodationDetailTopProps> = ({
@@ -132,6 +131,7 @@ const AccommodationDetailTopCard: React.FC<AccommodationDetailTopProps> = ({
   services,
   location,
   mapLink,
+  onReviewButtonClick, // Destructure this prop
 }) => {
   return (
     <div className="accommodation-detail">
@@ -155,7 +155,13 @@ const AccommodationDetailTopCard: React.FC<AccommodationDetailTopProps> = ({
             <span>{reviewCount}개의 리뷰</span>
           </div>
           <p>{reviewSnippet}</p>
-          <a href="#">리뷰 더 보기</a>
+          {/* Call the onReviewButtonClick function when the button is clicked */}
+          <a href="#" onClick={() => {
+            console.log("리뷰 버튼 클릭됨");
+            onReviewButtonClick();
+          }}>
+            리뷰 더 보기
+          </a>
         </div>
 
         <div className="services-section">
@@ -178,7 +184,11 @@ const AccommodationDetailTopCard: React.FC<AccommodationDetailTopProps> = ({
   );
 };
 
-export default function AccommodationDetailTop() {
+export default function AccommodationDetailTop({
+  onReviewButtonClick, // Accept this prop here
+}: {
+  onReviewButtonClick: () => void;
+}) {
   return (
     <>
       <AccommodationDetailTopImages images={[
@@ -189,7 +199,18 @@ export default function AccommodationDetailTop() {
         require('./Europe-Hotel-4-800x600.jpg'),
         require('./ibis-Yerevan-Center-4-800x600.jpg')
       ]} />
-      <AccommodationDetailTopCard name={''} stars={0} price={''} reviewScore={0} reviewCount={0} reviewSnippet={''} services={[]} location={''} mapLink={''} />
+      <AccommodationDetailTopCard
+        name={''}
+        stars={0}
+        price={''}
+        reviewScore={0}
+        reviewCount={0}
+        reviewSnippet={''}
+        services={[]}
+        location={''}
+        mapLink={''}
+        onReviewButtonClick={onReviewButtonClick} // Pass the function to the card
+      />
     </>
   );
 }

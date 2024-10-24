@@ -1,65 +1,97 @@
 /* 부모 컨테이너: 너비 1200px로 제한하고 중앙 정렬 */
 .room-list-container {
-    width: 100%;
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 20px;
-    box-sizing: border-box;
-  }
-  
-  /* RoomCard들이 flex로 정렬되도록 설정 */
-  .room-list {
-    display: flex;
-    flex-direction: column;
-    gap: 20px; /* 카드 간의 간격 */
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+  box-sizing: border-box;
+}
 
-  }
+/* RoomCard들이 flex로 정렬되도록 설정 */
+.room-list {
+  display: flex;
+  flex-direction: column;
+  gap: 20px; /* 카드 간의 간격 */
+}
 
+/* 숙소 정보 보기 */
+.room-list-container {
+  max-width: 1200px;
+  margin: 0 auto;
+}
 
-  /* 숙소 정보 보기 */
-  .room-list-container {
-    max-width: 1200px;
-    margin: 0 auto;
-  }
-  
-  .accommodation-info {
-    margin-top: 20px;
-  }
-  
-  .toggle-info-btn {
-    margin-bottom: 10px;
-    padding: 10px 20px;
-    background-color: #007bff;
-    color: white;
-    border: none;
-    cursor: pointer;
-    border-radius: 5px;
-  }
-  
-  .info-content {
-    background-color: #f7f7f7;
-    padding: 20px;
-    border-radius: 5px;
-  }
-  
-  .introduction, .usage-info {
-    margin-bottom: 20px;
-  }
-  
-  h3 {
-    font-size: 18px;
-    margin-bottom: 10px;
-  }
-  
-  p {
-    font-size: 16px;
-    line-height: 1.5;
-  }
-  
-  
+.accommodation-info {
+  margin-top: 20px;
+}
 
+.toggle-info-btn {
+  margin-bottom: 10px;
+  padding: 10px 20px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  cursor: pointer;
+  border-radius: 5px;
+}
 
-  
+.info-content {
+  background-color: #f7f7f7;
+  padding: 20px;
+  border-radius: 5px;
+}
 
-  
-  
+.introduction,
+.usage-info {
+  margin-bottom: 20px;
+}
+
+h3 {
+  font-size: 18px;
+  margin-bottom: 10px;
+}
+
+p {
+  font-size: 16px;
+  line-height: 1.5;
+}
+
+.room-list-container {
+  margin: 20px;
+}
+
+.show-accommodation-info-btn,
+.hide-accommodation-info-btn {
+  background-color: #007bff;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  margin: 10px 0;
+  cursor: pointer;
+  border-radius: 5px;
+}
+
+.accommodation-info {
+  background-color: #f9f9f9;
+  padding: 15px;
+  border-radius: 5px;
+  margin-top: 15px;
+}
+
+.accommodation-info h3 {
+  margin-top: 0;
+}
+
+.accommodation-info p {
+  line-height: 1.6;
+}
+
+.show-more-btn,
+.show-less-btn {
+  background-color: #28a745;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  margin-top: 20px;
+  cursor: pointer;
+  border-radius: 5px;
+}
