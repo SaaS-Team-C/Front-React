@@ -81,7 +81,7 @@ export default function Payment({ onPathChange }: PaymentComponentProps) {
 
     // render: 결제 화면 컴포넌트 렌더링 //
     return (
-        
+
         <div id='payment-wrapper'>
             <Topbar />
             <div id='payment-top-wrapper'>
@@ -89,11 +89,11 @@ export default function Payment({ onPathChange }: PaymentComponentProps) {
                     <svg
                         onClick={() => window.history.back()} // 이전 페이지로 돌아가기
                         xmlns="http://www.w3.org/2000/svg"
-                        width="20"
-                        height="20"
+                        width="23"
+                        height="23"
                         fill="#333333"
                         viewBox="0 0 20 20"
-                        style={{ cursor: 'pointer', marginRight: '10px' }} // 마우스 커서를 포인터로 변경
+                        style={{ cursor: 'pointer', marginTop: '1px' , marginRight: '5px' }} // 마우스 커서를 포인터로 변경
                     >
                         <path fill="#333" d="M12.414 3.586L11 2l-7 7 7 7 1.414-1.414L6.828 10H17V8H6.828l5.586-5.414z"></path>
                     </svg>
@@ -101,59 +101,61 @@ export default function Payment({ onPathChange }: PaymentComponentProps) {
                 </div>
             </div>
 
-                <div id='payment-bottom-wrapper'>
-                    <div className='page-left'>
-                        <div className='left-top'>
-                            <div className='left-top-title'>예약자 정보</div>
-                            <div className="payment-input-container3">
-                                <InputBox3
-                                    messageError={nameMessageError}
-                                    message={nameMessage}
-                                    value={name}
-                                    label="이름"
-                                    type="text"
-                                    placeholder="예약자 이름을 입력해주세요."
-                                    onChange={onNameChangeHandler}
-                                />
-                                <InputBox3
-                                    messageError={telNumberMessageError}
-                                    message={telNumberMessage}
-                                    value={telNumber}
-                                    label="전화번호"
-                                    type="text"
-                                    placeholder="예약자 전화번호를 입력해주세요."
-                                    buttonName="전화번호 인증"
-                                    onChange={onTelNumberChangeHandler}
-                                />
-                                <div className='check-container'>
-                                    <button
-                                        className={`toggle-button ${isAgreed ? 'active' : ''}`} // 체크 상태에 따라 스타일 변경
-                                        onClick={onAgreeButtonClickHandler} // 버튼 클릭 시 핸들러 호출
-                                        type='button'
-                                    >
-                                        {isAgreed ? '다름' : '같음'} {/* 현재 상태에 따라 버튼 텍스트 변경 */}
-                                    </button>
+            <div id='payment-bottom-wrapper'>
+                <div className='page-left'>
+                    <div className='left-top'>
+                        <div className='left-top-title'>예약자 정보</div>
+                        <div className="payment-input-container3">
+                            <InputBox3
+                                messageError={nameMessageError}
+                                message={nameMessage}
+                                value={name}
+                                label="이름"
+                                type="text"
+                                placeholder="예약자 이름을 입력해주세요."
+                                onChange={onNameChangeHandler}
+                            />
+                            <InputBox3
+                                messageError={telNumberMessageError}
+                                message={telNumberMessage}
+                                value={telNumber}
+                                label="전화번호"
+                                type="text"
+                                placeholder="예약자 전화번호를 입력해주세요."
+                                onChange={onTelNumberChangeHandler}
+                            />
+
+
+                            <div className='check-container1'>
+                                <div className='check-container2'>
+                                    <input
+                                        className='toggle-button'
+                                        type='checkbox'
+                                        checked={isAgreed} // 체크박스의 상태를 isAgreed로 연결
+                                        onChange={onAgreeButtonClickHandler} // 체크박스의 상태가 변경될 때 핸들러 호출
+                                    />
                                     <div className='check-message'>예약자와 투숙객이 다릅니다.</div>
-                                </div>
-                                <div className='divider'></div>
-                            </div>
-                            <div className='left-bottom'>
-                                <div className='left-bottom-title'>결제 수단</div>
-                                <div className='payment-typeList'>
-                                    <div className='kakaopay'></div>
-                                    <div className='tossPay'></div>
-                                    <div className='naverPay'></div>
-                                    <div className='creditCard'></div>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                    <div className='page-right'>
-                        <div className='right-top'></div>
-                        <div className='right-bottom'></div>
+                        <div className='divider'></div>
+                        <div className='left-bottom'>
+                            <div className='left-bottom-title'>결제 수단</div>
+                            <div className='payment-typeList'>
+                                <div className='kakaopay'></div>
+                                <div className='tossPay'></div>
+                                <div className='naverPay'></div>
+                                <div className='creditCard'></div>
+                            </div>
+                        </div>
                     </div>
                 </div>
+                <div className='page-right'>
+                    <div className='right-top'></div>
+                    <div className='right-bottom'></div>
+                </div>
             </div>
+        </div>
 
 
     );
