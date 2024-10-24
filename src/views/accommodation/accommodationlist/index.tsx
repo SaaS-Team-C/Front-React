@@ -3,9 +3,9 @@ import "./style.css";
 import React, { useState } from 'react'
 
 import Sidebar from "src/component/accomodation/sidebarfilter";
-// import Topbar from "src/component/topbar";
 import List from "../../../component/accomodation/list";
 import AccommodationListMockData from "src/mock/accommodation/list";
+import Topbar from "src/component/topbar";
 
 
 
@@ -55,7 +55,7 @@ const AccommodationList: React.FC = () => {
   return (
     <div className="AccommodationList">
       <div className="app-container">
-        {/* <Topbar /> */}
+        <Topbar />
         <div className="content-container">
           <Sidebar
             priceRange={priceRange}
