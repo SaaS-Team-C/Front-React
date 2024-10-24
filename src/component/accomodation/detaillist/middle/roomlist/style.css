@@ -1,0 +1,65 @@
+/* 부모 컨테이너: 너비 1200px로 제한하고 중앙 정렬 */
+.room-list-container {
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+    box-sizing: border-box;
+  }
+  
+  /* RoomCard들이 flex로 정렬되도록 설정 */
+  .room-list {
+    display: flex;
+    flex-direction: column;
+    gap: 20px; /* 카드 간의 간격 */
+
+  }
+
+
+  /* 숙소 정보 보기 */
+  .room-list-container {
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+  
+  .accommodation-info {
+    margin-top: 20px;
+  }
+  
+  .toggle-info-btn {
+    margin-bottom: 10px;
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+  }
+  
+  .info-content {
+    background-color: #f7f7f7;
+    padding: 20px;
+    border-radius: 5px;
+  }
+  
+  .introduction, .usage-info {
+    margin-bottom: 20px;
+  }
+  
+  h3 {
+    font-size: 18px;
+    margin-bottom: 10px;
+  }
+  
+  p {
+    font-size: 16px;
+    line-height: 1.5;
+  }
+  
+  
+
+
+  
+
+  
+  

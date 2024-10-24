@@ -8,7 +8,7 @@ import CustomCalendar from 'src/component/Calendar';
 
 
 import { useNavigate } from 'react-router';
-import { RegionImages } from 'src/resources/images/Region';
+
 import { mainImages } from 'src/resources/images/main';
 import { ACCOMMODATION_LIST_PATH } from 'src/constants';
 import { proposeImages } from 'src/resources/images/propose';
@@ -16,6 +16,7 @@ import { ChangeEvent, useEffect, useState } from 'react';
 import Calendar from 'react-calendar';
 import { getValue } from '@testing-library/user-event/dist/utils';
 import CalendarEnd from 'src/component/Calendar';
+import { RegionImages } from 'src/resources/images/Region';
 
 
 // component: 메인페이지 화면 컴포턴트 //
