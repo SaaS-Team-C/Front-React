@@ -7,9 +7,6 @@
   background-color: #fff;
 }
 
-.room-card-image {
-  position: relative;
-}
 
 .room-card-image img {
   width: 150px;
@@ -67,3 +64,45 @@
   margin-top: 10px;
   font-size: 16px;
 }
+
+
+/* 각 RoomCard의 스타일 */
+.room-card {
+
+  background-color: #f9f9f9;
+  padding: 15px;
+  border: 1px solid #ddd;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+}
+
+.room-card img {
+  width: 100%;
+  height: auto;
+  border-radius: 4px;
+}
+
+/* 상세 정보 모달 스타일 */
+.modal {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 90%;
+  height: 40%;
+  max-width: 600px;
+  background-color: white;
+  padding: 20px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  border-radius: 10px;
+}
+
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+}
+

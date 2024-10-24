@@ -1,10 +1,18 @@
 .accommodation-list {
-  width: 100%;
+  width: 1200px;
 }
 
 .accommodation-cards {
+  width: 1200px;
   display: flex;
   flex-direction: column;
+}
+
+.accommodation-image {
+  width: 150px;
+  height: 100px;
+  margin-right: 20px;
+  background-color: pink;
 }
 
 .accommodation-card {
@@ -93,11 +101,13 @@
   cursor: pointer;
 }
 
-/* 이미지 위에 북마크 아이콘 추가 */
+
+
+/* 숙소 사진 이미지 사이즈 */ 
 .image-wrapper {
   position: relative;
-  width: 350px;
-  height: 220px;
+  width: 330px;
+  height: 180px;
 }
 
 .accommodation-image {
@@ -106,10 +116,11 @@
   background-color: #f0f0f0;
 }
 
+/* 이미지 위에 북마크 아이콘 추가 */
 .bookmark {
   position: absolute;
-  top: 10px;
-  right: 10px;
+  top: 0px;
+  right: 50px;
   font-size: 1.5rem;
   color: #ccc;
   cursor: pointer;
