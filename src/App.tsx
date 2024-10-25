@@ -1,5 +1,6 @@
 import { Route, Routes, useNavigate } from 'react-router-dom';
 import './App.css';
+
 import Main from './views/Main';
 
 
@@ -14,8 +15,9 @@ import { useCookies } from 'react-cookie';
 import Detail from './component/accomodation/detail';
 
 import DetailList from './component/accomodation/detaillist';
-import Admin from './views/admin';
-import SignUp from './views/auth';
+
+import Kanban from './component/admin/react-kanban';
+
 
 
 
@@ -60,7 +62,7 @@ export default function App() {
       <Route path="/accommodationList/detail/:name" element={<Detail />} />
       {/* <Route path='/sign-up' element={<SignUp onPathChange={() => {}} />} /> */}
       <Route path='/payment' element={<Payment onPathChange={() => {}} />} />
-      <Route path='/admin' element={<Admin/>}/>
+      <Route path='/admin' element={<Kanban/>}/>
 
 
 
