@@ -15,7 +15,7 @@
   background-color: #fff;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   /* 상단에 그림자 효과 추가 */
-  margin-bottom: 40px;
+  margin-bottom: 20px;
   /* 상단 아래쪽에 여백 */
 }
 
@@ -23,9 +23,7 @@
 .headerBar {
   display: flex;
   align-items: center;
-  background-color: #fff;
   /* 헤더 배경색 */
-
   padding: 10px 20px;
   /* 패딩 */
   margin-bottom: 10px;
@@ -44,109 +42,57 @@
   /* 텍스트 색상 */
 }
 
-#payment-bottom-wrapper {
-  max-width: 1100px;
-  min-width: 800px;
-  /* 상단과 동일한 최소 크기 설정 */
-  padding: 20px;
-
-  display: flex;
-  justify-content: space-between;
-  margin: 0 auto;
-  /* 중앙 정렬 */
-  gap: 100px;
-}
-
-/* 왼쪽 결제 정보 wrapper */
-.page-left {
-  height: 1000px;
-  flex: 1;
-  /* 왼쪽 영역이 전체 공간의 50% 차지 */
-  padding-right: 10px;
-  /* 좌측 여백 */
-  min-width: 400px;
-  /* 각 영역의 최소 너비 설정 */
-  margin-top: 20px;
-  margin-right: 10px;
-  /* 우측 여백을 주어서 공간 분리 */
-  background-color: #f9f9f9;
-  /* 시각적인 구분을 위해 연한 배경색 추가 */
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  /* 약간의 그림자 */
-}
-
 /* 예약자 정보 섹션 스타일 */
 .left-top {
   margin-top: 40px;
 }
 
+
 .left-top-title {
   display: flex;
   font-size: 17px;
   /* 제목 크기 */
-  margin-top: 30px;
   margin-bottom: 35px;
   /* 제목과 입력 필드 간격 */
 
   padding-right: 100px;
 
-  margin-left: 60px;
+  margin-left: 45px;
   font-weight: bold;
   /* 제목 굵기 */
 }
 
-/* 입력 필드 컨테이너 */
+
 .payment-input-container3 {
+  gap: 40px;
+  display: flex;
+  margin-left: 40px;
+}
+
+.guest-name,
+.guest-telNumber {
   gap: 80px;
-  display: flex;
-  flex-direction: column;
-  /* 세로 배치 */
-  padding-left: 70px;
-  padding-right: 100px;
+
 }
 
-/* 체크박스 및 버튼 컨테이너 */
-.check-container1 {
-  padding: 5px 18px;
-  display: flex;
-  align-items: center;
+.name-title,
+.telNumber-title {
+  margin-bottom: 10px;
 }
 
-.check-container2 {
-  border-radius: 7px;
-  background-color: #ebe7e7ea;
-  padding: 5px 18px;
-  display: flex;
-  width: 370px;
-  margin-top: 10px;
-  /* 위쪽 여백 */
-}
-
-.toggle-button {
-  height: 20px;
-  width: 20px;
-  color: #fff;
-  /* 버튼 텍스트 색 */
-  border: none;
-  /* 테두리 없음 */
+.name-value {
   border-radius: 4px;
-  /* 둥근 모서리 */
-  padding: 1px 0 0 0;
-  /* 패딩 */
-  cursor: pointer;
-  /* 커서 포인터 */
-  transition: background-color 0.3s;
-  /* 배경색 변화 효과 */
+  background-color: #ddd;
+  height: 40px;
+  width: 80px;
+
 }
 
-.toggle-button:hover {
-  background-color: #00accf;
-}
-
-.check-message {
-  margin-left: 5px;
-  /* 버튼과 메시지 간격 */
-  margin-top: 2px;
+.telNumber-value {
+  border-radius: 4px;
+  background-color: #ddd;
+  height: 40px;
+  width: 170px;
 }
 
 /* 구분선 */
@@ -156,14 +102,15 @@
   /* 구분선 높이 */
   background-color: #ddd;
   /* 구분선 색 */
-  margin: 60px 10px 10px;
+  margin: 60px 0 10px 10px;
   /* 위쪽과 아래쪽 여백 */
-  width: 480px;
+
 }
 
 /* 결제 수단 섹션 */
 .left-bottom {
-  margin-top: 20px;
+
+  margin-top: 15px;
   /* 위쪽 여백 */
 }
 
@@ -177,19 +124,19 @@
 
   padding-right: 100px;
 
-  margin-left: 60px;
+  margin-left: 45px;
   font-weight: bold;
   /* 제목 굵기 */
 }
 
 .payment-typeList {
-  margin-left: 35px;
-  margin-right: 35px;
+  margin-left: 15px;
+  margin-right: 0px;
   display: flex;
   /* 가로 정렬 */
   justify-content: space-between;
   /* 각 상자가 균등하게 배치되도록 */
-  gap: 20px;
+  gap: 15px;
   /* 상자들 사이 간격 */
 }
 
@@ -198,6 +145,7 @@
   /* 상자가 균등하게 너비를 차지하도록 설정 */
   height: 45px;
   /* 상자의 높이 설정 */
+  width: 75px;
   background-color: #f0f0f0;
   /* 상자의 배경색 */
   border-radius: 8px;
@@ -225,48 +173,263 @@
 
 /* 각 결제 수단 아이콘을 추가하려면 추가적인 스타일을 지정할 수 있습니다 */
 
-.kakaoPay {
-  background-image: url("public/images/kakaoPay.png");
+.kakaoPay .tossPay .naverPay .creditCard {
+
   background-size: contain;
   background-repeat: no-repeat;
   background-position: center;
 }
 
-.tossPay {
-  background-image: url("tosspay-icon.png");
-  background-size: contain;
-  background-repeat: no-repeat;
-  background-position: center;
+.kakaoPay-image {
+  height: 40px;
+  width: 90px;
 }
 
-.naverPay {
-  background-image: url("public/images/naverPay.png");
-  background-size: contain;
-  background-repeat: no-repeat;
-  background-position: center;
+.tossPay-image {
+  height: 14.5px;
+  width: 70px;
+}
+
+.naverPay-image {
+  height: 30px;
+  width: 70px;
 }
 
 .creditCard {
-  /* background-image: url('creditcard-icon.png'); */
-  background-size: contain;
-  background-repeat: no-repeat;
-  background-position: center;
+  font-size: 13px;
+  background-color: #fff;
+  font-weight: bold;
+  border: 1.5px solid #ebebeb;
+  border-radius: 8px;
+  color: #333;
+  cursor: pointer;
+  height: 40px;
+  line-height: 37px;
+  margin: 0 9px 12px 0;
+  position: relative;
+  text-align: center;
+}
+
+#payment-bottom-wrapper {
+  display: flex;
+
+  margin: 0 auto;
+  /* 중앙 정렬 */
+  gap: 100px;
+  /* Change gap from 20px to 10px */
+}
+
+/* 왼쪽 결제 정보 wrapper */
+.page-left {
+  height: 480px;
+  flex: 0 0 40%;
+  /* Adjusted width */
+  padding-right: 10px;
+  min-width: 450px;
+  /* Decreased minimum width */
+  margin-top: 360px;
+  margin-right: 0;
+  /* Removed right margin */
+  background-color: #f9f9f9;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 /* 오른쪽 결제 정보 wrapper */
 .page-right {
-  flex: 1;
-  /* 오른쪽 영역이 전체 공간의 50% 차지 */
+  flex: 0 0 40%;
+  /* Adjusted width */
   height: 1000px;
-  flex: 1;
-  /* 왼쪽 영역이 전체 공간의 50% 차지 */
-  padding-right: 10px;
-  /* 좌측 여백 */
-  min-width: 400px;
-  /* 각 영역의 최소 너비 설정 */
+
+  min-width: 150px;
+  /* Decreased minimum width */
+  margin-top: 150px;
+}
+
+
+.right-top,
+.right-bottom {
+  width: 300px;
+  background-color: #fff;
+  border: 1px solid #e0e0e0;
+  padding: 20px;
+  border-radius: 10px;
+  margin-bottom: 20px;
+}
+
+.right-top-wrap {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.right-top-title {
+  height: 50px;
+  background-color: #eaeaea;
+}
+
+.right-top-image {
+  height: 130px;
+  border-radius: 8px;
+  background-color: #eaeaea;
+}
+
+.right-top-container1 {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 0;
+  border-bottom: 1px solid #e0e0e0;
+}
+
+.right-top-container2 {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+}
+
+.roomType,
+.checkIn&Out {
+  font-size: 16px;
+  font-weight: 500;
+}
+
+.roomType-input,
+.checkIn&Out-input {
+  background-color: #fafafa;
+  width: 60%;
+  padding: 8px;
+  border-radius: 5px;
+  border: 1px solid #ddd;
+}
+
+.check {
+  background-color: #fafafa;
+  width: 60%;
+  padding: 8px;
+  border-radius: 5px;
+}
+
+.right-bottom-title {
+  font-size: 18px;
+  font-weight: 600;
+  margin-bottom: 15px;
+}
+
+.right-bottom-container1 {
+  display: flex;
+  justify-content: space-between;
+  padding: 10px 0;
+  border-bottom: 1px solid #e0e0e0;
+}
+
+.right-bottom-container2 {
+  display: flex;
+  justify-content: space-between;
+  padding: 10px 0;
+
+}
+
+.room-price1,
+.room-price2 {
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.room-price-input1,
+.room-price-input2 {
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.total-agree-wrap {
+
+
+  display: flex;
+  align-items: center;
+
+}
+
+.agree-wrap-container {
+  margin-top: 10px;
+}
+
+.agree-wrap1,
+.agree-wrap2,
+.agree-wrap3,
+.agree-wrap4 {
+  display: flex;
+  padding: 10px 0;
+}
+
+.total-label {
+  border-radius: 7px;
+  background-color: #ebe7e7ea;
+  padding: 7px 6px;
+  display: flex;
+  width: 370px;
+  margin-top: 10px;
+}
+
+
+
+
+.total-agree {
+  margin-top: 2px;
+  margin-left: 10px;
+  font-size: 15px;
+  font-weight: bold;
+  color: #333;
+}
+
+.list-agree1,
+.list-agree2,
+.list-agree3,
+.list-agree4 {
+  margin-top: 3px;
+  margin-left: 10px;
+  font-size: 13px;
+  color: #333;
+}
+
+.list-agree-button {
+  display: inline-block;
+  width: 10px;
+  /* Adjust size as needed */
+  color: #000;
+  /* Text color */
+  text-align: center;
+  /* Center the text */
+  line-height: 20px;
+  /* Center the text vertically */
+  cursor: pointer;
+  /* Change cursor to pointer */
+  border-radius: 4px;
+  /* Optional: rounded corners */
+  margin-top: 3fdpx;
+  margin-left: 8px;
+  /* Spacing from the label */
+  transition: background-color 0.3s;
+  /* Transition effect */
+}
+
+.arrow-button:hover {
+  background-color: #dcdcdc;
+  /* Change background on hover */
+}
+
+.right-bottom-button {
+  background-color: #00accf;
+  color: white;
+  text-align: center;
+  padding: 15px 0;
+  font-size: 16px;
+  font-weight: 600;
+  border-radius: 10px;
+  cursor: pointer;
   margin-top: 20px;
-  background-color: #f9f9f9;
-  /* 시각적인 구분을 위해 연한 배경색 추가 */
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  /* 약간의 그림자 */
+}
+
+.right-bottom-button:hover {
+  background-color: #029bb9;
 }
