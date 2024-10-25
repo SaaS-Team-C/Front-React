@@ -1,4 +1,3 @@
-import InputBox3 from 'src/component/payment';
 import './style.css';
 
 import React, { ChangeEvent, useState } from 'react'
@@ -93,69 +92,135 @@ export default function Payment({ onPathChange }: PaymentComponentProps) {
                         height="23"
                         fill="#333333"
                         viewBox="0 0 20 20"
-                        style={{ cursor: 'pointer', marginTop: '1px' , marginRight: '5px' }} // 마우스 커서를 포인터로 변경
+                        style={{ cursor: 'pointer', marginTop: '1px', marginRight: '5px' }} // 마우스 커서를 포인터로 변경
                     >
                         <path fill="#333" d="M12.414 3.586L11 2l-7 7 7 7 1.414-1.414L6.828 10H17V8H6.828l5.586-5.414z"></path>
                     </svg>
                     <div className='text'>예약 확인 및 결제</div>
                 </div>
             </div>
-
             <div id='payment-bottom-wrapper'>
                 <div className='page-left'>
+                    <div className='choice-room-image'>
+                        <image />
+                    </div>
+
                     <div className='left-top'>
                         <div className='left-top-title'>예약자 정보</div>
                         <div className="payment-input-container3">
-                            <InputBox3
-                                messageError={nameMessageError}
-                                message={nameMessage}
-                                value={name}
-                                label="이름"
-                                type="text"
-                                placeholder="예약자 이름을 입력해주세요."
-                                onChange={onNameChangeHandler}
-                            />
-                            <InputBox3
-                                messageError={telNumberMessageError}
-                                message={telNumberMessage}
-                                value={telNumber}
-                                label="전화번호"
-                                type="text"
-                                placeholder="예약자 전화번호를 입력해주세요."
-                                onChange={onTelNumberChangeHandler}
-                            />
-
-
-                            <div className='check-container1'>
-                                <div className='check-container2'>
-                                    <input
-                                        className='toggle-button'
-                                        type='checkbox'
-                                        checked={isAgreed} // 체크박스의 상태를 isAgreed로 연결
-                                        onChange={onAgreeButtonClickHandler} // 체크박스의 상태가 변경될 때 핸들러 호출
-                                    />
-                                    <div className='check-message'>예약자와 투숙객이 다릅니다.</div>
-                                </div>
+                            <div className='guest-name'>
+                                <div className='name-title'>이름</div>
+                                <div className='name-value'></div>
+                            </div>
+                            <div className='guest-telNumber'>
+                                <div className='telNumber-title'>전화번호</div>
+                                <div className='telNumber-value'></div>
                             </div>
                         </div>
-                        <div className='divider'></div>
-                        <div className='left-bottom'>
-                            <div className='left-bottom-title'>결제 수단</div>
-                            <div className='payment-typeList'>
-                                <div className='kakaopay'></div>
-                                <div className='tossPay'></div>
-                                <div className='naverPay'></div>
-                                <div className='creditCard'></div>
+                    </div>
+                    <div className='divider'></div>
+                    <div className='left-bottom'>
+                        <div className='left-bottom-title'>결제 수단</div>
+                        <div className='payment-typeList'>
+                            <div className='kakaoPay'>
+                                <img className='kakaoPay-image' src="https://image.goodchoice.kr/images/mweb/reservation/payment/kakao.png" />
                             </div>
+                            <div className='tossPay'>
+                                <img className='tossPay-image' src="https://image.goodchoice.kr/images/mweb/reservation/payment/tosspay.png" />
+                            </div>
+                            <div className='naverPay'>
+                                <img className="naverPay-image" src="https://image.goodchoice.kr/images/mweb/reservation/payment/npay2.png" />
+                            </div>
+                            <div className='creditCard'>신용/체크카드</div>
                         </div>
                     </div>
                 </div>
                 <div className='page-right'>
-                    <div className='right-top'></div>
-                    <div className='right-bottom'></div>
+                    <div className='right-top'>
+                        <div className='right-top-wrap'>
+                            <div className='right-top-title'></div>
+                            <div className='right-top-container1'>
+                                <div className='roomType'>객실</div>
+                                <div className='roomType-input'></div>
+                            </div>
+                            <div className='right-top-container2'>
+                                <div className='checkIn&Out'>일정</div>
+                                <div className='checkin&Out-input'></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div className='right-bottom'>
+                        <div className='right-bottom-title'>결제정보</div>
+                        <div className='right-bottom-container1'>
+                            <div className='room-price1'>객실 가격(1박)</div>
+                            <div className='room-price-input1'>원</div>
+                        </div>
+                        <div className='right-bottom-container2'>
+                            <div className='room-price2'>총 결제 금액</div>
+                            <div className='room-price-input2'>원</div>
+                        </div>
+                        <div className='right-bottom-container3'>
+                            <div className='total-agree-wrap'>
+                                <div className='total-label'>
+                                    <input
+                                        className='toggle-button'
+                                        type='checkbox'
+                                    />
+                                    <div className='total-agree'>약관 전체동의</div>
+                                </div>
+                                <div className='total-agree-button'>&gt;</div>
+                            </div>
+
+                            <div className='agree-wrap-container'>
+
+                                <div className='agree-wrap1'>
+                                    <input
+                                        className='toggle-button'
+                                        type='checkbox'
+                                    />
+
+                                    <div className='list-agree1'>숙소 이용규칙 및 취소/환불규정 동의(필수)</div>
+                                    <div className='list-agree-button'>&gt;</div>
+                                </div>
+
+                                <div className='agree-wrap2'>
+                                    <input
+                                        className='toggle-button'
+                                        type='checkbox'
+                                    />
+
+                                    <div className='list-agree2'>개인정보 수집 및 이용 동의(필수)</div>
+                                    <div className='list-agree-button'>&gt;</div>
+                                </div>
+
+                                <div className='agree-wrap3'>
+                                    <input
+                                        className='toggle-button'
+                                        type='checkbox'
+                                    />
+                                    <div className='list-agree3'>개인정보 제3자 제공 동의(필수)</div>
+                                    <div className='list-agree-button'>&gt;</div>
+                                </div>
+
+                                <div className='agree-wrap4'>
+                                    <input
+                                        className='toggle-button'
+                                        type='checkbox'
+                                    />
+
+                                    <div className='list-agree4'>만 14세 이상 확인 (필수)</div>
+                                    <div className='list-agree-button'>&gt;</div>
+                                </div>
+
+                            </div>
+
+
+                        </div>
+                        <div className='right-bottom-button'>원 결제하기</div>
+                    </div>
                 </div>
             </div>
-        </div>
+        </div >
 
 
     );

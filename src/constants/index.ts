@@ -4,6 +4,7 @@ export const ROOT_PATH = "/";
 
 export const MAIN_PATH = "/main"
 
+export const PAYMENT_PATH = "/payment";
 
 export const ACCOMMODATION_LIST_PATH = "/accommodationList";
 export const ACCOMMODATION_LIST_DETAIL_PATH = `${ACCOMMODATION_LIST_PATH}/detail`;

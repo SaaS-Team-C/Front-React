@@ -3,7 +3,7 @@ import './App.css';
 
 import Main from './views/Main';
 
-import SignUp from './views/auth';
+
 import Payment from './views/payment';
 
 import AccommodationList from './views/accommodation/accommodationlist';
@@ -60,7 +60,7 @@ export default function App() {
       <Route path={ACCOMMODATION_LIST_PATH} element={<AccommodationList />} />
       <Route path={ACCOMMODATION_LIST_DETAIL_PATH} element={<DetailList />} />
       <Route path="/accommodationList/detail/:name" element={<Detail />} />
-      {/* <Route path='/sign-up' element={<SignUp onPathChange={() => { }} />} /> */}
+      {/* <Route path='/sign-up' element={<SignUp onPathChange={() => {}} />} /> */}
       <Route path='/payment' element={<Payment onPathChange={() => {}} />} />
       <Route path='/admin' element={<Kanban/>}/>
 
