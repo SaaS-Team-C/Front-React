@@ -15,6 +15,11 @@ import { useCookies } from 'react-cookie';
 import Detail from './component/accomodation/detail';
 
 import DetailList from './component/accomodation/detaillist';
+
+import Admin from './views/admin';
+import FAQ from './views/faq';
+import HostAccommodationRegister from './component/mypagehost/registration';
+
 import GuestMypage from './views/mypage/guest';
 
 
@@ -62,9 +67,10 @@ export default function App() {
       <Route path="/accommodationList/detail/:name" element={<Detail />} />
       {/* <Route path='/sign-up' element={<SignUp onPathChange={() => {}} />} /> */}
       <Route path='/payment' element={<Payment onPathChange={() => {}} />} />
-
-
-
+      <Route path='/admin' element={<Admin/>}/>
+      <Route path='/faq' element={<FAQ/>}/>
+      <Route path='/mypagehost'element={<HostAccommodationRegister/>}/>
+      <Route path='/mypagehost/enroll' element={<HostAccommodationRegister/>}/>
 
 
       <Route path='*' element={<Index />} />

@@ -1,22 +1,15 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './style.css';
 import PaginationFuction from '../pagination'; // PaginationFuction 임포트
+import { AccommodationDTO } from 'src/apis/accommodation/dto/response/accommodation.response.dto';
+
 interface ListProps {
-  accommodations: {
-    id: number;
-    name: string;
-    price: number;
-    rating: number;
-    reviewCount: number;
-    facilities: string[];
-    imageUrl: string;
-    location: string;
-    type: string;
-  }[];
+  accommodations: AccommodationDTO[];
 }
 
 const List: React.FC<ListProps> = ({ accommodations }) => {
+
   const navigate = useNavigate();
 
   // 페이지네이션을 위한 상태 관리
@@ -37,13 +30,13 @@ const List: React.FC<ListProps> = ({ accommodations }) => {
   // 분류 로직
   const sortedAccommodations = [...accommodations].sort((a, b) => {
     if (sortOption === '평점 높은순') {
-      return b.rating - a.rating;
+      return b.accommodation_grade_sum - a.accommodation_grade_sum;
     } else if (sortOption === '리뷰 많은순') {
-      return b.reviewCount - a.reviewCount;
+      return b.review_grade - a.review_grade;
     } else if (sortOption === '낮은 가격순') {
-      return a.price - b.price;
+      return a.room_price - b.room_price;
     } else if (sortOption === '높은 가격순') {
-      return b.price - a.price;
+      return b.room_price - a.room_price;
     }
     return 0;
   });
@@ -53,14 +46,28 @@ const List: React.FC<ListProps> = ({ accommodations }) => {
   const currentAccommodations = sortedAccommodations.slice(startIdx, startIdx + itemsPerPage);
 
   // 북마크 상태 관리
-  const [bookmarks, setBookmarks] = useState<number[]>([]);
+  const [bookmarks, setBookmarks] = useState<string[]>([]);
 
-  const handleBookmarkToggle = (id: number) => {
-    if (bookmarks.includes(id)) {
-      setBookmarks(bookmarks.filter(bookmarkedId => bookmarkedId !== id));
+  const handleBookmarkToggle = (accommodation_name: string) => {
+    if (bookmarks.includes(accommodation_name)) {
+      setBookmarks(bookmarks.filter(bookmarkedId => bookmarkedId !== accommodation_name));
     } else {
-      setBookmarks([...bookmarks, id]);
+      setBookmarks([...bookmarks, accommodation_name]);
     }
+  };
+
+  // 각 숙소의 시설 정보를 문자열로 변환하는 함수
+  const getFacilities = (accommodation: AccommodationDTO) => {
+    const facilities = [];
+    if (accommodation.category_pet) facilities.push('애완동물 허용');
+    if (accommodation.category_non_smoking_area) facilities.push('금연 구역');
+    if (accommodation.category_indoor_spa) facilities.push('실내 스파');
+    if (accommodation.category_dinner_party) facilities.push('저녁 파티 가능');
+    if (accommodation.category_wifi) facilities.push('와이파이');
+    if (accommodation.category_car_park) facilities.push('주차 공간');
+    if (accommodation.category_pool) facilities.push('수영장');
+
+    return facilities.join(', ');
   };
 
   return (
@@ -92,25 +99,25 @@ const List: React.FC<ListProps> = ({ accommodations }) => {
       ) : (
         <div className="accommodation-cards">
           {currentAccommodations.map((accommodation) => (
-            <div key={accommodation.id} className="accommodation-card">
+            <div key={accommodation.accommodation_name} className="accommodation-card">
               <div className="image-wrapper">
-                <img src={accommodation.imageUrl} alt={accommodation.name} className="accommodation-image" />
+                <img src={accommodation.accommodation_main_image} alt={accommodation.accommodation_name} className="accommodation-image" />
                 <div
-                  className={`bookmark ${bookmarks.includes(accommodation.id) ? 'active' : ''}`}
-                  onClick={() => handleBookmarkToggle(accommodation.id)}
+                  className={`bookmark ${bookmarks.includes(accommodation.accommodation_name) ? 'active' : ''}`}
+                  onClick={() => handleBookmarkToggle(accommodation.accommodation_name)}
                 >
                   ♥
                 </div>
               </div>
               <div className="accommodation-info">
-                <h3>{accommodation.name}</h3>
-                <p>{accommodation.type}</p>
-                <p>{accommodation.location}</p>
-                <p>₩{accommodation.price.toLocaleString()} /박</p>
-                <p>Rating: {accommodation.rating}</p>
-                <p>리뷰: {accommodation.reviewCount}개</p>
-                <p>Facilities: {accommodation.facilities.join(', ')}</p>
-                <button className="details-btn" onClick={() => handleDetailClick(accommodation.name)}>
+                <h3>{accommodation.accommodation_name}</h3>
+                <p>{accommodation.accommodation_type}</p>
+                <p>{accommodation.accommodation_address}</p>
+                <p>₩{accommodation.room_price.toLocaleString()} /박</p>
+                <p>Rating: {accommodation.accommodation_grade_sum}</p>
+                <p>리뷰: {accommodation.review_grade}개</p>
+                <p>Facilities: {getFacilities(accommodation)}</p> {/* 수정된 부분 */}
+                <button className="details-btn" onClick={() => handleDetailClick(accommodation.accommodation_name)}>
                   상세보기
                 </button>
               </div>
