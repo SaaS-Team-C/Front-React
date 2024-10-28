@@ -15,10 +15,13 @@ import { useCookies } from 'react-cookie';
 import Detail from './component/accomodation/detail';
 
 import DetailList from './component/accomodation/detaillist';
-import GuestMypage from './views/mypage/guest';
+
 import Admin from './views/admin';
 import FAQ from './views/faq';
 import HostAccommodationRegister from './component/mypagehost/registration';
+
+import GuestMypage from './views/mypage/guest';
+
 
 
 
