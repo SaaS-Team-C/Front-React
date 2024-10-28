@@ -9,14 +9,12 @@ import Payment from './views/payment';
 import AccommodationList from './views/accommodation/accommodationlist';
 import { ACCOMMODATION_LIST_DETAIL_PATH, ACCOMMODATION_LIST_PATH, MAIN_PATH } from './constants';
 
-import { RegionImages } from './resources/images/Region';
+import { RegionImages } from './resources/images/region';
 import { useEffect } from 'react';
 import { useCookies } from 'react-cookie';
 import Detail from './component/accomodation/detail';
 
 import DetailList from './component/accomodation/detaillist';
-
-import Kanban from './component/admin/react-kanban';
 
 
 
@@ -62,7 +60,6 @@ export default function App() {
       <Route path="/accommodationList/detail/:name" element={<Detail />} />
       {/* <Route path='/sign-up' element={<SignUp onPathChange={() => {}} />} /> */}
       <Route path='/payment' element={<Payment onPathChange={() => {}} />} />
-      <Route path='/admin' element={<Kanban/>}/>
 
 
 

@@ -16,7 +16,7 @@ import { ChangeEvent, useEffect, useState } from 'react';
 import Calendar from 'react-calendar';
 import { getValue } from '@testing-library/user-event/dist/utils';
 import CalendarEnd from 'src/component/Calendar';
-import { RegionImages } from 'src/resources/images/Region';
+import { RegionImages } from 'src/resources/images/region';
 
 
 // component: 메인페이지 화면 컴포턴트 //
