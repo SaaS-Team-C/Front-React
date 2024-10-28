@@ -9,7 +9,7 @@ import Payment from './views/payment';
 import AccommodationList from './views/accommodation/accommodationlist';
 import { ACCOMMODATION_LIST_DETAIL_PATH, ACCOMMODATION_LIST_PATH, MAIN_PATH } from './constants';
 
-import { RegionImages } from './resources/images/Region';
+import { RegionImages } from './resources/images/region';
 import { useEffect } from 'react';
 import { useCookies } from 'react-cookie';
 import Detail from './component/accomodation/detail';
