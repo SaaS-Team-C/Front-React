@@ -15,11 +15,8 @@ import { useCookies } from 'react-cookie';
 import Detail from './component/accomodation/detail';
 
 import DetailList from './component/accomodation/detaillist';
-
-import Kanban from './component/admin/react-kanban';
-
-
-
+import Admin from './views/admin';
+import FAQ from './views/faq';
 
 // component: root path 컴포넌트 //
 function Index() {
@@ -62,7 +59,8 @@ export default function App() {
       <Route path="/accommodationList/detail/:name" element={<Detail />} />
       {/* <Route path='/sign-up' element={<SignUp onPathChange={() => {}} />} /> */}
       <Route path='/payment' element={<Payment onPathChange={() => {}} />} />
-      <Route path='/admin' element={<Kanban/>}/>
+      <Route path='/admin' element={<Admin/>}/>
+      <Route path='/faq' element={<FAQ/>}/>
 
 
 
