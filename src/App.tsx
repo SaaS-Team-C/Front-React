@@ -15,6 +15,7 @@ import { useCookies } from 'react-cookie';
 import Detail from './component/accomodation/detail';
 
 import DetailList from './component/accomodation/detaillist';
+import GuestMypage from './views/mypage/guest';
 
 
 
@@ -54,6 +55,7 @@ export default function App() {
     <Routes>
       <Route index element={<Index />} />
       <Route path={MAIN_PATH} element={<Main />} />
+      <Route path='mypage' element={<GuestMypage />}/>
 
       <Route path={ACCOMMODATION_LIST_PATH} element={<AccommodationList />} />
       <Route path={ACCOMMODATION_LIST_DETAIL_PATH} element={<DetailList />} />
