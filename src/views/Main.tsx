@@ -18,7 +18,6 @@ import { getValue } from '@testing-library/user-event/dist/utils';
 import CalendarEnd from 'src/component/Calendar';
 import { RegionImages } from 'src/resources/images/region';
 
-
 // component: 메인페이지 화면 컴포턴트 //
 export default function Main() {
 

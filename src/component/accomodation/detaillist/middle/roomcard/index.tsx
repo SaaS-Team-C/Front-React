@@ -1,12 +1,14 @@
 import React, { useState } from 'react';
-import { useNavigate, useSearchParams } from 'react-router-dom'; 
+import { useNavigate, useSearchParams } from 'react-router-dom';
 import './style.css';
 import Modal from 'react-modal';
 import AccommodationDetailTopImages from '../../top/imageslick';
 import { PAYMENT_PATH } from 'src/constants';
+import { PAYMENT_PATH } from 'src/constants';
 
 // interface: 객실 상세보기 버튼 & 객실 정보 카드에 사용되는 props //
 interface Room {
+  name: string;
   name: string;
   type: string;
   checkInTime: string;
@@ -27,6 +29,8 @@ interface RoomCardProps {
 const RoomCard: React.FC<RoomCardProps> = ({ room, isFullyBooked }) => {
 
   // state: 상태 함수 //
+
+  // state: 상태 함수 //
   const [isImageModalOpen, setIsImageModalOpen] = useState(false);
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const [isDetailModalOpen, setIsDetailModalOpen] = useState(false);
@@ -44,7 +48,7 @@ const RoomCard: React.FC<RoomCardProps> = ({ room, isFullyBooked }) => {
 
   // function: 네비게이터 함수 //
   const navigator = useNavigate();
-  
+
   // 이미지 클릭 시 이미지 모달 열기
   const handleImageClick = (index: number) => {
     setCurrentImageIndex(index);
@@ -66,17 +70,17 @@ const RoomCard: React.FC<RoomCardProps> = ({ room, isFullyBooked }) => {
     setIsDetailModalOpen(false);
   };
 
-  // 일정 변경 버튼 클릭 핸들러
+  // 일정 변경 버튼 클릭 핸들러 
   const handleChangeSchedule = () => {
     navigator('/main'); // 메인 화면으로 이동
   };
 
-  // event handler: 숙소 예약 버튼 클릭 시 예약 페이지로 이동하는 핸들러 //
+   // event handler: 숙소 예약 버튼 클릭 시 예약 페이지로 이동하는 핸들러 //
     //! 예약 버튼 클릭시 로그인 상태 확인 필요 & 로그인 안되어 있을 시 로그인 하도록 alert창 or 회원가입 페이지로 이동하게끔 수정하기
     const handleChangebooking = () => {
       navigator(
         `${PAYMENT_PATH}?Region=${urlRegion}&start=${urlStart}&end=${urlEnd}&count=${urlCount}&name=${encodeURIComponent(room.name)}&roomType=${urlRoom}`,
-        { state: { imageSrc: room.images[0], price: room.price, type: room.type  } }
+        { state: { imageSrc: room.images[0], price: room.price, checkInTime: urlStart, checkOutTime: urlEnd, personnelCount: urlCount, roomName: urlName, roomType: urlRoom } }
       );
     };
 
@@ -137,7 +141,7 @@ const RoomCard: React.FC<RoomCardProps> = ({ room, isFullyBooked }) => {
           overlayClassName="modal-overlay"
         >
           <h2>{room.type} - 상세정보</h2>
-          <p>{room.description}</p> 
+          <p>{room.description}</p>
           <p>입실 시간: {room.checkInTime}</p>
           <p>퇴실 시간: {room.checkOutTime}</p>
           <p>최대 수용 인원: {room.maxOccupancy}명</p>
