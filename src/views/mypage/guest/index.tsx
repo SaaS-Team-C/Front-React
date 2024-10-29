@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import "./style.css"
 import Topbar from 'src/component/topbar'
 import MypageCatalogButton from 'src/component/mypage/mypagecatalogbutton';
+import Information from 'src/component/mypage/mypagemain/information';
 
 
 
@@ -28,10 +29,7 @@ export default function GuestMypage() {
             </div>}
         {!testValue && <div className='hostMypage-side-bar'></div>}
         {testValue && <div className='guestMypage-main'>
-            <div className='guestMypage-main-title'>
-                
-            </div>
-            <div className='guestMypage-main-detail'></div>
+                <Information />
             </div>}
         {!testValue && <div className='hosttMypage-main'></div>}
     </div>}
