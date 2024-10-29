@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
+import axios from 'axios'; 
 import './style.css';
 import PaginationFuction from '../../pagination';
 
@@ -11,21 +12,6 @@ interface Review {
   likes: number;
 }
 
-// 초기 리뷰 데이터
-const initialReviewsData: Review[] = [
-  { id: 1, user: '이소진', date: '06/01/2024', rating: 5, content: '안녕하세요...', likes: 6 },
-  { id: 2, user: '미쳐버린 개발자', date: '06/01/2024', rating: 4, content: '에러 에러 에러...', likes: 6 },
-  { id: 3, user: 'Customer', date: '06/01/2024', rating: 1, content: 'I hate error...', likes: 6 },
-  { id: 4, user: 'a', date: '06/01/2024', rating: 3, content: '안녕하세요...', likes: 6 },
-  { id: 5, user: '미쳐버린 개발자', date: '06/01/2024', rating: 4, content: '에러 에러 에러...', likes: 6 },
-  { id: 6, user: 'Customer', date: '06/01/2024', rating: 1, content: 'I hate error...', likes: 6 },
-  { id: 7, user: '이소진', date: '06/01/2024', rating: 2, content: '안녕하세요...', likes: 6 },
-  { id: 8, user: '미쳐버린 개발자', date: '06/01/2024', rating: 2, content: '에러 에러 에러...', likes: 6 },
-  { id: 9, user: 'Customer', date: '06/01/2024', rating: 1, content: 'I hate error...', likes: 6 },
-  { id: 10, user: 'User4', date: '06/02/2024', rating: 4, content: '이곳은 정말 좋았습니다!', likes: 2 },
-  { id: 11, user: 'User5', date: '06/02/2024', rating: 3, content: '평범한 숙소였습니다.', likes: 1 },
-  { id: 12, user: 'User6', date: '06/02/2024', rating: 5, content: '완벽한 경험이었습니다!', likes: 3 },
-];
 
 // 리뷰 컴포넌트
 const ReviewCard: React.FC<{
@@ -53,12 +39,25 @@ const ReviewCard: React.FC<{
   );
 };
 
-// 리뷰 리스트 컴포넌트
+// state: 리뷰 리스트 컴포넌트 //
 const ReviewList: React.FC = () => {
-  const [reviews, setReviews] = useState<Review[]>(initialReviewsData);
+  const [reviews, setReviews] = useState<Review[]>([]);
   const [currentPage, setCurrentPage] = useState<number>(1);
   const [sortCriteria, setSortCriteria] = useState<string>('추천순');
   const itemsPerPage = 5; // 한 페이지당 보여줄 리뷰 개수
+
+   // effect: 데이터베이스에서 리뷰 가져오기 //
+   useEffect(() => {
+    const fetchReviews = async () => {
+      try {
+        const response = await axios.get<Review[]>('/api/reviews'); // API 경로는 백엔드와 맞춰서 추후 실제 경로 수정 예정
+        setReviews(response.data);
+      } catch (error) {
+        console.error('리뷰 데이터를 가져오는 중 에러 발생:', error);
+      }
+    };
+    fetchReviews();
+  }, []);
 
   // 좋아요 수 증가 함수
   const handleLike = (id: number) => {

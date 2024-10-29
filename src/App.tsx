@@ -12,7 +12,7 @@ import { ACCOMMODATION_LIST_DETAIL_PATH, ACCOMMODATION_LIST_PATH, MAIN_PATH } fr
 import { RegionImages } from './resources/images/region';
 import { useEffect } from 'react';
 import { useCookies } from 'react-cookie';
-import Detail from './component/accomodation/detail';
+
 
 import DetailList from './component/accomodation/detaillist';
 
@@ -21,6 +21,7 @@ import FAQ from './views/faq';
 import HostAccommodationRegister from './component/mypagehost/registration';
 
 import GuestMypage from './views/mypage/guest';
+
 
 
 
@@ -64,7 +65,6 @@ export default function App() {
 
       <Route path={ACCOMMODATION_LIST_PATH} element={<AccommodationList />} />
       <Route path={ACCOMMODATION_LIST_DETAIL_PATH} element={<DetailList />} />
-      <Route path="/accommodationList/detail/:name" element={<Detail />} />
       {/* <Route path='/sign-up' element={<SignUp onPathChange={() => {}} />} /> */}
       <Route path='/payment' element={<Payment onPathChange={() => {}} />} />
       <Route path='/admin' element={<Admin/>}/>
