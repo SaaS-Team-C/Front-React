@@ -3,26 +3,39 @@
     flex-direction: column;
     width: 100%;
     height: 100%;
+    margin-left: 40px;
 }
 
 .information-title {
     width: 100%;
-    height: 100px;
-    background-color: black;
-
+    height: 50px;
+    font-size: 30px;
 }
 
 .information-title-text {
-
+    font-size: 20px;
+    font-weight: 700;
+    margin-top: 10px;
+    margin-bottom: 20px;
 }
 
-.information-title-ditail {
+.information-title-box {
+    display: flex;
+    align-items: end;
+}
 
+.information-title-ditail-username {
+    font-size: 17px;
+    font-weight: 600;
+}
+.information-title-ditail {
+    font-size: 16px;
+    
 }
 
 .information-main {
     width: 100%;
     height: 100%;
-    background-color: aquamarine;
+    margin-top: 50px;
 
 }
