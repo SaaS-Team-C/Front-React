@@ -1,46 +1,30 @@
-import React, { ChangeEvent } from 'react';
-import './style.css';
+import React from 'react';
+import './Modal.css'; // 모달의 스타일을 위한 CSS 파일
 
-interface Props {
-    label: string;
-    type: 'text' | 'password';
-    placeholder: string;
-    value: string;
-    message: string;
-    messageError: boolean;
-    buttonName?: string;
-
-    onChange: (event: ChangeEvent<HTMLInputElement>) => void;
-    onButtonClick?: () => void;
+// ModalProps 타입 정의
+interface ModalProps {
+    isOpen: boolean;
+    onClose: () => void;
+    title: string;
+    children?: React.ReactNode; // children의 타입을 React.ReactNode로 정의
 }
 
-export default function InputBox3({
-    label,
-    type,
-    placeholder,
-    value,
-    buttonName,
-    message,
-    messageError,
-    onChange,
-    onButtonClick
-}: Props) {
+const Modal: React.FC<ModalProps> = ({ isOpen, onClose, title, children }) => {
+    if (!isOpen) return null;
 
     return (
-
-        <div id='payment-wrapper'>
-            <div className="payment-input-container2">
-                <label>{label}</label>
-                <div className="payment-input-with-button">
-                    <input type={type} value={value} placeholder={placeholder} onChange={onChange} />
-                    {buttonName && <button onClick={onButtonClick}>{buttonName}</button>}
+        <div className='modal-overlay'>
+            <div className='modal'>
+                <div className='modal-header'>
+                    <h2>{title}</h2>
+                    <button className='close-button' onClick={onClose}>X</button>
                 </div>
-                {message && <p className="message">{message}</p>}
-                {messageError && <p className="messageError">{messageError}</p>}
+                <div className='modal-content'>
+                    {children} {/* 여기에 children을 렌더링 */}
+                </div>
             </div>
         </div>
-
-
     );
 };
 
+export default Modal;
