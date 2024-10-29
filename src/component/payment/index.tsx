@@ -1,5 +1,5 @@
 import React from 'react';
-import './Modal.css'; // 모달의 스타일을 위한 CSS 파일
+import './style.css'; // 모달의 스타일을 위한 CSS 파일
 
 // ModalProps 타입 정의
 interface ModalProps {

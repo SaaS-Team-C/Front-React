@@ -4,11 +4,10 @@ import './style.css';
 import Modal from 'react-modal';
 import AccommodationDetailTopImages from '../../top/imageslick';
 import { PAYMENT_PATH } from 'src/constants';
-import { PAYMENT_PATH } from 'src/constants';
+
 
 // interface: 객실 상세보기 버튼 & 객실 정보 카드에 사용되는 props //
 interface Room {
-  name: string;
   name: string;
   type: string;
   checkInTime: string;
@@ -75,14 +74,14 @@ const RoomCard: React.FC<RoomCardProps> = ({ room, isFullyBooked }) => {
     navigator('/main'); // 메인 화면으로 이동
   };
 
-   // event handler: 숙소 예약 버튼 클릭 시 예약 페이지로 이동하는 핸들러 //
-    //! 예약 버튼 클릭시 로그인 상태 확인 필요 & 로그인 안되어 있을 시 로그인 하도록 alert창 or 회원가입 페이지로 이동하게끔 수정하기
-    const handleChangebooking = () => {
-      navigator(
-        `${PAYMENT_PATH}?Region=${urlRegion}&start=${urlStart}&end=${urlEnd}&count=${urlCount}&name=${encodeURIComponent(room.name)}&roomType=${urlRoom}`,
-        { state: { imageSrc: room.images[0], price: room.price, checkInTime: urlStart, checkOutTime: urlEnd, personnelCount: urlCount, roomName: urlName, roomType: urlRoom } }
-      );
-    };
+  // event handler: 숙소 예약 버튼 클릭 시 예약 페이지로 이동하는 핸들러 //
+  //! 예약 버튼 클릭시 로그인 상태 확인 필요 & 로그인 안되어 있을 시 로그인 하도록 alert창 or 회원가입 페이지로 이동하게끔 수정하기
+  const handleChangebooking = () => {
+    navigator(
+      `${PAYMENT_PATH}?Region=${urlRegion}&start=${urlStart}&end=${urlEnd}&count=${urlCount}&name=${encodeURIComponent(room.name)}&roomType=${urlRoom}`,
+      { state: { imageSrc: room.images[0], price: room.price, checkInTime: urlStart, checkOutTime: urlEnd, personnelCount: urlCount, roomName: urlName, roomType: urlRoom } }
+    );
+  };
 
   return (
     <div className="room-card">
