@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 import './style.css';
-import PaginationFuction from '../pagination'; // PaginationFuction 임포트
+import PaginationFuction from '../pagination';
 import { AccommodationDTO } from 'src/apis/accommodation/dto/response/accommodation.response.dto';
+import { fetchAccommodationList } from 'src/apis/accommodation';
+import { ACCOMMODATION_LIST_DETAIL_PATH } from 'src/constants';
 
 interface ListProps {
   accommodations: AccommodationDTO[];
@@ -10,31 +12,69 @@ interface ListProps {
 
 const List: React.FC<ListProps> = ({ accommodations }) => {
 
-  const navigate = useNavigate();
+  // state: 숙소 리스트 불러오기 상태 관리 
+  const [callAccommodationList, SetCallAccommodationList] = useState<AccommodationDTO[]>([]);
 
-  // 페이지네이션을 위한 상태 관리
+  // state: 숙소 리스트 불러오기
+  useEffect(() => {
+    // 서버에서 숙소 데이터를 가져오는 함수
+    const getAccommodations = async () => {
+      try {
+        // fetchAccommodationList()는 서버에 요청을 보내 숙소 리스트를 받아오는 함수
+        const data = await fetchAccommodationList();
+        SetCallAccommodationList(data);
+      } catch (error) {
+        console.error('Error fetching accommodation list:', error);
+      }
+    };
+    getAccommodations();
+  }, []);
+
+
+  // state: 페이지네이션을 위한 상태 관리 //
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 10;
 
+  // state: url 값 저장 //
+  const [searchParams, setSearchParams] = useSearchParams('');
+
+  // state: 분류 상태 관리 (분류 옵션 기본값) //
+  const [sortOption, setSortOption] = useState('추천순');
+
+
+  // function: url 값 가져오기 //
+  const urlRegion = searchParams.get('Region')
+  const urlStart = searchParams.get('start')
+  const urlEnd = searchParams.get('end')
+  const urlCount = searchParams.get('count')
+  const urlName = searchParams.get('name')
+
+  // function: 네비게이터 함수 //
+  const navigator = useNavigate();
+
+
+  // event handler: 숙소 클릭 시 숙소 디테일 페이지로 이동하는 핸들러 //
   const handleDetailClick = (name: string) => {
-    navigate(`/accommodationList/detail/${encodeURIComponent(name)}`);
+    navigator(
+      `${ACCOMMODATION_LIST_DETAIL_PATH}?Region=${urlRegion}&start=${urlStart}&end=${urlEnd}&count=${urlCount}&name=${encodeURIComponent(name)}`
+    );
   };
 
+  // event handler: 핸들러 //
   const handlePageChange = (page: number) => {
     setCurrentPage(page);
   };
 
-  // 분류 상태 관리 (분류 옵션 기본값) //
-  const [sortOption, setSortOption] = useState('추천순');
 
   // 분류 로직
-  const sortedAccommodations = [...accommodations].sort((a, b) => {
+  const sortedAccommodations = [...callAccommodationList].sort((a, b) => {
     if (sortOption === '평점 높은순') {
       return b.accommodation_grade_sum - a.accommodation_grade_sum;
     } else if (sortOption === '리뷰 많은순') {
       return b.review_grade - a.review_grade;
     } else if (sortOption === '낮은 가격순') {
       return a.room_price - b.room_price;
+      
     } else if (sortOption === '높은 가격순') {
       return b.room_price - a.room_price;
     }
@@ -73,7 +113,7 @@ const List: React.FC<ListProps> = ({ accommodations }) => {
   return (
     <div className="accommodation-list">
       <div className="list-header">
-        <p>{accommodations.length}개의 검색 결과가 있습니다.</p>
+        <p>{callAccommodationList.length}개의 검색 결과가 있습니다.</p>
         <div className="sort-dropdown">
           <label htmlFor="sortOptions">분류 기준:</label>
           <select
@@ -115,8 +155,8 @@ const List: React.FC<ListProps> = ({ accommodations }) => {
                 <p>{accommodation.accommodation_address}</p>
                 <p>₩{accommodation.room_price.toLocaleString()} /박</p>
                 <p>Rating: {accommodation.accommodation_grade_sum}</p>
-                <p>리뷰: {accommodation.review_grade}개</p>
-                <p>Facilities: {getFacilities(accommodation)}</p> {/* 수정된 부분 */}
+                <p>리뷰: {accommodation.review_grade}개</p> {/* 합계 구하는걸로 수정 필요 */}
+                <p>Facilities: {getFacilities(accommodation)}</p>
                 <button className="details-btn" onClick={() => handleDetailClick(accommodation.accommodation_name)}>
                   상세보기
                 </button>

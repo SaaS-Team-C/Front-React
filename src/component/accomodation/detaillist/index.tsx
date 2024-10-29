@@ -19,9 +19,8 @@ export default function DetailList() {
   return (
     <div>
       <Topbar />
-      <AccommodationDetailTop onReviewButtonClick={scrollToReviews} />
+      <AccommodationDetailTop onReviewButtonClick={scrollToReviews} accommodation_name={''} />
       <AccommodationDetailMiddle />
-      {/* Set the ref on the review list container */}
       <div ref={reviewSectionRef} id="reviewSection">
         <ReviewList />
       </div>
