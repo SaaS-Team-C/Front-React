@@ -4,9 +4,11 @@ import './style.css';
 import Modal from 'react-modal';
 import AccommodationDetailTopImages from '../../top/imageslick';
 import { PAYMENT_PATH } from 'src/constants';
+import { PAYMENT_PATH } from 'src/constants';
 
 // interface: 객실 상세보기 버튼 & 객실 정보 카드에 사용되는 props //
 interface Room {
+  name: string;
   name: string;
   type: string;
   checkInTime: string;
@@ -25,6 +27,8 @@ interface RoomCardProps {
 
 // component: 객실 상세 정보 보여주는 카드 컴포넌트 //
 const RoomCard: React.FC<RoomCardProps> = ({ room, isFullyBooked }) => {
+
+  // state: 상태 함수 //
 
   // state: 상태 함수 //
   const [isImageModalOpen, setIsImageModalOpen] = useState(false);

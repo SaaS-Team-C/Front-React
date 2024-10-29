@@ -1,159 +1,19 @@
 import React, { useState } from 'react';
 import './style.css';
 import RoomCard from '../roomcard';
+import { RoomDTO } from 'src/apis/accommodation/dto/request/room.request.dto';
+import { AccommodationDetailRequestDTO } from 'src/apis/accommodation/dto/request/accommodation-detail.request.dto';
 // import MapSection from '../navermap';
 
-
-const roomsData = [
-  {
-    type: "스탠다드 룸",
-    checkInTime: "14:00",
-    checkOutTime: "12:00",
-    maxOccupancy: 2,
-    price: 100000,
-    description: "이 객실은 기본형 스탠다드 룸으로 ...",
-    images: [
-      require('./Best-Western-Plus-Congress-Hotel-4-800x600.jpg'),
-      require('./Europe-Hotel-4-800x600.jpg'),
-      require('./ibis-Yerevan-Center-4-800x600.jpg'),
-      require('./Best-Western-Plus-Congress-Hotel-4-800x600.jpg'),
-      require('./ibis-Yerevan-Center-4-800x600.jpg'),
-    ]
-  },
-  {
-    type: "디럭스 룸",
-    checkInTime: "14:00",
-    checkOutTime: "12:00",
-    maxOccupancy: 4,
-    price: 150000,
-    description: "디럭스 룸은 넓은 공간과 ...",
-    images: [
-      require('./Best-Western-Plus-Congress-Hotel-4-800x600.jpg'),
-      require('./Europe-Hotel-4-800x600.jpg'),
-      require('./ibis-Yerevan-Center-4-800x600.jpg'),
-
-    ]
-  },
-  {
-    type: "스탠다드 룸",
-    checkInTime: "14:00",
-    checkOutTime: "12:00",
-    maxOccupancy: 2,
-    price: 100000,
-    description: "이 객실은 기본형 스탠다드 룸으로 ...",
-    images: [
-      require('./Best-Western-Plus-Congress-Hotel-4-800x600.jpg'),
-      require('./Europe-Hotel-4-800x600.jpg'),
-      require('./ibis-Yerevan-Center-4-800x600.jpg'),
-      require('./Best-Western-Plus-Congress-Hotel-4-800x600.jpg'),
-      require('./ibis-Yerevan-Center-4-800x600.jpg'),
-    ]
-  },
-  {
-    type: "디럭스 룸",
-    checkInTime: "14:00",
-    checkOutTime: "12:00",
-    maxOccupancy: 4,
-    price: 150000,
-    description: "디럭스 룸은 넓은 공간과 ...",
-    images: [
-      require('./Best-Western-Plus-Congress-Hotel-4-800x600.jpg'),
-      require('./Europe-Hotel-4-800x600.jpg'),
-      require('./ibis-Yerevan-Center-4-800x600.jpg'),
-
-    ]
-  },
-  {
-    type: "스탠다드 룸",
-    checkInTime: "14:00",
-    checkOutTime: "12:00",
-    maxOccupancy: 2,
-    price: 100000,
-    description: "이 객실은 기본형 스탠다드 룸으로 ...",
-    images: [
-      require('./Best-Western-Plus-Congress-Hotel-4-800x600.jpg'),
-      require('./Europe-Hotel-4-800x600.jpg'),
-      require('./ibis-Yerevan-Center-4-800x600.jpg'),
-      require('./Best-Western-Plus-Congress-Hotel-4-800x600.jpg'),
-      require('./ibis-Yerevan-Center-4-800x600.jpg'),
-    ]
-  },
-  {
-    type: "디럭스 룸",
-    checkInTime: "14:00",
-    checkOutTime: "12:00",
-    maxOccupancy: 4,
-    price: 150000,
-    description: "디럭스 룸은 넓은 공간과 ...",
-    images: [
-      require('./Best-Western-Plus-Congress-Hotel-4-800x600.jpg'),
-      require('./Europe-Hotel-4-800x600.jpg'),
-      require('./ibis-Yerevan-Center-4-800x600.jpg'),
-
-    ]
-  },
-  {
-    type: "스탠다드 룸",
-    checkInTime: "14:00",
-    checkOutTime: "12:00",
-    maxOccupancy: 2,
-    price: 100000,
-    description: "이 객실은 기본형 스탠다드 룸으로 ...",
-    images: [
-      require('./Best-Western-Plus-Congress-Hotel-4-800x600.jpg'),
-      require('./Europe-Hotel-4-800x600.jpg'),
-      require('./ibis-Yerevan-Center-4-800x600.jpg'),
-      require('./Best-Western-Plus-Congress-Hotel-4-800x600.jpg'),
-      require('./ibis-Yerevan-Center-4-800x600.jpg'),
-    ]
-  },
-  {
-    type: "디럭스 룸",
-    checkInTime: "14:00",
-    checkOutTime: "12:00",
-    maxOccupancy: 4,
-    price: 150000,
-    description: "디럭스 룸은 넓은 공간과 ...",
-    images: [
-      require('./Best-Western-Plus-Congress-Hotel-4-800x600.jpg'),
-      require('./Europe-Hotel-4-800x600.jpg'),
-      require('./ibis-Yerevan-Center-4-800x600.jpg'),
-
-    ]
-  }
-];
-
-// 숙소 정보를 위한 인터페이스
-interface AccommodationInfo {
-  introduction: string;
-  usageInfo: string;
+interface RoomDetailProps {
+  roomsData: RoomDTO[]; 
+}
+interface AccommodationInfoProps{
+  accommodationData?: AccommodationDetailRequestDTO;
 }
 
-// 숙소 정보 데이터
-const accommodationData: AccommodationInfo = {
-  introduction: `
-    [호텔명]에 오신 것을 환영합니다! 도심 속 휴식처, [호텔명]은 현대적 감각과 세련된 디자인의 아늑한 공간에서 품격 있는 서비스를 제공합니다.
-    최상의 편안함을 위해 마련된 넓고 아늑한 객실은 아름다운 도시 전망과 함께 최첨단 시설을 갖추고 있어, 고객님의 특별한 휴식 경험을 선사합니다.
-  `,
-  usageInfo: `
-    <h3>기본정보</h3>
-    - 체크인: 15:00 | 체크아웃: 11:00<br/>
-    - 미성년자의 숙박 금지: 청소년 보호법 제30조에 의거하여 미성년자(만 19세 미만) 숙박이 불가능합니다.<br/>
-    <h3>주차 안내</h3>
-    - 주차장 완비: 주차 가능<br/>
-    <h3>인원 추가 및 요금</h3>
-    - 성인 추가 요금: 1인당 추가 요금 발생<br/>
-    <h3>부대시설</h3>
-    - 레스토랑: 11:30 ~ 21:00 운영<br/>
-    - 주차장: 무료 제공<br/>
-    <h3>취소 및 환불 규정</h3>
-    - 체크인 3일 전: 무료 취소 가능<br/>
-    - 체크인 1일 전: 30% 차감 후 환불<br/>
-  `,
-};
-
 // component: middel 객실 리스트 컴보넌트(객실 카드, 숙소 소개)
-const RoomList: React.FC = () => {
+const RoomList: React.FC<RoomDetailProps & AccommodationInfoProps> = ({ roomsData, accommodationData }) => {
   const [visibleRooms, setVisibleRooms] = useState(3); // 처음에는 3개의 객실만 보이도록 설정
   const [isAllRoomsVisible, setIsAllRoomsVisible] = useState(false); // 모든 객실 표시 여부
   const [isAccommodationInfoVisible, setIsAccommodationInfoVisible] = useState(false); // 숙소 정보 표시 여부
@@ -203,10 +63,16 @@ const RoomList: React.FC = () => {
               숙소 정보 닫기
             </button>
             <div className="accommodation-info">
-              <h3>숙소 소개</h3>
-              <p>{accommodationData.introduction}</p>
-              <h3>숙소 이용 정보</h3>
-              <div dangerouslySetInnerHTML={{ __html: accommodationData.usageInfo }} />
+            {accommodationData ? (
+              <>
+                <h3>숙소 소개</h3>
+                <p>{accommodationData.introduction}</p>
+                <h3>숙소 이용 정보</h3>
+                <div dangerouslySetInnerHTML={{ __html: accommodationData.usage_info }} />
+              </>
+            ) : (
+              <p>숙소 정보를 불러오는 중입니다.</p>
+            )}
             </div>
           </>
         )}

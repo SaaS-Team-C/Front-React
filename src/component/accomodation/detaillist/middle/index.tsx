@@ -5,7 +5,7 @@ import RoomList from './roomlist'
 export default function AccommodationDetailMiddle() {
   return (
     <div>
-      <RoomList />
+      <RoomList roomsData={[]} accommodationData={undefined} />
     </div>
   )
 }
