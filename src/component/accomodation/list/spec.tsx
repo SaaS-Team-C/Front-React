@@ -7,7 +7,7 @@ import { AccommodationDTO } from 'src/apis/accommodation/dto/response/accommodat
 const AccommodationList: React.FC = () => {
 
   // **useState([])**는 컴포넌트가 화면에 표시할 기본 데이터 상태를 정하는 역할
-  // accommodations는 숙소 데이터를 저장하는 공간
+  // accommodatio/ns는 숙소 데이터를 저장하는 공간
   // setAccommodations는 이 accommodations에 새 데이터를 저장하거나 업데이트하는 도구
   const [accommodations, setAccommodations] = useState<AccommodationDTO[]>([]);
 

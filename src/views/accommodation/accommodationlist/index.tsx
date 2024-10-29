@@ -67,8 +67,7 @@ const AccommodationList: React.FC = () => {
             facilities={facilities}
             setFacilities={setFacilities}
           />
-          {/* <List accommodations={filteredAccommodations} /> */}
-          <List accommodations={[]}/>
+          <List accommodations={filteredAccommodations} />
         </div>
       </div>
     </div>

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './style.css';
-import PaginationFuction from '../pagination'; // PaginationFuction 임포트
+import PaginationFuction from '../pagination';
 import { AccommodationDTO } from 'src/apis/accommodation/dto/response/accommodation.response.dto';
 
 interface ListProps {
@@ -116,7 +116,7 @@ const List: React.FC<ListProps> = ({ accommodations }) => {
                 <p>₩{accommodation.room_price.toLocaleString()} /박</p>
                 <p>Rating: {accommodation.accommodation_grade_sum}</p>
                 <p>리뷰: {accommodation.review_grade}개</p>
-                <p>Facilities: {getFacilities(accommodation)}</p> {/* 수정된 부분 */}
+                <p>Facilities: {getFacilities(accommodation)}</p>
                 <button className="details-btn" onClick={() => handleDetailClick(accommodation.accommodation_name)}>
                   상세보기
                 </button>

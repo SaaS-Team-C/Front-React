@@ -9,7 +9,7 @@ export interface AccommodationDTO {
     // reviewCount: number;
 
     // facilities //
-    category_area: string; // 지역 카테고리 빼라고 했는데 mysql 테이블에 있길래 일단 넣어둠
+    category_area: string; // 지역 카테고리 빼라고 했는데 erd에 있길래 일단 넣어둠
     category_pet: boolean; 
     category_non_smoking_area: boolean; 
     category_indoor_spa: boolean;
