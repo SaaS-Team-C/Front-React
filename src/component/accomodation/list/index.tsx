@@ -5,7 +5,9 @@ import PaginationFuction from '../pagination';
 import { AccommodationDTO } from 'src/apis/accommodation/dto/response/accommodation.response.dto';
 import { fetchAccommodationList } from 'src/apis/accommodation';
 import { ACCOMMODATION_LIST_DETAIL_PATH } from 'src/constants';
+import { RoomDTO } from 'src/apis/accommodation/dto/request/room.request.dto';
 
+// interface: 메인 화면에서 검색 된 숙소 리스트 props //
 interface ListProps {
   accommodations: AccommodationDTO[];
 }
@@ -15,9 +17,19 @@ const List: React.FC<ListProps> = ({ accommodations }) => {
   // state: 숙소 리스트 불러오기 상태 관리 
   const [callAccommodationList, SetCallAccommodationList] = useState<AccommodationDTO[]>([]);
 
-  // state: 숙소 리스트 불러오기
+  // state: 페이지네이션을 위한 상태 관리 //
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 10;
+
+  // state: url 값 저장 //
+  const [searchParams] = useSearchParams('');
+
+  // state: 분류 상태 관리 (분류 옵션 기본값) //
+  const [sortOption, setSortOption] = useState('추천순');
+
+  // effect: 숙소 리스트 불러오기
   useEffect(() => {
-    // 서버에서 숙소 데이터를 가져오는 함수
+    // function: 받아온 숙소 리스트를 화면에 뿌려주는 함수
     const getAccommodations = async () => {
       try {
         // fetchAccommodationList()는 서버에 요청을 보내 숙소 리스트를 받아오는 함수
@@ -31,17 +43,6 @@ const List: React.FC<ListProps> = ({ accommodations }) => {
   }, []);
 
 
-  // state: 페이지네이션을 위한 상태 관리 //
-  const [currentPage, setCurrentPage] = useState(1);
-  const itemsPerPage = 10;
-
-  // state: url 값 저장 //
-  const [searchParams, setSearchParams] = useSearchParams('');
-
-  // state: 분류 상태 관리 (분류 옵션 기본값) //
-  const [sortOption, setSortOption] = useState('추천순');
-
-
   // function: url 값 가져오기 //
   const urlRegion = searchParams.get('Region')
   const urlStart = searchParams.get('start')
@@ -51,7 +52,6 @@ const List: React.FC<ListProps> = ({ accommodations }) => {
 
   // function: 네비게이터 함수 //
   const navigator = useNavigate();
-
 
   // event handler: 숙소 클릭 시 숙소 디테일 페이지로 이동하는 핸들러 //
   const handleDetailClick = (name: string) => {
@@ -66,17 +66,19 @@ const List: React.FC<ListProps> = ({ accommodations }) => {
   };
 
 
-  // 분류 로직
+  // function: 분류 로직
   const sortedAccommodations = [...callAccommodationList].sort((a, b) => {
+    const aMinPrice = Math.min(...a.rooms.map((room) => room.roomPrice));
+    const bMinPrice = Math.min(...b.rooms.map((room) => room.roomPrice));
+
     if (sortOption === '평점 높은순') {
       return b.accommodation_grade_sum - a.accommodation_grade_sum;
     } else if (sortOption === '리뷰 많은순') {
       return b.review_grade - a.review_grade;
     } else if (sortOption === '낮은 가격순') {
-      return a.room_price - b.room_price;
-      
+      return aMinPrice - bMinPrice;
     } else if (sortOption === '높은 가격순') {
-      return b.room_price - a.room_price;
+      return bMinPrice - aMinPrice;
     }
     return 0;
   });
@@ -109,6 +111,14 @@ const List: React.FC<ListProps> = ({ accommodations }) => {
 
     return facilities.join(', ');
   };
+
+  // 최저 가격 가져오는 함수
+  const getLowestRoomPrice = (rooms: RoomDTO[]): number => {
+    return rooms.reduce((minPrice, room) => {
+      return room.roomPrice < minPrice ? room.roomPrice : minPrice;
+    }, rooms[0]?.roomPrice || 0);
+  };
+
 
   return (
     <div className="accommodation-list">
@@ -153,7 +163,12 @@ const List: React.FC<ListProps> = ({ accommodations }) => {
                 <h3>{accommodation.accommodation_name}</h3>
                 <p>{accommodation.accommodation_type}</p>
                 <p>{accommodation.accommodation_address}</p>
-                <p>₩{accommodation.room_price.toLocaleString()} /박</p>
+
+                {/* 최저 객실 가격 표시 */}
+                <p>₩{getLowestRoomPrice(accommodation.rooms).toLocaleString()} /박</p>
+
+
+
                 <p>Rating: {accommodation.accommodation_grade_sum}</p>
                 <p>리뷰: {accommodation.review_grade}개</p> {/* 합계 구하는걸로 수정 필요 */}
                 <p>Facilities: {getFacilities(accommodation)}</p>
