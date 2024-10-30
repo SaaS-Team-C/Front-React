@@ -2,73 +2,52 @@ import "./style.css";
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import Topbar from "src/component/topbar";
+import { fetchAdminApprovalRequests } from "src/apis/admin";
+import { AdminRequestDTO } from "src/apis/admin/dto/request";
 
-interface AccommodationRequest {
-  id: number;
-  hostName: string;
-  accommodationName: string;
-  requestDate: string;
-  status: 'pending' | 'approved';
+interface AdminProps {
+  request:AdminRequestDTO;
 }
 
-const AdminPage: React.FC = () => {
-  const [requests, setRequests] = useState<AccommodationRequest[]>([
-    {
-      id: 1,
-      hostName: 'Juan M.',
-      accommodationName: 'Beach House',
-      requestDate: '2023-05-16',
-      status: 'pending',
-    },
-    {
-      id: 2,
-      hostName: 'Mia L.',
-      accommodationName: 'Mountain Cabin',
-      requestDate: '2023-03-14',
-      status: 'pending',
-    },
-    {
-      id: 3,
-      hostName: 'Lynda G.',
-      accommodationName: 'Urban Studio',
-      requestDate: '2023-04-29',
-      status: 'approved',
-    },
-    {
-      id: 4,
-      hostName: 'Lynda G.',
-      accommodationName: 'Urban Studio',
-      requestDate: '2024-07-29',
-      status: 'approved',
-    },
-  ]);
+const Accommodationenrollmentapproval: React.FC = () => {
+  const [requests, setRequests] = useState<AdminRequestDTO[]>([]);
 
   const [pendingSortOrder, setPendingSortOrder] = useState<'latest' | 'oldest'>('latest');
   const [approvedSortOrder, setApprovedSortOrder] = useState<'latest' | 'oldest'>('latest');
 
+  // function: 호스트 승인 요청 리스트 불러오기 함수 //
   const fetchRequests = async () => {
     try {
-      const response = await axios.get('/api/accommodation/requests');
-      setRequests(response.data);
+      const data = await fetchAdminApprovalRequests();
+      
+      // requestDate와 status를 추가하여 가공된 데이터 생성
+      const processedData = data.map((item) => ({
+        ...item,
+        requestDate: item.requestDate || new Date().toISOString(), // 데이터베이스 값이 없을 경우 현재 시각 설정
+        status: item.status || 'pending', // 기본 상태를 '대기 중'으로 설정
+      }));
+  
+      setRequests(processedData); // 상태 업데이트
     } catch (error) {
       console.error('Error fetching accommodation requests:', error);
     }
   };
+  
 
-  const toggleApprovalStatus = (id: number) => {
+  const toggleApprovalStatus = (hostId: string) => {
     setRequests((prevRequests) =>
       prevRequests.map((req) =>
-        req.id === id
+        req.hostId === hostId
           ? { ...req, status: req.status === 'pending' ? 'approved' : 'pending' }
           : req
       )
     );
   };
 
-  const sortRequests = (requests: AccommodationRequest[], order: 'latest' | 'oldest') => {
+  const sortRequests = (requests: AdminRequestDTO[], order: 'latest' | 'oldest') => {
     return [...requests].sort((a, b) => {
-      const dateA = new Date(a.requestDate);
-      const dateB = new Date(b.requestDate);
+      const dateA = new Date(a.requestDate || new Date().toISOString()); // undefined면 현재 시각을 사용
+      const dateB = new Date(b.requestDate || new Date().toISOString()); // undefined면 현재 시각을 사용
       return order === 'latest' ? dateB.getTime() - dateA.getTime() : dateA.getTime() - dateB.getTime();
     });
   };
@@ -88,31 +67,23 @@ const AdminPage: React.FC = () => {
   );
 
   return (
-    <div style={{ width: '1200px', margin: '0 auto', color: '#E0E0E0' }}>
-        <Topbar/>
+    <div className="page-container">
+      <Topbar />
       <h1>숙소 등록 요청 관리자 페이지</h1>
-
-      {/* 대기 중 요청 테이블 */}
+  
       <h2>대기 중 요청</h2>
-      <div style={{ display: 'flex', justifyContent: 'flex-end', marginBottom: '10px' }}>
-        <label style={{ color: '#E0E0E0', marginRight: '10px' }}>분류:</label>
+      <div className="sort-container">
+        <label className="sort-label">분류:</label>
         <select
           value={pendingSortOrder}
           onChange={(e) => setPendingSortOrder(e.target.value as 'latest' | 'oldest')}
-          style={{
-            padding: '5px',
-            borderRadius: '5px',
-            cursor: 'pointer',
-            backgroundColor: '#333',
-            color: '#E0E0E0',
-            border: '1px solid #555',
-          }}
+          className="sort-select"
         >
           <option value="latest">최신순</option>
           <option value="oldest">오래된 순</option>
         </select>
       </div>
-
+  
       <table className="table">
         <thead>
           <tr>
@@ -125,7 +96,7 @@ const AdminPage: React.FC = () => {
         </thead>
         <tbody>
           {pendingRequests.map((request) => (
-            <tr key={request.id}>
+            <tr key={request.hostId}>
               <td>{request.hostName}</td>
               <td>{request.accommodationName}</td>
               <td>{request.requestDate}</td>
@@ -134,15 +105,8 @@ const AdminPage: React.FC = () => {
               </td>
               <td>
                 <button
-                  onClick={() => toggleApprovalStatus(request.id)}
-                  style={{
-                    padding: '5px 10px',
-                    borderRadius: '5px',
-                    backgroundColor: '#00C2FF',
-                    color: '#FFFFFF',
-                    border: 'none',
-                    cursor: 'pointer',
-                  }}
+                  onClick={() => toggleApprovalStatus(request.hostId)}
+                  className="action-button approve"
                 >
                   승인
                 </button>
@@ -151,28 +115,21 @@ const AdminPage: React.FC = () => {
           ))}
         </tbody>
       </table>
-
+  
       {/* 승인 완료 요청 테이블 */}
-      <h2 style={{ marginTop: '40px' }}>승인 완료</h2>
-      <div style={{ display: 'flex', justifyContent: 'flex-end', marginBottom: '10px' }}>
-        <label style={{ color: '#E0E0E0', marginRight: '10px' }}>분류:</label>
+      <h2>승인 완료</h2>
+      <div className="sort-container">
+        <label className="sort-label">분류:</label>
         <select
           value={approvedSortOrder}
           onChange={(e) => setApprovedSortOrder(e.target.value as 'latest' | 'oldest')}
-          style={{
-            padding: '5px',
-            borderRadius: '5px',
-            cursor: 'pointer',
-            backgroundColor: '#333',
-            color: '#E0E0E0',
-            border: '1px solid #555',
-          }}
+          className="sort-select"
         >
           <option value="latest">최신순</option>
           <option value="oldest">오래된 순</option>
         </select>
       </div>
-
+  
       <table className="table">
         <thead>
           <tr>
@@ -185,7 +142,7 @@ const AdminPage: React.FC = () => {
         </thead>
         <tbody>
           {approvedRequests.map((request) => (
-            <tr key={request.id}>
+            <tr key={request.hostId}>
               <td>{request.hostName}</td>
               <td>{request.accommodationName}</td>
               <td>{request.requestDate}</td>
@@ -194,15 +151,8 @@ const AdminPage: React.FC = () => {
               </td>
               <td>
                 <button
-                  onClick={() => toggleApprovalStatus(request.id)}
-                  style={{
-                    padding: '5px 10px',
-                    borderRadius: '5px',
-                    backgroundColor: '#FF5733',
-                    color: '#FFFFFF',
-                    border: 'none',
-                    cursor: 'pointer',
-                  }}
+                  onClick={() => toggleApprovalStatus(request.hostId)}
+                  className="action-button cancel"
                 >
                   취소
                 </button>
@@ -215,4 +165,4 @@ const AdminPage: React.FC = () => {
   );
 };
 
-export default AdminPage;
+export default Accommodationenrollmentapproval;

@@ -1,6 +1,6 @@
 // interface: 메인에서 숙소 검색 시 불러올 숙소 검색 리스트 dto//
 
-export interface AccommodationDTO {
+export interface AccommodationSearchListDTO {
 
   accommodation_name: string;
   room_price: number; // room 테이블에서 데이터 불러와야 함
