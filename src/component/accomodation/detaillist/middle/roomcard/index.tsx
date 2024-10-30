@@ -4,11 +4,11 @@ import './style.css';
 import Modal from 'react-modal';
 import AccommodationDetailTopImages from '../../top/imageslick';
 import { PAYMENT_PATH } from 'src/constants';
-import { PAYMENT_PATH } from 'src/constants';
+
 
 // interface: 객실 상세보기 버튼 & 객실 정보 카드에 사용되는 props //
 interface Room {
-  name: string;
+  
   name: string;
   type: string;
   checkInTime: string;
