@@ -1,6 +1,6 @@
 import axios, { AxiosResponse } from "axios";
 import { ResponseDto } from "./dto/response";
-import { AccommodationDTO } from "./dto/request/accommodation.request.dto";
+import { AccommodationSearchListDTO } from "./dto/request/accommodation.request.dto";
 
 
 // variable: API URL 상수 //
@@ -39,9 +39,9 @@ const responseErrorHandler = (error: any) => {
 // function: 숙소 검색 리스트 가져오기 API 함수 //
 const GET_ACCOMMODATION_LIST_API_URL = `${ROOMLY_API_DOMAIN}/accommodationList`;
 
-export const fetchAccommodationList = async (): Promise<AccommodationDTO[]> => {
+export const fetchAccommodationList = async (): Promise<AccommodationSearchListDTO[]> => {
   try {
-    const response = await api.get<AccommodationDTO[]>(GET_ACCOMMODATION_LIST_API_URL); 
+    const response = await api.get<AccommodationSearchListDTO[]>(GET_ACCOMMODATION_LIST_API_URL); 
     return response.data;
   } catch (error) {
     console.error('Failed to fetch accommodations:', error);
