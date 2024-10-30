@@ -1,17 +1,20 @@
 import "./style.css";
 import React, { useEffect, useState } from 'react';
-import axios from 'axios';
 import Topbar from "src/component/topbar";
 import { fetchAdminApprovalRequests } from "src/apis/admin";
 import { AdminRequestDTO } from "src/apis/admin/dto/request";
+export interface AdminRequestProps {
+  req: AdminRequestDTO[];
+}
 
-interface AdminProps {
-  request:AdminRequestDTO;
+// requestDate와 status 필드를 포함하는 임시 타입
+interface AdminRequestWithStatus extends AdminRequestDTO {
+  requestDate: string; // 요청 일자
+  status: 'pending' | 'approved'; // 상태
 }
 
 const Accommodationenrollmentapproval: React.FC = () => {
-  const [requests, setRequests] = useState<AdminRequestDTO[]>([]);
-
+  const [requests, setRequests] = useState<AdminRequestWithStatus[]>([]);
   const [pendingSortOrder, setPendingSortOrder] = useState<'latest' | 'oldest'>('latest');
   const [approvedSortOrder, setApprovedSortOrder] = useState<'latest' | 'oldest'>('latest');
 
@@ -19,21 +22,21 @@ const Accommodationenrollmentapproval: React.FC = () => {
   const fetchRequests = async () => {
     try {
       const data = await fetchAdminApprovalRequests();
-      
+
       // requestDate와 status를 추가하여 가공된 데이터 생성
-      const processedData = data.map((item) => ({
+      const processedData: AdminRequestWithStatus[] = data.map((item) => ({
         ...item,
-        requestDate: item.requestDate || new Date().toISOString(), // 데이터베이스 값이 없을 경우 현재 시각 설정
-        status: item.status || 'pending', // 기본 상태를 '대기 중'으로 설정
+        requestDate: new Date().toISOString(), // 기본 값 설정
+        status: 'pending', // 기본 상태 설정
       }));
-  
+
       setRequests(processedData); // 상태 업데이트
     } catch (error) {
       console.error('Error fetching accommodation requests:', error);
     }
   };
-  
 
+  // 상태 변경 함수
   const toggleApprovalStatus = (hostId: string) => {
     setRequests((prevRequests) =>
       prevRequests.map((req) =>
@@ -44,10 +47,11 @@ const Accommodationenrollmentapproval: React.FC = () => {
     );
   };
 
-  const sortRequests = (requests: AdminRequestDTO[], order: 'latest' | 'oldest') => {
+  // 정렬 함수
+  const sortRequests = (requests: AdminRequestWithStatus[], order: 'latest' | 'oldest') => {
     return [...requests].sort((a, b) => {
-      const dateA = new Date(a.requestDate || new Date().toISOString()); // undefined면 현재 시각을 사용
-      const dateB = new Date(b.requestDate || new Date().toISOString()); // undefined면 현재 시각을 사용
+      const dateA = new Date(a.requestDate);
+      const dateB = new Date(b.requestDate);
       return order === 'latest' ? dateB.getTime() - dateA.getTime() : dateA.getTime() - dateB.getTime();
     });
   };
@@ -70,7 +74,7 @@ const Accommodationenrollmentapproval: React.FC = () => {
     <div className="page-container">
       <Topbar />
       <h1>숙소 등록 요청 관리자 페이지</h1>
-  
+
       <h2>대기 중 요청</h2>
       <div className="sort-container">
         <label className="sort-label">분류:</label>
@@ -83,7 +87,7 @@ const Accommodationenrollmentapproval: React.FC = () => {
           <option value="oldest">오래된 순</option>
         </select>
       </div>
-  
+
       <table className="table">
         <thead>
           <tr>
@@ -115,8 +119,7 @@ const Accommodationenrollmentapproval: React.FC = () => {
           ))}
         </tbody>
       </table>
-  
-      {/* 승인 완료 요청 테이블 */}
+
       <h2>승인 완료</h2>
       <div className="sort-container">
         <label className="sort-label">분류:</label>
@@ -129,7 +132,7 @@ const Accommodationenrollmentapproval: React.FC = () => {
           <option value="oldest">오래된 순</option>
         </select>
       </div>
-  
+
       <table className="table">
         <thead>
           <tr>

@@ -1,7 +1,4 @@
-
 /* 페이지 전체 컨테이너 스타일 - (기능구현 먼저 다 끝내놓고 나중에 상세 디자인 작업 예정) */
-
-
 
 /* .div{
     font-family: Arial, sans-serif;
@@ -9,17 +6,17 @@
     margin: 0 auto;
     padding: 20px;
   } */
-  
-  /* 헤더 스타일 */
-  /* h1 {
+
+/* 헤더 스타일 */
+/* h1 {
     text-align: center;
     font-size: 24px;
     color: #333;
     margin-bottom: 20px;
   } */
-  
-  /* 날짜 선택 필터 스타일 */
-  /* label {
+
+/* 날짜 선택 필터 스타일 */
+/* label {
     font-size: 16px;
     color: #555;
     margin-right: 10px;
@@ -36,9 +33,9 @@
     border-radius: 4px;
     width: 200px;
   } */
-  
-  /* 테이블 스타일 */
-  /* table {
+
+/* 테이블 스타일 */
+/* table {
     width: 100%;
     border-collapse: collapse;
     margin-top: 20px;
@@ -62,14 +59,14 @@
   tbody tr:hover {
     background-color: #f9f9f9;
   } */
-  
-  /* ID, 이름, 날짜 텍스트 스타일 */
-  /* td {
+
+/* ID, 이름, 날짜 텍스트 스타일 */
+/* td {
     color: #555;
   } */
-  
-  /* 반응형 스타일 */
-  /* @media (max-width: 600px) {
+
+/* 반응형 스타일 */
+/* @media (max-width: 600px) {
     div {
       padding: 10px;
     }
