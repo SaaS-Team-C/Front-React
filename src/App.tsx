@@ -1,7 +1,7 @@
 import { Route, Routes, useNavigate } from 'react-router-dom';
 import './App.css';
 
-import Main from './views/Main';
+import Main from './views/main/Main';
 
 
 import Payment from './views/payment';
