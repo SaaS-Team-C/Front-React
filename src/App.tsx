@@ -20,8 +20,9 @@ import FAQ from './views/faq';
 import HostAccommodationRegister from './component/mypagehost/registration';
 
 import GuestMypage from './views/mypage/guest';
-import AccomodationEnrollApprovalPage from './views/admin/hostenrollmentapproval';
+
 import Accommodationenrollmentapproval from './views/admin/accommodationenrollmentapproval';
+import HostEnrollmentapproval from './views/admin/hostenrollmentapproval/index';
 
 
 
@@ -69,7 +70,7 @@ export default function App() {
       {/* <Route path='/sign-up' element={<SignUp onPathChange={() => {}} />} /> */}
       <Route path='/payment' element={<Payment onPathChange={() => {}} />} />
       <Route path='/admin' element={<Accommodationenrollmentapproval/>}/>
-      <Route path='/adminHost' element={<AccomodationEnrollApprovalPage/>}/>
+      <Route path='/adminHost' element={<HostEnrollmentapproval/>}/>
       <Route path='/faq' element={<FAQ/>}/>
       <Route path='/mypagehost'element={<HostAccommodationRegister/>}/>
       <Route path='/mypagehost/enroll' element={<HostAccommodationRegister/>}/>
