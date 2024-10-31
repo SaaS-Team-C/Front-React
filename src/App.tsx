@@ -17,12 +17,14 @@ import { useCookies } from 'react-cookie';
 import DetailList from './component/accomodation/detaillist';
 
 import FAQ from './views/faq';
-import HostAccommodationRegister from './component/mypagehost/registration';
+import HostAccommodationRegister from './component/mypagehost/MyAccommodationManagement/registration';
 
 import GuestMypage from './views/mypage/guest';
 
 import Accommodationenrollmentapproval from './views/admin/accommodationenrollmentapproval';
 import HostEnrollmentapproval from './views/admin/hostenrollmentapproval/index';
+import SignUp from './views/auth';
+import MypageHost from './views/mypagehost';
 
 
 
@@ -63,17 +65,17 @@ export default function App() {
     <Routes>
       <Route index element={<Index />} />
       <Route path={MAIN_PATH} element={<Main />} />
-      <Route path='mypage' element={<GuestMypage />}/>
+      <Route path='mypage' element={<GuestMypage />} />
 
       <Route path={ACCOMMODATION_LIST_PATH} element={<AccommodationList />} />
       <Route path={ACCOMMODATION_LIST_DETAIL_PATH} element={<DetailList />} />
-      <Route path='/sign-up' element={<SignUp onPathChange={() => {}} />} />
-      <Route path='/payment' element={<Payment onPathChange={() => {}} />} />
-      <Route path='/admin' element={<Accommodationenrollmentapproval/>}/>
-      <Route path='/adminHost' element={<HostEnrollmentapproval/>}/>
-      <Route path='/faq' element={<FAQ/>}/>
-      <Route path='/mypagehost'element={<HostAccommodationRegister/>}/>
-      <Route path='/mypagehost/enroll' element={<HostAccommodationRegister/>}/>
+      {/* <Route path='/sign-up' element={<SignUp onPathChange={() => { }} />} /> */}
+      <Route path='/payment' element={<Payment onPathChange={() => { }} />} />
+      <Route path='/admin' element={<Accommodationenrollmentapproval />} />
+      <Route path='/adminHost' element={<HostEnrollmentapproval />} />
+      <Route path='/faq' element={<FAQ />} />
+      <Route path='/mypagehost' element={<MypageHost />} />
+      <Route path='/mypagehost/enroll' element={<HostAccommodationRegister />} />
 
 
       <Route path='*' element={<Index />} />
