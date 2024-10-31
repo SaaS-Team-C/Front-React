@@ -185,4 +185,81 @@
     transform: translateX(30px);
     background-color: #FF5A5A;
   }
+
+  /* 스타일 전체 래퍼 */
+.page-container {
+  width: 1200px;
+  margin: 0 auto;
+  color: #E0E0E0;
+}
+
+/* 제목 스타일 */
+.page-container h1, .page-container h2 {
+  color: #E0E0E0;
+}
+
+/* 정렬 선택 섹션 */
+.sort-container {
+  display: flex;
+  justify-content: flex-end;
+  margin-bottom: 10px;
+}
+
+.sort-label {
+  color: #E0E0E0;
+  margin-right: 10px;
+}
+
+.sort-select {
+  padding: 5px;
+  border-radius: 5px;
+  cursor: pointer;
+  background-color: #333;
+  color: #E0E0E0;
+  border: 1px solid #555;
+}
+
+/* 테이블 스타일 */
+.table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.table th, .table td {
+  padding: 10px;
+  border: 1px solid #ddd;
+  text-align: left;
+}
+
+.status-badge {
+  padding: 5px;
+  border-radius: 5px;
+  color: #fff;
+}
+
+.status-badge.in-progress {
+  background-color: #00C2FF;
+}
+
+.status-badge.done {
+  background-color: #28A745;
+}
+
+/* 버튼 스타일 */
+.action-button {
+  padding: 5px 10px;
+  border-radius: 5px;
+  color: #FFFFFF;
+  border: none;
+  cursor: pointer;
+}
+
+.action-button.approve {
+  background-color: #00C2FF;
+}
+
+.action-button.cancel {
+  background-color: #FF5733;
+}
+
   

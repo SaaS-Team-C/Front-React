@@ -9,6 +9,7 @@ import ModalComponent2 from 'src/component/payment/modal2';
 import ModalComponent3 from 'src/component/payment/modal3';
 import ModalComponent4 from 'src/component/payment/modal4';
 import Information from 'src/component/mypage/mypagemain/information';
+import axios from 'axios';
 
 interface Agreements {
     ruleAgreement: boolean;
@@ -157,7 +158,6 @@ export default function Payment({ onPathChange }: PaymentComponentProps) {
     // event handler: 결제 요청 버튼 클릭 이벤트 처리 // 
     const onChargeClickButtonHandler = (
         pg_method: string,
-        price: number,
         nickname: string,
         redirect_url: string
     ) => {
@@ -173,17 +173,45 @@ export default function Payment({ onPathChange }: PaymentComponentProps) {
                 pay_method: 'card',
                 merchant_uid: `mid_${new Date().getTime()}`, // 현재 시간
                 name: '결제 품목 및 제목 지정',
-                amount: 100, // 실제 충전할 금액
-                buyer_email: 'buyer@example.com', // 구매자 이메일
+                amount: 3, // 실제 충전할 금액 (중괄호 제거)
+                buyer_email: '', // 구매자 이메일
                 buyer_name: nickname, // 구매자 이름
                 buyer_tel: '010-1222-2222',
-                buyer_addr: '서울특별시 강남구 삼성동',
-                buyer_postcode: '123-456',
+                buyer_addr: '',
+                buyer_postcode: '',
                 m_redirect_url: redirect_url || "http://localhost:3000/main" // 결제 완료 후 리다이렉션할 주소
             },
-            function (rsp: { success: boolean; error_msg?: string }) { // callback
-                if (rsp.success) { // 결제가 성공적으로 이루어졌다면
+            async function (rsp: { success: boolean; error_msg?: string }) {
+
+                if (rsp.success) {
                     alert("결제되었습니다.");
+    
+                    try {
+                        await axios.post('http://localhost:8080/payment/success', {
+                            paymentRequest: {
+                                pgMethod: pg_method,
+                                amount: 3, 
+                                nickname: nickname,
+                                buyerEmail: '', 
+                                buyerName: nickname,
+                                buyerTel: '010-1222-2222',
+                                buyerAddr: '서울특별시 강남구 삼성동',
+                                buyerPostcode: '123-456'
+                            },
+                            reservationRequest: {
+                                guestId: 'qwer1234',
+                                accommodationName: '좋은펜션',
+                                roomId: 123,
+                                checkInDay: '0000-00-00', 
+                                checkOutDay: '0000-00-00', 
+                                reservationTotalPeople: 3,
+                                reservationStatus: 0,
+                                createdAt: `mid_${new Date().getTime()}`
+                            }
+                        });
+                    } catch (error) {
+                        console.error("Failed to send payment data to server:", error);
+                    }
                 } else {
                     alert(`결제 실패되었습니다.: ${rsp.error_msg || '알 수 없는 오류'}`);
                 }
@@ -360,7 +388,7 @@ export default function Payment({ onPathChange }: PaymentComponentProps) {
                             </div>
                         </div>
                     </div>
-                    <div className='right-bottom-button' onClick={() => onChargeClickButtonHandler('kakaopay', price, '사용자 닉네임', '리다이렉트 URL')}>{isAllAgreed && price && <div>{price}원 결제하기</div>}</div>
+                    <div className='right-bottom-button' onClick={() => onChargeClickButtonHandler('kakaopay', '사용자 닉네임', '리다이렉트 URL')}>{isAllAgreed && price && <div>{price}원 결제하기</div>}</div>
                 </div>
             </div>
         </div>

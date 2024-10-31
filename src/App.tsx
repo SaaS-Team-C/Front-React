@@ -16,11 +16,13 @@ import { useCookies } from 'react-cookie';
 
 import DetailList from './component/accomodation/detaillist';
 
-import Admin from './views/admin';
 import FAQ from './views/faq';
 import HostAccommodationRegister from './component/mypagehost/registration';
 
 import GuestMypage from './views/mypage/guest';
+import AccomodationEnrollApprovalPage from './views/admin/hostenrollmentapproval';
+import Accommodationenrollmentapproval from './views/admin/accommodationenrollmentapproval';
+import SignUp from './views/auth';
 
 
 
@@ -65,9 +67,10 @@ export default function App() {
 
       <Route path={ACCOMMODATION_LIST_PATH} element={<AccommodationList />} />
       <Route path={ACCOMMODATION_LIST_DETAIL_PATH} element={<DetailList />} />
-      {/* <Route path='/sign-up' element={<SignUp onPathChange={() => {}} />} /> */}
+      <Route path='/sign-up' element={<SignUp onPathChange={() => {}} />} />
       <Route path='/payment' element={<Payment onPathChange={() => {}} />} />
-      <Route path='/admin' element={<Admin/>}/>
+      <Route path='/admin' element={<Accommodationenrollmentapproval/>}/>
+      <Route path='/adminHost' element={<AccomodationEnrollApprovalPage/>}/>
       <Route path='/faq' element={<FAQ/>}/>
       <Route path='/mypagehost'element={<HostAccommodationRegister/>}/>
       <Route path='/mypagehost/enroll' element={<HostAccommodationRegister/>}/>

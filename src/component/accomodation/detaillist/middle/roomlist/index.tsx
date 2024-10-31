@@ -6,9 +6,9 @@ import { AccommodationDetailRequestDTO } from 'src/apis/accommodation/dto/reques
 // import MapSection from '../navermap';
 
 interface RoomDetailProps {
-  roomsData: RoomDTO[]; 
+  roomsData: RoomDTO[];
 }
-interface AccommodationInfoProps{
+interface AccommodationInfoProps {
   accommodationData?: AccommodationDetailRequestDTO;
 }
 
@@ -63,16 +63,16 @@ const RoomList: React.FC<RoomDetailProps & AccommodationInfoProps> = ({ roomsDat
               숙소 정보 닫기
             </button>
             <div className="accommodation-info">
-            {accommodationData ? (
-              <>
-                <h3>숙소 소개</h3>
-                <p>{accommodationData.introduction}</p>
-                <h3>숙소 이용 정보</h3>
-                <div dangerouslySetInnerHTML={{ __html: accommodationData.usage_info }} />
-              </>
-            ) : (
-              <p>숙소 정보를 불러오는 중입니다.</p>
-            )}
+              {accommodationData ? (
+                <>
+                  <h3>숙소 소개</h3>
+                  <p>{accommodationData.introduction}</p>
+                  <h3>숙소 이용 정보</h3>
+                  <div dangerouslySetInnerHTML={{ __html: accommodationData.usage_info }} />
+                </>
+              ) : (
+                <p>숙소 정보를 불러오는 중입니다.</p>
+              )}
             </div>
           </>
         )}

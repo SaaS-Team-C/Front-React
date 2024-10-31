@@ -1,12 +1,8 @@
 import "./style.css";
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import Sidebar from "src/component/accomodation/sidebarfilter";
 import List from "../../../component/accomodation/list";
 import Topbar from "src/component/topbar";
-import { AccommodationDTO } from "src/apis/accommodation/dto/response/accommodation.response.dto";
-import { fetchAccommodationList } from "src/apis/accommodation";
-import { useNavigate, useSearchParams } from "react-router-dom";
-
 
 const AccommodationList: React.FC = () => {
 
@@ -16,23 +12,23 @@ const AccommodationList: React.FC = () => {
   const [accommodationType, setAccommodationType] = useState<boolean[]>([]);
   const [facilities, setFacilities] = useState<boolean[]>([]);
 
-  
+
   return (
     <div className="AccommodationList">
       <div className="app-container">
         <Topbar />
         <div className="content-container">
           <Sidebar
-              priceRange={priceRange} 
-              setPriceRange={setPriceRange} 
-              reviewScore={reviewScore} 
-              setReviewScore={setReviewScore} 
-              accommodationType={accommodationType} 
-              setAccommodationType={setAccommodationType} 
-              facilities={facilities} 
-              setFacilities={setFacilities}
+            priceRange={priceRange}
+            setPriceRange={setPriceRange}
+            reviewScore={reviewScore}
+            setReviewScore={setReviewScore}
+            accommodationType={accommodationType}
+            setAccommodationType={setAccommodationType}
+            facilities={facilities}
+            setFacilities={setFacilities}
           />
-          <List accommodations={[]}/>
+          <List accommodations={[]} />
         </div>
       </div>
     </div>

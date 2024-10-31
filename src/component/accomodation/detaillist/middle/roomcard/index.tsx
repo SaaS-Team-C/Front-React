@@ -4,25 +4,12 @@ import './style.css';
 import Modal from 'react-modal';
 import AccommodationDetailTopImages from '../../top/imageslick';
 import { PAYMENT_PATH } from 'src/constants';
-
-
-
-// interface: 객실 상세보기 버튼 & 객실 정보 카드에 사용되는 props //
-interface Room {
-  
-  name: string;
-  type: string;
-  checkInTime: string;
-  checkOutTime: string;
-  maxOccupancy: number;
-  price: number;
-  description: string;
-  images: string[];
-}
+import { RoomDTO } from 'src/apis/accommodation/dto/request/room.request.dto';
+import { useCookies } from 'react-cookie';
 
 // props: 객실 카드 컴포넌트의 props 정의 //
 interface RoomCardProps {
-  room: Room;
+  room: RoomDTO;
   isFullyBooked: boolean; // 객실 매진 여부를 나타내는 props 추가
 }
 
@@ -30,14 +17,13 @@ interface RoomCardProps {
 const RoomCard: React.FC<RoomCardProps> = ({ room, isFullyBooked }) => {
 
   // state: 상태 함수 //
-
-  // state: 상태 함수 //
   const [isImageModalOpen, setIsImageModalOpen] = useState(false);
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const [isDetailModalOpen, setIsDetailModalOpen] = useState(false);
+  const [cookies] = useCookies(['accessToken']);
 
   // state: url 값 저장 //
-  const [searchParams, setSearchParams] = useSearchParams('');
+  const [searchParams] = useSearchParams('');
 
   // function: url 값 가져오기 //
   const urlRegion = searchParams.get('Region')
@@ -76,14 +62,21 @@ const RoomCard: React.FC<RoomCardProps> = ({ room, isFullyBooked }) => {
     navigator('/main'); // 메인 화면으로 이동
   };
 
-   // event handler: 숙소 예약 버튼 클릭 시 예약 페이지로 이동하는 핸들러 //
-    //! 예약 버튼 클릭시 로그인 상태 확인 필요 & 로그인 안되어 있을 시 로그인 하도록 alert창 or 회원가입 페이지로 이동하게끔 수정하기
-    const handleChangebooking = () => {
+  // event handler: 숙소 예약 버튼 클릭 시 예약 페이지로 이동하는 핸들러 //
+  const handleChangebooking = () => {
+    if (cookies.accessToken) {
+      // 로그인 상태인 경우 예약 페이지로 이동
       navigator(
         `${PAYMENT_PATH}?Region=${urlRegion}&start=${urlStart}&end=${urlEnd}&count=${urlCount}&name=${encodeURIComponent(room.name)}&roomType=${urlRoom}`,
-        { state: { imageSrc: room.images[0], price: room.price, checkInTime: urlStart, checkOutTime: urlEnd, personnelCount: urlCount, roomName: urlName, roomType: urlRoom } }
+        { state: { imageSrc: room.images[0], price: room.roomPrice, checkInTime: urlStart, checkOutTime: urlEnd, personnelCount: urlCount, roomName: urlName, roomType: urlRoom } }
       );
-    };
+    } else {
+      // 로그인 상태가 아닌 경우 alert 표시 후 회원가입 페이지로 이동
+      if (window.confirm('Roomly 회원만 숙박 예약이 가능합니다. 로그인/회원가입 페이지로 이동하시겠습니까?')) {
+        navigator('/sign-up');
+      }
+    }
+  };
 
   return (
     <div className="room-card">
@@ -118,7 +111,7 @@ const RoomCard: React.FC<RoomCardProps> = ({ room, isFullyBooked }) => {
             <button className="reserve-btn" onClick={handleChangebooking}>
               숙박 예약
             </button>
-            <p className="price">₩{room.price.toLocaleString()}원</p>
+            <p className="price">₩{room.roomPrice.toLocaleString()}원</p>
           </div>
         </>
       )}
@@ -146,7 +139,7 @@ const RoomCard: React.FC<RoomCardProps> = ({ room, isFullyBooked }) => {
           <p>입실 시간: {room.checkInTime}</p>
           <p>퇴실 시간: {room.checkOutTime}</p>
           <p>최대 수용 인원: {room.maxOccupancy}명</p>
-          <p>가격: ₩{room.price.toLocaleString()}원</p>
+          <p>가격: ₩{room.roomPrice.toLocaleString()}원</p>
           <button onClick={closeDetailModal}>닫기</button>
         </Modal>
       )}
