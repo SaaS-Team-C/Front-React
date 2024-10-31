@@ -32,13 +32,36 @@ const RoomList: React.FC<RoomDetailProps & AccommodationInfoProps> = ({ roomsDat
     setIsAccommodationInfoVisible(!isAccommodationInfoVisible); // 숙소 정보 토글
   };
 
+
+
+
+  // 테스트용 (테스트 끝나면 삭제 예정)
+  const mockRoomData: RoomDTO = {
+    name: "Deluxe Room",
+    type: "Deluxe Suite",
+    description: "Spacious suite with a beautiful city view, free WiFi, and complimentary breakfast.",
+    checkInTime: "14:00",
+    checkOutTime: "11:00",
+    maxOccupancy: 4,
+    roomPrice: 150000,
+    images: [
+      "https://example.com/images/deluxe-room1.jpg",
+      "https://example.com/images/deluxe-room2.jpg",
+      "https://example.com/images/deluxe-room3.jpg",
+      "https://example.com/images/deluxe-room4.jpg"
+    ]
+  };
+
   return (
     <div className="room-list-container">
       <h2>객실 선택</h2>
       <div className="room-list">
         {roomsData.slice(0, visibleRooms).map((room, index) => (
 
-          <RoomCard key={index} room={room} isFullyBooked={false} />
+
+          // <RoomCard key={index} room={room} isFullyBooked={false} />
+          //(테스트 끝나면 삭제 예정)
+          <RoomCard key={index} room={mockRoomData} isFullyBooked={false} />
         ))}
         {!isAllRoomsVisible ? (
           <button className="show-more-btn" onClick={handleShowMore}>
