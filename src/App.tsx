@@ -23,6 +23,7 @@ import GuestMypage from './views/mypage/guest';
 
 import Accommodationenrollmentapproval from './views/admin/accommodationenrollmentapproval';
 import HostEnrollmentapproval from './views/admin/hostenrollmentapproval/index';
+import SignUp from './views/auth';
 
 
 
