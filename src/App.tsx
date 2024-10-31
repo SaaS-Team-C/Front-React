@@ -23,6 +23,8 @@ import GuestMypage from './views/mypage/guest';
 import AccomodationEnrollApprovalPage from './views/admin/hostenrollmentapproval';
 import Accommodationenrollmentapproval from './views/admin/accommodationenrollmentapproval';
 import SignUp from './views/auth';
+import FindId from './views/find';
+
 
 
 
@@ -69,6 +71,7 @@ export default function App() {
       <Route path={ACCOMMODATION_LIST_DETAIL_PATH} element={<DetailList />} />
       <Route path='/sign-up' element={<SignUp onPathChange={() => {}} />} />
       <Route path='/payment' element={<Payment onPathChange={() => {}} />} />
+      <Route path='/find' element={<FindId onPathChange={() => {}} />} />
       <Route path='/admin' element={<Accommodationenrollmentapproval/>}/>
       <Route path='/adminHost' element={<AccomodationEnrollApprovalPage/>}/>
       <Route path='/faq' element={<FAQ/>}/>
