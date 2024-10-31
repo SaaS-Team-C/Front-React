@@ -394,24 +394,22 @@ align-items: center;
 }
 
 .list-agree-button {
+
   display: inline-block;
-  width: 10px;
-  /* Adjust size as needed */
-  color: #000;
-  /* Text color */
+
   text-align: center;
-  /* Center the text */
+
   line-height: 20px;
-  /* Center the text vertically */
+
   cursor: pointer;
-  /* Change cursor to pointer */
-  border-radius: 4px;
-  /* Optional: rounded corners */
-  margin-top: 3fdpx;
-  margin-left: 8px;
-  /* Spacing from the label */
-  transition: background-color 0.3s;
-  /* Transition effect */
+
+
+  margin-top: 2px;
+
+}
+
+.list-agree-button:hover .arrow-icon path {
+  fill: gray; /* Change color on hover */
 }
 
 .arrow-button:hover {
@@ -433,4 +431,8 @@ align-items: center;
 
 .right-bottom-button:hover {
   background-color: #029bb9;
+}
+
+.modal1 {
+
 }

@@ -1,10 +1,15 @@
 import './style.css';
-import axios from 'axios';
+
 import React, { ChangeEvent, useEffect, useState } from 'react'
 import { useLocation } from 'react-router-dom';
 import Topbar from 'src/component/topbar';
 import ResponseDto from 'src/apis/signUp/dto/response/response.dto';
-import Modal from 'src/component/payment';
+import ModalComponent1 from 'src/component/payment/modal1';
+import ModalComponent2 from 'src/component/payment/modal2';
+import ModalComponent3 from 'src/component/payment/modal3';
+import ModalComponent4 from 'src/component/payment/modal4';
+import Information from 'src/component/mypage/mypagemain/information';
+import axios from 'axios';
 
 interface Agreements {
     ruleAgreement: boolean;
@@ -12,8 +17,6 @@ interface Agreements {
     thirdPartyAgreement: boolean;
     ageVerification: boolean;
 }
-
-
 
 interface PaymentComponentProps {
     onPathChange: (path: string) => void;
@@ -23,6 +26,7 @@ interface PaymentComponentProps {
 export default function Payment({ onPathChange }: PaymentComponentProps) {
     const location = useLocation();
 
+    // state: 예약 상세 정보 불러오기 상태 //
     const { imageSrc, price, checkInTime, checkOutTime, roomName, roomType, personnelCount } = location.state || {};
 
     // state: 예약자 입력 정보 상태 //
@@ -53,16 +57,13 @@ export default function Payment({ onPathChange }: PaymentComponentProps) {
         ageVerification: false
     });
 
-    const [isModalOpen, setIsModalOpen] = useState(false);
+    // state: 약관 동의 모달 오픈/오프 상태 //
+    const [isModalOpen, setModalOpen] = useState(false);
+    const openModal = () => setModalOpen(true);
+    const closeModal = () => setModalOpen(false);
 
-    const openModal = () => {
-        setIsModalOpen(true);
-    };
-
-    const closeModal = () => {
-        setIsModalOpen(false);
-    };
-
+    // state: 카카오페이/토스페이 결제 요청 상태 //
+    const [amount, setAmount] = useState(0);
 
     // variable: 결제 가능 여부 //
     const isComplete = name && telNumber && paymentType && isSend;
@@ -122,7 +123,6 @@ export default function Payment({ onPathChange }: PaymentComponentProps) {
         }));
     };
 
-
     // event handler: 이름 변경 이벤트 처리 //
     const onNameChangeHandler = (event: ChangeEvent<HTMLInputElement>) => {
         const { value } = event.target;
@@ -145,10 +145,78 @@ export default function Payment({ onPathChange }: PaymentComponentProps) {
 
     const isAllAgreed = Object.values(agreements).every(Boolean);
 
-
     // event handler: 동의 버튼 클릭 이벤트 처리 //
     const onAgreeButtonClickHandler = () => {
         setIsAgreed(prev => !prev); // 이전 상태를 반전시킴
+    };
+
+    // event handler: 결제 변경 이벤트 처리 //
+    const onChargeChangeHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
+        setAmount(Number(e.target.value));
+    };
+
+    // event handler: 결제 요청 버튼 클릭 이벤트 처리 // 
+    const onChargeClickButtonHandler = (
+        pg_method: string,
+        nickname: string,
+        redirect_url: string
+    ) => {
+        const { IMP } = window;
+        alert(pg_method);
+        
+        // 가맹점 번호 지정
+        IMP.init('imp48124315');
+    
+        IMP.request_pay(
+            {
+                pg: pg_method, // 결제 방식 지정
+                pay_method: 'card',
+                merchant_uid: `mid_${new Date().getTime()}`, // 현재 시간
+                name: '결제 품목 및 제목 지정',
+                amount: 3, // 실제 충전할 금액 (중괄호 제거)
+                buyer_email: '', // 구매자 이메일
+                buyer_name: nickname, // 구매자 이름
+                buyer_tel: '010-1222-2222',
+                buyer_addr: '',
+                buyer_postcode: '',
+                m_redirect_url: redirect_url || "http://localhost:3000/main" // 결제 완료 후 리다이렉션할 주소
+            },
+            async function (rsp: { success: boolean; error_msg?: string }) {
+
+                if (rsp.success) {
+                    alert("결제되었습니다.");
+    
+                    try {
+                        await axios.post('http://localhost:8080/payment/success', {
+                            paymentRequest: {
+                                pgMethod: pg_method,
+                                amount: 3, 
+                                nickname: nickname,
+                                buyerEmail: '', 
+                                buyerName: nickname,
+                                buyerTel: '010-1222-2222',
+                                buyerAddr: '서울특별시 강남구 삼성동',
+                                buyerPostcode: '123-456'
+                            },
+                            reservationRequest: {
+                                guestId: 'qwer1234',
+                                accommodationName: '좋은펜션',
+                                roomId: 123,
+                                checkInDay: '0000-00-00', 
+                                checkOutDay: '0000-00-00', 
+                                reservationTotalPeople: 3,
+                                reservationStatus: 0,
+                                createdAt: `mid_${new Date().getTime()}`
+                            }
+                        });
+                    } catch (error) {
+                        console.error("Failed to send payment data to server:", error);
+                    }
+                } else {
+                    alert(`결제 실패되었습니다.: ${rsp.error_msg || '알 수 없는 오류'}`);
+                }
+            }
+        );
     };
 
     // render: 결제 화면 컴포넌트 렌더링 //
@@ -274,12 +342,10 @@ export default function Payment({ onPathChange }: PaymentComponentProps) {
                                         onChange={() => handleAgreementChange('ruleAgreement')}
                                     />
                                     <div className='list-agree1'>숙소 이용규칙 및 취소/환불규정 동의(필수)</div>
-                                    <div className='list-agree-button' onClick={openModal}>&gt;</div>
+                                    <div className="list-agree-button" onClick={openModal}>
+                                        <svg className="arrow-icon" xmlns="http://www.w3.org/2000/svg" width="20px" height="20px"><path d="M11 14.667 15.986 10 11 5.333 12.424 4l4.986 4.667c.787.736.787 1.93 0 2.666L12.424 16z"></path></svg></div>
+                                    <ModalComponent1 isOpen={isModalOpen} closeModal={closeModal} />
                                 </div>
-
-                                <Modal isOpen={isModalOpen} onClose={closeModal} title="숙소 이용규칙 및 취소/환불규정">
-                                    <p>여기에 숙소 이용규칙 및 취소/환불규정 내용을 입력하세요.</p>
-                                </Modal>
                             </div>
 
                             <div className='agree-wrap2'>
@@ -290,9 +356,9 @@ export default function Payment({ onPathChange }: PaymentComponentProps) {
                                     onChange={() => handleAgreementChange('personalInfoAgreement')}
                                 />
                                 <div className='list-agree2'>개인정보 수집 및 이용 동의(필수)</div>
-                                <div className='list-agree-button' >
-                                    &gt;
-                                </div>
+                                <div className="list-agree-button" onClick={openModal}>
+                                    <svg className="arrow-icon" xmlns="http://www.w3.org/2000/svg" width="20px" height="20px"><path d="M11 14.667 15.986 10 11 5.333 12.424 4l4.986 4.667c.787.736.787 1.93 0 2.666L12.424 16z"></path></svg></div>
+                                <ModalComponent2 isOpen={isModalOpen} closeModal={closeModal} />
                             </div>
 
                             <div className='agree-wrap3'>
@@ -303,9 +369,9 @@ export default function Payment({ onPathChange }: PaymentComponentProps) {
                                     onChange={() => handleAgreementChange('thirdPartyAgreement')}
                                 />
                                 <div className='list-agree3'>개인정보 제3자 제공 동의(필수)</div>
-                                <div className='list-agree-button' >
-                                    &gt;
-                                </div>
+                                <div className="list-agree-button" onClick={openModal}>
+                                    <svg className="arrow-icon" xmlns="http://www.w3.org/2000/svg" width="20px" height="20px"><path d="M11 14.667 15.986 10 11 5.333 12.424 4l4.986 4.667c.787.736.787 1.93 0 2.666L12.424 16z"></path></svg></div>
+                                <ModalComponent3 isOpen={isModalOpen} closeModal={closeModal} />
                             </div>
 
                             <div className='agree-wrap4'>
@@ -316,15 +382,15 @@ export default function Payment({ onPathChange }: PaymentComponentProps) {
                                     onChange={() => handleAgreementChange('ageVerification')}
                                 />
                                 <div className='list-agree4'>만 14세 이상 확인 (필수)</div>
-                                <div className='list-agree-button' >
-                                    &gt;
-                                </div>
+                                <div className="list-agree-button" onClick={openModal}>
+                                    <svg className="arrow-icon" xmlns="http://www.w3.org/2000/svg" width="20px" height="20px"><path d="M11 14.667 15.986 10 11 5.333 12.424 4l4.986 4.667c.787.736.787 1.93 0 2.666L12.424 16z"></path></svg></div>
+                                <ModalComponent4 isOpen={isModalOpen} closeModal={closeModal} />
                             </div>
                         </div>
                     </div>
-                    <div className='right-bottom-button'>{price && <div>{price}원 결제하기</div>}</div>
+                    <div className='right-bottom-button' onClick={() => onChargeClickButtonHandler('kakaopay', '사용자 닉네임', '리다이렉트 URL')}>{isAllAgreed && price && <div>{price}원 결제하기</div>}</div>
                 </div>
             </div>
         </div>
     );
-}
+};
