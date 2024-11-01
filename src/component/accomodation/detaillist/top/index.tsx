@@ -161,7 +161,7 @@ const AccommodationDetailTopCard: React.FC<AccommodationDetailTopProps> = ({
           <h1>{name}</h1>
         </div>
         <div className="price-section">
-          <span>{price} 원~</span>
+          <span>{price} 원~ /1박</span>
         </div>
       </div>
 

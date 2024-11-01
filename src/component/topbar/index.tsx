@@ -1,4 +1,4 @@
-import { ChangeEvent, useEffect, useState } from 'react';
+import { ChangeEvent, KeyboardEvent, useEffect, useState } from 'react';
 import './style.css';
 import { useLocation, useNavigate, useParams } from 'react-router';
 import InputBox from '../input/login';
@@ -15,7 +15,7 @@ import ResponseDto from 'src/apis/login/dto/response/response.dto';
 // 컴포넌트: 메인페이지 화면 컴포넌트 //
 export default function Topbar() {
     // 쿠키 상태 초기화
-    const [cookies, setCookies, removeCookies] = useCookies(['accessToken']);
+    const [cookies, setCookie, removeCookies] = useCookies(['accessToken']);
 
     // state: 모달창 상태 //
     const [modalOpen, setModalOpen] = useState(false);
@@ -25,6 +25,7 @@ export default function Topbar() {
     const [password, setPassword] = useState<string>('');
 
     // state: 메세지 출력 정보 상태 //
+    const [message, setMessage] = useState<string>('');
     const [idmessage, setIdMessage] = useState<string>('');
     const [pwmessage, setPwMessage] = useState<string>('');
     const [errorMessage, setErrorMessage] = useState<boolean>(false);
@@ -65,32 +66,35 @@ export default function Topbar() {
          if (!id || !password) return;
     
             const requestBody: GuestLogInRequestDto = {
-                userId: id,
-                userpassword: password
+                guestId: id,
+                password: password
             };
             logInRequest(requestBody).then(logInResponse);
+
         }
 
 
     // function: 로그인 응답 처리 함수 //
     const logInResponse = (responseBody: LogInResponseDto | ResponseDto | null) => {
-        const message =
+        const message = 
             !responseBody ? '서버에 문제가 있습니다.' :
-                responseBody.code === 'VF' ? '아이디와 비밀번호를 모두 입력하세요.' :
-                    responseBody.code === 'SF' ? '로그인 정보가 일치하지 않습니다.' :
-                        responseBody.code === 'TCF' ? '서버에 문제가 있습니다.' :
-                            responseBody.code === 'DBE' ? '서버에 문제가 있습니다.' : '';
-
-        if (responseBody?.code === 'SU') {
-            const { accessToken, expiration } = responseBody as LogInResponseDto;
-            const expires = new Date(Date.now() + (expiration * 1000));
-            setCookies('accessToken', accessToken, { path: MAIN_PATH, expires });
-            navigator('/main'); // 로그인 성공 시 메인 페이지로 이동
-        } else {
-            setIdMessage(message);
+            responseBody.code === 'VF' ? '아이디와 비밀번호를 모두 입력하세요.' :
+            responseBody.code === 'SF' ? '로그인 정보가 일치하지 않습니다.' : 
+            responseBody.code === 'TCF' ? '서버에 문제가 있습니다.' :
+            responseBody.code === 'DBE' ? '서버에 문제가 있습니다.' : '';
+        
+        const isSuccessed = responseBody !== null && responseBody.code === 'SU';
+        if (!isSuccessed) {
             setPwMessage(message);
+            return;
         }
+        const { accessToken, expiration } = responseBody as LogInResponseDto;
+        const expires = new Date(Date.now() + (expiration * 1000));
+        setCookie('accessToken', accessToken, { path: '/', expires });
+        setModalOpen(false)
+
     };
+
 
     // function: url 값 가져오기 //
     const urlRegion = searchParams.get('Region')
@@ -122,9 +126,23 @@ export default function Topbar() {
         setPwMessage('');
     }, [password]);
 
+    // effect: 토큰값 있을 경우 실행할 함수 //
+    useEffect(() => {
+        if (!modalOpen) {
+            setModalOpen(false);
+        }
+    }, [cookies]);
+
+    const pressKeyEnter = (event : KeyboardEvent<HTMLInputElement>) => {
+        if (event.key === 'Enter') {
+            onLoginButtonClickHandler();
+        }
+    }
+
     // event handler: 로그아웃 버튼 클릭 이벤트 처리 //
     const onlogoutButtonClickHandler = () => {
         removeCookies("accessToken");
+        navigator('/main')
     };
 
     // event handler: 회원가입 버튼 클릭 이벤트 처리 //
@@ -205,6 +223,7 @@ export default function Topbar() {
                                 message={idmessage}
                                 messageError={errorMessage}
                                 onChange={onIdChangeHandler}
+                                onKey={pressKeyEnter}
                             />
                         </div>
                         <div className='input-log'>
@@ -216,6 +235,7 @@ export default function Topbar() {
                                 message={pwmessage}
                                 messageError={errorMessage}
                                 onChange={onPasswordChangeHandler}
+                                onKey={pressKeyEnter}
                             />
                         </div>
                         <div className='log-in-button' onClick={onLoginButtonClickHandler}>로그인</div>

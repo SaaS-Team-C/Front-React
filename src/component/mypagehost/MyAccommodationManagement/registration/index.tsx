@@ -1,4 +1,3 @@
-import Topbar from 'src/component/topbar';
 import './style.css';
 import React, { useState } from 'react';
 
@@ -291,7 +290,6 @@ const HostAccommodationRegister: React.FC = () => {
 
   return (
     <div>
-      <Topbar />
       <form onSubmit={handleSubmit}>
         <h2>숙소 등록</h2>
         <div>
