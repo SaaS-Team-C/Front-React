@@ -26,8 +26,8 @@ interface PaymentComponentProps {
 export default function Payment({ onPathChange }: PaymentComponentProps) {
     const location = useLocation();
 
-    // state: 예약 상세 정보 불러오기 상태 //
-    const { imageSrc, price, checkInTime, checkOutTime, roomName, roomType, personnelCount } = location.state || {};
+    // state: 예약 상세 정보 불러오기 상태 // 
+    const { imageSrc, price, checkInTime, checkOutTime, accommodationName, roomName, personnelCount } = location.state || {};
 
     // state: 예약자 입력 정보 상태 //
     const [name, setName] = useState<string>('');
@@ -285,13 +285,13 @@ export default function Payment({ onPathChange }: PaymentComponentProps) {
                             <div className='right-top-container1'>
                                 <div className='accommodationName'>숙소</div>
                                 <div className='accommodation-input'>
-                                    {roomName ? <div>{roomName}</div> : <div>숙소정보가 없습니다.</div>}
+                                    {accommodationName ? <div>{accommodationName}</div> : <div>숙소정보가 없습니다.</div>}
                                 </div>
                             </div>
                             <div className='right-top-container2'>
-                                <div className='roomType'>객실</div>
-                                <div className='roomType-input'>
-                                    {roomType ? <div>{roomType}</div> : <div>객실정보가 없습니다.</div>}
+                                <div className='roomName'>객실</div>
+                                <div className='roomName-input'>
+                                    {accommodationName ? <div>{roomName}</div> : <div>객실정보가 없습니다.</div>}
                                 </div>
                             </div>
 
