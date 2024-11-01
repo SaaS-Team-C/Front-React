@@ -4,7 +4,7 @@ interface findComponentProps {
     onPathChange: (path: string) => void;
 }
 
-export default function findId({ onPathChange }:findComponentProps) {
+export default function FindId({ onPathChange }:findComponentProps) {
 
 // render: 아이디 찾기 화면 컴포넌트 렌더링 //
 return (

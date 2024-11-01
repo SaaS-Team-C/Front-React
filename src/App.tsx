@@ -25,6 +25,7 @@ import Accommodationenrollmentapproval from './views/admin/accommodationenrollme
 import HostEnrollmentapproval from './views/admin/hostenrollmentapproval/index';
 import SignUp from './views/auth';
 import MypageHost from './views/mypagehost';
+import FindId from './views/find';
 
 
 
@@ -73,7 +74,7 @@ export default function App() {
       <Route path='/payment' element={<Payment onPathChange={() => {}} />} />
       <Route path='/find' element={<FindId onPathChange={() => {}} />} />
       <Route path='/admin' element={<Accommodationenrollmentapproval/>}/>
-      <Route path='/adminHost' element={<AccomodationEnrollApprovalPage/>}/>
+      {/* <Route path='/adminHost' element={<AccomodationEnrollApprovalPage/>}/> */}
       <Route path='/faq' element={<FAQ/>}/>
       <Route path='/mypagehost'element={<HostAccommodationRegister/>}/>
       <Route path='/mypagehost/enroll' element={<HostAccommodationRegister/>}/>

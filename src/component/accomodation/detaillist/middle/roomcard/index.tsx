@@ -80,13 +80,12 @@ const RoomCard: React.FC<RoomCardProps> = ({ room, isFullyBooked }) => {
 
   const handleChangebooking = () => {
     
-      // 로그인 상태인 경우 예약 페이지로 이동
-      navigator(
-        `${PAYMENT_PATH}?Region=${urlRegion}&start=${urlStart}&end=${urlEnd}&count=${urlCount}&roomType=${urlRoom}&name=${encodeURIComponent(room.name)}`,
-        { state: { imageSrc: room.images[0], price: room.roomPrice, checkInTime: urlStart, checkOutTime: urlEnd, personnelCount: urlCount, roomName: urlName, roomType: urlRoom } }
-      );
-    } 
-  
+    // 로그인 상태인 경우 예약 페이지로 이동
+    navigator(
+      `${PAYMENT_PATH}?Region=${urlRegion}&start=${urlStart}&end=${urlEnd}&count=${urlCount}&roomName=${urlRoom}&name=${encodeURIComponent(room.name)}`,
+      { state: { imageSrc: room.images[0], price: room.roomPrice, checkInTime: urlStart, checkOutTime: urlEnd, personnelCount: urlCount, AccommodationName: urlName, roomName: urlRoom } }
+    );
+  } 
 
 
   
@@ -146,7 +145,7 @@ const RoomCard: React.FC<RoomCardProps> = ({ room, isFullyBooked }) => {
           className="modal"
           overlayClassName="modal-overlay"
         >
-          <h2>{room.type} - 상세정보</h2>
+          <h2>{room} - 상세정보</h2>
           <p>{room.description}</p>
           <p>입실 시간: {room.checkInTime}</p>
           <p>퇴실 시간: {room.checkOutTime}</p>
