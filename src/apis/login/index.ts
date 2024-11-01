@@ -12,7 +12,7 @@ const responseDataHandler = <T>(response: AxiosResponse<T, any>) => {
 };
 
 export const logInRequest = async (requestBody: GuestLogInRequestDto) => {
-    const responseBody = await axios.post(MAIN_PATH, requestBody)
+    const responseBody = await axios.post('http://localhost:4000/api/roomly/guest-auth/sign-in', requestBody)
         .then(responseDataHandler<LogInResponseDto>)
         .catch(responseErrorHandler);
     return responseBody;
