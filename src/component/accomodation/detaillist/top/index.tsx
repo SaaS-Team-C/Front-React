@@ -11,15 +11,15 @@ interface AccommodationImagesProps {
   initialImages: string[]; // 숙소 ID를 props로 전달
 }
 
-const AccommodationDetailTopImages: React.FC<AccommodationImagesProps> = ({  initialImages }) => {
-  
+const AccommodationDetailTopImages: React.FC<AccommodationImagesProps> = ({ initialImages }) => {
+
   const [images, setImages] = useState<string[]>(initialImages);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [currentImage, setCurrentImage] = useState(0);
   const sliderRef = useRef<Slider>(null);
 
-   // effect: 서버에서 이미지 데이터 가져오는 함수 //
-   useEffect(() => {
+  // effect: 서버에서 이미지 데이터 가져오는 함수 //
+  useEffect(() => {
     const fetchAccommodationImages = async () => {
       try {
         const response = await axios.get(`/api/accommodations/${initialImages}/images`);
@@ -28,7 +28,7 @@ const AccommodationDetailTopImages: React.FC<AccommodationImagesProps> = ({  ini
         console.error("이미지 데이터를 불러오는 중 오류 발생:", error);
       }
     };
-    
+
     fetchAccommodationImages(); // 컴포넌트 마운트 시 이미지 가져오기
   }, [initialImages]);
 
@@ -226,7 +226,34 @@ export default function AccommodationDetailTop({
   accommodation_name: string;
   onReviewButtonClick: () => void;
 }) {
-  const [accommodationDetail, setAccommodationDetail] = useState<AccommodationDetail | null>(null);
+  // const [accommodationDetail, setAccommodationDetail] = useState<AccommodationDetail | null>(null);
+
+  // 테스트용 (테스트 끝나면 삭제 예정)
+  const [accommodationDetail, setAccommodationDetail] = useState<AccommodationDetail | null>({
+    name: "Best Western Plus",
+    stars: 4,
+    price: "100,000",
+    reviewScore: 4.5,
+    reviewCount: 128,
+    reviewSnippet: "아주 훌륭한 숙소입니다.",
+    services: ["WiFi", "수영장", "주차"],
+    location: "서울시 종로구",
+    mapLink: "https://maps.example.com",
+    images: [
+      "Best-Western-Plus-Congress-Hotel-4-800x600.jpg",
+      "Europe-Hotel-4-800x600.jpg",
+      "ibis-Yerevan-Center-4-800x600.jpg",
+      "Best-Western-Plus-Congress-Hotel-4-800x600.jpg",
+      "Europe-Hotel-4-800x600.jpg",
+    ],
+  });
+
+
+
+
+
+
+
 
   useEffect(() => {
     const fetchAccommodationDetail = async () => {
@@ -242,7 +269,7 @@ export default function AccommodationDetailTop({
 
   if (!accommodationDetail) return <p>Loading...</p>; // 로딩 표시
 
-  
+
   return (
     <>
       <AccommodationDetailTopImages initialImages={accommodationDetail.images} />

@@ -7,9 +7,10 @@ interface Props {
     value: string;
     placeholder: string;
     buttonName?: string;
+    messageError? : boolean;
 
  
-    onChange: (event: ChangeEvent<HTMLInputElement>) => void;
+    onChange?: (event: ChangeEvent<HTMLInputElement>) => void;
     onButtonClick?: () => void;
 }
 
@@ -19,6 +20,7 @@ export default function MypageInputBox({
     value, 
     placeholder, 
     buttonName,
+    messageError,
     onButtonClick,
     onChange
 }: Props) {
@@ -27,8 +29,10 @@ export default function MypageInputBox({
         <div id='mypageinformation-input-warpper'>
         <div className='mypageinformation-input-box'>
             <div className='mypageinformation-input-title'>{title}</div>
-            <input className='mypageinformation-input-inputbox' type={type} value={value} placeholder={placeholder} onChange={onChange} />
-
+            <div className='mypageinformation-input-area'>
+                <input className='mypageinformation-input-inputbox' type={type} value={value} placeholder={placeholder} onChange={onChange} />
+                {messageError && <div className='checkMessageError'> </div>}
+            </div>
         </div>
         {buttonName && <button onClick={onButtonClick} >{buttonName}</button>}
         </div>

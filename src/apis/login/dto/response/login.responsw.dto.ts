@@ -1,4 +1,4 @@
-import { ResponseDto } from "src/apis/signUp/dto/response";
+import ResponseDto from "./response.dto";
 
 export default interface LogInResponseDto extends ResponseDto {
     accessToken: string;
