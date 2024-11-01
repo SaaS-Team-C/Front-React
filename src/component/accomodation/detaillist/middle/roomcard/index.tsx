@@ -83,8 +83,8 @@ const RoomCard: React.FC<RoomCardProps> = ({ room, isFullyBooked }) => {
     
       // 로그인 상태인 경우 예약 페이지로 이동
       navigator(
-        `${PAYMENT_PATH}?Region=${urlRegion}&start=${urlStart}&end=${urlEnd}&count=${urlCount}&roomName=${encodeURIComponent(room.roomName)}&accommodationName=${urlName}`,
-        { state: { imageSrc: room.images[0], price: room.roomPrice, checkInTime: urlStart, checkOutTime: urlEnd, personnelCount: urlCount, accommodationName: urlName, roomName: urlRoom } }
+        `${PAYMENT_PATH}?Region=${urlRegion}&start=${urlStart}&end=${urlEnd}&count=${urlCount}&roomName=${urlRoom}&accommodationName=${urlName}`,
+        { state: { imageSrc: room.images[0], price: room.roomPrice, checkInTime: urlStart, checkOutTime: urlEnd, personnelCount: urlCount, accommodationName: urlName, roomName: room.roomName } }
       );
     } 
 
