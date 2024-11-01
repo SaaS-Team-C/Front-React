@@ -28,19 +28,104 @@ const List: React.FC<ListProps> = ({ accommodations }) => {
   const [sortOption, setSortOption] = useState('추천순');
 
   // effect: 숙소 리스트 불러오기
+  // useEffect(() => {
+  // function: 받아온 숙소 리스트를 화면에 뿌려주는 함수
+  // const getAccommodations = async () => {
+  //   try {
+  // fetchAccommodationList()는 서버에 요청을 보내 숙소 리스트를 받아오는 함수
+  //       const data = await fetchAccommodationList();
+  //       SetCallAccommodationList(data);
+  //     } catch (error) {
+  //       console.error('Error fetching accommodation list:', error);
+  //     }
+  //   };
+  //   getAccommodations();
+  // }, []);
+
   useEffect(() => {
-    // function: 받아온 숙소 리스트를 화면에 뿌려주는 함수
-    const getAccommodations = async () => {
-      try {
-        // fetchAccommodationList()는 서버에 요청을 보내 숙소 리스트를 받아오는 함수
-        const data = await fetchAccommodationList();
-        SetCallAccommodationList(data);
-      } catch (error) {
-        console.error('Error fetching accommodation list:', error);
-      }
-    };
-    getAccommodations();
+    // mock data를 직접 설정하여 화면에 표시하는 방식
+    const mockData: AccommodationDTO[] = [
+      {
+        accommodation_name: '해운대 호텔',
+        accommodation_grade_sum: 8.5,
+        category_area: '부산',
+        category_pet: true,
+        category_non_smoking_area: true,
+        category_indoor_spa: false,
+        category_dinner_party: true,
+        category_wifi: true,
+        category_car_park: true,
+        category_pool: true,
+        accommodation_main_image: 'https://example.com/image1.jpg',
+        accommodation_address: '부산 해운대구 해운대해변로 1',
+        accommodation_type: '호텔',
+        review_grade: 4.2,
+        rooms: [
+          {
+            roomPrice: 70000,
+            name: '스탠다드 룸',
+            type: '더블',
+            checkInTime: '15:00',
+            checkOutTime: '11:00',
+            maxOccupancy: 2,
+            description: '바다 전망을 가진 스탠다드 룸입니다.',
+            images: ['https://example.com/room1.jpg']
+          },
+          {
+            roomPrice: 150000,
+            name: '디럭스 룸',
+            type: '트윈',
+            checkInTime: '15:00',
+            checkOutTime: '11:00',
+            maxOccupancy: 3,
+            description: '바다 전망을 가진 디럭스 룸입니다.',
+            images: ['https://example.com/room2.jpg']
+          }
+        ]
+      },
+      {
+        accommodation_name: '웨스틴 조선',
+        accommodation_grade_sum: 9.5,
+        category_area: '서울',
+        category_pet: false,
+        category_non_smoking_area: true,
+        category_indoor_spa: false,
+        category_dinner_party: true,
+        category_wifi: false,
+        category_car_park: false,
+        category_pool: true,
+        accommodation_main_image: 'https://example.com/image1.jpg',
+        accommodation_address: '서울 서면진구 소진이네 집 1',
+        accommodation_type: '리조트',
+        review_grade: 4.9,
+        rooms: [
+          {
+            roomPrice: 100000,
+            name: '스탠다드 룸',
+            type: '더블',
+            checkInTime: '15:00',
+            checkOutTime: '11:00',
+            maxOccupancy: 2,
+            description: '바다 전망을 가진 스탠다드 룸입니다.',
+            images: ['https://example.com/room1.jpg']
+          },
+          {
+            roomPrice: 350000,
+            name: '디럭스 룸',
+            type: '트윈',
+            checkInTime: '15:00',
+            checkOutTime: '11:00',
+            maxOccupancy: 3,
+            description: '바다 전망을 가진 디럭스 룸입니다.',
+            images: ['https://example.com/room2.jpg']
+          }
+        ]
+      },
+    ];
+
+    SetCallAccommodationList(mockData);
   }, []);
+
 
 
   // function: url 값 가져오기 //
@@ -170,7 +255,7 @@ const List: React.FC<ListProps> = ({ accommodations }) => {
 
 
                 <p>Rating: {accommodation.accommodation_grade_sum}</p>
-                <p>리뷰: {accommodation.review_grade}개</p> {/* 합계 구하는걸로 수정 필요 */}
+                <p>리뷰: {accommodation.review_grade}개</p> {/* ! 합계 구하는걸로 수정 필요 */}
                 <p>Facilities: {getFacilities(accommodation)}</p>
                 <button className="details-btn" onClick={() => handleDetailClick(accommodation.accommodation_name)}>
                   상세보기

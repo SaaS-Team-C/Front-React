@@ -3,7 +3,6 @@ import React, { useEffect, useState } from 'react';
 import Topbar from "src/component/topbar";
 
 import { AdminRequestDTO } from "src/apis/admin/dto/request";
-import { fetchAdminHostApprovalRequests } from "src/apis/admin";
 export interface AdminRequestProps {
   req: AdminRequestDTO[];
 }
@@ -38,7 +37,7 @@ const Accommodationenrollmentapproval: React.FC = () => {
   };
 
   useEffect(() => {
-   // api 호출 자리
+    // api 호출 자리
   }, []);
 
   const pendingRequests = sortRequests(
@@ -72,7 +71,6 @@ const Accommodationenrollmentapproval: React.FC = () => {
       <table className="table">
         <thead>
           <tr>
-            <th>호스트 이름</th>
             <th>숙소 이름</th>
             <th>요청 날짜</th>
             <th>상태</th>
@@ -117,7 +115,6 @@ const Accommodationenrollmentapproval: React.FC = () => {
       <table className="table">
         <thead>
           <tr>
-            <th>호스트 이름</th>
             <th>숙소 이름</th>
             <th>요청 날짜</th>
             <th>상태</th>

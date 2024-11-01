@@ -6,6 +6,7 @@
     margin-left: 40px;
 }
 
+/* 타이틀 */
 .information-title {
     width: 100%;
     height: 50px;
@@ -28,11 +29,13 @@
     font-size: 17px;
     font-weight: 600;
 }
+
 .information-title-ditail {
     font-size: 16px;
     
 }
 
+/* 메인내용 */
 .information-main {
     width: 100%;
     height: 100%;

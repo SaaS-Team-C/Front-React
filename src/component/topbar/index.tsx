@@ -7,6 +7,10 @@ import InputBox from '../input/login';
 import { useCookies } from 'react-cookie';
 import { MAIN_PATH } from 'src/constants';
 import { useSearchParams } from 'react-router-dom';
+import { logInRequest } from 'src/apis/login';
+import GuestLogInRequestDto from 'src/apis/login/dto/request/guest/login.request.dto';
+import LogInResponseDto from 'src/apis/login/dto/response/login.responsw.dto';
+import ResponseDto from 'src/apis/login/dto/response/response.dto';
 
 // 컴포넌트: 메인페이지 화면 컴포넌트 //
 export default function Topbar() {
@@ -45,7 +49,8 @@ export default function Topbar() {
         setPassword(value);
     }
 
-    // function: 로그인 버튼 클릭 이벤트 처리 //
+    /** 
+     * function: 로그인 버튼을 클릭 했을 경우 일어나는 이벤트 처리 */   
     const onLoginButtonClickHandler = async () => {
         if (!id) {
             setIdMessage('아이디를 입력해 주세요!');
@@ -57,27 +62,35 @@ export default function Topbar() {
             setErrorMessage(true);
             return;
         }
-    }
+         if (!id || !password) return;
+    
+            const requestBody: GuestLogInRequestDto = {
+                userId: id,
+                userpassword: password
+            };
+            logInRequest(requestBody).then(logInResponse);
+        }
+
 
     // function: 로그인 응답 처리 함수 //
-    // const logInResponse = (responseBody: LogInResponseDto | ResponseDto | null) => {
-    //     const message =
-    //         !responseBody ? '서버에 문제가 있습니다.' :
-    //             responseBody.code === 'VF' ? '아이디와 비밀번호를 모두 입력하세요.' :
-    //                 responseBody.code === 'SF' ? '로그인 정보가 일치하지 않습니다.' :
-    //                     responseBody.code === 'TCF' ? '서버에 문제가 있습니다.' :
-    //                         responseBody.code === 'DBE' ? '서버에 문제가 있습니다.' : '';
+    const logInResponse = (responseBody: LogInResponseDto | ResponseDto | null) => {
+        const message =
+            !responseBody ? '서버에 문제가 있습니다.' :
+                responseBody.code === 'VF' ? '아이디와 비밀번호를 모두 입력하세요.' :
+                    responseBody.code === 'SF' ? '로그인 정보가 일치하지 않습니다.' :
+                        responseBody.code === 'TCF' ? '서버에 문제가 있습니다.' :
+                            responseBody.code === 'DBE' ? '서버에 문제가 있습니다.' : '';
 
-    //     if (responseBody?.code === 'SU') {
-    //         const { accessToken, expiration } = responseBody as LogInResponseDto;
-    //         const expires = new Date(Date.now() + (expiration * 1000));
-    //         setCookies('accessToken', accessToken, { path: MAIN_PATH, expires });
-    //         navigator('/main'); // 로그인 성공 시 메인 페이지로 이동
-    //     } else {
-    //         setIdMessage(message);
-    //         setPwMessage(message);
-    //     }
-    // };
+        if (responseBody?.code === 'SU') {
+            const { accessToken, expiration } = responseBody as LogInResponseDto;
+            const expires = new Date(Date.now() + (expiration * 1000));
+            setCookies('accessToken', accessToken, { path: MAIN_PATH, expires });
+            navigator('/main'); // 로그인 성공 시 메인 페이지로 이동
+        } else {
+            setIdMessage(message);
+            setPwMessage(message);
+        }
+    };
 
     // function: url 값 가져오기 //
     const urlRegion = searchParams.get('Region')
