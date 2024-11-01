@@ -8,14 +8,13 @@
 #payment-top-wrapper {
   margin: 0 auto;
   /* 중앙 정렬 */
-  max-width: 1100px;
-  min-width: 800px;
+  width: 800px;
   /* 최소 크기 설정 */
   padding: 20px;
   background-color: #fff;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   /* 상단에 그림자 효과 추가 */
-  margin-bottom: 20px;
+  margin-bottom: 5px;
   /* 상단 아래쪽에 여백 */
 }
 
@@ -26,7 +25,7 @@
   /* 헤더 배경색 */
   padding: 10px 20px;
   /* 패딩 */
-  margin-bottom: 10px;
+  margin-bottom: 5px;
   width: 1100px;
   /* 최소 크기 설정 */
 }
@@ -54,7 +53,7 @@
 
 .payImage {
   display: flex;
-  margin-top: 50px;
+  margin-top: 30px;
   margin-left: 10px;
   height: 300px;
   width: 100px;
@@ -252,7 +251,7 @@
   flex: 0 0 40%;
   height: 1000px;
   min-width: 150px;
-  margin-top: 50px;
+  margin-top: 30px;
 }
 
 .right-top,

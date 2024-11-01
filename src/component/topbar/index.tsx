@@ -150,14 +150,9 @@ export default function Topbar() {
         navigator('/sign-up');
     };
 
-    // event handler: 아이디 찾기 버튼 클릭 이벤트 처리 //
-    const onFindIdButtonClickHandler = () => {
-        navigator('/find-id');
-    };
-
-    // event handler: 비밀번호 찾기 버튼 클릭 이벤트 처리 //
-    const onFindPasswordButtonClickHandler = () => {
-        navigator('/find-pw');
+    // event handler: 아이디/비밀번호 찾기 버튼 클릭 이벤트 처리 //
+    const onFindIdPwButtonClickHandler = () => {
+        navigator('/find');
     };
 
     // event handler: 마이페이지 버튼 클릭 이벤트 처리 //
@@ -240,8 +235,7 @@ export default function Topbar() {
                         </div>
                         <div className='log-in-button' onClick={onLoginButtonClickHandler}>로그인</div>
                         <div className='find'>
-                            <div className='find-id' onClick={onFindIdButtonClickHandler}>아이디 찾기</div>
-                            <div className='find-pw' onClick={onFindPasswordButtonClickHandler}>비밀번호 찾기</div>
+                            <div className='find-id' onClick={onFindIdPwButtonClickHandler}>아이디/비밀번호 찾기</div>
                         </div>
                         <div className='sign-up'>
                             <div className='sign-up-text'>계정이 없으신가요?</div>

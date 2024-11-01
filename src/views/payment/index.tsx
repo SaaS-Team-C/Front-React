@@ -8,7 +8,6 @@ import ModalComponent1 from 'src/component/payment/modal1';
 import ModalComponent2 from 'src/component/payment/modal2';
 import ModalComponent3 from 'src/component/payment/modal3';
 import ModalComponent4 from 'src/component/payment/modal4';
-import Information from 'src/component/mypage/mypagemain/information';
 import axios from 'axios';
 import dayjs from 'dayjs';
 
@@ -206,11 +205,11 @@ export default function Payment({ onPathChange }: PaymentComponentProps) {
                 pg: pg_method, // 결제 방식 지정
                 pay_method: 'card',
                 merchant_uid: dayjs().format('YYYY-MM-DD HH:mm:ss'), 
-                name: '김김김',
+                name: accommodationName,
                 amount: calculatePricePerNight(), 
-                buyer_email: '김', 
-                buyer_name: '김', 
-                buyer_tel: '김',
+                buyer_email: '', 
+                buyer_name: '홍길동', 
+                buyer_tel: '010-0000-0000',
                 buyer_addr: '김',
                 buyer_postcode: '김',
                 m_redirect_url: redirect_url || "http://localhost:3000/main" // 결제 완료 후 리다이렉션할 주소
