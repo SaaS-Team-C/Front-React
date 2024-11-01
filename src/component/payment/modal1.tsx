@@ -10,7 +10,7 @@ const ModalComponent1: React.FC<ModalProps> = ({ isOpen, closeModal }) => {
     if (!isOpen) return null;
 
     return (
-        <div className="overlay">
+        <div className="overlay2">
             <div className="modal">
                 <button onClick={closeModal} className="closeButton">X</button>
                 <h2>모달 제목fffffff</h2>

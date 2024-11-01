@@ -10,6 +10,7 @@ import ModalComponent3 from 'src/component/payment/modal3';
 import ModalComponent4 from 'src/component/payment/modal4';
 import Information from 'src/component/mypage/mypagemain/information';
 import axios from 'axios';
+import dayjs from 'dayjs';
 
 interface Agreements {
     ruleAgreement: boolean;
@@ -26,7 +27,7 @@ interface PaymentComponentProps {
 export default function Payment({ onPathChange }: PaymentComponentProps) {
     const location = useLocation();
 
-    // state: 예약 상세 정보 불러오기 상태 // 
+    // state: 예약 상세 정보 불러오기 상태 //
     const { imageSrc, price, checkInTime, checkOutTime, accommodationName, roomName, personnelCount } = location.state || {};
 
     // state: 예약자 입력 정보 상태 //
@@ -68,23 +69,47 @@ export default function Payment({ onPathChange }: PaymentComponentProps) {
     // variable: 결제 가능 여부 //
     const isComplete = name && telNumber && paymentType && isSend;
 
+    // 모든 버튼을 선택합니다.
+    const paymentButtons = document.querySelectorAll('.payment-typeList div');
+
+    // 각 버튼에 클릭 이벤트를 추가합니다.
+    paymentButtons.forEach(button => {
+        button.addEventListener('click', () => {
+            // 모든 버튼에서 active 클래스를 제거합니다.
+            paymentButtons.forEach(btn => btn.classList.remove('active'));
+
+            // 클릭된 버튼에 active 클래스를 추가합니다.
+            button.classList.add('active');
+        });
+    });
+
     // function: 1박당 가격 계산 함수 //
     const calculatePricePerNight = () => {
-        if (!checkInTime || !checkOutTime) {
-            return 0; // 체크인/체크아웃 시간이 없을 경우 0 반환
+        if (!checkInTime || !checkOutTime || !price || isNaN(price)) {
+            return 3; // 체크인/체크아웃 시간이 없거나 price가 유효하지 않을 경우 0 반환
         }
 
-        // YYYY-MM-DD 형식으로 Date 객체 생성
-        const checkInDate = new Date(checkInTime);
-        const checkOutDate = new Date(checkOutTime);
+        // 날짜에 시간 정보가 추가된 UTC 기반 날짜 생성
+        const checkInDate = new Date(Date.UTC(
+            parseInt(checkInTime.split('-')[0]),
+            parseInt(checkInTime.split('-')[1]) - 1, // 월은 0부터 시작하므로 1을 뺌
+            parseInt(checkInTime.split('-')[2])
+        ));
+
+        const checkOutDate = new Date(Date.UTC(
+            parseInt(checkOutTime.split('-')[0]),
+            parseInt(checkOutTime.split('-')[1]) - 1,
+            parseInt(checkOutTime.split('-')[2])
+        ));
+
         const differenceInTime = checkOutDate.getTime() - checkInDate.getTime();
         const differenceInDays = differenceInTime / (1000 * 3600 * 24); // 밀리초를 일로 변환
 
-        if (differenceInDays <= 0) {
-            return 0; // 잘못된 날짜 범위일 경우 0 반환
+        if (differenceInDays <= 0 || Number.isNaN(differenceInDays)) {
+            return 0; // 잘못된 날짜 범위 또는 NaN 값일 경우 0 반환
         }
 
-        return price / differenceInDays; // 가격을 일 수로 나누기
+        return price * differenceInDays; // 가격을 일 수로 나누기
     };
 
     // function: 전체 동의 체크박스 상태를 관리하는 함수 //
@@ -155,60 +180,62 @@ export default function Payment({ onPathChange }: PaymentComponentProps) {
         setAmount(Number(e.target.value));
     };
 
+    const [selectedPaymentMethod, setSelectedPaymentMethod] = useState<string | null>(null);
+    const handlePaymentMethodClick = (method: string) => {
+        setSelectedPaymentMethod(method);
+    };
+
+
     // event handler: 결제 요청 버튼 클릭 이벤트 처리 // 
     const onChargeClickButtonHandler = (
         pg_method: string,
         nickname: string,
         redirect_url: string
     ) => {
+        if (!selectedPaymentMethod) {
+            alert("결제 방식을 선택해주세요.");
+            return;
+        }
         const { IMP } = window;
-        alert(pg_method);
-        
+
         // 가맹점 번호 지정
         IMP.init('imp48124315');
-    
+
         IMP.request_pay(
             {
                 pg: pg_method, // 결제 방식 지정
                 pay_method: 'card',
-                merchant_uid: `mid_${new Date().getTime()}`, // 현재 시간
-                name: '결제 품목 및 제목 지정',
-                amount: 3, // 실제 충전할 금액 (중괄호 제거)
-                buyer_email: '', // 구매자 이메일
-                buyer_name: nickname, // 구매자 이름
-                buyer_tel: '010-1222-2222',
-                buyer_addr: '',
-                buyer_postcode: '',
+                merchant_uid: dayjs().format('YYYY-MM-DD HH:mm:ss'), 
+                name: '김김김',
+                amount: calculatePricePerNight(), 
+                buyer_email: '김', 
+                buyer_name: '김', 
+                buyer_tel: '김',
+                buyer_addr: '김',
+                buyer_postcode: '김',
                 m_redirect_url: redirect_url || "http://localhost:3000/main" // 결제 완료 후 리다이렉션할 주소
             },
             async function (rsp: { success: boolean; error_msg?: string }) {
 
                 if (rsp.success) {
                     alert("결제되었습니다.");
-    
+                    
                     try {
-                        await axios.post('http://localhost:8080/payment/success', {
-                            paymentRequest: {
-                                pgMethod: pg_method,
-                                amount: 3, 
-                                nickname: nickname,
-                                buyerEmail: '', 
-                                buyerName: nickname,
-                                buyerTel: '010-1222-2222',
-                                buyerAddr: '서울특별시 강남구 삼성동',
-                                buyerPostcode: '123-456'
-                            },
-                            reservationRequest: {
-                                guestId: 'qwer1234',
-                                accommodationName: '좋은펜션',
-                                roomId: 123,
-                                checkInDay: '0000-00-00', 
-                                checkOutDay: '0000-00-00', 
-                                reservationTotalPeople: 3,
-                                reservationStatus: 0,
-                                createdAt: `mid_${new Date().getTime()}`
-                            }
+                        await axios.post('http://localhost:4000/api/roomly/payment/success', {
+                            impuId: pg_method,
+                            status: 'SUCCESS',
+                            amount: calculatePricePerNight(),
+                            accommodationName: accommodationName,
+                            checkInDay: checkInTime,
+                            checkOutDay: checkOutTime,
+                            reservationTotalPeople: personnelCount,
+                            reservationStatus: 'BOOKED',
+                            createdAt: dayjs().format('YYYY-MM-DD HH:mm:ss'),
+                            guestId: 'gnsxmtkfkd',
+                            roomId: 1
+
                         });
+
                     } catch (error) {
                         console.error("Failed to send payment data to server:", error);
                     }
@@ -218,6 +245,7 @@ export default function Payment({ onPathChange }: PaymentComponentProps) {
             }
         );
     };
+
 
     // render: 결제 화면 컴포넌트 렌더링 //
     return (
@@ -264,16 +292,15 @@ export default function Payment({ onPathChange }: PaymentComponentProps) {
                         <div className='left-bottom'>
                             <div className='left-bottom-title'>결제 수단</div>
                             <div className='payment-typeList'>
-                                <div className='kakaoPay'>
+                                <div className='kakaoPay' onClick={() => handlePaymentMethodClick('kakaopay')}>
                                     <img className='kakaoPay-image' src="https://image.goodchoice.kr/images/mweb/reservation/payment/kakao.png" />
                                 </div>
-                                <div className='tossPay'>
+                                <div className='tossPay' onClick={() => handlePaymentMethodClick('tosspay')}>
                                     <img className='tossPay-image' src="https://image.goodchoice.kr/images/mweb/reservation/payment/tosspay.png" />
                                 </div>
-                                <div className='naverPay'>
-                                    <img className="naverPay-image" src="https://image.goodchoice.kr/images/mweb/reservation/payment/npay2.png" />
+                                <div className='creditCard' onClick={() => handlePaymentMethodClick('mobilians')}>
+                                    신용/체크카드
                                 </div>
-                                <div className='creditCard'>신용/체크카드</div>
                             </div>
                         </div>
                     </div>
@@ -289,9 +316,9 @@ export default function Payment({ onPathChange }: PaymentComponentProps) {
                                 </div>
                             </div>
                             <div className='right-top-container2'>
-                                <div className='roomName'>객실</div>
-                                <div className='roomName-input'>
-                                    {accommodationName ? <div>{roomName}</div> : <div>객실정보가 없습니다.</div>}
+                                <div className='roomType'>객실</div>
+                                <div className='roomType-input'>
+                                    {roomName ? <div>{roomName}</div> : <div>객실정보가 없습니다.</div>}
                                 </div>
                             </div>
 
@@ -314,11 +341,11 @@ export default function Payment({ onPathChange }: PaymentComponentProps) {
                         <div className='right-bottom-title'>결제정보</div>
                         <div className='right-bottom-container1'>
                             <div className='room-price1'>객실 가격(1박)</div>
-                            <div className='room-price-input1'>{calculatePricePerNight()}원</div>
+                            <div className='room-price-input1'>{price && <div>{price}원</div>}</div>
                         </div>
                         <div className='right-bottom-container2'>
                             <div className='room-price2'>총 결제 금액</div>
-                            {price && <div>{price}원</div>}
+                            <div className='room-price-input2'>{calculatePricePerNight()}원</div>
                         </div>
                         <div className='right-bottom-container3'>
                             <div className='total-agree-wrap'>
@@ -388,9 +415,12 @@ export default function Payment({ onPathChange }: PaymentComponentProps) {
                             </div>
                         </div>
                     </div>
-                    <div className='right-bottom-button' onClick={() => onChargeClickButtonHandler('kakaopay', '사용자 닉네임', '리다이렉트 URL')}>{isAllAgreed && price && <div>{price}원 결제하기</div>}</div>
+                    {isAllAgreed && selectedPaymentMethod && (
+                        <div className='right-bottom-button' onClick={() => onChargeClickButtonHandler(selectedPaymentMethod, "구매자 이름", "http://localhost:3000/main")}>{calculatePricePerNight()}원 결제하기</div>
+                    )}
                 </div>
             </div>
         </div>
+
     );
 };

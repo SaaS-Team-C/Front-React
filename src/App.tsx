@@ -25,6 +25,7 @@ import Accommodationenrollmentapproval from './views/admin/accommodationenrollme
 import HostEnrollmentapproval from './views/admin/hostenrollmentapproval/index';
 import SignUp from './views/auth';
 import MypageHost from './views/mypagehost';
+import FindId from './views/find';
 
 
 
@@ -69,13 +70,14 @@ export default function App() {
 
       <Route path={ACCOMMODATION_LIST_PATH} element={<AccommodationList />} />
       <Route path={ACCOMMODATION_LIST_DETAIL_PATH} element={<DetailList />} />
-      {/* <Route path='/sign-up' element={<SignUp onPathChange={() => { }} />} /> */}
-      <Route path='/payment' element={<Payment onPathChange={() => { }} />} />
-      <Route path='/admin' element={<Accommodationenrollmentapproval />} />
-      <Route path='/adminHost' element={<HostEnrollmentapproval />} />
-      <Route path='/faq' element={<FAQ />} />
-      <Route path='/mypagehost' element={<MypageHost />} />
-      <Route path='/mypagehost/enroll' element={<HostAccommodationRegister />} />
+      <Route path='/sign-up' element={<SignUp onPathChange={() => {}} />} />
+      <Route path='/payment' element={<Payment onPathChange={() => {}} />} />
+      <Route path='/find' element={<FindId onPathChange={() => {}} />} />
+      <Route path='/admin' element={<Accommodationenrollmentapproval/>}/>
+      {/* <Route path='/adminHost' element={<AccomodationEnrollApprovalPage/>}/> */}
+      <Route path='/faq' element={<FAQ/>}/>
+      <Route path='/mypagehost'element={<HostAccommodationRegister/>}/>
+      <Route path='/mypagehost/enroll' element={<HostAccommodationRegister/>}/>
 
 
       <Route path='*' element={<Index />} />
