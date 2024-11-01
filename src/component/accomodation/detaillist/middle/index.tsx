@@ -4,8 +4,7 @@ import { RoomDTO } from 'src/apis/accommodation/dto/request/room.request.dto';
 
 const mockRoomsData: RoomDTO[] = [
   {
-    name: "Deluxe Room",
-    type: "Deluxe Suite",
+    roomName: "Deluxe Room",
     description: "Spacious suite with a beautiful city view, free WiFi, and complimentary breakfast.",
     checkInTime: "14:00",
     checkOutTime: "11:00",
@@ -17,8 +16,7 @@ const mockRoomsData: RoomDTO[] = [
     ]
   },
   {
-    name: "suite Room",
-    type: "Family Suite",
+    roomName: "suite Room",
     description: "가족 단위로 오기 좋은 넓은 스위트 패밀리 객실.",
     checkInTime: "15:00",
     checkOutTime: "10:00",

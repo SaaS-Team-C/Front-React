@@ -1,6 +1,6 @@
 // interface: 메인에서 숙소 검색 시 불러올 숙소 검색 리스트 dto//
 
-import { RoomDTO } from "../request/room.request.dto";
+import { RoomMinPriceDTO } from "../request/room.minPrice.dto";
 
 export interface AccommodationDTO {
   accommodation_name: string;
@@ -24,5 +24,6 @@ export interface AccommodationDTO {
   // review 테이블에서 가져옴
   review_grade: number;
 
-  rooms: RoomDTO[];
+  // 객실 최소값 구하기 위해 가져옴
+  roomMinPrice: RoomMinPriceDTO[];
 }

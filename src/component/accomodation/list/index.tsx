@@ -6,6 +6,7 @@ import { AccommodationDTO } from 'src/apis/accommodation/dto/response/accommodat
 import { fetchAccommodationList } from 'src/apis/accommodation';
 import { ACCOMMODATION_LIST_DETAIL_PATH } from 'src/constants';
 import { RoomDTO } from 'src/apis/accommodation/dto/request/room.request.dto';
+import { RoomMinPriceDTO } from 'src/apis/accommodation/dto/request/room.minPrice.dto';
 
 // interface: 메인 화면에서 검색 된 숙소 리스트 props //
 interface ListProps {
@@ -60,26 +61,14 @@ const List: React.FC<ListProps> = ({ accommodations }) => {
         accommodation_address: '부산 해운대구 해운대해변로 1',
         accommodation_type: '호텔',
         review_grade: 4.2,
-        rooms: [
+        roomMinPrice: [
           {
             roomPrice: 70000,
-            name: '스탠다드 룸',
-            type: '더블',
-            checkInTime: '15:00',
-            checkOutTime: '11:00',
-            maxOccupancy: 2,
-            description: '바다 전망을 가진 스탠다드 룸입니다.',
-            images: ['https://example.com/room1.jpg']
+            roomName: "스위트룸"
           },
           {
             roomPrice: 150000,
-            name: '디럭스 룸',
-            type: '트윈',
-            checkInTime: '15:00',
-            checkOutTime: '11:00',
-            maxOccupancy: 3,
-            description: '바다 전망을 가진 디럭스 룸입니다.',
-            images: ['https://example.com/room2.jpg']
+            roomName: "더블룸"
           }
         ]
       },
@@ -98,26 +87,14 @@ const List: React.FC<ListProps> = ({ accommodations }) => {
         accommodation_address: '서울 서면진구 소진이네 집 1',
         accommodation_type: '리조트',
         review_grade: 4.9,
-        rooms: [
+        roomMinPrice: [
           {
             roomPrice: 100000,
-            name: '스탠다드 룸',
-            type: '더블',
-            checkInTime: '15:00',
-            checkOutTime: '11:00',
-            maxOccupancy: 2,
-            description: '바다 전망을 가진 스탠다드 룸입니다.',
-            images: ['https://example.com/room1.jpg']
+             roomName: "트윈"
           },
           {
             roomPrice: 350000,
-            name: '디럭스 룸',
-            type: '트윈',
-            checkInTime: '15:00',
-            checkOutTime: '11:00',
-            maxOccupancy: 3,
-            description: '바다 전망을 가진 디럭스 룸입니다.',
-            images: ['https://example.com/room2.jpg']
+            roomName: "디럭스"
           }
         ]
       },
@@ -133,15 +110,17 @@ const List: React.FC<ListProps> = ({ accommodations }) => {
   const urlStart = searchParams.get('start')
   const urlEnd = searchParams.get('end')
   const urlCount = searchParams.get('count')
-  const urlName = searchParams.get('name')
+  const urlName = searchParams.get('accommodationName')
+
+
 
   // function: 네비게이터 함수 //
   const navigator = useNavigate();
 
   // event handler: 숙소 클릭 시 숙소 디테일 페이지로 이동하는 핸들러 //
-  const handleDetailClick = (name: string) => {
+  const handleDetailClick = (accommodationName: string) => {
     navigator(
-      `${ACCOMMODATION_LIST_DETAIL_PATH}?Region=${urlRegion}&start=${urlStart}&end=${urlEnd}&count=${urlCount}&name=${encodeURIComponent(name)}`
+      `${ACCOMMODATION_LIST_DETAIL_PATH}?Region=${urlRegion}&start=${urlStart}&end=${urlEnd}&count=${urlCount}&accommodationName=${encodeURIComponent(accommodationName)}`
     );
   };
 
@@ -153,8 +132,8 @@ const List: React.FC<ListProps> = ({ accommodations }) => {
 
   // function: 분류 로직
   const sortedAccommodations = [...callAccommodationList].sort((a, b) => {
-    const aMinPrice = Math.min(...a.rooms.map((room) => room.roomPrice));
-    const bMinPrice = Math.min(...b.rooms.map((room) => room.roomPrice));
+    const aMinPrice = Math.min(...a.roomMinPrice.map((room) => room.roomPrice));
+    const bMinPrice = Math.min(...b.roomMinPrice.map((room) => room.roomPrice));
 
     if (sortOption === '평점 높은순') {
       return b.accommodation_grade_sum - a.accommodation_grade_sum;
@@ -198,7 +177,7 @@ const List: React.FC<ListProps> = ({ accommodations }) => {
   };
 
   // 최저 가격 가져오는 함수
-  const getLowestRoomPrice = (rooms: RoomDTO[]): number => {
+  const getLowestRoomPrice = (rooms: RoomMinPriceDTO[]): number => {
     return rooms.reduce((minPrice, room) => {
       return room.roomPrice < minPrice ? room.roomPrice : minPrice;
     }, rooms[0]?.roomPrice || 0);
@@ -250,7 +229,7 @@ const List: React.FC<ListProps> = ({ accommodations }) => {
                 <p>{accommodation.accommodation_address}</p>
 
                 {/* 최저 객실 가격 표시 */}
-                <p>₩{getLowestRoomPrice(accommodation.rooms).toLocaleString()} /박</p>
+                <p>₩{getLowestRoomPrice(accommodation.roomMinPrice).toLocaleString()} /박</p>
 
 
 
