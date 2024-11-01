@@ -24,6 +24,7 @@ interface Room {
   selectedRoomImage?: File;
 }
 
+const userName = "이소진"; 
 const accommodationTypes = ['호텔', '리조트', '펜션'];
 const facilitiesOptions = [
   '금연객실', 
@@ -36,6 +37,9 @@ const facilitiesOptions = [
 ];
 
 const RoomRegister: React.FC<{ room: Room; onChange: (updatedRoom: Room) => void; onDelete: () => void; onCopy: () => void }> = ({ room, onChange, onDelete, onCopy }) => {
+
+  console.log('Registration 렌더링 중');
+
   const [roomImageError, setRoomImageError] = useState<string>('');
   const [roomImagePreviews, setRoomImagePreviews] = useState<string[]>([]);
 
@@ -289,7 +293,9 @@ const HostAccommodationRegister: React.FC = () => {
 
 
   return (
-    <div>
+    <div id='registration-wrapper'>
+    {/* 상단 환영 문구 */}
+    <div className="welcome-message"> 호스트 '{userName}'님, 반갑습니다.</div>
       <form onSubmit={handleSubmit}>
         <h2>숙소 등록</h2>
         <div>
@@ -374,6 +380,9 @@ const HostAccommodationRegister: React.FC = () => {
         </div>
         <button type="submit">등록하기</button>
       </form>
+      //! 관리자만 해당 버튼이 보이도록 코드 수정 해야 함
+      <button className="approval-button" type="submit">승인</button>
+      <button className="rejection-button"type="submit">거절</button>
     </div>
   );
 };
