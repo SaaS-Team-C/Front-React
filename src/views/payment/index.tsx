@@ -27,7 +27,7 @@ interface PaymentComponentProps {
 export default function Payment({ onPathChange }: PaymentComponentProps) {
     const location = useLocation();
 
-    // state: 예약 상세 정보 불러오기 상태 // 
+    // state: 예약 상세 정보 불러오기 상태 //
     const { imageSrc, price, checkInTime, checkOutTime, accommodationName, roomName, personnelCount } = location.state || {};
 
     // state: 예약자 입력 정보 상태 //
@@ -205,30 +205,30 @@ export default function Payment({ onPathChange }: PaymentComponentProps) {
             {
                 pg: pg_method, // 결제 방식 지정
                 pay_method: 'card',
-                merchant_uid: `mid_${new Date().getTime()}`, // 현재 시간
-                name: '결제 품목 및 제목 지정',
-                amount: 3, // 실제 충전할 금액 (중괄호 제거)
-                buyer_email: '', // 구매자 이메일
-                buyer_name: nickname, // 구매자 이름
-                buyer_tel: '010-1222-2222',
-                buyer_addr: '',
-                buyer_postcode: '',
+                merchant_uid: dayjs().format('YYYY-MM-DD HH:mm:ss'), 
+                name: '김김김',
+                amount: calculatePricePerNight(), 
+                buyer_email: '김', 
+                buyer_name: '김', 
+                buyer_tel: '김',
+                buyer_addr: '김',
+                buyer_postcode: '김',
                 m_redirect_url: redirect_url || "http://localhost:3000/main" // 결제 완료 후 리다이렉션할 주소
             },
             async function (rsp: { success: boolean; error_msg?: string }) {
 
                 if (rsp.success) {
                     alert("결제되었습니다.");
-
+                    
                     try {
                         await axios.post('http://localhost:4000/api/roomly/payment/success', {
                             impuId: pg_method,
                             status: 'SUCCESS',
-                            amount: 30000,
-                            accommodationName: '놀기좋은팬션',
-                            checkInDay: '2021-12-20',
-                            checkOutDay: '2021-12-26',
-                            reservationTotalPeople: 3,
+                            amount: calculatePricePerNight(),
+                            accommodationName: accommodationName,
+                            checkInDay: checkInTime,
+                            checkOutDay: checkOutTime,
+                            reservationTotalPeople: personnelCount,
                             reservationStatus: 'BOOKED',
                             createdAt: dayjs().format('YYYY-MM-DD HH:mm:ss'),
                             guestId: 'gnsxmtkfkd',
@@ -316,9 +316,9 @@ export default function Payment({ onPathChange }: PaymentComponentProps) {
                                 </div>
                             </div>
                             <div className='right-top-container2'>
-                                <div className='roomName'>객실</div>
-                                <div className='roomName-input'>
-                                    {accommodationName ? <div>{roomName}</div> : <div>객실정보가 없습니다.</div>}
+                                <div className='roomType'>객실</div>
+                                <div className='roomType-input'>
+                                    {roomName ? <div>{roomName}</div> : <div>객실정보가 없습니다.</div>}
                                 </div>
                             </div>
 
