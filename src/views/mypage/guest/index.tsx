@@ -1,9 +1,12 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import "./style.css"
 import Topbar from 'src/component/topbar'
 import MypageCatalogButton from 'src/component/mypage/mypagecatalogbutton';
 import Information from 'src/component/mypage/mypagemain/information';
 import { Userinformation } from 'src/resources/userinfromation';
+import { useCookies } from 'react-cookie';
+import { MAIN_PATH } from 'src/constants';
+import { useNavigate } from 'react-router';
 
 
 
@@ -14,6 +17,9 @@ export default function GuestMypage() {
     const datail3 = "즐겨찾기"
 
     const [click, setClick] = useState<string>(datail1)
+    const [cookies , setCookie] = useCookies();
+
+    const navigator = useNavigate();
 
     // event handler: 분류 버튼 클릭 이벤트 핸들러 //
     const onClickButtonHandler = (distimction: string) => {
@@ -22,6 +28,9 @@ export default function GuestMypage() {
 
     const testValue = true ;
 
+    useEffect(() => {
+        if(!cookies['accessToken']) navigator(MAIN_PATH);
+    }, [Topbar]);
 
 
 
