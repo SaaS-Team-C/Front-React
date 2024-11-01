@@ -63,21 +63,33 @@ const RoomCard: React.FC<RoomCardProps> = ({ room, isFullyBooked }) => {
   };
 
   // event handler: 숙소 예약 버튼 클릭 시 예약 페이지로 이동하는 핸들러 //
+  // const handleChangebooking = () => {
+  //   if (cookies.accessToken) {
+  //     // 로그인 상태인 경우 예약 페이지로 이동
+  //     navigator(
+  //       `${PAYMENT_PATH}?Region=${urlRegion}&start=${urlStart}&end=${urlEnd}&count=${urlCount}&name=${encodeURIComponent(room.name)}&roomType=${urlRoom}`,
+  //       { state: { imageSrc: room.images[0], price: room.roomPrice, checkInTime: urlStart, checkOutTime: urlEnd, personnelCount: urlCount, roomName: urlName, roomType: urlRoom } }
+  //     );
+  //   } else {
+  //     // 로그인 상태가 아닌 경우 alert 표시 후 회원가입 페이지로 이동
+  //     if (window.confirm('Roomly 회원만 숙박 예약이 가능합니다. 로그인/회원가입 페이지로 이동하시겠습니까?')) {
+  //       navigator('/sign-up');
+  //     }
+  //   }
+  // };
+
   const handleChangebooking = () => {
-    if (cookies.accessToken) {
+    
       // 로그인 상태인 경우 예약 페이지로 이동
       navigator(
-        `${PAYMENT_PATH}?Region=${urlRegion}&start=${urlStart}&end=${urlEnd}&count=${urlCount}&name=${encodeURIComponent(room.name)}&roomType=${urlRoom}`,
+        `${PAYMENT_PATH}?Region=${urlRegion}&start=${urlStart}&end=${urlEnd}&count=${urlCount}&roomType=${urlRoom}&name=${encodeURIComponent(room.name)}`,
         { state: { imageSrc: room.images[0], price: room.roomPrice, checkInTime: urlStart, checkOutTime: urlEnd, personnelCount: urlCount, roomName: urlName, roomType: urlRoom } }
       );
-    } else {
-      // 로그인 상태가 아닌 경우 alert 표시 후 회원가입 페이지로 이동
-      if (window.confirm('Roomly 회원만 숙박 예약이 가능합니다. 로그인/회원가입 페이지로 이동하시겠습니까?')) {
-        navigator('/sign-up');
-      }
-    }
-  };
+    } 
+  
 
+
+  
   return (
     <div className="room-card">
       {isFullyBooked ? ( // 객실이 매진된 경우

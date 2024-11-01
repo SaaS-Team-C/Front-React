@@ -83,7 +83,44 @@ const List: React.FC<ListProps> = ({ accommodations }) => {
           }
         ]
       },
-      // ...다른 mock 데이터들 추가 가능
+      {
+        accommodation_name: '웨스틴 조선',
+        accommodation_grade_sum: 9.5,
+        category_area: '서울',
+        category_pet: false,
+        category_non_smoking_area: true,
+        category_indoor_spa: false,
+        category_dinner_party: true,
+        category_wifi: false,
+        category_car_park: false,
+        category_pool: true,
+        accommodation_main_image: 'https://example.com/image1.jpg',
+        accommodation_address: '서울 서면진구 소진이네 집 1',
+        accommodation_type: '리조트',
+        review_grade: 4.9,
+        rooms: [
+          {
+            roomPrice: 100000,
+            name: '스탠다드 룸',
+            type: '더블',
+            checkInTime: '15:00',
+            checkOutTime: '11:00',
+            maxOccupancy: 2,
+            description: '바다 전망을 가진 스탠다드 룸입니다.',
+            images: ['https://example.com/room1.jpg']
+          },
+          {
+            roomPrice: 350000,
+            name: '디럭스 룸',
+            type: '트윈',
+            checkInTime: '15:00',
+            checkOutTime: '11:00',
+            maxOccupancy: 3,
+            description: '바다 전망을 가진 디럭스 룸입니다.',
+            images: ['https://example.com/room2.jpg']
+          }
+        ]
+      },
     ];
 
     SetCallAccommodationList(mockData);
