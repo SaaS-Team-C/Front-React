@@ -1,9 +1,15 @@
 import React from 'react';
-import Registration from './registration';
+import './style.css';
+
 
 export function MyAccommodationManagement() {
-  return <div>
-     console.log('MyAccommodationManagement 렌더링 중');
-    <Registration/>
-  </div>;
+  const handleRegisterClick = () => {
+    window.location.href = 'http://localhost:3000/mypagehost/accommodations/register';
+  };
+
+  return (
+  <div>
+    <button onClick={handleRegisterClick}>숙소 등록</button>
+  </div>
+  );
 }

@@ -117,7 +117,7 @@ const Accommodationenrollmentapproval: React.FC = () => {
               </td>
               <td>
                 <button
-                 onClick={() => navigate('/mypagehost')}
+                 onClick={() => navigate('/mypagehost/accommodations/register')}
                   className="action-button approve"
                 >
                   숙소 정보 보기

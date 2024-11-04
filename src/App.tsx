@@ -82,10 +82,20 @@ export default function App() {
       <Route path='/adminHost' element={<Accommodationenrollmentapproval/>}/>
       <Route path='/faq' element={<FAQ/>}/>
 
-      <Route path="/mypagehost/*" element={<HostMypageLayout />} />
-        <Route path="/mypagehost" element={<MyInfoManagement />} />
-        <Route path="/mypagehost/books" element={<ReservationStatus />} />
-        <Route path="/mypagehost/accommodations" element={<MyAccommodationManagement />} />
+
+      <Route path="/mypagehost" element={<HostMypageLayout />}>
+            <Route index element={<MyInfoManagement />} />
+       </Route>
+
+      <Route path="/mypagehost/books" element={<HostMypageLayout />}>
+            <Route index element={<ReservationStatus />} />
+      </Route>
+
+      <Route path="/mypagehost/accommodations" element={<HostMypageLayout />}>
+            <Route index element={<MyAccommodationManagement/>} />
+            <Route path="register" element={<HostAccommodationRegister />} />
+      </Route>
+
 
       <Route path='*' element={<Index />} />
     </Routes>
