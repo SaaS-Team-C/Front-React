@@ -76,7 +76,7 @@ export default function App() {
       <Route path={ACCOMMODATION_LIST_DETAIL_PATH} element={<DetailList />} />
       {/* <Route path='/sign-up' element={<SignUp onPathChange={() => {}} />} /> */}
       <Route path='/payment' element={<Payment onPathChange={() => {}} />} />
-      <Route path='/find' element={<FindId onPathChange={() => {}} />} />
+      {/* <Route path='/find' element={<FindId onPathChange={() => {}} />} /> */}
 
       <Route path='/admin' element={<HostEnrollmentapproval/>}/>
       <Route path='/adminHost' element={<Accommodationenrollmentapproval/>}/>
