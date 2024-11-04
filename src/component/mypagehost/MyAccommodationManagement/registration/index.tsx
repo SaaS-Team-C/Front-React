@@ -139,8 +139,8 @@ const RoomRegister: React.FC<{ room: Room; onChange: (updatedRoom: Room) => void
             ))}
           </div>
         </div>
-        <button type="button" onClick={onDelete}>삭제</button> {/* 삭제 버튼 추가 */}
-        <button type="button" onClick={onCopy}>복사하여 추가</button> {/* 복사 버튼 추가 */}
+        <button type="button" onClick={onDelete}>삭제</button> 
+        <button type="button" onClick={onCopy}>복사하여 추가</button> 
       </div>
     </>
   );
