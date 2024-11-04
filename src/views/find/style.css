@@ -14,10 +14,17 @@
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 }
 
+.findId-body {
+    display: flex;
+    gap: 70px;
+}
+
+
 .findId-title {
     font-weight: bold;
-    font-size: 20px;
+    font-size: 18px;
     margin-bottom: 20px;
+    margin-right: 10px;
 }
 
 .nameBox,
@@ -103,3 +110,59 @@
     margin-left: 125px;
     margin-top: 7px;
 }
+
+.guest-login-button1,
+.host-login-button2 {
+    margin-left: 62px;
+    
+    text-align: right;
+    padding: 10px 0px 0px 0px; /* 버튼 내부 여백 */
+    font-weight: bold; /* 글씨 두껍게 */
+}
+
+
+.GuestLogin-button-guest1,
+.HostLogin-button-guest2 {
+    padding: 8px 10px; /* 버튼 내부 여백 */
+
+}
+
+.GuestLogin-button-host1,
+.HostLogin-button-host2 {
+    padding: 8px 13px; /* 버튼 내부 여백 */
+
+}
+
+.GuestLogin-button-guest1,
+.HostLogin-button-host2 {
+    border-radius: 5px; /* 테두리 둥글게 */
+    text-decoration: none; /* 링크 밑줄 제거 */
+    font-weight: bold; /* 글씨 두껍게 */
+    transition: background-color 0.3s; /* 호버 시 부드러운 색 변화 */
+    background-color: #00accf; 
+    color: white;
+    border: none;
+    font-size: 16px;
+
+}
+
+.GuestLogin-button-host1,
+.HostLogin-button-guest2 {
+    border-radius: 5px; /* 테두리 둥글게 */
+    cursor: pointer; /* 마우스 커서 포인터로 변경 */
+    text-decoration: none; /* 링크 밑줄 제거 */
+    font-weight: bold; /* 글씨 두껍게 */
+    transition: background-color 0.3s; /* 호버 시 부드러운 색 변화 */
+
+    background-color: rgba(157, 160, 165, 1);
+    color: white;
+    border: none;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+.GuestLogin-button-host1:hover,
+.HostLogin-button-guest2:hover {
+    color: #ccc;
+}
+

@@ -58,9 +58,21 @@ export default function Payment({ onPathChange }: PaymentComponentProps) {
     });
 
     // state: 약관 동의 모달 오픈/오프 상태 //
-    const [isModalOpen, setModalOpen] = useState(false);
-    const openModal = () => setModalOpen(true);
-    const closeModal = () => setModalOpen(false);
+    const [isModalOpen1, setModalOpen1] = useState(false);
+    const openModal1 = () => setModalOpen1(true);
+    const closeModal1 = () => setModalOpen1(false);
+     // state: 약관 동의 모달 오픈/오프 상태 //
+     const [isModalOpen2, setModalOpen2] = useState(false);
+     const openModal2 = () => setModalOpen2(true);
+     const closeModal2 = () => setModalOpen2(false);
+      // state: 약관 동의 모달 오픈/오프 상태 //
+    const [isModalOpen3, setModalOpen3] = useState(false);
+    const openModal3 = () => setModalOpen3(true);
+    const closeModal3 = () => setModalOpen3(false);
+     // state: 약관 동의 모달 오픈/오프 상태 //
+     const [isModalOpen4, setModalOpen4] = useState(false);
+     const openModal4 = () => setModalOpen4(true);
+     const closeModal4 = () => setModalOpen4(false);
 
     // state: 카카오페이/토스페이 결제 요청 상태 //
     const [amount, setAmount] = useState(0);
@@ -81,6 +93,35 @@ export default function Payment({ onPathChange }: PaymentComponentProps) {
             button.classList.add('active');
         });
     });
+
+     // function: 박수 계산 함수 //
+     const differenceInTime = () => {
+        if (!checkInTime || !checkOutTime ) {
+            return 0; // 체크인/체크아웃 시간이 없거나 price가 유효하지 않을 경우 0 반환
+        }
+
+        // 날짜에 시간 정보가 추가된 UTC 기반 날짜 생성
+        const checkInDate = new Date(Date.UTC(
+            parseInt(checkInTime.split('-')[0]),
+            parseInt(checkInTime.split('-')[1]) - 1, // 월은 0부터 시작하므로 1을 뺌
+            parseInt(checkInTime.split('-')[2])
+        ));
+
+        const checkOutDate = new Date(Date.UTC(
+            parseInt(checkOutTime.split('-')[0]),
+            parseInt(checkOutTime.split('-')[1]) - 1,
+            parseInt(checkOutTime.split('-')[2])
+        ));
+
+        const differenceInTime = checkOutDate.getTime() - checkInDate.getTime();
+        const differenceInDays = differenceInTime / (1000 * 3600 * 24); // 밀리초를 일로 변환
+
+        if (differenceInDays <= 0 || Number.isNaN(differenceInDays)) {
+            return 0; // 잘못된 날짜 범위 또는 NaN 값일 경우 0 반환
+        }
+
+        return differenceInDays; 
+    };
 
     // function: 1박당 가격 계산 함수 //
     const calculatePricePerNight = () => {
@@ -208,31 +249,28 @@ export default function Payment({ onPathChange }: PaymentComponentProps) {
                 name: accommodationName,
                 amount: calculatePricePerNight(), 
                 buyer_email: '', 
-                buyer_name: '홍길동', 
+                buyer_name: '', 
                 buyer_tel: '010-0000-0000',
                 buyer_addr: '김',
                 buyer_postcode: '김',
                 m_redirect_url: redirect_url || "http://localhost:3000/main" // 결제 완료 후 리다이렉션할 주소
             },
-            async function (rsp: { success: boolean; error_msg?: string }) {
+            async function (rsp: { success: boolean; error_msg?: string, differenceinTime: number }) {
 
                 if (rsp.success) {
                     alert("결제되었습니다.");
-                    
+
                     try {
                         await axios.post('http://localhost:4000/api/roomly/payment/success', {
-                            impuId: pg_method,
-                            status: 'SUCCESS',
-                            amount: calculatePricePerNight(),
+                            totalPrice: calculatePricePerNight(),
                             accommodationName: accommodationName,
+                            totalNight: differenceInTime(),
                             checkInDay: checkInTime,
                             checkOutDay: checkOutTime,
                             reservationTotalPeople: personnelCount,
-                            reservationStatus: 'BOOKED',
                             createdAt: dayjs().format('YYYY-MM-DD HH:mm:ss'),
-                            guestId: 'gnsxmtkfkd',
+                            guestId: 'qwer1234',
                             roomId: 1
-
                         });
 
                     } catch (error) {
@@ -270,7 +308,7 @@ export default function Payment({ onPathChange }: PaymentComponentProps) {
                 <div className='page-left'>
                     <div className='payment-image'>
                         <div className='payImage'>
-                            {imageSrc && <img src={imageSrc} alt="Room" />}
+                            {imageSrc && <img src={imageSrc} alt={roomName} />}
                         </div>
                     </div>
                     <div className='left-box'>
@@ -368,9 +406,9 @@ export default function Payment({ onPathChange }: PaymentComponentProps) {
                                         onChange={() => handleAgreementChange('ruleAgreement')}
                                     />
                                     <div className='list-agree1'>숙소 이용규칙 및 취소/환불규정 동의(필수)</div>
-                                    <div className="list-agree-button" onClick={openModal}>
+                                    <div className="list-agree-button" onClick={openModal1}>
                                         <svg className="arrow-icon" xmlns="http://www.w3.org/2000/svg" width="20px" height="20px"><path d="M11 14.667 15.986 10 11 5.333 12.424 4l4.986 4.667c.787.736.787 1.93 0 2.666L12.424 16z"></path></svg></div>
-                                    <ModalComponent1 isOpen={isModalOpen} closeModal={closeModal} />
+                                    <ModalComponent1 isOpen1={isModalOpen1} closeModal1={closeModal1} />
                                 </div>
                             </div>
 
@@ -382,9 +420,9 @@ export default function Payment({ onPathChange }: PaymentComponentProps) {
                                     onChange={() => handleAgreementChange('personalInfoAgreement')}
                                 />
                                 <div className='list-agree2'>개인정보 수집 및 이용 동의(필수)</div>
-                                <div className="list-agree-button" onClick={openModal}>
+                                <div className="list-agree-button" onClick={openModal2}>
                                     <svg className="arrow-icon" xmlns="http://www.w3.org/2000/svg" width="20px" height="20px"><path d="M11 14.667 15.986 10 11 5.333 12.424 4l4.986 4.667c.787.736.787 1.93 0 2.666L12.424 16z"></path></svg></div>
-                                <ModalComponent2 isOpen={isModalOpen} closeModal={closeModal} />
+                                <ModalComponent2 isOpen2={isModalOpen2} closeModal2={closeModal2} />
                             </div>
 
                             <div className='agree-wrap3'>
@@ -395,9 +433,9 @@ export default function Payment({ onPathChange }: PaymentComponentProps) {
                                     onChange={() => handleAgreementChange('thirdPartyAgreement')}
                                 />
                                 <div className='list-agree3'>개인정보 제3자 제공 동의(필수)</div>
-                                <div className="list-agree-button" onClick={openModal}>
+                                <div className="list-agree-button" onClick={openModal3}>
                                     <svg className="arrow-icon" xmlns="http://www.w3.org/2000/svg" width="20px" height="20px"><path d="M11 14.667 15.986 10 11 5.333 12.424 4l4.986 4.667c.787.736.787 1.93 0 2.666L12.424 16z"></path></svg></div>
-                                <ModalComponent3 isOpen={isModalOpen} closeModal={closeModal} />
+                                <ModalComponent3 isOpen3={isModalOpen3} closeModal3={closeModal3} accommodationName={accommodationName} />
                             </div>
 
                             <div className='agree-wrap4'>
@@ -408,9 +446,9 @@ export default function Payment({ onPathChange }: PaymentComponentProps) {
                                     onChange={() => handleAgreementChange('ageVerification')}
                                 />
                                 <div className='list-agree4'>만 14세 이상 확인 (필수)</div>
-                                <div className="list-agree-button" onClick={openModal}>
+                                <div className="list-agree-button" onClick={openModal4}>
                                     <svg className="arrow-icon" xmlns="http://www.w3.org/2000/svg" width="20px" height="20px"><path d="M11 14.667 15.986 10 11 5.333 12.424 4l4.986 4.667c.787.736.787 1.93 0 2.666L12.424 16z"></path></svg></div>
-                                <ModalComponent4 isOpen={isModalOpen} closeModal={closeModal} />
+                                <ModalComponent4 isOpen4={isModalOpen4} closeModal4={closeModal4} />
                             </div>
                         </div>
                     </div>
