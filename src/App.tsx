@@ -19,9 +19,10 @@ import DetailList from './component/accomodation/detaillist';
 import FAQ from './views/faq';
 import HostAccommodationRegister from './component/mypagehost/registration';
 
-import GuestMypage from './views/mypage/guest';
+import GuestMypage from './views/mypageguest';
 import AccomodationEnrollApprovalPage from './views/admin/hostenrollmentapproval';
 import Accommodationenrollmentapproval from './views/admin/accommodationenrollmentapproval';
+import MypageInputBox from './component/input/mypageinput';
 
 
 
@@ -76,6 +77,7 @@ export default function App() {
 
 
       <Route path='*' element={<Index />} />
+      <Route path='/test' element= {<MypageInputBox activation={true} title='아이디' type='text' value='qwre1234' placeholder='아이디를 입력해 주세요' />}/>
     </Routes>
 
   );

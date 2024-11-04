@@ -1,4 +1,4 @@
-#information-warpper {
+#booking-warpper {
     display: flex;
     flex-direction: column;
     width: 100%;
@@ -7,43 +7,43 @@
 }
 
 /* 타이틀 */
-.information-title {
+.booking-title {
     width: 100%;
     height: 50px;
     font-size: 30px;
 }
 
-.information-title-text {
+.booking-title-text {
     font-size: 20px;
     font-weight: 700;
     margin-top: 10px;
     margin-bottom: 20px;
 }
 
-.information-title-box {
+.booking-title-box {
     display: flex;
     align-items: end;
 }
 
-.information-title-ditail-username {
+.booking-title-ditail-username {
     font-size: 17px;
     font-weight: 600;
 }
 
-.information-title-ditail {
+.booking-title-ditail {
     font-size: 16px;
     
 }
 
 /* 메인내용 */
-.information-main {
+.booking-main {
     width: 100%;
     height: 100%;
     margin-top: 50px;
 
 }
 
-.information-save-button {
+.booking-save-button {
     cursor: pointer;
     display: flex;
 
