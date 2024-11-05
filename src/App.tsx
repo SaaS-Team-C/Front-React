@@ -72,9 +72,9 @@ export default function App() {
 
       <Route path={ACCOMMODATION_LIST_PATH} element={<AccommodationList />} />
       <Route path={ACCOMMODATION_LIST_DETAIL_PATH} element={<DetailList />} />
-      {/* <Route path='/sign-up' element={<SignUp onPathChange={() => {}} />} /> */}
-      <Route path='/payment' element={<Payment onPathChange={() => {}} />} />
-      {/* <Route path='/find' element={<FindId onPathChange={() => {}} />} /> */}
+      <Route path='/sign-up' element={<SignUp onPathChange={() => {}} />} />
+      <Route path='/payment' element={<Payment onPathChange={() => { }} />} />
+      <Route path='/find' element={<FindId onPathChange={() => { }} />} />
 
       <Route path='/adminHost' element={<HostEnrollmentapproval/>}/>
       <Route path='/adminAccommodation' element={<Accommodationenrollmentapproval/>}/>
@@ -82,11 +82,11 @@ export default function App() {
 
 
       <Route path="/mypagehost" element={<HostMypageLayout />}>
-            <Route index element={<MyInfoManagement />} />
-       </Route>
+        <Route index element={<MyInfoManagement />} />
+      </Route>
 
       <Route path="/mypagehost/books" element={<HostMypageLayout />}>
-            <Route index element={<ReservationStatus />} />
+        <Route index element={<ReservationStatus />} />
       </Route>
       // ! 자식 요소로 경로 넣으면 화면이 안뜸. 왜 그런지 아시는 분???
       {/* <Route path="/mypagehost/accommodations" element={<HostMypageLayout />}> */}

@@ -115,24 +115,37 @@ export default function SignUp({ onPathChange }: AuthComponentProps) {
   const [businessNameCheckMessageError, setBusinessNameCheckMessageError] = useState<boolean>(false);
   const [businessNumberCheckMessageError, setBusinessNumberCheckMessageError] = useState<boolean>(false);
   const [businessStartDayCheckMessageError, setBusinessStartDayCheckMessageError] = useState<boolean>(false);
+  const [guestIsButtonEnabled, setGuestIsButtonEnabled] = useState(false);
+  const [hostIsButtonEnabled, setHostIsButtonEnabled] = useState(false);
 
+  
+  useEffect(() => {
+    // Check if all fields have values
+    const guestAllFieldsFilled = guestName !== '' && guestId !== '' && guestPassword !== '' && guestPasswordCheck !== '' && telNumber !== '';
+    setGuestIsButtonEnabled(guestAllFieldsFilled); 
+  }, [guestName, guestId, guestPassword, guestPasswordCheck, telNumber]);
+
+  useEffect(() => {
+    // 모든 입력 필드가 채워지고 체크박스가 선택되었는지 확인
+    const hostAllFieldsFilled =
+      hostName !== '' && 
+      hostId !== '' && 
+      hostPassword !== '' && 
+      hostPasswordCheck !== '' && 
+      businessName !== '' && 
+      businessNumber !== '' && 
+      telNumber !== '' && 
+      authNumber !== '' &&
+      isAgreed;
+    
+    setHostIsButtonEnabled(hostAllFieldsFilled);
+  }, [hostName, hostId, hostPassword, hostPasswordCheck, businessName, businessNumber, businessStartDay, telNumber, authNumber, isAgreed]);
 
 
   // variable: SNS 회원가입 여부 //
   const isSnsSignUp = snsId !== null && joinPath !== null;
 
-  // variable: 공통 회원가입 타입 //
-  const isCompleteSignUp = (name: string, id: string, password: string, passwordCheck: string) => {
-    return name && id && isCheckedId && password && passwordCheck && isMatchedPassword && isCheckedPassword
-      && telNumber && isSend && authNumber && isCheckedAuthNumber && isAgreed;
-  }
 
-
-  // variable: guest 회원가입 가능 여부
-  const isCompleteGuest = isCompleteSignUp(guestName, guestId, guestPassword, guestPasswordCheck);
-
-  // variable: host 회원가입 가능 여부
-  const isCompleteHost = isCompleteSignUp(hostName, hostId, hostPassword, hostPasswordCheck) && businessNumber;
 
   // function: 아이디 중복확인 Response 처리 함수 //
   const IdCheckResponse = (responseBody: ResponseDto | null) => {
@@ -281,10 +294,15 @@ export default function SignUp({ onPathChange }: AuthComponentProps) {
     const pattern = /^(?=.*[a-zA-Z])(?=.*[0-9]).{8,13}$/;
     const isMatched = pattern.test(value);
 
-    const message = (isMatched || !value) ? '' : '영문, 숫자를 혼용하여 8 ~ 13자를 입력해주세요';
-    setPasswordMessage(message);
-    setPasswordMessageError(!isMatched);
-    setMatchedPassword(isMatched);
+    // 비밀번호가 8자 이상일 때만 메시지를 설정
+    if (value.length >= 8) {
+      const message = isMatched ? '' : '영문, 숫자를 혼용하여 8 ~ 13자를 입력해주세요';
+      setPasswordMessage(message);
+      setPasswordMessageError(!isMatched);
+    } else {
+      setPasswordMessage(''); // 비밀번호가 8자 미만일 때 메시지 초기화
+      setPasswordMessageError(false);
+    }
   };
 
   // event handler: 비밀번호 변경 확인 이벤트 처리 //
@@ -311,7 +329,7 @@ export default function SignUp({ onPathChange }: AuthComponentProps) {
   };
 
 
-   // event handler: 사업자 번호 변경 이벤트 처리 //
+  // event handler: 사업자 번호 변경 이벤트 처리 //
   const onBusinessNumberChangeHandler = (event: ChangeEvent<HTMLInputElement>) => {
     const { value } = event.target; // 입력된 값을 가져옴
     setBusinessNumber(value); // 상태 업데이트
@@ -335,7 +353,7 @@ export default function SignUp({ onPathChange }: AuthComponentProps) {
       // 10자 숫자 형식이 맞으면 에러 메시지 초기화
       setBusinessNumberCheckMessage('유효한 사업자 번호입니다.');
       setBusinessNumberCheckMessageError(false);
-      
+
       const requestBody: BusinessNumberCheckRequestDto = {
         businessNumber
       };
@@ -391,36 +409,6 @@ export default function SignUp({ onPathChange }: AuthComponentProps) {
     setIsAgreed(event.target.checked);
   };
 
-  // Event handler: guest 회원가입 버튼 클릭 이벤트 처리
-  const onGuestSignUpButtonClickHandler = () => {
-    if (!isCompleteGuest) return;
-
-    const requestBody: GuestSignUpRequestDto = {
-      guestName,
-      guestId,
-      guestPassword,
-      telNumber,
-      joinPath
-    }
-    guestSignUpRequest(requestBody).then(guestSignUpResponse);
-  };
-
-  // Event handler: host 회원가입 버튼 클릭 이벤트 처리
-  const onHostSignUpButtonClickHandler = () => {
-    if (!isCompleteHost) return;
-
-    const requestBody: HostSignUpRequestDto = {
-      hostName,
-      hostId,
-      hostPassword,
-      telNumber,
-      businessNumber,
-      businessName,
-      businessStartDay
-    }
-    hostSignUpRequest(requestBody).then(hostSignUpResponse);
-  };
-
   // event handler: 상단 게스트 버튼 클릭 이벤트 처리
   const onGuestButtonClickHandler = () => {
     setCurrentView('guest'); // 게스트 화면으로 변경
@@ -451,6 +439,42 @@ export default function SignUp({ onPathChange }: AuthComponentProps) {
     setCheckedAuthNumber(false);
     setAuthNumberMessage('');
   };
+
+  // Guest 회원가입 버튼 클릭 이벤트 처리 //
+const onGuestSignUpButtonHandler = () => {
+  if (!guestIsButtonEnabled) return;
+
+  const requestBody: GuestSignUpRequestDto = {
+    guestName: guestName, // guestName 변수를 사용
+    guestId: guestId, // guestId 변수를 사용
+    guestPassword: guestPassword, // guestPassword 변수를 사용
+    snsId: snsId // guestSnsId 변수를 사용
+    ,
+    telNumber: telNumber,
+    authNumber: authNumber
+  };
+
+  guestSignUpRequest(requestBody).then(guestSignUpResponse);
+};
+
+// Host 회원가입 버튼 클릭 이벤트 처리 //
+const onHostSignUpButtonHandler = () => {
+  if (!hostIsButtonEnabled) return;
+
+  const requestBody: HostSignUpRequestDto = {
+    hostName: hostName,
+    hostId: hostId,
+    hostPassword: hostPassword,   
+    telNumber: telNumber,
+    authNumber: authNumber,
+    businessName: businessName,
+    businessStartDay: businessStartDay,
+    businessNumber: businessNumber
+  };
+
+  hostSignUpRequest(requestBody).then(hostSignUpResponse);
+};
+
 
   // effect : 비밀번호 및 비밀번호 확인 변경시 실행할 함수 //
   useEffect(() => {
@@ -571,8 +595,7 @@ export default function SignUp({ onPathChange }: AuthComponentProps) {
                 />
                 <div className='guest-agreeMessage'>개인정보 수집 및 이용약관에 동의합니다.</div>
               </div>
-              < div className={`guest-button-clear ${isCompleteGuest ? 'primary' : 'disable'}`}
-                onClick={isCompleteGuest ? onGuestSignUpButtonClickHandler : undefined}>회원가입</div>
+              <button className='guest-button-clear' disabled={!guestIsButtonEnabled} onClick={onGuestSignUpButtonHandler}>회원가입</button>
               <div className='guest-alreay-signIn'>
                 <div className='guest-alreay'>이미 Roomly 회원이신가요?</div>
                 <div className='guest-mainPageGo' onClick={onMainPageGoClickHandler}>메인페이지에서 로그인하기</div>
@@ -666,8 +689,7 @@ export default function SignUp({ onPathChange }: AuthComponentProps) {
                       locale={ko}
                       placeholderText="개업일자 선택"
                       isClearable
-                      className="host-input-field"
-                    />
+                      className="host-input-field"                    />
                     {businessStartDayCheckMessageError && (
                       <div className="error-message">{businessStartDayCheckMessage}</div>
                     )}
@@ -707,12 +729,11 @@ export default function SignUp({ onPathChange }: AuthComponentProps) {
                 />
                 <div className='host-agreeMessage'>개인정보 수집 및 이용약관에 동의합니다.</div>
               </div>
-              <div
-                className={`host-button-clear ${isCompleteHost ? 'primary' : 'disable'}`}
-                onClick={isCompleteHost ? onHostSignUpButtonClickHandler : undefined}
+              <button
+                className='host-button-clear' disabled={!hostIsButtonEnabled} onClick={onHostSignUpButtonHandler}
               >
                 회원가입
-              </div>
+              </button>
               <div className='host-alreay-signIn'>
                 <div className='host-alreay'>이미 Roomly 회원이신가요?</div>
                 <div className='host-mainPageGo' onClick={onMainPageGoClickHandler}>메인페이지에서 로그인하기</div>
