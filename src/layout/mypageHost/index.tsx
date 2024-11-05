@@ -3,10 +3,7 @@ import { Route, Routes, useNavigate, useLocation, To } from 'react-router-dom';
 import './style.css';
 import Topbar from 'src/component/topbar';
 import MypageCatalogButton from 'src/component/mypage/mypagecatalogbutton';
-import { MyInfoManagement } from 'src/component/mypagehost/ReservationStatus';
-import { ReservationStatus } from 'src/component/mypagehost/myinfo';
-import { MyAccommodationManagement } from 'src/component/mypagehost/MyAccommodationManagement';
-import HostAccommodationRegister from 'src/component/mypagehost/MyAccommodationManagement/registration';
+
 
 export default function HostMypageLayout() {
   const navigate = useNavigate();
@@ -22,10 +19,7 @@ export default function HostMypageLayout() {
 
   return (
     <>
-      <Topbar />
-
-      <div id="mypage-wrapper">
-        <div className="guestMypage-side-bar">
+        <div className="hostMypage-side-bar">
           <MypageCatalogButton
             text="내정보관리"
             activite={currentPath === "/mypagehost"}
@@ -43,7 +37,7 @@ export default function HostMypageLayout() {
             onClick={() => onClickButtonHandler("/mypagehost/accommodations")}
           />
         </div>
-      </div>
+
     </>
   );
 }

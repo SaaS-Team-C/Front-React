@@ -24,13 +24,11 @@ import GuestMypage from './views/mypage/guest';
 import Accommodationenrollmentapproval from './views/admin/accommodationenrollmentapproval';
 import HostEnrollmentapproval from './views/admin/hostenrollmentapproval/index';
 import SignUp from './views/auth';
-import MypageHost from './views/mypagehost';
 import FindId from './views/find';
 import HostMypageLayout from './layout/mypageHost';
 import { MyInfoManagement } from './component/mypagehost/ReservationStatus';
 import { ReservationStatus } from './component/mypagehost/myinfo';
 import { MyAccommodationManagement } from './component/mypagehost/MyAccommodationManagement';
-
 
 
 
@@ -78,9 +76,9 @@ export default function App() {
       <Route path='/payment' element={<Payment onPathChange={() => { }} />} />
       <Route path='/find' element={<FindId onPathChange={() => { }} />} />
 
-      <Route path='/admin' element={<HostEnrollmentapproval />} />
-      <Route path='/adminHost' element={<Accommodationenrollmentapproval />} />
-      <Route path='/faq' element={<FAQ />} />
+      <Route path='/adminHost' element={<HostEnrollmentapproval/>}/>
+      <Route path='/adminAccommodation' element={<Accommodationenrollmentapproval/>}/>
+      <Route path='/faq' element={<FAQ/>}/>
 
 
       <Route path="/mypagehost" element={<HostMypageLayout />}>
@@ -90,11 +88,15 @@ export default function App() {
       <Route path="/mypagehost/books" element={<HostMypageLayout />}>
         <Route index element={<ReservationStatus />} />
       </Route>
+      // ! 자식 요소로 경로 넣으면 화면이 안뜸. 왜 그런지 아시는 분???
+      {/* <Route path="/mypagehost/accommodations" element={<HostMypageLayout />}> */}
+            {/* <Route index element={<MyAccommodationManagement/>} />
+            <Route path="register" element={<HostAccommodationRegister />} /> */}
+      {/* </Route> */}
 
-      <Route path="/mypagehost/accommodations" element={<HostMypageLayout />}>
-        <Route index element={<MyAccommodationManagement />} />
-        <Route path="register" element={<HostAccommodationRegister />} />
-      </Route>
+
+      <Route path='/mypagehost/accommodations' element={<MyAccommodationManagement/>}/>    
+      <Route path='/mypagehost/accommodations/register' element={<HostAccommodationRegister/>}/>
 
 
       <Route path='*' element={<Index />} />
