@@ -64,13 +64,21 @@ export default function Topbar() {
             setErrorMessage(true);
             return;
         }
-         if (!id || !password) return;
+        //  if (!id || !password) return;
     
-            const requestBody: GuestLogInRequestDto = {
-                guestId: id,
-                password: password
-            };
-            logInRequest(requestBody).then(logInResponse);
+        //     const requestBody: GuestLogInRequestDto = {
+        //         guestId: id,
+        //         password: password
+        //     };
+        //     logInRequest(requestBody).then(logInResponse);
+
+        if (id === "qwer1234" && password === "qwer1234") {
+            setCookie("accessToken", "accessToken")
+            setModalOpen(false)
+            setId('')
+            setPassword('')
+        }
+
 
         }
 
@@ -83,7 +91,7 @@ export default function Topbar() {
             responseBody.code === 'SF' ? '로그인 정보가 일치하지 않습니다.' : 
             responseBody.code === 'TCF' ? '서버에 문제가 있습니다.' :
             responseBody.code === 'DBE' ? '서버에 문제가 있습니다.' : '';
-        
+         
         const isSuccessed = responseBody !== null && responseBody.code === 'SU';
         if (!isSuccessed) {
             setPwMessage(message);
@@ -167,10 +175,22 @@ export default function Topbar() {
     };
 
     // event handler: 로그인 버튼 클릭 이벤트 처리 //
-    const onContainerClickHandler = () => {
-        if (modalOpen) {
+    const onContainerClickHandler = (event: React.MouseEvent) => {
+        if (event.target === event.currentTarget) {
             setModalOpen(false);
         }
+    };
+
+    const onModalContentClickHandler = (event : React.MouseEvent) => {
+        event.stopPropagation()
+    };
+
+    const asdasdaszd = (event : React.MouseEvent) => {
+        setModalOpen(true)
+    };
+
+    const asdasdaszd2 = (event : React.MouseEvent) => {
+        setModalOpen(true)
     };
 
     return (
@@ -201,10 +221,10 @@ export default function Topbar() {
                 </div>
             </div>
             {modalOpen &&
-                <div className='modal-container' onClick={onContainerClickHandler}>
+                <div className='modal-container' onClick={onContainerClickHandler}  >
                     <div
                         className='modal-content'
-                        onClick={(event: React.MouseEvent) => event.stopPropagation()} // 모달 내용 클릭 시 전파 중지
+                        onClick={onModalContentClickHandler}
                     >
                         <div className='log-in'>
                             <div className='log-in-word'>Log In</div>

@@ -11,9 +11,10 @@ interface Props {
 export default function Information({ titletext, username, activite }: Props) {
 
 
-    const [idmessage, setIdMessage] = useState<string>('');
+    const [idmessage, setIdMessage] = useState<string>('qwer1234');
     const [password, setPassword] = useState<string>('');
     const [checkPassword, setCheckPassword] = useState<string>('');
+    const [changePasswordbutton, setChangePasswordbutton] = useState<boolean>(false);
     const [errorMessage, setErrorMessage] = useState<boolean>(false);
 
 
@@ -29,6 +30,9 @@ export default function Information({ titletext, username, activite }: Props) {
         setCheckPassword(value);
     }
 
+    const onPasswordChangeButtonClickHandlder = () => {
+
+    }
 
     useEffect(() => {
         if (!password || !checkPassword) return;
@@ -38,7 +42,7 @@ export default function Information({ titletext, username, activite }: Props) {
         ;
     }, [password, checkPassword]);
 
-    return (
+    return ( 
 
         <>
             {activite && <div id='information-warpper'>
@@ -51,11 +55,14 @@ export default function Information({ titletext, username, activite }: Props) {
                 </div>
                 <div className='information-main'>
                     <div className='information-title'>나의 정보</div>
-                    <MypageInputBox title='아이디' type='text' value={idmessage} placeholder='아이디를 입력해 주세요' />                    
-                    <MypageInputBox title='이름' type='text' value='value' placeholder='아이디를 입력해 주세요'  />                    
-                    <MypageInputBox title='비밀번호' type='password' value={password} placeholder='비밀번호를 입력해 주세요.' onChange={onPasswordChangeHandler} />                    
-                    <MypageInputBox title='비밀번호 확인' type='password' value={checkPassword} placeholder='한번더 비밀번호를 입력해 주세요.' onChange={onCheckPasswordChangeHandler} />                    
-                    <MypageInputBox title='전화번호' type='text' value='value' placeholder='-를 빼고 입력해 주세요.' buttonName='변경' />                    
+                    <MypageInputBox activation={false} title='아이디' type='text' value={idmessage} placeholder='아이디를 입력해 주세요' />                    
+                    <MypageInputBox activation={false} title='이름' type='text' value='value' placeholder='아이디를 입력해 주세요'  />                    
+                    <MypageInputBox activation={true} title='비밀번호' type='password' value={password} placeholder='비밀번호를 입력해 주세요.' onChange={onPasswordChangeHandler} />                  
+                    <MypageInputBox activation={true} title='비밀번호 확인' type='password' value={checkPassword} placeholder='한번더 비밀번호를 입력해 주세요.' onChange={onCheckPasswordChangeHandler} />                  
+                    <MypageInputBox activation={true} title='전화번호' type='text' value='value' placeholder='-를 빼고 입력해 주세요.' buttonName='변경' />
+                    <div className='information-save-button'>
+                        <p>저장하기</p>
+                        </div>                    
                 </div>
             </div>}
         </>

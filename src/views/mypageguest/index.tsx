@@ -7,6 +7,8 @@ import { Userinformation } from 'src/resources/userinfromation';
 import { useCookies } from 'react-cookie';
 import { MAIN_PATH } from 'src/constants';
 import { useNavigate } from 'react-router';
+import styled from 'styled-components';
+import Booking from 'src/component/mypage/mypagemain/booking';
 
 
 
@@ -32,25 +34,30 @@ export default function GuestMypage() {
         if(!cookies['accessToken']) navigator(MAIN_PATH);
     }, [Topbar]);
 
+    const ConSortArea = styled.div`
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+    gap: 10px;
+  `;
 
 
   return (
     <>
     <Topbar/>
-    {<div id='mypage-wrapper'>
-        {testValue && <div className='guestMypage-side-bar'>
+    <div id='mypage-wrapper'>
+        <div className='guestMypage-side-bar'>
             <MypageCatalogButton text={datail1} activite={click === datail1 || click === ''} onClick={onClickButtonHandler} />
             <MypageCatalogButton text={datail2} activite={click === datail2 || click === ''} onClick={onClickButtonHandler} />
             <MypageCatalogButton text={datail3} activite={click === datail3 || click === ''} onClick={onClickButtonHandler} />
-            </div>}
-        {!testValue && <div className='hostMypage-side-bar'></div>}
-        {testValue && <div className='guestMypage-main'>
+            </div>
+        <div className='guestMypage-main'>
                 <Information activite={click === datail1 || click === ''} titletext={datail1} username={'옥진서'} />
-                <Information activite={click === datail2 || click === ''} titletext={datail2} username={'옥진서'} />
+                <Booking activite={click === datail2 || click === ''} titletext={datail2} username={'옥진서'} />
                 <Information activite={click === datail3 || click === ''} titletext={datail3} username={'옥진서'} />
-            </div>}
-        {!testValue && <div className='hosttMypage-main'></div>}
-    </div>}
+            </div>
+    </div>
     </>
   )
+
 }

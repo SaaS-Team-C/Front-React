@@ -19,7 +19,15 @@ import DetailList from './component/accomodation/detaillist';
 import FAQ from './views/faq';
 import HostAccommodationRegister from './component/mypagehost/MyAccommodationManagement/registration';
 
+<<<<<<< HEAD
+import GuestMypage from './views/mypageguest';
+import AccomodationEnrollApprovalPage from './views/admin/hostenrollmentapproval';
+import Accommodationenrollmentapproval from './views/admin/accommodationenrollmentapproval';
+import MypageInputBox from './component/input/mypageinput';
+import BookingList from './component/mypage/bookinglist';
+=======
 import GuestMypage from './views/mypage/guest';
+>>>>>>> f79245b43bd841a5e1f242ab56f41c40f810e38c
 
 import Accommodationenrollmentapproval from './views/admin/accommodationenrollmentapproval';
 import HostEnrollmentapproval from './views/admin/hostenrollmentapproval/index';
@@ -100,6 +108,7 @@ export default function App() {
 
 
       <Route path='*' element={<Index />} />
+      <Route path='/test' element= {<BookingList />}/>
     </Routes>
 
   );
