@@ -1,40 +1,46 @@
 import "./style.css";
 import React, { useEffect, useState } from 'react';
 import Topbar from "src/component/topbar";
-import { fetchAdminApprovalRequests } from "src/apis/admin";
+
 import { AdminRequestDTO } from "src/apis/admin/dto/request";
+import { useNavigate } from "react-router";
 export interface AdminRequestProps {
   req: AdminRequestDTO[];
 }
 
-// requestDate와 status 필드를 포함하는 임시 타입
-interface AdminRequestWithStatus extends AdminRequestDTO {
-  requestDate: string; // 요청 일자
-  status: 'pending' | 'approved'; // 상태
-}
 
 const Accommodationenrollmentapproval: React.FC = () => {
-  const [requests, setRequests] = useState<AdminRequestWithStatus[]>([]);
+  const [requests, setRequests] = useState<AdminRequestDTO[]>([]);
   const [pendingSortOrder, setPendingSortOrder] = useState<'latest' | 'oldest'>('latest');
   const [approvedSortOrder, setApprovedSortOrder] = useState<'latest' | 'oldest'>('latest');
+  const navigate = useNavigate(); 
+
+
+  // 테스트 완료 후 삭제 예정
+  const mockData: AdminRequestDTO[] = [
+    {
+      requestDate: '2024.12.12 08:11',
+      hostId: '1',
+      accommodationName: '서울의 쉼터',
+      status: 'pending',
+    },
+    {
+      requestDate: '2024.12.05 05:13',
+      hostId: '2',
+      accommodationName: '부산의 휴양지',
+      status: 'approved',
+    },
+    {
+      requestDate: '2024.12.25 17:25',
+      hostId: '3',
+      accommodationName: '제주의 편안한 공간',
+      status: 'pending',
+    },
+  ];
+  
 
   // function: 호스트 승인 요청 리스트 불러오기 함수 //
-  const fetchRequests = async () => {
-    try {
-      const data = await fetchAdminApprovalRequests();
 
-      // requestDate와 status를 추가하여 가공된 데이터 생성
-      const processedData: AdminRequestWithStatus[] = data.map((item) => ({
-        ...item,
-        requestDate: new Date().toISOString(), // 기본 값 설정
-        status: 'pending', // 기본 상태 설정
-      }));
-
-      setRequests(processedData); // 상태 업데이트
-    } catch (error) {
-      console.error('Error fetching accommodation requests:', error);
-    }
-  };
 
   // 상태 변경 함수
   const toggleApprovalStatus = (hostId: string) => {
@@ -47,17 +53,19 @@ const Accommodationenrollmentapproval: React.FC = () => {
     );
   };
 
-  // 정렬 함수
-  const sortRequests = (requests: AdminRequestWithStatus[], order: 'latest' | 'oldest') => {
+  // ! 정렬 함수 날짜 말고 호스트명 가나다 순으로 수정 필요 
+  const sortRequests = (requests: AdminRequestDTO[], order: 'latest' | 'oldest') => {
     return [...requests].sort((a, b) => {
-      const dateA = new Date(a.requestDate);
-      const dateB = new Date(b.requestDate);
+      const dateA = new Date(a.accommodationName);
+      const dateB = new Date(b.accommodationName);
       return order === 'latest' ? dateB.getTime() - dateA.getTime() : dateA.getTime() - dateB.getTime();
     });
   };
 
   useEffect(() => {
-    fetchRequests();
+    // api 호출 자리
+     // 일단 테스트 용으로 가짜 데이터를 설정
+  setRequests(mockData);
   }, []);
 
   const pendingRequests = sortRequests(
@@ -91,28 +99,28 @@ const Accommodationenrollmentapproval: React.FC = () => {
       <table className="table">
         <thead>
           <tr>
-            <th>호스트 이름</th>
-            <th>숙소 이름</th>
-            <th>요청 날짜</th>
+            <th>요청 일자</th>
+            <th>호스트 ID</th>
+            <th>숙소명</th>
             <th>상태</th>
-            <th>액션</th>
+            <th>요청 상세 보기</th>
           </tr>
         </thead>
         <tbody>
           {pendingRequests.map((request) => (
             <tr key={request.hostId}>
-              <td>{request.hostName}</td>
-              <td>{request.accommodationName}</td>
               <td>{request.requestDate}</td>
+              <td>{request.accommodationName}</td>
+              <td>{request.hostId}</td>
               <td>
                 <span className="status-badge in-progress">대기 중</span>
               </td>
               <td>
                 <button
-                  onClick={() => toggleApprovalStatus(request.hostId)}
+                 onClick={() => navigate('/mypagehost/accommodations/register')}
                   className="action-button approve"
                 >
-                  승인
+                  숙소 정보 보기
                 </button>
               </td>
             </tr>
@@ -136,19 +144,19 @@ const Accommodationenrollmentapproval: React.FC = () => {
       <table className="table">
         <thead>
           <tr>
-            <th>호스트 이름</th>
-            <th>숙소 이름</th>
-            <th>요청 날짜</th>
+            <th>요청 일자</th>
+            <th>호스트 Id</th>
+            <th>숙소명</th>
             <th>상태</th>
-            <th>액션</th>
+            <th>요청 상세 보기</th>
           </tr>
         </thead>
         <tbody>
           {approvedRequests.map((request) => (
             <tr key={request.hostId}>
-              <td>{request.hostName}</td>
-              <td>{request.accommodationName}</td>
               <td>{request.requestDate}</td>
+              <td>{request.accommodationName}</td>
+              <td>{request.hostId}</td>
               <td>
                 <span className="status-badge done">승인 완료</span>
               </td>
@@ -157,7 +165,7 @@ const Accommodationenrollmentapproval: React.FC = () => {
                   onClick={() => toggleApprovalStatus(request.hostId)}
                   className="action-button cancel"
                 >
-                  취소
+                  숙소 정보 보기
                 </button>
               </td>
             </tr>

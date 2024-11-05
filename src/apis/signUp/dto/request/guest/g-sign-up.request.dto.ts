@@ -1,9 +1,10 @@
 // interface: 회원가입 Reuqest Body Dto //
 
 export default interface GuestSignUpRequestDto {
+    guestName: string;
     guestId: string;
     guestPassword: string;
-    guestName: string;
     telNumber: string;
-    joinPath: string;
+    authNumber: string;
+    snsId: string | null;
 }

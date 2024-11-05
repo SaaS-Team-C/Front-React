@@ -1,7 +1,7 @@
 import { ChangeEvent, KeyboardEvent, useEffect, useState } from 'react';
 import './style.css';
 import { useLocation, useNavigate, useParams } from 'react-router';
-import InputBox from '../input/login';
+
 // import { LogInResponseDto } from 'src/apis/login/response';
 // import { ResponseDto } from 'src/apis/dto/response';
 import { useCookies } from 'react-cookie';
@@ -11,6 +11,7 @@ import { logInRequest } from 'src/apis/login';
 import GuestLogInRequestDto from 'src/apis/login/dto/request/guest/login.request.dto';
 import LogInResponseDto from 'src/apis/login/dto/response/login.responsw.dto';
 import ResponseDto from 'src/apis/login/dto/response/response.dto';
+import InputBox from '../input/login';
 
 // 컴포넌트: 메인페이지 화면 컴포넌트 //
 export default function Topbar() {
@@ -158,14 +159,9 @@ export default function Topbar() {
         navigator('/sign-up');
     };
 
-    // event handler: 아이디 찾기 버튼 클릭 이벤트 처리 //
-    const onFindIdButtonClickHandler = () => {
-        navigator('/find-id');
-    };
-
-    // event handler: 비밀번호 찾기 버튼 클릭 이벤트 처리 //
-    const onFindPasswordButtonClickHandler = () => {
-        navigator('/find-pw');
+    // event handler: 아이디/비밀번호 찾기 버튼 클릭 이벤트 처리 //
+    const onFindIdPwButtonClickHandler = () => {
+        navigator('/find');
     };
 
     // event handler: 마이페이지 버튼 클릭 이벤트 처리 //
@@ -260,8 +256,7 @@ export default function Topbar() {
                         </div>
                         <div className='log-in-button' onClick={onLoginButtonClickHandler}>로그인</div>
                         <div className='find'>
-                            <div className='find-id' onClick={onFindIdButtonClickHandler}>아이디 찾기</div>
-                            <div className='find-pw' onClick={onFindPasswordButtonClickHandler}>비밀번호 찾기</div>
+                            <div className='find-id' onClick={onFindIdPwButtonClickHandler}>아이디/비밀번호 찾기</div>
                         </div>
                         <div className='sign-up'>
                             <div className='sign-up-text'>계정이 없으신가요?</div>

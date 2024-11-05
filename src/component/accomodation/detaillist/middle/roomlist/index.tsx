@@ -38,7 +38,10 @@ const RoomList: React.FC<RoomDetailProps & AccommodationInfoProps> = ({ roomsDat
       <div className="room-list">
         {roomsData.slice(0, visibleRooms).map((room, index) => (
 
+
           <RoomCard key={index} room={room} isFullyBooked={false} />
+     
+  
         ))}
         {!isAllRoomsVisible ? (
           <button className="show-more-btn" onClick={handleShowMore}>

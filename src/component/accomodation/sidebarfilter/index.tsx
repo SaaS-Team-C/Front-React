@@ -22,17 +22,15 @@ const Sidebar: React.FC<SidebarProps> = ({
   facilities,
   setFacilities,
 }) => {
-  // 필터 리셋 함수
   const resetFilters = () => {
-    setPriceRange({ min: 0, max: 5000000 }); // 가격 범위 초기화
-    setReviewScore([false, false, false, false, false]); // 평점 필터 초기화 (모두 선택 해제)
-    setAccommodationType([false, false, false]); // 숙소 타입 초기화 (모두 선택 해제)
-    setFacilities([false, false, false, false, false, false, false]); // 시설 필터 초기화 (모두 선택 해제)
+    setPriceRange({ min: 0, max: 5000000 });
+    setReviewScore([false, false, false, false, false]);
+    setAccommodationType([false, false, false]);
+    setFacilities([false, false, false, false, false, false, false]);
   };
 
   const handlePriceChange = (e: React.ChangeEvent<HTMLInputElement>, side: 'min' | 'max') => {
     const value = Number(e.target.value);
-
     setPriceRange({
       ...priceRange,
       [side]: value,
@@ -46,7 +44,6 @@ const Sidebar: React.FC<SidebarProps> = ({
         <button className="reset-btn" onClick={resetFilters}>Reset</button>
       </div>
 
-      {/* 가격 필터 */}
       <div className="filter-section">
         <h3>Filter Price</h3>
         <div className="range-container">
@@ -55,7 +52,6 @@ const Sidebar: React.FC<SidebarProps> = ({
         </div>
       </div>
 
-      {/* 평점 필터 */}
       <div className="filter-section">
         <h3>Review Score</h3>
         <ul>
@@ -76,7 +72,6 @@ const Sidebar: React.FC<SidebarProps> = ({
         </ul>
       </div>
 
-      {/* 숙소 타입 필터 */}
       <div className="filter-section">
         <h3>Accommodation Type</h3>
         <ul>
@@ -97,7 +92,6 @@ const Sidebar: React.FC<SidebarProps> = ({
         </ul>
       </div>
 
-      {/* 시설 필터 */}
       <div className="filter-section">
         <h3>Facilities</h3>
         <ul>

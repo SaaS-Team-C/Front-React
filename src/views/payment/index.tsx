@@ -1,10 +1,15 @@
 import './style.css';
-import axios from 'axios';
+
 import React, { ChangeEvent, useEffect, useState } from 'react'
 import { useLocation } from 'react-router-dom';
 import Topbar from 'src/component/topbar';
 import ResponseDto from 'src/apis/signUp/dto/response/response.dto';
-import Modal from 'src/component/payment';
+import ModalComponent1 from 'src/component/payment/modal1';
+import ModalComponent2 from 'src/component/payment/modal2';
+import ModalComponent3 from 'src/component/payment/modal3';
+import ModalComponent4 from 'src/component/payment/modal4';
+import axios from 'axios';
+import dayjs from 'dayjs';
 
 interface Agreements {
     ruleAgreement: boolean;
@@ -12,8 +17,6 @@ interface Agreements {
     thirdPartyAgreement: boolean;
     ageVerification: boolean;
 }
-
-
 
 interface PaymentComponentProps {
     onPathChange: (path: string) => void;
@@ -23,7 +26,8 @@ interface PaymentComponentProps {
 export default function Payment({ onPathChange }: PaymentComponentProps) {
     const location = useLocation();
 
-    const { imageSrc, price, checkInTime, checkOutTime, roomName, roomType, personnelCount } = location.state || {};
+    // state: 예약 상세 정보 불러오기 상태 //
+    const { imageSrc, price, checkInTime, checkOutTime, accommodationName, roomName, personnelCount } = location.state || {};
 
     // state: 예약자 입력 정보 상태 //
     const [name, setName] = useState<string>('');
@@ -53,37 +57,99 @@ export default function Payment({ onPathChange }: PaymentComponentProps) {
         ageVerification: false
     });
 
-    const [isModalOpen, setIsModalOpen] = useState(false);
+    // state: 약관 동의 모달 오픈/오프 상태 //
+    const [isModalOpen1, setModalOpen1] = useState(false);
+    const openModal1 = () => setModalOpen1(true);
+    const closeModal1 = () => setModalOpen1(false);
+     // state: 약관 동의 모달 오픈/오프 상태 //
+     const [isModalOpen2, setModalOpen2] = useState(false);
+     const openModal2 = () => setModalOpen2(true);
+     const closeModal2 = () => setModalOpen2(false);
+      // state: 약관 동의 모달 오픈/오프 상태 //
+    const [isModalOpen3, setModalOpen3] = useState(false);
+    const openModal3 = () => setModalOpen3(true);
+    const closeModal3 = () => setModalOpen3(false);
+     // state: 약관 동의 모달 오픈/오프 상태 //
+     const [isModalOpen4, setModalOpen4] = useState(false);
+     const openModal4 = () => setModalOpen4(true);
+     const closeModal4 = () => setModalOpen4(false);
 
-    const openModal = () => {
-        setIsModalOpen(true);
-    };
-
-    const closeModal = () => {
-        setIsModalOpen(false);
-    };
-
+    // state: 카카오페이/토스페이 결제 요청 상태 //
+    const [amount, setAmount] = useState(0);
 
     // variable: 결제 가능 여부 //
     const isComplete = name && telNumber && paymentType && isSend;
 
-    // function: 1박당 가격 계산 함수 //
-    const calculatePricePerNight = () => {
-        if (!checkInTime || !checkOutTime) {
-            return 0; // 체크인/체크아웃 시간이 없을 경우 0 반환
+    // 모든 버튼을 선택합니다.
+    const paymentButtons = document.querySelectorAll('.payment-typeList div');
+
+    // 각 버튼에 클릭 이벤트를 추가합니다.
+    paymentButtons.forEach(button => {
+        button.addEventListener('click', () => {
+            // 모든 버튼에서 active 클래스를 제거합니다.
+            paymentButtons.forEach(btn => btn.classList.remove('active'));
+
+            // 클릭된 버튼에 active 클래스를 추가합니다.
+            button.classList.add('active');
+        });
+    });
+
+     // function: 박수 계산 함수 //
+     const differenceInTime = () => {
+        if (!checkInTime || !checkOutTime ) {
+            return 0; // 체크인/체크아웃 시간이 없거나 price가 유효하지 않을 경우 0 반환
         }
 
-        // YYYY-MM-DD 형식으로 Date 객체 생성
-        const checkInDate = new Date(checkInTime);
-        const checkOutDate = new Date(checkOutTime);
+        // 날짜에 시간 정보가 추가된 UTC 기반 날짜 생성
+        const checkInDate = new Date(Date.UTC(
+            parseInt(checkInTime.split('-')[0]),
+            parseInt(checkInTime.split('-')[1]) - 1, // 월은 0부터 시작하므로 1을 뺌
+            parseInt(checkInTime.split('-')[2])
+        ));
+
+        const checkOutDate = new Date(Date.UTC(
+            parseInt(checkOutTime.split('-')[0]),
+            parseInt(checkOutTime.split('-')[1]) - 1,
+            parseInt(checkOutTime.split('-')[2])
+        ));
+
         const differenceInTime = checkOutDate.getTime() - checkInDate.getTime();
         const differenceInDays = differenceInTime / (1000 * 3600 * 24); // 밀리초를 일로 변환
 
-        if (differenceInDays <= 0) {
-            return 0; // 잘못된 날짜 범위일 경우 0 반환
+        if (differenceInDays <= 0 || Number.isNaN(differenceInDays)) {
+            return 0; // 잘못된 날짜 범위 또는 NaN 값일 경우 0 반환
         }
 
-        return price / differenceInDays; // 가격을 일 수로 나누기
+        return differenceInDays; 
+    };
+
+    // function: 1박당 가격 계산 함수 //
+    const calculatePricePerNight = () => {
+        if (!checkInTime || !checkOutTime || !price || isNaN(price)) {
+            return 3; // 체크인/체크아웃 시간이 없거나 price가 유효하지 않을 경우 0 반환
+        }
+
+        // 날짜에 시간 정보가 추가된 UTC 기반 날짜 생성
+        const checkInDate = new Date(Date.UTC(
+            parseInt(checkInTime.split('-')[0]),
+            parseInt(checkInTime.split('-')[1]) - 1, // 월은 0부터 시작하므로 1을 뺌
+            parseInt(checkInTime.split('-')[2])
+        ));
+
+        const checkOutDate = new Date(Date.UTC(
+            parseInt(checkOutTime.split('-')[0]),
+            parseInt(checkOutTime.split('-')[1]) - 1,
+            parseInt(checkOutTime.split('-')[2])
+        ));
+
+        const differenceInTime = checkOutDate.getTime() - checkInDate.getTime();
+        const differenceInDays = differenceInTime / (1000 * 3600 * 24); // 밀리초를 일로 변환
+
+        if (differenceInDays <= 0 || Number.isNaN(differenceInDays)) {
+            return 0; // 잘못된 날짜 범위 또는 NaN 값일 경우 0 반환
+        }
+
+        return price * differenceInDays; // 가격을 일 수로 나누기
     };
 
     // function: 전체 동의 체크박스 상태를 관리하는 함수 //
@@ -122,7 +188,6 @@ export default function Payment({ onPathChange }: PaymentComponentProps) {
         }));
     };
 
-
     // event handler: 이름 변경 이벤트 처리 //
     const onNameChangeHandler = (event: ChangeEvent<HTMLInputElement>) => {
         const { value } = event.target;
@@ -145,11 +210,79 @@ export default function Payment({ onPathChange }: PaymentComponentProps) {
 
     const isAllAgreed = Object.values(agreements).every(Boolean);
 
-
     // event handler: 동의 버튼 클릭 이벤트 처리 //
     const onAgreeButtonClickHandler = () => {
         setIsAgreed(prev => !prev); // 이전 상태를 반전시킴
     };
+
+    // event handler: 결제 변경 이벤트 처리 //
+    const onChargeChangeHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
+        setAmount(Number(e.target.value));
+    };
+
+    const [selectedPaymentMethod, setSelectedPaymentMethod] = useState<string | null>(null);
+    const handlePaymentMethodClick = (method: string) => {
+        setSelectedPaymentMethod(method);
+    };
+
+
+    // event handler: 결제 요청 버튼 클릭 이벤트 처리 // 
+    const onChargeClickButtonHandler = (
+        pg_method: string,
+        nickname: string,
+        redirect_url: string
+    ) => {
+        if (!selectedPaymentMethod) {
+            alert("결제 방식을 선택해주세요.");
+            return;
+        }
+        const { IMP } = window;
+
+        // 가맹점 번호 지정
+        IMP.init('imp48124315');
+
+        IMP.request_pay(
+            {
+                pg: pg_method, // 결제 방식 지정
+                pay_method: 'card',
+                merchant_uid: dayjs().format('YYYY-MM-DD HH:mm:ss'), 
+                name: accommodationName,
+                amount: calculatePricePerNight(), 
+                buyer_email: '', 
+                buyer_name: '', 
+                buyer_tel: '010-0000-0000',
+                buyer_addr: '김',
+                buyer_postcode: '김',
+                m_redirect_url: redirect_url || "http://localhost:3000/main" // 결제 완료 후 리다이렉션할 주소
+            },
+            async function (rsp: { success: boolean; error_msg?: string, differenceinTime: number }) {
+
+                if (rsp.success) {
+                    alert("결제되었습니다.");
+
+                    try {
+                        await axios.post('http://localhost:4000/api/roomly/payment/success', {
+                            totalPrice: calculatePricePerNight(),
+                            accommodationName: accommodationName,
+                            totalNight: differenceInTime(),
+                            checkInDay: checkInTime,
+                            checkOutDay: checkOutTime,
+                            reservationTotalPeople: personnelCount,
+                            createdAt: dayjs().format('YYYY-MM-DD HH:mm:ss'),
+                            guestId: 'qwer1234',
+                            roomId: 1
+                        });
+
+                    } catch (error) {
+                        console.error("Failed to send payment data to server:", error);
+                    }
+                } else {
+                    alert(`결제 실패되었습니다.: ${rsp.error_msg || '알 수 없는 오류'}`);
+                }
+            }
+        );
+    };
+
 
     // render: 결제 화면 컴포넌트 렌더링 //
     return (
@@ -175,7 +308,7 @@ export default function Payment({ onPathChange }: PaymentComponentProps) {
                 <div className='page-left'>
                     <div className='payment-image'>
                         <div className='payImage'>
-                            {imageSrc && <img src={imageSrc} alt="Room" />}
+                            {imageSrc && <img src={imageSrc} alt={roomName} />}
                         </div>
                     </div>
                     <div className='left-box'>
@@ -196,16 +329,15 @@ export default function Payment({ onPathChange }: PaymentComponentProps) {
                         <div className='left-bottom'>
                             <div className='left-bottom-title'>결제 수단</div>
                             <div className='payment-typeList'>
-                                <div className='kakaoPay'>
+                                <div className='kakaoPay' onClick={() => handlePaymentMethodClick('kakaopay')}>
                                     <img className='kakaoPay-image' src="https://image.goodchoice.kr/images/mweb/reservation/payment/kakao.png" />
                                 </div>
-                                <div className='tossPay'>
+                                <div className='tossPay' onClick={() => handlePaymentMethodClick('tosspay')}>
                                     <img className='tossPay-image' src="https://image.goodchoice.kr/images/mweb/reservation/payment/tosspay.png" />
                                 </div>
-                                <div className='naverPay'>
-                                    <img className="naverPay-image" src="https://image.goodchoice.kr/images/mweb/reservation/payment/npay2.png" />
+                                <div className='creditCard' onClick={() => handlePaymentMethodClick('mobilians')}>
+                                    신용/체크카드
                                 </div>
-                                <div className='creditCard'>신용/체크카드</div>
                             </div>
                         </div>
                     </div>
@@ -217,13 +349,13 @@ export default function Payment({ onPathChange }: PaymentComponentProps) {
                             <div className='right-top-container1'>
                                 <div className='accommodationName'>숙소</div>
                                 <div className='accommodation-input'>
-                                    {roomName ? <div>{roomName}</div> : <div>숙소정보가 없습니다.</div>}
+                                    {accommodationName ? <div>{accommodationName}</div> : <div>숙소정보가 없습니다.</div>}
                                 </div>
                             </div>
                             <div className='right-top-container2'>
                                 <div className='roomType'>객실</div>
                                 <div className='roomType-input'>
-                                    {roomType ? <div>{roomType}</div> : <div>객실정보가 없습니다.</div>}
+                                    {roomName ? <div>{roomName}</div> : <div>객실정보가 없습니다.</div>}
                                 </div>
                             </div>
 
@@ -246,11 +378,11 @@ export default function Payment({ onPathChange }: PaymentComponentProps) {
                         <div className='right-bottom-title'>결제정보</div>
                         <div className='right-bottom-container1'>
                             <div className='room-price1'>객실 가격(1박)</div>
-                            <div className='room-price-input1'>{calculatePricePerNight()}원</div>
+                            <div className='room-price-input1'>{price && <div>{price}원</div>}</div>
                         </div>
                         <div className='right-bottom-container2'>
                             <div className='room-price2'>총 결제 금액</div>
-                            {price && <div>{price}원</div>}
+                            <div className='room-price-input2'>{calculatePricePerNight()}원</div>
                         </div>
                         <div className='right-bottom-container3'>
                             <div className='total-agree-wrap'>
@@ -274,12 +406,10 @@ export default function Payment({ onPathChange }: PaymentComponentProps) {
                                         onChange={() => handleAgreementChange('ruleAgreement')}
                                     />
                                     <div className='list-agree1'>숙소 이용규칙 및 취소/환불규정 동의(필수)</div>
-                                    <div className='list-agree-button' onClick={openModal}>&gt;</div>
+                                    <div className="list-agree-button" onClick={openModal1}>
+                                        <svg className="arrow-icon" xmlns="http://www.w3.org/2000/svg" width="20px" height="20px"><path d="M11 14.667 15.986 10 11 5.333 12.424 4l4.986 4.667c.787.736.787 1.93 0 2.666L12.424 16z"></path></svg></div>
+                                    <ModalComponent1 isOpen1={isModalOpen1} closeModal1={closeModal1} />
                                 </div>
-
-                                <Modal isOpen={isModalOpen} onClose={closeModal} title="숙소 이용규칙 및 취소/환불규정">
-                                    <p>여기에 숙소 이용규칙 및 취소/환불규정 내용을 입력하세요.</p>
-                                </Modal>
                             </div>
 
                             <div className='agree-wrap2'>
@@ -290,9 +420,9 @@ export default function Payment({ onPathChange }: PaymentComponentProps) {
                                     onChange={() => handleAgreementChange('personalInfoAgreement')}
                                 />
                                 <div className='list-agree2'>개인정보 수집 및 이용 동의(필수)</div>
-                                <div className='list-agree-button' >
-                                    &gt;
-                                </div>
+                                <div className="list-agree-button" onClick={openModal2}>
+                                    <svg className="arrow-icon" xmlns="http://www.w3.org/2000/svg" width="20px" height="20px"><path d="M11 14.667 15.986 10 11 5.333 12.424 4l4.986 4.667c.787.736.787 1.93 0 2.666L12.424 16z"></path></svg></div>
+                                <ModalComponent2 isOpen2={isModalOpen2} closeModal2={closeModal2} />
                             </div>
 
                             <div className='agree-wrap3'>
@@ -303,9 +433,9 @@ export default function Payment({ onPathChange }: PaymentComponentProps) {
                                     onChange={() => handleAgreementChange('thirdPartyAgreement')}
                                 />
                                 <div className='list-agree3'>개인정보 제3자 제공 동의(필수)</div>
-                                <div className='list-agree-button' >
-                                    &gt;
-                                </div>
+                                <div className="list-agree-button" onClick={openModal3}>
+                                    <svg className="arrow-icon" xmlns="http://www.w3.org/2000/svg" width="20px" height="20px"><path d="M11 14.667 15.986 10 11 5.333 12.424 4l4.986 4.667c.787.736.787 1.93 0 2.666L12.424 16z"></path></svg></div>
+                                <ModalComponent3 isOpen3={isModalOpen3} closeModal3={closeModal3} accommodationName={accommodationName} />
                             </div>
 
                             <div className='agree-wrap4'>
@@ -316,15 +446,18 @@ export default function Payment({ onPathChange }: PaymentComponentProps) {
                                     onChange={() => handleAgreementChange('ageVerification')}
                                 />
                                 <div className='list-agree4'>만 14세 이상 확인 (필수)</div>
-                                <div className='list-agree-button' >
-                                    &gt;
-                                </div>
+                                <div className="list-agree-button" onClick={openModal4}>
+                                    <svg className="arrow-icon" xmlns="http://www.w3.org/2000/svg" width="20px" height="20px"><path d="M11 14.667 15.986 10 11 5.333 12.424 4l4.986 4.667c.787.736.787 1.93 0 2.666L12.424 16z"></path></svg></div>
+                                <ModalComponent4 isOpen4={isModalOpen4} closeModal4={closeModal4} />
                             </div>
                         </div>
                     </div>
-                    <div className='right-bottom-button'>{price && <div>{price}원 결제하기</div>}</div>
+                    {isAllAgreed && selectedPaymentMethod && (
+                        <div className='right-bottom-button' onClick={() => onChargeClickButtonHandler(selectedPaymentMethod, "구매자 이름", "http://localhost:3000/main")}>{calculatePricePerNight()}원 결제하기</div>
+                    )}
                 </div>
             </div>
         </div>
+
     );
-}
+};
