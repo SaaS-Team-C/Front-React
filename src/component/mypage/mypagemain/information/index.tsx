@@ -42,7 +42,7 @@ export default function Information({ titletext, username, activite }: Props) {
         ;
     }, [password, checkPassword]);
 
-    return (
+    return ( 
 
         <>
             {activite && <div id='information-warpper'>

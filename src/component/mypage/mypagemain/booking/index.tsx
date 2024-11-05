@@ -1,6 +1,7 @@
 import React, { ChangeEvent, useEffect, useState } from 'react'
 import './style.css'
 import MypageInputBox from 'src/component/input/mypageinput';
+import BookingList from '../../bookinglist';
 
 interface Props {
     titletext: string;
@@ -55,15 +56,11 @@ export default function Booking({ titletext, username, activite }: Props) {
                 </div>
                 <div className='booking-main'>
                     <div className='booking-title'>예약 내역</div>
-                    <div ></div>
-                    <MypageInputBox activation={false} title='아이디' type='text' value={idmessage} placeholder='아이디를 입력해 주세요' />                    
-                    <MypageInputBox activation={false} title='이름' type='text' value='value' placeholder='아이디를 입력해 주세요'  />                    
-                    <MypageInputBox activation={true} title='비밀번호' type='password' value={password} placeholder='비밀번호를 입력해 주세요.' onChange={onPasswordChangeHandler} />                  
-                    <MypageInputBox activation={true} title='비밀번호 확인' type='password' value={checkPassword} placeholder='한번더 비밀번호를 입력해 주세요.' onChange={onCheckPasswordChangeHandler} />                  
-                    <MypageInputBox activation={true} title='전화번호' type='text' value='value' placeholder='-를 빼고 입력해 주세요.' buttonName='변경' />
-                    <div className='booking-save-button'>
-                        <p>저장하기</p>
-                        </div>                    
+                    <BookingList />
+                    <BookingList />
+                    <BookingList />
+                    <BookingList />
+                    <BookingList />
                 </div>
             </div>}
         </>
