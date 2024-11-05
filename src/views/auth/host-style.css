@@ -157,34 +157,19 @@
 }
 
 .host-button-clear {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 26px;
-    padding: 12px 15px;
-    background-color: #00accf;
+    width: 100%;
+    padding: 10px;
+    background-color: var(--input-solid-color);
     color: white;
     border: none;
     border-radius: 4px;
-    cursor: pointer;
-    font-size: 15px;
+    font-size: 16px;
     font-weight: bold;
-    margin-bottom: 5px;
-    transition: background-color 0.3s ease;
-    /* 상태 변화 시 부드러운 전환 */
 }
 
-.host-button-clear .primary {
-    background-color: #00accf;
-    /* 파란색 */
-}
-
-/* disable 상태 - 회색 */
-.host-button-clear .disable {
-    background-color: #ccc;
-    /* 회색 */
-    cursor: not-allowed;
-    /* 비활성화 상태 시 커서를 금지 모양으로 변경 */
+.host-button-clear :enabled {
+    background-color: #029bb9;
+    cursor: pointer;
 }
 
 .host-alreay-signIn {

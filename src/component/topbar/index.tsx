@@ -1,7 +1,7 @@
 import { ChangeEvent, KeyboardEvent, useEffect, useState } from 'react';
 import './style.css';
 import { useLocation, useNavigate, useParams } from 'react-router';
-import InputBox from '../input/login';
+
 // import { LogInResponseDto } from 'src/apis/login/response';
 // import { ResponseDto } from 'src/apis/dto/response';
 import { useCookies } from 'react-cookie';
@@ -11,6 +11,7 @@ import { logInRequest } from 'src/apis/login';
 import GuestLogInRequestDto from 'src/apis/login/dto/request/guest/login.request.dto';
 import LogInResponseDto from 'src/apis/login/dto/response/login.responsw.dto';
 import ResponseDto from 'src/apis/login/dto/response/response.dto';
+import InputBox from '../input/login';
 
 // 컴포넌트: 메인페이지 화면 컴포넌트 //
 export default function Topbar() {

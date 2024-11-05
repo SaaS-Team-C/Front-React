@@ -74,26 +74,26 @@ export default function App() {
 
       <Route path={ACCOMMODATION_LIST_PATH} element={<AccommodationList />} />
       <Route path={ACCOMMODATION_LIST_DETAIL_PATH} element={<DetailList />} />
-      {/* <Route path='/sign-up' element={<SignUp onPathChange={() => {}} />} /> */}
-      <Route path='/payment' element={<Payment onPathChange={() => {}} />} />
-      {/* <Route path='/find' element={<FindId onPathChange={() => {}} />} /> */}
+      <Route path='/sign-up' element={<SignUp onPathChange={() => {}} />} />
+      <Route path='/payment' element={<Payment onPathChange={() => { }} />} />
+      <Route path='/find' element={<FindId onPathChange={() => { }} />} />
 
-      <Route path='/admin' element={<HostEnrollmentapproval/>}/>
-      <Route path='/adminHost' element={<Accommodationenrollmentapproval/>}/>
-      <Route path='/faq' element={<FAQ/>}/>
+      <Route path='/admin' element={<HostEnrollmentapproval />} />
+      <Route path='/adminHost' element={<Accommodationenrollmentapproval />} />
+      <Route path='/faq' element={<FAQ />} />
 
 
       <Route path="/mypagehost" element={<HostMypageLayout />}>
-            <Route index element={<MyInfoManagement />} />
-       </Route>
+        <Route index element={<MyInfoManagement />} />
+      </Route>
 
       <Route path="/mypagehost/books" element={<HostMypageLayout />}>
-            <Route index element={<ReservationStatus />} />
+        <Route index element={<ReservationStatus />} />
       </Route>
 
       <Route path="/mypagehost/accommodations" element={<HostMypageLayout />}>
-            <Route index element={<MyAccommodationManagement/>} />
-            <Route path="register" element={<HostAccommodationRegister />} />
+        <Route index element={<MyAccommodationManagement />} />
+        <Route path="register" element={<HostAccommodationRegister />} />
       </Route>
 
 
