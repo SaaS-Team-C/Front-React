@@ -1,3 +1,13 @@
+#host-accommodation-register-wrapper{
+  width: 1200px;
+  background-color: cadetblue;
+
+}
+
+.test{
+  display: flex;
+}
+
 
 #registration-wrapper {
   width: 800px;
@@ -58,6 +68,7 @@
   height: 100px; 
 } 
 
+/* 버튼 */
 #registration-wrapper button {
   background-color: #5CC3D6; 
   color: white;
@@ -72,8 +83,21 @@
   width: 100%;
 } 
 
+#registration-wrapper .representative-image-button{
+  background-color: #5CC3D6; 
+  color: white;
+  border: none;
+  width: 100px;
+  font-size: 8px;
+}
+
 #registration-wrapper button:hover {
   background-color: #ccc; 
+}
+
+#registration-wrapper .address-search-button{
+  width: 100px;
+  background-color: #5CC3D6;
 }
 
 #registration-wrapper .approval-button{
@@ -84,6 +108,14 @@
 #registration-wrapper .rejection-button{
   width: 100px;
   background-color: rebeccapurple;
+}
+
+#registration-wrapper .delete-image-button{
+  width: 5px;
+  height: 10px;
+  font-size: 8px;
+  text-align: center;
+  background-color: blueviolet;
 }
 
 
