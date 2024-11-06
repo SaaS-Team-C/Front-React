@@ -20,7 +20,6 @@ import FAQ from './views/faq';
 import HostAccommodationRegister from './component/mypagehost/MyAccommodationManagement/registration';
 
 import AccomodationEnrollApprovalPage from './views/admin/hostenrollmentapproval';
-import Accommodationenrollmentapproval from './views/admin/accommodationenrollmentapproval';
 import MypageInputBox from './component/input/mypageinput';
 import BookingList from './component/mypage/bookinglist';
 
