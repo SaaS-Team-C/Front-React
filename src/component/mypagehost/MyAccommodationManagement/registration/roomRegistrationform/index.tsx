@@ -19,8 +19,9 @@ const RoomRegister: React.FC<{
   onCopy: () => void;
 }> = ({ room, onChange, onDelete, onCopy }) => {
 
-  // 상태 관리
+  // state: 상태 관리 //
   const [roomNameError, setRoomNameError] = useState<string>("");
+  const [roomPriceError, setRoomPriceError] = useState<string>("");
   const [roomDetailError, setDescriptionError] = useState<string>("");
   const [roomImageError, setRoomImageError] = useState<string>("");
   const [roomImagePreviews, setRoomImagePreviews] = useState<string[]>([]);

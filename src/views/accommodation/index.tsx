@@ -1,9 +1,10 @@
 import "./style.css";
 import React, { useState, useEffect } from 'react';
-import Sidebar from "src/component/accomodation/sidebarfilter";
-import List from "../../../component/accomodation/list";
+import Sidebar from "src/component/accomodation/filter/sidebarfilter";
+import List from "../../component/accomodation/list";
 import Topbar from "src/component/topbar";
 import { AccommodationDTO } from "src/apis/accommodation/dto/response/accommodation.response.dto";
+import Filter from "src/component/accomodation/filter";
 
 const AccommodationList: React.FC = () => {
   // 숙소 데이터 예시
@@ -59,17 +60,8 @@ const AccommodationList: React.FC = () => {
       <div className="app-container">
         <Topbar />
         <div className="content-container">
-          <Sidebar
-            priceRange={priceRange}
-            setPriceRange={setPriceRange}
-            reviewScore={reviewScore}
-            setReviewScore={setReviewScore}
-            accommodationType={accommodationType}
-            setAccommodationType={setAccommodationType}
-            facilities={facilities}
-            setFacilities={setFacilities}
-          />
-          <List accommodations={filteredAccommodations} /> 
+          <Filter />
+          {/* <List accommodations={filteredAccommodations} />  */}
         </div>
       </div>
     </div>
