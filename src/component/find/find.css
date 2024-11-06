@@ -38,13 +38,19 @@
 .find-modal-input-container2 button {
 
     padding: 10px ;
-    background-color: #00ACCF;
+    background-color: rgb(222, 120, 157);
+    
     color: white;
     border: none;
     border-radius: 4px;
     cursor: pointer;
-    font-size: 12px;
+    font-size: 12px; 
     font-weight: bold;
+}
+
+.find-modal-input-container2 button:hover {
+    background-color: rgb(235, 181, 201);
+
 }
 
 .find-modal-input-container2 button:disabled {
