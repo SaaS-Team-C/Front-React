@@ -47,7 +47,7 @@ const HostAccommodationRegisterForm: React.FC = () => {
     rooms: [],
   });
 
-  // 상태 관리
+  // state: 상태 관리
   const [nameError, setNameError] = useState<string>("");
   const [descriptionError, setDescriptionError] = useState<string>("");
   const [imagePreviews, setImagePreviews] = useState<string[]>([]);

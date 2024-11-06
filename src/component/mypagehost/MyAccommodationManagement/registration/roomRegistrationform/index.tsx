@@ -18,7 +18,6 @@ const RoomRegister: React.FC<{
   onDelete: () => void;
   onCopy: () => void;
 }> = ({ room, onChange, onDelete, onCopy }) => {
-  console.log("Registration 렌더링 중");
 
   // 상태 관리
   const [roomNameError, setRoomNameError] = useState<string>("");
