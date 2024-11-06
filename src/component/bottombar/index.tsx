@@ -1,14 +1,31 @@
+import { useNavigate } from 'react-router-dom';
+import './style.css';
+
 export default function Bottombar() {
+
+    const navigate = useNavigate();
+
+    // 카카오톡 문의 핸들러
+    const handleKakaoClick = () => {
+        window.open('http://pf.kakao.com/_axcqVn', '_blank', 'noopener,noreferrer');
+    };
+
+    // FAQ 핸들러
+    const handleFaqClick = () => {
+        navigate('/faq');
+    };
 
     return (
         <div className="footer">
             <div className="top-footer">
                 <div className="top-footer1">
-                    <div className="top-footer1-title"></div>
-                    <div className="top-footer1-content"></div>
+                    <div className="top-footer1-title">문의센터</div>
+                    <div className="top-footer1-content1">카카오톡 문의: 오전 9시 ~ 새벽 3시 운영</div>
+                    <div className="top-footer1-content2">FAQ: 24시간 운영</div>
+
                     <div className="top-footer1-button">
-                        <div className="top-footer1-number"></div>
-                        <div className="top-footer1-faq"></div>
+                        <button className='top-footer1-kakao' onClick={handleKakaoClick}>카카오톡 문의</button>
+                        <button className="top-footer1-faq" onClick={handleFaqClick}>FAQ</button>
                     </div>
                 </div>
                 <div className="top-footer2">
@@ -29,8 +46,18 @@ export default function Bottombar() {
                 </div>
             </div>
             <div className="bottom-footer">
-                <div className="bottom-footer1"></div>
-                <div className="bottom-footer2"></div>
+                <div className="bottom-footer1">
+                    <div className="bottom-footer1-content1"></div>
+                    <div className="bottom-footer1-content2"></div>
+                    <div className="bottom-footer1-content3"></div>
+                    <div className="bottom-footer1-content4"></div>
+                </div>
+                <div className="bottom-footer2">
+                    <div className="bottom-footer2-content1"></div>
+                    <div className="bottom-footer2-content2"></div>
+                    <div className="bottom-footer2-content3"></div>
+                    <div className="bottom-footer2-content4"></div>
+                </div>
                 <div className="bottom-footer3"></div>
             </div>
         </div>

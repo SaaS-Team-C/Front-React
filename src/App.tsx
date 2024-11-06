@@ -31,6 +31,7 @@ import { MyInfoManagement } from './component/mypagehost/ReservationStatus';
 import { ReservationStatus } from './component/mypagehost/myinfo';
 import { MyAccommodationManagement } from './component/mypagehost/MyAccommodationManagement';
 import GuestMypage from './views/mypageguest';
+import Accommodationenrollmentapproval from './views/admin/accommodationenrollmentapproval';
 
 
 
