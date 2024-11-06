@@ -6,17 +6,19 @@ import './style.css';
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 
-// 숙소 이미지 모달 + 슬라이더 //
+// interface: 숙소 이미지 모달 + 슬라이더 //
 interface AccommodationImagesProps {
   initialImages: string[]; // 숙소 ID를 props로 전달
 }
 
 const AccommodationDetailTopImages: React.FC<AccommodationImagesProps> = ({ initialImages }) => {
 
+  // state: 상태 //
   const [images, setImages] = useState<string[]>(initialImages);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [currentImage, setCurrentImage] = useState(0);
   const sliderRef = useRef<Slider>(null);
+
 
   // effect: 서버에서 이미지 데이터 가져오는 함수 //
   useEffect(() => {
@@ -51,6 +53,8 @@ const AccommodationDetailTopImages: React.FC<AccommodationImagesProps> = ({ init
     setIsModalOpen(false);
   };
 
+
+
   const handleThumbnailClick = (index: number) => {
     setCurrentImage(index);
     if (sliderRef.current) {
@@ -81,7 +85,7 @@ const AccommodationDetailTopImages: React.FC<AccommodationImagesProps> = ({ init
             onClick={() => handleImageClick(index + 1)}
           />
         ))}
-        {/* '전체보기' button */}
+        {/* '이미지 전체보기' button */}
         {images.length > 5 && (
           <button className="view-all-btn" onClick={() => setIsModalOpen(true)}>
             전체보기
@@ -89,7 +93,7 @@ const AccommodationDetailTopImages: React.FC<AccommodationImagesProps> = ({ init
         )}
       </div>
 
-      {/* Modal for the image gallery */}
+      {/* 이미지 모달 */}
       <Modal
         isOpen={isModalOpen}
         onRequestClose={closeModal}
@@ -135,6 +139,7 @@ interface AccommodationDetailTopProps {
   services: string[];
   location: string;
   mapLink: string;
+  accommodationType: string;
   onReviewButtonClick: () => void; // Add this prop
 }
 
@@ -148,13 +153,22 @@ const AccommodationDetailTopCard: React.FC<AccommodationDetailTopProps> = ({
   services,
   location,
   mapLink,
-  onReviewButtonClick, // Destructure this prop
+  accommodationType,
+  onReviewButtonClick // Destructure this prop
 }) => {
+
+  // state: 상태 관리 //
+  const [isFacilityModalOpen, setIsFacilityModalOpen] = useState(false); 
+
+  // 부대시설 모달 열기 및 닫기 함수
+  const openFacilityModal = () => setIsFacilityModalOpen(true);
+  const closeFacilityModal = () => setIsFacilityModalOpen(false);
+  
   return (
     <div className="accommodation-detail">
       <div className="header">
         <div className="title-section">
-          <span className="accommodation-type">호텔</span>
+          <span className="accommodation-type">{accommodationType}</span>
           <div className="stars">
             {'★'.repeat(stars)} {/* 별점 출력 */}
           </div>
@@ -188,7 +202,28 @@ const AccommodationDetailTopCard: React.FC<AccommodationDetailTopProps> = ({
               <span key={index} className="service-icon">{service}</span>
             ))}
           </div>
-          <a href="#">전체 보기</a>
+          <button className="view-all-facilities-btn" onClick={openFacilityModal}>전체 보기</button>
+         {/* 부대시설 모달 */}
+      <Modal
+        isOpen={isFacilityModalOpen}
+        onRequestClose={closeFacilityModal}
+        contentLabel="Facility Information"
+        className="modal"
+        overlayClassName="overlay"
+      >
+        <button onClick={closeFacilityModal}>Close</button>
+        <div className="facility-info">
+          <h3>부대시설</h3>
+          <div className="facility-icons">
+            {services.map((service, index) => (
+              <div key={index} className="facility-item">
+                <i className={`facility-icon ${service}-icon`} /> {/* 부대시설 아이콘 넣기*/}
+                <span>{service}</span>
+              </div>
+            ))}
+          </div>
+        </div>
+      </Modal>
         </div>
 
         <div className="location-section">
@@ -283,8 +318,7 @@ export default function AccommodationDetailTop({
         services={accommodationDetail.services}
         location={accommodationDetail.location}
         mapLink={accommodationDetail.mapLink}
-        onReviewButtonClick={onReviewButtonClick}
-      />
+        onReviewButtonClick={onReviewButtonClick} accommodationType={''} />
     </>
   );
 }
