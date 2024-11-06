@@ -17,6 +17,7 @@ import CalendarEnd from 'src/component/Calendar';
 import { RegionImages } from 'src/resources/images/region';
 import DatePicker from 'react-datepicker';
 import Calendar from 'react-calendar';
+import Bottombar from 'src/component/bottombar';
 
 
 type ValuePiece = Date | null ;
@@ -266,7 +267,9 @@ export default function Main() {
                         <ImageSlider4 imageContents={proposeImages} />
                     </div>
                 </div>
-                <div className='last-warpper'></div>
+                <div className='last-warpper'>
+                    <Bottombar />
+                </div>
             </div>
         </>
     )
