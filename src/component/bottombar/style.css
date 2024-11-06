@@ -1,11 +1,42 @@
-.top-footer1 {
-    text-align: left;
-    /* 텍스트 왼쪽 정렬 */
-    padding: 20px;
-    background-color: #f8f8f8;
+
+.footer {
+    display: flex;
+    justify-content: center;
+
+    width: 100%;
 }
 
-.top-footer1-title {
+.top-footer {
+    height: 300px;
+    width: 1150px;
+    margin-top: 10px;
+    display: flex;
+    padding: 20px;
+    /* border-bottom: 2px solid #ccc; */
+    
+}
+
+.top-footer1 {
+    text-align: left;    
+    margin-right: 210px;
+
+}
+
+.top-footer2,
+.top-footer3 {
+    text-align: left;
+    margin-right: 210px;
+}
+
+.top-footer4 {
+    text-align: left; 
+}
+
+/* 제목 스타일 */
+.top-footer1-title,
+.top-footer2-title,
+.top-footer3-title,
+.top-footer4-title {
     color: rgb(112 112 112 / var(--tw-text-opacity));
     font-size: 18px;
     font-weight: 700;
@@ -14,130 +45,55 @@
     --tw-text-opacity: 1;
 }
 
+/* 내용 스타일 */
 .top-footer1-content1,
-.top-footer1-content2 {
+.top-footer1-content2,
+.top-footer2-content,
+.top-footer3-content1,
+.top-footer3-content2,
+.top-footer4-content1,
+.top-footer4-content2 {
     color: #999999;
     font-size: 14px;
-    font-weight: 600px;
+    font-weight: 600;
     margin: 5px 0;
 }
 
+/* 버튼 컨테이너 */
 .top-footer1-button {
     display: flex;
     justify-content: flex-start;
-    /* 버튼을 왼쪽 정렬 */
     gap: 15px;
     margin-top: 13px;
 }
 
-.top-footer1-kakao {
-    padding: 10px 12px;
+/* 카카오 버튼 */
+.top-footer1-kakao,
+.top-footer1-faq {
+    padding: 10px 15px;
     font-size: 14px;
     font-weight: bold;
-    /* 볼드 적용 */
     color: #fff;
     border: none;
-    /* 테두리 없애기 */
     border-radius: 5px;
     cursor: pointer;
     transition: background-color 0.3s;
     outline: none;
-    /* 포커스 시 테두리 없애기 */
+}
+
+.top-footer1-kakao {
     background-color: rgb(235, 181, 201);
-    /* 카카오톡 버튼 색상 */
 }
 
 .top-footer1-faq {
-    padding: 10px 20px;
-    font-size: 14px;
-    font-weight: bold;
-    /* 볼드 적용 */
-    color: #fff;
-    border: none;
-    /* 테두리 없애기 */
-    border-radius: 5px;
-    cursor: pointer;
-    transition: background-color 0.3s;
-    outline: none;
-    /* 포커스 시 테두리 없애기 */
     background-color: rgb(222, 120, 157);
-    /* FAQ 버튼 색상 */
 }
 
+/* 버튼 hover 효과 */
 .top-footer1-kakao:hover {
     background-color: rgb(223, 161, 182);
-    /* 카카오톡 버튼 hover 색상 */
 }
 
 .top-footer1-faq:hover {
     background-color: rgb(202, 100, 137);
-    /* FAQ 버튼 hover 색상 */
-}
-
-.wrap_qr {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    margin: 20px;
-}
-
-.screen_out {
-    position: absolute;
-    width: 1px;
-    height: 1px;
-    margin: -1px;
-    padding: 0;
-    border: 0;
-    clip: rect(0, 0, 0, 0);
-    clip-path: inset(50%);
-    overflow: hidden;
-}
-
-.box_qr {
-    position: relative;
-    text-align: center;
-}
-
-.img_qr {
-    width: 150px;
-    /* 크기는 필요에 따라 조정하세요 */
-    height: 150px;
-    /* 크기는 필요에 따라 조정하세요 */
-    margin-bottom: 10px;
-}
-
-.txt_qr {
-    font-size: 18px;
-    font-weight: bold;
-    color: #333;
-    margin-bottom: 8px;
-}
-
-.desc_qr {
-    font-size: 14px;
-    color: #777;
-    line-height: 1.5;
-}
-
-.btn_channel_add {
-    background-color: #ffcc00;
-    /* 버튼 배경 색상 */
-    border: none;
-    padding: 10px 20px;
-    border-radius: 5px;
-    color: white;
-    font-size: 14px;
-    cursor: pointer;
-    visibility: hidden;
-    /* 기본적으로 버튼은 숨김 처리 */
-}
-
-.btn_channel_add .icon_comm {
-    margin-right: 5px;
-}
-
-.btn_channel_add:hover {
-    background-color: #e6b800;
-    /* 버튼 호버 시 색상 */
 }
