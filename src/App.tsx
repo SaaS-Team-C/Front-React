@@ -19,17 +19,11 @@ import DetailList from './component/accomodation/detaillist';
 import FAQ from './views/faq';
 import HostAccommodationRegister from './component/mypagehost/MyAccommodationManagement/registration';
 
-<<<<<<< HEAD
-import GuestMypage from './views/mypageguest';
 import AccomodationEnrollApprovalPage from './views/admin/hostenrollmentapproval';
 import Accommodationenrollmentapproval from './views/admin/accommodationenrollmentapproval';
 import MypageInputBox from './component/input/mypageinput';
 import BookingList from './component/mypage/bookinglist';
-=======
-import GuestMypage from './views/mypage/guest';
->>>>>>> f79245b43bd841a5e1f242ab56f41c40f810e38c
 
-import Accommodationenrollmentapproval from './views/admin/accommodationenrollmentapproval';
 import HostEnrollmentapproval from './views/admin/hostenrollmentapproval/index';
 import SignUp from './views/auth';
 import FindId from './views/find';
@@ -37,7 +31,7 @@ import HostMypageLayout from './layout/mypageHost';
 import { MyInfoManagement } from './component/mypagehost/ReservationStatus';
 import { ReservationStatus } from './component/mypagehost/myinfo';
 import { MyAccommodationManagement } from './component/mypagehost/MyAccommodationManagement';
-
+import GuestMypage from './views/mypageguest';
 
 
 
@@ -80,9 +74,9 @@ export default function App() {
 
       <Route path={ACCOMMODATION_LIST_PATH} element={<AccommodationList />} />
       <Route path={ACCOMMODATION_LIST_DETAIL_PATH} element={<DetailList />} />
-      <Route path='/sign-up' element={<SignUp onPathChange={() => {}} />} />
+      {/* <Route path='/sign-up' element={<SignUp onPathChange={() => {}} />} /> */}
       <Route path='/payment' element={<Payment onPathChange={() => { }} />} />
-      <Route path='/find' element={<FindId onPathChange={() => { }} />} />
+      {/* <Route path='/find' element={<FindId onPathChange={() => { }} />} /> */}
 
       <Route path='/adminHost' element={<HostEnrollmentapproval/>}/>
       <Route path='/adminAccommodation' element={<Accommodationenrollmentapproval/>}/>
