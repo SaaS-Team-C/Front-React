@@ -16,8 +16,10 @@ export interface HostEnrollmentRequestDetailProps {
 }
 
 const HostEnrollmentapproval: React.FC = () => {
+  // state: 상태 관리 //
   // 리스트 불러올 상태
   const [requests, setRequests] = useState<HostEnrollmentResponseDto[]>([]);
+
   // 디테일 불러올 상태 
   const [detailrequests, setDetailRequests] = useState<HostEnrollmentResponseDetailDto>();
   const [pendingSortOrder, setPendingSortOrder] = useState<'latest' | 'oldest'>('latest');
@@ -25,45 +27,39 @@ const HostEnrollmentapproval: React.FC = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedRequest, setSelectedRequest] = useState<HostEnrollmentResponseDetailDto | null>(null);
 
-  // const fetchRequests = async () => {
-  //   try {
-  //     const mockData:  HostEnrollmentResponseDetailDto[]  = [
-  //       {
-  //         hostId: "host123",
-  //         hostName: "김철수",
-  //         businessLicenseNumber: "해변의 펜션",
-  //         status: "pending",
-  //         hostTelNumber: "010-1234-5678", 
-  //         ownerName: "김철수", 
-  //         businessOpenDay: "2024-01-01", 
-  //         businessLicenseImg: "image_url.jpg" 
-  //       },
-  //       {
-  //         hostId: "host456",
-  //         hostName: "이영희",
-  //         businessLicenseNumber: "산속의 호텔",
-  //         status: "approved",
-  //         hostTelNumber: "010-9876-5432",
-  //         ownerName: "이영희",
-  //         businessOpenDay: "2024-02-02",
-  //         businessLicenseImg: "image_url2.jpg"
-  //       },
-  //       {
-  //         hostId: "host789",
-  //         hostName: "박민수",
-  //         businessLicenseNumber: "도심의 호스텔",
-  //         status: "pending",
-  //         hostTelNumber: "010-1357-2468",
-  //         ownerName: "박민수",
-  //         businessOpenDay: "2024-03-03",
-  //         businessLicenseImg: "image_url3.jpg"
-  //       }
-  //     ];
-  //     setRequests(mockData);
-  //   } catch (error) {
-  //     console.error('Error fetching accommodation requests:', error);
-  //   }
-  // };
+       const mockData:  HostEnrollmentResponseDetailDto[]  = [
+        {
+          hostId: "host123",
+          hostName: "김철수",
+          businessLicenseNumber: "해변의 펜션",
+          status: "pending",
+          hostTelNumber: "010-1234-5678", 
+          ownerName: "김철수", 
+          businessOpenDay: "2024-01-01", 
+          businessLicenseImg: "image_url.jpg" 
+        },
+        {
+          hostId: "host456",
+          hostName: "이영희",
+          businessLicenseNumber: "산속의 호텔",
+          status: "approved",
+          hostTelNumber: "010-9876-5432",
+          ownerName: "이영희",
+          businessOpenDay: "2024-02-02",
+          businessLicenseImg: "image_url2.jpg"
+        },
+        {
+          hostId: "host789",
+          hostName: "박민수",
+          businessLicenseNumber: "도심의 호스텔",
+          status: "pending",
+          hostTelNumber: "010-1357-2468",
+          ownerName: "박민수",
+          businessOpenDay: "2024-03-03",
+          businessLicenseImg: "image_url3.jpg"
+        }
+      ];
+
 
   // function: 호스트 계정 승인 리스트 api 호출 //
   const fetchRequests = async () => {
@@ -76,7 +72,8 @@ const HostEnrollmentapproval: React.FC = () => {
   };
 
   useEffect(() => {
-    fetchRequests();
+    // fetchRequests();
+    setRequests(mockData)
   }, []);
 
  // function: 모달 오픈 시 특정 호스트 승인 요청 디테일 정보 api 호출 //
@@ -89,9 +86,6 @@ const openModal = async (hostId: string) => {
     console.error('Error fetching host enrollment request detail:', error);
   }
 };
-
-
-
 
 
 

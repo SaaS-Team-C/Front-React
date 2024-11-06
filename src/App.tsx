@@ -19,12 +19,10 @@ import DetailList from './component/accomodation/detaillist';
 import FAQ from './views/faq';
 import HostAccommodationRegister from './component/mypagehost/MyAccommodationManagement/registration';
 
-import GuestMypage from './views/mypageguest';
 import AccomodationEnrollApprovalPage from './views/admin/hostenrollmentapproval';
 import MypageInputBox from './component/input/mypageinput';
 import BookingList from './component/mypage/bookinglist';
 
-import Accommodationenrollmentapproval from './views/admin/accommodationenrollmentapproval';
 import HostEnrollmentapproval from './views/admin/hostenrollmentapproval/index';
 import SignUp from './views/auth';
 import FindId from './views/find';
@@ -32,7 +30,7 @@ import HostMypageLayout from './layout/mypageHost';
 import { MyInfoManagement } from './component/mypagehost/ReservationStatus';
 import { ReservationStatus } from './component/mypagehost/myinfo';
 import { MyAccommodationManagement } from './component/mypagehost/MyAccommodationManagement';
-
+import GuestMypage from './views/mypageguest';
 
 
 
@@ -75,9 +73,9 @@ export default function App() {
 
       <Route path={ACCOMMODATION_LIST_PATH} element={<AccommodationList />} />
       <Route path={ACCOMMODATION_LIST_DETAIL_PATH} element={<DetailList />} />
-      <Route path='/sign-up' element={<SignUp onPathChange={() => {}} />} />
+      {/* <Route path='/sign-up' element={<SignUp onPathChange={() => {}} />} /> */}
       <Route path='/payment' element={<Payment onPathChange={() => { }} />} />
-      <Route path='/find' element={<FindId onPathChange={() => { }} />} />
+      {/* <Route path='/find' element={<FindId onPathChange={() => { }} />} /> */}
 
       <Route path='/adminHost' element={<HostEnrollmentapproval/>}/>
       <Route path='/adminAccommodation' element={<Accommodationenrollmentapproval/>}/>
