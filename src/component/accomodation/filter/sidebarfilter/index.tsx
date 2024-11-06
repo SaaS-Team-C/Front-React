@@ -1,5 +1,6 @@
 import React from 'react';
 import './style.css';
+import MapFilter from '../mapfilter';
 
 interface SidebarProps {
   priceRange: { min: number; max: number };
@@ -38,6 +39,7 @@ const Sidebar: React.FC<SidebarProps> = ({
   };
 
   return (
+    <>
     <aside className="sidebar">
       <div className="filter-header">
         <h2>FILTER BY</h2>
@@ -112,6 +114,8 @@ const Sidebar: React.FC<SidebarProps> = ({
         </ul>
       </div>
     </aside>
+    </>
+
   );
 };
 

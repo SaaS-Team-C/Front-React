@@ -25,4 +25,15 @@
 // };
 
 //  export default MapSection;
-export { }
+import React from 'react'
+import './style.css';
+
+export default function Map() {
+  return (
+    <div id='map-wrapper'>
+    <h2>위치</h2>
+    <div>지도 들어갈 곳</div>
+    </div>
+  )
+}
+

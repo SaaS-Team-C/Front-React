@@ -47,33 +47,36 @@ const HostAccommodationRegisterForm: React.FC = () => {
     rooms: [],
   });
 
-  // 상태 관리
+  // state: 상태 관리 //
   const [nameError, setNameError] = useState<string>("");
   const [descriptionError, setDescriptionError] = useState<string>("");
   const [imagePreviews, setImagePreviews] = useState<string[]>([]);
   const [imageError, setImageError] = useState<string>("");
   const [roomErrors, setRoomErrors] = useState<string>("");
+  const [isAdmin, setIsAdmin] = useState<boolean>(false);
 
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
-    const { name, value } = e.target as HTMLInputElement | HTMLTextAreaElement;
+    const { name, value } = e.target;
+    setAccommodation((prev) => ({ ...prev, [name]: value }));
 
     // 숙소명과 설명의 글자 수 제한 및 경고 메시지 표시
     if (name === "name") {
-      if (value.length > 45) {
-        setNameError("숙소명은 최대 45자만 입력 가능합니다.");
+      if (value.length >= 45) {
+        setNameError("숙소명은 최대 45자 까지만 입력 가능합니다.");
       } else {
         setNameError("");
-        setAccommodation((prev) => ({ ...prev, [name]: value }));
       }
+      setAccommodation((prev) => ({ ...prev, [name]: value }));
     } else if (name === "description") {
-      if (value.length > 1500) {
+      if (value.length >= 1500) {
         setDescriptionError("숙소 설명은 최대 1500자 까지만 입력 가능합니다.");
+        return;
       } else {
         setDescriptionError("");
-        setAccommodation((prev) => ({ ...prev, [name]: value }));
-      }
+      } 
+      setAccommodation((prev) => ({ ...prev, [name]: value }));
     } else if (name === "price" || name === "maxGuests") {
       const numericValue = Math.max(
         0,
@@ -85,18 +88,14 @@ const HostAccommodationRegisterForm: React.FC = () => {
     }
   };
 
-  const handleMainImageChange = (
-    e: React.ChangeEvent<HTMLInputElement>
-  ) => {
+  const handleMainImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (file) {
       setAccommodation((prev) => ({ ...prev, selectedImage: file }));
     }
   };
 
-  const handleFileChange = (
-    e: React.ChangeEvent<HTMLInputElement>
-  ) => {
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const files = e.target.files;
     if (files) {
       const selectedFiles = Array.from(files);
@@ -148,7 +147,6 @@ const HostAccommodationRegisterForm: React.FC = () => {
     updatedRooms[index] = updatedRoom;
     setAccommodation((prev) => ({ ...prev, rooms: updatedRooms }));
   };
-  
 
   const handleAddRoom = () => {
     const newRoom: Room = {
@@ -175,7 +173,7 @@ const HostAccommodationRegisterForm: React.FC = () => {
     const roomToCopy = accommodation.rooms[index];
     const copiedRoom: Room = {
       ...roomToCopy,
-      roomName: `${roomToCopy.roomName} (복사본)`, // 복사본 이름 변경
+      roomName: `${roomToCopy.roomName} (복사본)`,
     };
     setAccommodation((prev) => ({
       ...prev,
@@ -183,23 +181,20 @@ const HostAccommodationRegisterForm: React.FC = () => {
     }));
   };
 
-  const validateRoomFields = (room: Room) => {
-    return (
-      room.roomName &&
-      room.price > 0 &&
-      room.checkInTime &&
-      room.checkOutTime &&
-      room.details &&
-      room.maxGuests > 0 &&
-      room.roomImages.length >= 3 &&
-      room.selectedRoomImage
-    );
+  // function: 관리자 권한을 확인하는 함수 (예시로 localStorage를 사용)
+  const checkAdmin = () => {
+    const userRole = localStorage.getItem("userRole"); // 예를 들어 'admin'이라는 값이 저장되어 있다고 가정
+    setIsAdmin(userRole === "admin");
   };
+
+  // effect: 관리자인지 권한 확인 //
+  React.useEffect(() => {
+    checkAdmin(); // 컴포넌트가 렌더링될 때 관리자 권한을 확인
+  }, []);
 
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-   
 
     // 필수 입력 필드 확인
     if (
@@ -209,16 +204,29 @@ const HostAccommodationRegisterForm: React.FC = () => {
       !accommodation.selectedImage ||
       accommodation.images.length < 3
     ) {
-      alert("모든 숙소 필드를 완전히 입력해야 합니다.");
+      alert("모든 필드를 완전히 입력해야 합니다.");
       return;
     }
 
-        // 각 Room 객체의 필수 필드 확인
-        const roomsValid = accommodation.rooms.every(validateRoomFields);
-        if (!roomsValid) {
-          setRoomErrors("모든 객실 필드를 완전히 입력해 주세요.");
-          return;
-        }
+    const validateRoomFields = (room: Room) => {
+      return (
+        room.roomName &&
+        room.price > 0 &&
+        room.checkInTime &&
+        room.checkOutTime &&
+        room.details &&
+        room.maxGuests > 0 &&
+        room.roomImages.length >= 3 &&
+        room.selectedRoomImage
+      );
+    };
+
+    // 각 Room 객체의 필수 필드 확인
+    const roomsValid = accommodation.rooms.every(validateRoomFields);
+    if (!roomsValid) {
+      setRoomErrors("모든 객실 필드를 완전히 입력해 주세요.");
+      return;
+    }
 
     const confirmSubmit = window.confirm("숙소 등록을 신청하시겠습니까?");
     if (confirmSubmit) {
@@ -250,27 +258,32 @@ const HostAccommodationRegisterForm: React.FC = () => {
       });
 
       // dto, api 만들면 다시 활성화 할 예정
-
-    //   const response = await fetch("http://localhost:3000/mypagehost/accommodations", {
-    //     method: "POST",
-    //     body: formData,
-    //   });
-
-    //   if (response.ok) {
-    //     alert("숙소 등록 신청에 성공하였습니다.");
-    //     window.location.href = "http://localhost:3000/mypagehost/accommodations";
-    //   } else {
-    //     alert("숙소 등록에 실패하였습니다.");
-    //   }
+      // 서버에 요청을 보내는 부분
+      //   fetch("/your-api-endpoint", {
+      //     method: "POST",
+      //     body: formData,
+      //   })
+      //     .then((response) => {
+      //       if (response.ok) {
+      //         alert("숙소 등록 신청에 성공하였습니다.");
+      //         window.location.href = "http://localhost:3000/mypagehost/accommodations";
+      //       } else {
+      //         alert("등록에 실패하였습니다. 다시 시도해주세요.");
+      //       }
+      //     })
+      //     .catch((error) => {
+      //       console.error("Error during submission:", error);
+      //       alert("오류가 발생했습니다. 다시 시도해주세요.");
+      //     });
+      // }
     }
   };
-
 
   return (
     <div id="registration-wrapper">
       <form onSubmit={handleSubmit}>
         <h2>숙소 등록</h2>
-        
+
         {/* 숙소명 입력 필드 */}
         <div>
           <label>
@@ -286,7 +299,7 @@ const HostAccommodationRegisterForm: React.FC = () => {
           </label>
           {nameError && <p style={{ color: "red" }}>{nameError}</p>}
         </div>
-        
+
         {/* 설명 입력 필드 */}
         <div>
           <label>
@@ -325,7 +338,11 @@ const HostAccommodationRegisterForm: React.FC = () => {
         <div>
           <label>
             숙소 대표 이미지:
-            <input type="file" onChange={handleMainImageChange} accept="image/*" />
+            <input
+              type="file"
+              onChange={handleMainImageChange}
+              accept="image/*"
+            />
           </label>
           {accommodation.selectedImage && (
             <img
@@ -340,7 +357,12 @@ const HostAccommodationRegisterForm: React.FC = () => {
         <div>
           <label>
             숙소 이미지 업로드:
-            <input type="file" onChange={handleFileChange} multiple accept="image/*" />
+            <input
+              type="file"
+              onChange={handleFileChange}
+              multiple
+              accept="image/*"
+            />
           </label>
           {imageError && <p style={{ color: "red" }}>{imageError}</p>}
           <div className="image-wrapper">
@@ -360,9 +382,16 @@ const HostAccommodationRegisterForm: React.FC = () => {
                 <button
                   type="button"
                   onClick={() => {
-                    const updatedImages = accommodation.images.filter((_, i) => i !== index);
-                    setAccommodation((prev) => ({ ...prev, images: updatedImages }));
-                    setImagePreviews((prevPreviews) => prevPreviews.filter((_, i) => i !== index));
+                    const updatedImages = accommodation.images.filter(
+                      (_, i) => i !== index
+                    );
+                    setAccommodation((prev) => ({
+                      ...prev,
+                      images: updatedImages,
+                    }));
+                    setImagePreviews((prevPreviews) =>
+                      prevPreviews.filter((_, i) => i !== index)
+                    );
                   }}
                   className="delete-image-button"
                 >
@@ -426,17 +455,22 @@ const HostAccommodationRegisterForm: React.FC = () => {
           {roomErrors && <p style={{ color: "red" }}>{roomErrors}</p>}
         </div>
 
-        <button type="submit">등록하기</button>
+        <button type="submit" onClick={handleSubmit}>
+          등록하기
+        </button>
       </form>
 
       {/* 관리자만 볼 수 있는 승인/거절 버튼 */}
-      {/* TODO: 관리자 권한 확인 로직 추가 */}
-      <button className="approval-button" type="button">
-        승인
-      </button>
-      <button className="rejection-button" type="button">
-        거절
-      </button>
+      {isAdmin && (
+        <div>
+          <button className="approval-button" type="button">
+            승인
+          </button>
+          <button className="rejection-button" type="button">
+            거절
+          </button>
+        </div>
+      )}
     </div>
   );
 };

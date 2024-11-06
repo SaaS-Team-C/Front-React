@@ -6,7 +6,6 @@ import Main from './views/main/Main';
 
 import Payment from './views/payment';
 
-import AccommodationList from './views/accommodation/accommodationlist';
 import { ACCOMMODATION_LIST_DETAIL_PATH, ACCOMMODATION_LIST_PATH, MAIN_PATH } from './constants';
 
 import { RegionImages } from './resources/images/region';
@@ -32,6 +31,7 @@ import { ReservationStatus } from './component/mypagehost/myinfo';
 import { MyAccommodationManagement } from './component/mypagehost/MyAccommodationManagement';
 import GuestMypage from './views/mypageguest';
 import Accommodationenrollmentapproval from './views/admin/accommodationenrollmentapproval';
+import AccommodationList from './views/accommodation';
 
 
 
@@ -99,6 +99,7 @@ export default function App() {
 
       <Route path='/mypagehost/accommodations' element={<MyAccommodationManagement/>}/>    
       <Route path='/mypagehost/accommodations/register' element={<HostAccommodationRegister/>}/>
+      <Route path='/mypagehost/accommodations/edit' element={<HostAccommodationRegister/>}/>
 
 
       <Route path='*' element={<Index />} />

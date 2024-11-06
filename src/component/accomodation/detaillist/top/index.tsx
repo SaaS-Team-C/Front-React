@@ -172,7 +172,7 @@ const AccommodationDetailTopCard: React.FC<AccommodationDetailTopProps> = ({
           <div className="stars">
             {'★'.repeat(stars)} {/* 별점 출력 */}
           </div>
-          <h1>{name}</h1>
+          <h2>{name}</h2>
         </div>
         <div className="price-section">
           <span>{price} 원~ /1박</span>
