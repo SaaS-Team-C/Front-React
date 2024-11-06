@@ -29,6 +29,11 @@ const FAQ: React.FC = () => {
     setOpenItemId(openItemId === id ? null : id);
   };
 
+  const handleKakaoClick = () => {
+    window.open('http://pf.kakao.com/_axcqVn', '_blank', 'noopener,noreferrer');
+  };
+
+
   return (
     <>
     <Topbar/>
@@ -38,7 +43,7 @@ const FAQ: React.FC = () => {
       <p>어려움이나 궁금한 점이 있으신가요?</p>
       <div className="contact">
         <p>고객센터 전화: <strong>1670-6250</strong></p>
-        <button className="kakao-button">카카오 문의</button>
+        <button className="kakao-button" onClick={handleKakaoClick}>카카오 문의</button>
       </div>
 
       {/* 카테고리 탭 */}

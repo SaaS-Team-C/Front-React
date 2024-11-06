@@ -210,7 +210,7 @@ export default function FindId({ onPathChange }: FindComponentProps) {
         } catch (error) {
             console.error('아이디 찾기 실패:', error);
             alert('존재하지 않는 유저 정보입니다.');
-            setGuestModalOpen(false);
+            setGuestModalOpen(true);
 
         }
     };
@@ -233,7 +233,7 @@ export default function FindId({ onPathChange }: FindComponentProps) {
         } catch (error) {
             console.error('아이디 찾기 실패:', error);
             alert('존재하지 않는 유저 정보입니다.');
-            setHostModalOpen(false);
+            setHostModalOpen(true);
         }
     };
 
@@ -477,7 +477,7 @@ export default function FindId({ onPathChange }: FindComponentProps) {
         return (
             <div id='find-wrapper'>
                 <Topbar />
-                <div className="find">
+                <div className="find2">
                     <div className="find-wrapper">
                         <div className='find-body'>
                             <div className='find-title'>(게스트)비밀번호 재설정</div>
@@ -518,7 +518,7 @@ export default function FindId({ onPathChange }: FindComponentProps) {
         return (
             <div id='find-wrapper'>
                 <Topbar />
-                <div className="find">
+                <div className="find2">
                     <div className="find-wrapper">
                         <div className='find-body'>
                             <div className='find-title'>(호스트)비밀번호 재설정</div>

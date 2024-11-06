@@ -1,0 +1,99 @@
+
+.footer {
+    display: flex;
+    justify-content: center;
+
+    width: 100%;
+}
+
+.top-footer {
+    height: 300px;
+    width: 1150px;
+    margin-top: 10px;
+    display: flex;
+    padding: 20px;
+    /* border-bottom: 2px solid #ccc; */
+    
+}
+
+.top-footer1 {
+    text-align: left;    
+    margin-right: 210px;
+
+}
+
+.top-footer2,
+.top-footer3 {
+    text-align: left;
+    margin-right: 210px;
+}
+
+.top-footer4 {
+    text-align: left; 
+}
+
+/* 제목 스타일 */
+.top-footer1-title,
+.top-footer2-title,
+.top-footer3-title,
+.top-footer4-title {
+    color: rgb(112 112 112 / var(--tw-text-opacity));
+    font-size: 18px;
+    font-weight: 700;
+    font-family: 'Arial', sans-serif;
+    margin-bottom: 20px;
+    --tw-text-opacity: 1;
+}
+
+/* 내용 스타일 */
+.top-footer1-content1,
+.top-footer1-content2,
+.top-footer2-content,
+.top-footer3-content1,
+.top-footer3-content2,
+.top-footer4-content1,
+.top-footer4-content2 {
+    color: #999999;
+    font-size: 14px;
+    font-weight: 600;
+    margin: 5px 0;
+}
+
+/* 버튼 컨테이너 */
+.top-footer1-button {
+    display: flex;
+    justify-content: flex-start;
+    gap: 15px;
+    margin-top: 13px;
+}
+
+/* 카카오 버튼 */
+.top-footer1-kakao,
+.top-footer1-faq {
+    padding: 10px 15px;
+    font-size: 14px;
+    font-weight: bold;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    outline: none;
+}
+
+.top-footer1-kakao {
+    background-color: rgb(235, 181, 201);
+}
+
+.top-footer1-faq {
+    background-color: rgb(222, 120, 157);
+}
+
+/* 버튼 hover 효과 */
+.top-footer1-kakao:hover {
+    background-color: rgb(223, 161, 182);
+}
+
+.top-footer1-faq:hover {
+    background-color: rgb(202, 100, 137);
+}
