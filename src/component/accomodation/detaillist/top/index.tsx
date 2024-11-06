@@ -187,12 +187,12 @@ const AccommodationDetailTopCard: React.FC<AccommodationDetailTopProps> = ({
           </div>
           <p>{reviewSnippet}</p>
           {/* Call the onReviewButtonClick function when the button is clicked */}
-          <a href="#" onClick={() => {
+          <button onClick={() => {
             console.log("리뷰 버튼 클릭됨");
             onReviewButtonClick();
           }}>
             리뷰 더 보기
-          </a>
+          </button>
         </div>
 
         <div className="services-section">

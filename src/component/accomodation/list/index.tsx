@@ -5,8 +5,6 @@ import PaginationFuction from "../pagination";
 import { AccommodationDTO } from "src/apis/accommodation/dto/response/accommodation.response.dto";
 import { fetchAccommodationList } from "src/apis/accommodation";
 import { ACCOMMODATION_LIST_DETAIL_PATH } from "src/constants";
-import { RoomDTO } from "src/apis/accommodation/dto/request/room.request.dto";
-import { RoomMinPriceDTO } from "src/apis/accommodation/dto/request/room.minPrice.dto";
 
 // interface: 메인 화면에서 검색 된 숙소 리스트 props //
 interface ListProps {
@@ -44,10 +42,10 @@ const List: React.FC<ListProps> = ({ accommodations }) => {
 
   // effect: 숙소 리스트 불러오기
   // useEffect(() => {
-  // function: 받아온 숙소 리스트를 화면에 뿌려주는 함수
+  //function: 메인(홈)에서 고객이 검색(지역, 숙박일자, 체크인, 체크아웃 시간)하여 받아온 숙소 리스트를 화면에 뿌려주는 함수
   // const getAccommodations = async () => {
   //   try {
-  // fetchAccommodationList()는 서버에 요청을 보내 숙소 리스트를 받아오는 함수
+  // fetchAccommodationList() //는 서버에 요청을 보내 숙소 리스트를 받아오는 함수
   //       const data = await fetchAccommodationList();
   //       SetCallAccommodationList(data);
   //     } catch (error) {
@@ -57,60 +55,44 @@ const List: React.FC<ListProps> = ({ accommodations }) => {
   //   getAccommodations();
   // }, []);
 
+  // 임시 샘플 데이터, 기능 구현 후 삭제 예정
   useEffect(() => {
-    // mock data를 직접 설정하여 화면에 표시하는 방식
     const mockData: AccommodationDTO[] = [
       {
-        accommodation_name: "해운대 호텔",
-        accommodation_grade_sum: 5,
-        category_area: "부산",
-        category_pet: true,
-        category_non_smoking_area: true,
-        category_indoor_spa: false,
-        category_dinner_party: true,
-        category_wifi: true,
-        category_car_park: true,
-        category_pool: true,
-        accommodation_main_image: "https://example.com/image1.jpg",
-        accommodation_address: "부산 해운대구 해운대해변로 1",
-        accommodation_type: "호텔",
-        review_grade: 4,
-        roomMinPrice: [
-          {
-            roomPrice: 70000,
-            roomName: "스위트룸",
-          },
-          {
-            roomPrice: 150000,
-            roomName: "더블룸",
-          },
-        ],
+        accommodationName: "해운대 호텔",
+        accommodationGradeAverage: 5,
+        accommodationAddress: "부산광역시 해운대구 해운로 해운대 해수욕장 13번길",
+        categoryArea: "부산광역시",
+        categoryPet: true,
+        categoryNonSmokingArea: true,
+        categoryIndoorSpa: false,
+        categoryDinnerParty: true,
+        categoryWifi: true,
+        categoryCarPark: true,
+        categoryPool: true,
+        accommodationMainImage: "https://example.com/image1.jpg",
+        accommodationType: "호텔",
+        countReview: 4,
+        minRoomPrice: 300000,
+        applyStatus: false
       },
       {
-        accommodation_name: "웨스틴 조선",
-        accommodation_grade_sum: 3,
-        category_area: "서울",
-        category_pet: false,
-        category_non_smoking_area: true,
-        category_indoor_spa: false,
-        category_dinner_party: true,
-        category_wifi: false,
-        category_car_park: false,
-        category_pool: true,
-        accommodation_main_image: "https://example.com/image1.jpg",
-        accommodation_address: "서울 서면진구 소진이네 집 1",
-        accommodation_type: "리조트",
-        review_grade: 4.9,
-        roomMinPrice: [
-          {
-            roomPrice: 100000,
-            roomName: "트윈",
-          },
-          {
-            roomPrice: 350000,
-            roomName: "디럭스",
-          },
-        ],
+        accommodationName: "웨스틴 조선",
+        accommodationGradeAverage: 3,
+        categoryArea: "서울시",
+        accommodationAddress: "서울특별심 해운대구 해운로 해운대 해수욕장 13번길 소진이네집",
+        categoryPet: false,
+        categoryNonSmokingArea: true,
+        categoryIndoorSpa: false,
+        categoryDinnerParty: true,
+        categoryWifi: false,
+        categoryCarPark: false,
+        categoryPool: true,
+        accommodationMainImage: "https://example.com/image1.jpg",
+        accommodationType: "리조트",
+        countReview: 54,
+        minRoomPrice: 500000,
+        applyStatus: true
       },
     ];
 
@@ -136,27 +118,26 @@ const List: React.FC<ListProps> = ({ accommodations }) => {
     );
   };
 
-  // event handler: 핸들러 //
   const handlePageChange = (page: number) => {
     setCurrentPage(page);
   };
 
   // function: 분류 로직
-  const sortedAccommodations = [...callAccommodationList].sort((a, b) => {
-    const aMinPrice = Math.min(...a.roomMinPrice.map((room) => room.roomPrice));
-    const bMinPrice = Math.min(...b.roomMinPrice.map((room) => room.roomPrice));
+const sortedAccommodations = [...callAccommodationList].sort((a, b) => {
+  const aMinPrice = a.minRoomPrice; 
+  const bMinPrice = b.minRoomPrice;
 
-    if (sortOption === "평점 높은순") {
-      return b.accommodation_grade_sum - a.accommodation_grade_sum;
-    } else if (sortOption === "리뷰 많은순") {
-      return b.review_grade - a.review_grade;
-    } else if (sortOption === "낮은 가격순") {
-      return aMinPrice - bMinPrice;
-    } else if (sortOption === "높은 가격순") {
-      return bMinPrice - aMinPrice;
-    }
-    return 0;
-  });
+  if (sortOption === "평점 높은순") {
+    return b.accommodationGradeAverage - a.accommodationGradeAverage;
+  } else if (sortOption === "리뷰 많은순") {
+    return b.countReview - a.countReview;
+  } else if (sortOption === "낮은 가격순") {
+    return aMinPrice - bMinPrice;
+  } else if (sortOption === "높은 가격순") {
+    return bMinPrice - aMinPrice;
+  }
+  return 0;
+});
 
   // function: 현재 페이지에 해당하는 숙소 리스트만 표시
   const startIdx = (currentPage - 1) * itemsPerPage;
@@ -168,22 +149,15 @@ const List: React.FC<ListProps> = ({ accommodations }) => {
   // function: 각 숙소의 시설 정보를 문자열로 변환하는 함수 //
   const getFacilities = (accommodation: AccommodationDTO) => {
     const facilities = [];
-    if (accommodation.category_pet) facilities.push("애완동물 허용");
-    if (accommodation.category_non_smoking_area) facilities.push("금연 구역");
-    if (accommodation.category_indoor_spa) facilities.push("실내 스파");
-    if (accommodation.category_dinner_party) facilities.push("저녁 파티 가능");
-    if (accommodation.category_wifi) facilities.push("와이파이");
-    if (accommodation.category_car_park) facilities.push("주차 공간");
-    if (accommodation.category_pool) facilities.push("수영장");
+    if (accommodation.categoryPet) facilities.push("애완동물 허용");
+    if (accommodation.categoryNonSmokingArea) facilities.push("금연 구역");
+    if (accommodation.categoryIndoorSpa) facilities.push("실내 스파");
+    if (accommodation.categoryDinnerParty) facilities.push("저녁 파티 가능");
+    if (accommodation.categoryWifi) facilities.push("와이파이");
+    if (accommodation.categoryCarPark) facilities.push("주차 공간");
+    if (accommodation.categoryPool) facilities.push("수영장");
 
     return facilities.join(", ");
-  };
-
-  // function: 최저 가격 가져오는 함수 //
-  const getLowestRoomPrice = (rooms: RoomMinPriceDTO[]): number => {
-    return rooms.reduce((minPrice, room) => {
-      return room.roomPrice < minPrice ? room.roomPrice : minPrice;
-    }, rooms[0]?.roomPrice || 0);
   };
 
   return (
@@ -216,48 +190,45 @@ const List: React.FC<ListProps> = ({ accommodations }) => {
         <div className="accommodation-cards">
           {currentAccommodations.map((accommodation) => (
             <div
-              key={accommodation.accommodation_name}
+              key={accommodation.accommodationName}
               className="accommodation-card"
             >
               <div className="image-wrapper">
                 <img
-                  src={accommodation.accommodation_main_image}
-                  alt={accommodation.accommodation_name}
+                  src={accommodation.accommodationMainImage}
+                  alt={accommodation.accommodationName}
                   className="accommodation-image"
                 />
                 <div
                   className={`bookmark ${
-                    bookmarks.includes(accommodation.accommodation_name)
+                    bookmarks.includes(accommodation.accommodationName)
                       ? "active"
                       : ""
                   }`}
                   onClick={() =>
-                    handleBookmarkToggle(accommodation.accommodation_name)
+                    handleBookmarkToggle(accommodation.accommodationName)
                   }
                 >
                   ♥
                 </div>
               </div>
               <div className="accommodation-info">
-                <h3>{accommodation.accommodation_name}</h3>
-                <p>{accommodation.accommodation_type}</p>
-                <p>{accommodation.accommodation_address}</p>
+                <h3>{accommodation.accommodationName}</h3>
+                <p>{accommodation.accommodationType}</p>
+                <p>{accommodation.categoryArea}</p>
                 {/* 최저 객실 가격 표시 */}
                 <p>
                   ₩
-                  {getLowestRoomPrice(
-                    accommodation.roomMinPrice
-                  ).toLocaleString()}{" "}
                   /박
                 </p>
-                <p>Rating: {accommodation.accommodation_grade_sum}</p>
-                <p>리뷰: {accommodation.review_grade}개</p>{" "}
+                <p>Rating: {accommodation.accommodationGradeAverage}</p>
+                <p>리뷰: {accommodation.countReview}개</p>{" "}
                 {/* ! 합계 구하는걸로 수정 필요 */}
                 <p>Facilities: {getFacilities(accommodation)}</p>
                 <button
                   className="details-btn"
                   onClick={() =>
-                    handleDetailClick(accommodation.accommodation_name)
+                    handleDetailClick(accommodation.accommodationName)
                   }
                 >
                   상세보기
