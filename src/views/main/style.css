@@ -79,8 +79,8 @@
     font-size: 16px;
     font-weight: 600;
     color: white;
-    background-color: var(--main-button-color);
-    border: solid 1px var(--main-button-color);
+    background-color: rgb(235, 181, 201);
+    border: solid 2px rgb(223, 161, 182);
     border-radius: 12px;
   }
   
