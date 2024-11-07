@@ -6,7 +6,7 @@ import Main from './views/main/Main';
 
 import Payment from './views/payment';
 
-import { ACCOMMODATION_LIST_DETAIL_PATH, ACCOMMODATION_LIST_PATH, MAIN_PATH } from './constants';
+import { ACCOMMODATION_LIST_DETAIL_PATH, ACCOMMODATION_LIST_PATH, AUTH_PATH, FINDID_PATH, MAIN_PATH } from './constants';
 
 import { RegionImages } from './resources/images/region';
 import { useEffect } from 'react';
@@ -23,7 +23,6 @@ import MypageInputBox from './component/input/mypageinput';
 import BookingList from './component/mypage/bookinglist';
 
 import HostEnrollmentapproval from './views/admin/hostenrollmentapproval/index';
-import SignUp from './views/auth';
 import FindId from './views/find';
 import HostMypageLayout from './layout/mypageHost';
 import { MyInfoManagement } from './component/mypagehost/ReservationStatus';
@@ -32,6 +31,9 @@ import { MyAccommodationManagement } from './component/mypagehost/MyAccommodatio
 import GuestMypage from './views/mypageguest';
 import Accommodationenrollmentapproval from './views/admin/accommodationenrollmentapproval';
 import AccommodationList from './views/accommodation';
+import SignUp from './views/auth';
+
+
 
 
 
@@ -66,6 +68,12 @@ function Booking() {
 }
 
 export default function App() {
+  
+    // onPathChange 함수 정의
+    const handlePathChange = () => {
+      console.log('Path changed!');
+    };
+  
   return (
     <Routes>
       <Route index element={<Index />} />
@@ -74,10 +82,9 @@ export default function App() {
 
       <Route path={ACCOMMODATION_LIST_PATH} element={<AccommodationList />} />
       <Route path={ACCOMMODATION_LIST_DETAIL_PATH} element={<DetailList />} />
-      {/* <Route path='/sign-up' element={<SignUp onPathChange={() => {}} />} /> */}
+      <Route path={AUTH_PATH} element={<SignUp />} />
       <Route path='/payment' element={<Payment onPathChange={() => { }} />} />
-      {/* <Route path='/find' element={<FindId onPathChange={() => { }} />} /> */}
-
+      <Route path={FINDID_PATH} element={<FindId />} />
       <Route path='/adminHost' element={<HostEnrollmentapproval/>}/>
       <Route path='/adminAccommodation' element={<Accommodationenrollmentapproval/>}/>
       <Route path='/faq' element={<FAQ/>}/>
