@@ -20,7 +20,7 @@ import { ko } from 'date-fns/locale'; // 한국어 지원
 import BusinessNumberCheckRequestDto from 'src/apis/signUp/dto/request/host/h-business-number-check.request.dto';
 
 type AuthPath = '회원가입' | '로그인';
-type CurrentView = 'host' | 'guest';
+type CurrentView = 'host' | 'guest' | null;
 
 interface SnsContainnerProps {
   type: AuthPath;
@@ -404,6 +404,7 @@ export default function SignUp() {
       setTelNumberMessageError(true);
       return;
     }
+
 
     const requestBody: TelAuthRequestDto = {
       telNumber // 속성의 이름과 담을 변수의 이름이 동일한 경우 하나로 작성
