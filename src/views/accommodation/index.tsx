@@ -12,20 +12,21 @@ const AccommodationList: React.FC = () => {
 const [callAccommodationList, SetCallAccommodationList] = useState<AccommodationDTO[]>([]);
   
 
-  // effect: 숙소 리스트 불러오기 //
-  useEffect(() => {
-    //function: 메인(홈)에서 고객이 검색(지역, 숙박일자, 체크인, 체크아웃 시간)하여 받아온 숙소 리스트를 화면에 뿌려주는 api 호출 함수
-    const getAccommodations = async () => {
-      try {
-        fetchAccommodationList(); //는 서버에 요청을 보내 숙소 리스트를 받아오는 함수
-        const data = await fetchAccommodationList();
-        SetCallAccommodationList(data);
-      } catch (error) {
-        console.error("Error fetching accommodation list:", error);
-      }
-    };
-    getAccommodations();
-  }, []);
+  //effect: 숙소 리스트 호출 함수 //
+  // fetchAccommodationList(); 는 서버에 요청을 보내 숙소 리스트를 받아오는 함수
+  // useEffect(() => {
+
+  //   const getAccommodations = async () => {
+  //     try {
+  //       fetchAccommodationList(); 
+  //       const data = await fetchAccommodationList();
+  //       SetCallAccommodationList(data);
+  //     } catch (error) {
+  //       console.error("Error fetching accommodation list:", error);
+  //     }
+  //   };
+  //   getAccommodations();
+  // }, []);
 
   return (
     <div className="AccommodationList">
