@@ -13,7 +13,7 @@ import TelAuthRequestDto from 'src/apis/signUp/dto/request/common/tel-auth.reque
 import TelAuthCheckRequestDto from 'src/apis/signUp/dto/request/common/tel-auth-check.request.dto';
 import GuestSignUpRequestDto from 'src/apis/signUp/dto/request/guest/g-sign-up.request.dto';
 import HostSignUpRequestDto from 'src/apis/signUp/dto/request/host/h-sign-up.request.dto';
-
+import React from 'react';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import { ko } from 'date-fns/locale'; // 한국어 지원
@@ -47,12 +47,12 @@ function SnsContainer({ type }: SnsContainnerProps) {
 }
 
 interface AuthComponentProps {
-  onPathChange: (path: string) => void;
+  onPathChange: (path: AuthPath) => void;
 }
 
 
 // component: 회원가입 화면 컴포넌트 //
-export default function SignUp({ onPathChange }: AuthComponentProps) {
+export default function SignUp() {
 
   // state: 현재 화면 상태 관리
   const [currentView, setCurrentView] = useState<CurrentView>('guest');
@@ -510,156 +510,98 @@ const onHostSignUpButtonHandler = () => {
   }, [hostPassword, hostPasswordCheck]);
 
 
-  // render: 게스트 회원가입 화면 컴포넌트 렌더링 //
-  if (currentView === 'guest') {
-    return (
-      <div id='guest-signUp-wrapper'>
-        <div style={{ paddingTop: '50px' }}>
-          <div className='guest-login-button'>
-            <a className='GuestLogin-button-guest'>Guest</a>
-            <a className='GuestLogin-button-host' onClick={onHostButtonClickHandler}>Host</a>
-          </div>
-          <div className='guest-input-box-signup'>
-            <div className='guest-inputBox'>
-              <div className='guest-title'>Sign up</div>
-              <div className="guest-input-container3">
-                <InputBox
-                  messageError={nameMessageError}
-                  message={nameMessage}
-                  value={guestName}
-                  label="이름"
-                  type="text"
-                  placeholder="이름을 입력해주세요."
-                  onChange={onNameChangeHandler}
-                />
-                <InputBox
-                  messageError={idMessageError}
-                  message={idMessage}
-                  value={guestId}
-                  label="아이디"
-                  type="text"
-                  placeholder="아이디를 입력해주세요."
-                  buttonName="중복확인"
-                  onChange={onIdChangeHandler}
-                  onButtonClick={onGuestIdCheckClickHandler}
-                />
-                <InputBox
-                  messageError={passwordMessageError}
-                  message={passwordMessage}
-                  value={guestPassword}
-                  label="비밀번호"
-                  type="password"
-                  placeholder="비밀번호"
-                  onChange={onPasswordChangeHandler}
-                />
-                <InputBox
-                  messageError={passwordCheckMessageError}
-                  message={passwordCheckMessage}
-                  value={guestPasswordCheck}
-                  label="비밀번호 확인"
-                  type="password"
-                  placeholder="비밀번호 확인"
-                  onChange={onPasswordCheckChangeHandler}
-                />
-                <InputBox
-                  messageError={telNumberMessageError}
-                  message={telNumberMessage}
-                  value={telNumber}
-                  label="전화번호"
-                  type="text"
-                  placeholder="-빼고 입력해주세요."
-                  buttonName="전화번호 인증"
-                  onChange={onTelNumberChangeHandler}
-                  onButtonClick={onTelNumberSendClickHandler}
-                />
-                <InputBox
-                  messageError={authNumberMessageError}
-                  message={authNumberMessage}
-                  value={authNumber}
-                  label="인증번호"
-                  type="text"
-                  placeholder="인증번호 4자리를 입력해주세요."
-                  buttonName="인증확인"
-                  onChange={onAuthNumberChangeHandler}
-                  onButtonClick={onAuthNumberCheckClickHandler}
-                />
-              </div>
-            </div>
-            <div className="guest-button-container2">
-              <div className='guest-agree'>
-                <input
-                  className='guest-agreeButton'
-                  type='checkbox'
-                  checked={isAgreed} // 체크박스의 상태를 isAgreed로 연결
-                  onChange={onAgreeButtonClickHandler} // 체크박스의 상태가 변경될 때 핸들러 호출
-                />
-                <div className='guest-agreeMessage'>개인정보 수집 및 이용약관에 동의합니다.</div>
-              </div>
-              <button className='guest-button-clear' disabled={!guestIsButtonEnabled} onClick={onGuestSignUpButtonHandler}>회원가입</button>
-              <div className='guest-alreay-signIn'>
-                <div className='guest-alreay'>이미 Roomly 회원이신가요?</div>
-                <div className='guest-mainPageGo' onClick={onMainPageGoClickHandler}>메인페이지에서 로그인하기</div>
-              </div>
-              <SnsContainer type="회원가입" />
-            </div>
-          </div>
-        </div>
+  // 공통 Wrapper
+return (
+  <div id={`${currentView}-signUp-wrapper`}>
+    <div style={{ paddingTop: '50px' }}>
+      <div className={`${currentView}-login-button`}>
+        <a
+          className={`${currentView === 'guest' ? 'GuestLogin-button-guest' : 'HostLogin-button-guest'}`}
+          onClick={onGuestButtonClickHandler}
+        >
+          Guest
+        </a>
+        <a
+          className={`${currentView === 'guest' ? 'GuestLogin-button-host' : 'HostLogin-button-host'}`}
+          onClick={onHostButtonClickHandler}
+        >
+          Host
+        </a>
       </div>
-    );
-  }
-
-  // render: 호스트 회원가입 화면 컴포넌트 렌더링 //
-  if (currentView === 'host') {
-    return (
-      <div id='host-signUp-wrapper'>
-        <div style={{ paddingTop: '50px' }}>
-          <div className='host-login-button'>
-            <a className='HostLogin-button-guest' onClick={onGuestButtonClickHandler}>Guest</a>
-            <a className="HostLogin-button-host">Host</a>
-          </div>
-          <div className='host-input-box-signup'>
-            <div className='host-inputBox'>
-              <div className='host-title'>Sign up</div>
-              <div className="host-input-container3">
-                <InputBox2
-                  messageError={nameMessageError}
-                  message={nameMessage}
-                  value={hostName}
-                  label="이름"
-                  type="text"
-                  placeholder="이름을 입력해주세요."
-                  onChange={onNameChangeHandler}
-                />
-                <InputBox2
-                  messageError={idMessageError}
-                  message={idMessage}
-                  value={hostId}
-                  label="아이디"
-                  type="text"
-                  placeholder="아이디를 입력해주세요."
-                  buttonName="중복확인"
-                  onChange={onIdChangeHandler}
-                  onButtonClick={onHostIdCheckClickHandler}
-                />
-                <InputBox2
-                  messageError={passwordMessageError}
-                  message={passwordMessage}
-                  value={hostPassword}
-                  label="비밀번호"
-                  type="password"
-                  placeholder="비밀번호"
-                  onChange={onPasswordChangeHandler}
-                />
-                <InputBox2
-                  messageError={passwordCheckMessageError}
-                  message={passwordCheckMessage}
-                  value={hostPasswordCheck}
-                  label="비밀번호 확인"
-                  type="password"
-                  placeholder="비밀번호 확인"
-                  onChange={onPasswordCheckChangeHandler}
-                />
-                <InputBox2
+      <div className={`${currentView}-input-box-signup`}>
+        <div className={`${currentView}-inputBox`}>
+          <div className={`${currentView}-title`}>Sign up</div>
+          <div className={`${currentView}-input-container3`}>
+            {/* 이름 */}
+            <InputBox
+              messageError={nameMessageError}
+              message={nameMessage}
+              value={currentView === 'guest' ? guestName : hostName}
+              label="이름"
+              type="text"
+              placeholder="이름을 입력해주세요."
+              onChange={onNameChangeHandler}
+            />
+            {/* 아이디 */}
+            <InputBox
+              messageError={idMessageError}
+              message={idMessage}
+              value={currentView === 'guest' ? guestId : hostId}
+              label="아이디"
+              type="text"
+              placeholder="아이디를 입력해주세요."
+              buttonName="중복확인"
+              onChange={onIdChangeHandler}
+              onButtonClick={currentView === 'guest' ? onGuestIdCheckClickHandler : onHostIdCheckClickHandler}
+            />
+            {/* 비밀번호 */}
+            <InputBox
+              messageError={passwordMessageError}
+              message={passwordMessage}
+              value={currentView === 'guest' ? guestPassword : hostPassword}
+              label="비밀번호"
+              type="password"
+              placeholder="비밀번호"
+              onChange={onPasswordChangeHandler}
+            />
+            {/* 비밀번호 확인 */}
+            <InputBox
+              messageError={passwordCheckMessageError}
+              message={passwordCheckMessage}
+              value={currentView === 'guest' ? guestPasswordCheck : hostPasswordCheck}
+              label="비밀번호 확인"
+              type="password"
+              placeholder="비밀번호 확인"
+              onChange={onPasswordCheckChangeHandler}
+            />
+            {/* 전화번호 */}
+            <InputBox
+              messageError={telNumberMessageError}
+              message={telNumberMessage}
+              value={telNumber}
+              label="전화번호"
+              type="text"
+              placeholder="-빼고 입력해주세요."
+              buttonName="전화번호 인증"
+              onChange={onTelNumberChangeHandler}
+              onButtonClick={onTelNumberSendClickHandler}
+            />
+            {/* 인증번호 */}
+            <InputBox
+              messageError={authNumberMessageError}
+              message={authNumberMessage}
+              value={authNumber}
+              label="인증번호"
+              type="text"
+              placeholder="인증번호 4자리를 입력해주세요."
+              buttonName="인증확인"
+              onChange={onAuthNumberChangeHandler}
+              onButtonClick={onAuthNumberCheckClickHandler}
+            />
+            {/* 사업자 등록 (호스트만) */}
+            {currentView === 'host' && (
+              <>
+                <InputBox
                   messageError={businessNameCheckMessageError}
                   message={businessNameCheckMessage}
                   value={businessName}
@@ -668,7 +610,7 @@ const onHostSignUpButtonHandler = () => {
                   placeholder="사업자 등록이름을 입력해주세요."
                   onChange={onBusinessNameChangeHandler}
                 />
-                <InputBox2
+                <InputBox
                   messageError={businessNumberCheckMessageError}
                   message={businessNumberCheckMessage}
                   value={businessNumber}
@@ -689,59 +631,44 @@ const onHostSignUpButtonHandler = () => {
                       locale={ko}
                       placeholderText="개업일자 선택"
                       isClearable
-                      className="host-input-field"                    />
+                      className="host-input-field"
+                    />
                     {businessStartDayCheckMessageError && (
                       <div className="error-message">{businessStartDayCheckMessage}</div>
                     )}
                   </div>
                 </div>
-                <InputBox2
-                  messageError={telNumberMessageError}
-                  message={telNumberMessage}
-                  value={telNumber}
-                  label="전화번호"
-                  type="text"
-                  placeholder="-빼고 입력해주세요."
-                  buttonName="전화번호 인증"
-                  onChange={onTelNumberChangeHandler}
-                  onButtonClick={onTelNumberSendClickHandler}
-                />
-                <InputBox2
-                  messageError={authNumberMessageError}
-                  message={authNumberMessage}
-                  value={authNumber}
-                  label="인증번호"
-                  type="text"
-                  placeholder="인증번호 4자리를 입력해주세요."
-                  buttonName="인증확인"
-                  onChange={onAuthNumberChangeHandler}
-                  onButtonClick={onAuthNumberCheckClickHandler}
-                />
-              </div>
-            </div>
-            <div className="host-button-container2">
-              <div className='host-agree'>
-                <input
-                  className='host-agreeButton'
-                  type='checkbox'
-                  checked={isAgreed} // 체크박스의 상태를 isAgreed로 연결
-                  onChange={onAgreeButtonClickHandler} // 체크박스의 상태가 변경될 때 핸들러 호출
-                />
-                <div className='host-agreeMessage'>개인정보 수집 및 이용약관에 동의합니다.</div>
-              </div>
-              <button
-                className='host-button-clear' disabled={!hostIsButtonEnabled} onClick={onHostSignUpButtonHandler}
-              >
-                회원가입
-              </button>
-              <div className='host-alreay-signIn'>
-                <div className='host-alreay'>이미 Roomly 회원이신가요?</div>
-                <div className='host-mainPageGo' onClick={onMainPageGoClickHandler}>메인페이지에서 로그인하기</div>
-              </div>
+              </>
+            )}
+          </div>
+        </div>
+        <div className={`${currentView}-button-container2`}>
+          <div className={`${currentView}-agree`}>
+            <input
+              className={`${currentView}-agreeButton`}
+              type='checkbox'
+              checked={isAgreed}
+              onChange={onAgreeButtonClickHandler}
+            />
+            <div className={`${currentView}-agreeMessage`}>개인정보 수집 및 이용약관에 동의합니다.</div>
+          </div>
+          <button
+            className={`${currentView}-button-clear`}
+            disabled={currentView === 'guest' ? !guestIsButtonEnabled : !hostIsButtonEnabled}
+            onClick={currentView === 'guest' ? onGuestSignUpButtonHandler : onHostSignUpButtonHandler}
+          >
+            회원가입
+          </button>
+          <div className={`${currentView}-alreay-signIn`}>
+            <div className={`${currentView}-alreay`}>이미 Roomly 회원이신가요?</div>
+            <div className={`${currentView}-mainPageGo`} onClick={onMainPageGoClickHandler}>
+              메인페이지에서 로그인하기
             </div>
           </div>
         </div>
       </div>
-    );
-  }
+    </div>
+  </div>
+);
+
 };
