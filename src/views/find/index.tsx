@@ -8,17 +8,10 @@ import axios from 'axios';
 import { telAuthCheckRequest, telAuthRequest } from 'src/apis/signUp';
 import TelAuthRequestDto from 'src/apis/signUp/dto/request/common/tel-auth.request.dto';
 import TelAuthCheckRequestDto from 'src/apis/signUp/dto/request/common/tel-auth-check.request.dto';
-
+import React from 'react';
 type CurrentView = 'host-find-id' | 'guest-find-id' | 'host-find-password' | 'guest-find-password';
 
-interface FindComponentProps {
-
-    onPathChange: (path: string) => void;
-}
-
-// component : Guest Id찾기 컴포넌트  //
-export default function FindId({ onPathChange }: FindComponentProps) {
-
+export default function FindId () {
     // state: 현재 화면 상태 관리
     const [currentView, setCurrentView] = useState<CurrentView>('guest-find-id');
 
@@ -319,239 +312,120 @@ export default function FindId({ onPathChange }: FindComponentProps) {
     };
 
     // render: guest 아이디 찾기 화면 렌더링 //
-    if (currentView === 'guest-find-id') {
-        return (
-            <div id='find-wrapper'>
-                <Topbar />
-                <div className="find2">
-                    <div className="find-wrapper">
-                        <div className='find-body'>
-                            <div className='find-title'>아이디 찾기</div>
-                            <div className='guest-login-button1'>
-                                <a className='GuestLogin-button-guest1'>Guest</a>
-                                <a className='GuestLogin-button-host1' onClick={onHostButtonClickHandler}>Host</a>
+    return (
+        <div id='find-wrapper'>
+            <Topbar />
+            <div className="find2">
+                <div className="find-wrapper">
+                    <div className='find-body'>
+                        <div className='find-body2'>
+                            {/* 제목 영역 */}
+                            <div className='find-title'>
+                                {currentView.includes('find-password') ? '비밀번호 재설정' : '아이디 찾기'}
                             </div>
-
+                            
+                            {/* 로그인 버튼들 영역 */}
+                            <div className='find-login-buttons'>
+                                {currentView === 'guest-find-id' ? (
+                                    <>
+                                        <a className='GuestLogin-button-guest1'>Guest</a>
+                                        <a className='GuestLogin-button-host1' onClick={onHostButtonClickHandler}>Host</a>
+                                    </>
+                                ) : (
+                                    <>
+                                        <a className='HostLogin-button-guest2' onClick={onGuestButtonClickHandler}>Guest</a>
+                                        <a className="HostLogin-button-host2">Host</a>
+                                    </>
+                                )}
+                            </div>
                         </div>
-                        <div className="nameBox">
-                            <InputBox
-                                messageError={nameMessageError}
-                                message={nameMessage}
-                                value={guestName}
-                                label="이름"
-                                type="text"
-                                placeholder="이름을 입력해주세요."
-                                onChange={onNameChangeHandler}
-                            />
-                        </div>
-                        <div className="telNumberBox">
-                            <InputBox
-                                messageError={telNumberMessageError}
-                                message={telNumberMessage}
-                                value={telNumber}
-                                label="전화번호"
-                                type="text"
-                                placeholder="-빼고 입력해주세요."
-                                buttonName="전화번호 인증"
-                                onChange={onTelNumberChangeHandler}
-                                onButtonClick={onTelNumberSendClickHandler}
-                            />
-                            <InputBox
-                                messageError={authNumberMessageError}
-                                message={authNumberMessage}
-                                value={authNumber}
-                                label="인증번호"
-                                type="text"
-                                placeholder="인증번호 4자리를 입력해주세요."
-                                buttonName="인증확인"
-                                onChange={onAuthNumberChangeHandler}
-                                onButtonClick={onAuthNumberCheckClickHandler}
-                            />
-
-                        </div>
-                        <button className="find-button" onClick={onGuestFindIdButtonClickHandler} >
-                            아이디 찾기
-                        </button>
-                        {isGuestModalOpen && (
-                            <div className="find-overlay" onClick={() => setGuestModalOpen(false)}>
-                                <div className="modal-content2">
-                                    <button className="closeButton" onClick={() => setGuestModalOpen(false)}>X</button>
-                                    <div className="find-modal-body">
-                                        <h2>결과</h2>
-                                        <p className='find-result'>{guestName}님의 아이디는 {guestId}입니다.</p>
-                                        <p className='find-password-button' onClick={onGuestFindPasswordButtonClickHandler}>비밀번호 찾기</p>
-                                    </div>
+    
+                        {currentView === 'guest-find-id' || currentView === 'host-find-id' ? (
+                            <>
+                                <div className="nameBox">
+                                    <InputBox
+                                        messageError={nameMessageError}
+                                        message={nameMessage}
+                                        value={currentView === 'guest-find-id' ? guestName : hostName}
+                                        label="이름"
+                                        type="text"
+                                        placeholder="이름을 입력해주세요."
+                                        onChange={onNameChangeHandler}
+                                    />
                                 </div>
-                            </div>
-                        )}
-                        <div className="modal-guest">
-                        </div>
-                        <div className='mainPage-movig' onClick={onMainPageGoClickHandler}>
-                            <div className='mainPage-movig-input'>메인페이지에서 로그인하기</div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        );
-    }
-
-    // render: guest 아이디 찾기 화면 렌더링 //
-    if (currentView === 'host-find-id') {
-        return (
-            <div id='find-wrapper'>
-                <Topbar />
-                <div className="find2">
-                    <div className="find-wrapper">
-                        <div className='find-body'>
-                            <div className='find-title'>아이디 찾기</div>
-                            <div className='host-login-button2'>
-                                <a className='HostLogin-button-guest2' onClick={onGuestButtonClickHandler}>Guest</a>
-                                <a className="HostLogin-button-host2">Host</a>
-                            </div>
-
-                        </div>
-                        <div className="nameBox">
-                            <InputBox
-                                messageError={nameMessageError}
-                                message={nameMessage}
-                                value={hostName}
-                                label="이름"
-                                type="text"
-                                placeholder="이름을 입력해주세요."
-                                onChange={onNameChangeHandler}
-                            />
-
-                        </div>
-                        <div className="telNumberBox">
-                            <InputBox
-                                messageError={telNumberMessageError}
-                                message={telNumberMessage}
-                                value={telNumber}
-                                label="전화번호"
-                                type="text"
-                                placeholder="-빼고 입력해주세요."
-                                buttonName="전화번호 인증"
-                                onChange={onTelNumberChangeHandler}
-                                onButtonClick={onTelNumberSendClickHandler}
-                            />
-                            <InputBox
-                                messageError={authNumberMessageError}
-                                message={authNumberMessage}
-                                value={authNumber}
-                                label="인증번호"
-                                type="text"
-                                placeholder="인증번호 4자리를 입력해주세요."
-                                buttonName="인증확인"
-                                onChange={onAuthNumberChangeHandler}
-                                onButtonClick={onAuthNumberCheckClickHandler}
-                            />
-
-                        </div>
-                        <button className="find-button" onClick={onHostFindIdButtonClickHandler}>
-                            아이디 찾기
-                        </button>
-                        {isHostModalOpen && (
-                            <div className="find-overlay" onClick={() => setHostModalOpen(false)}>
-                                <div className="modal-content2">
-                                    <button className="closeButton" onClick={() => setHostModalOpen(false)}>X</button>
-                                    <div className="find-modal-body">
-                                        <h2>결과</h2>
-                                        <p className='find-result'>{hostName}님의 아이디는 {hostId}입니다.</p>
-                                        <p className='find-password-button' onClick={onHostFindPasswordButtonClickHandler}>비밀번호 찾기</p>
-                                    </div>
+                                <div className="telNumberBox">
+                                    <InputBox
+                                        messageError={telNumberMessageError}
+                                        message={telNumberMessage}
+                                        value={telNumber}
+                                        label="전화번호"
+                                        type="text"
+                                        placeholder="-빼고 입력해주세요."
+                                        buttonName="전화번호 인증"
+                                        onChange={onTelNumberChangeHandler}
+                                        onButtonClick={onTelNumberSendClickHandler}
+                                    />
+                                    <InputBox
+                                        messageError={authNumberMessageError}
+                                        message={authNumberMessage}
+                                        value={authNumber}
+                                        label="인증번호"
+                                        type="text"
+                                        placeholder="인증번호 4자리를 입력해주세요."
+                                        buttonName="인증확인"
+                                        onChange={onAuthNumberChangeHandler}
+                                        onButtonClick={onAuthNumberCheckClickHandler}
+                                    />
                                 </div>
-                            </div>
+                                <button className="find-button" onClick={currentView === 'guest-find-id' ? onGuestFindIdButtonClickHandler : onHostFindIdButtonClickHandler}>
+                                    아이디 찾기
+                                </button>
+                                {(currentView === 'guest-find-id' && isGuestModalOpen) || (currentView === 'host-find-id' && isHostModalOpen) ? (
+                                    <div className="find-overlay" onClick={() => currentView === 'guest-find-id' ? setGuestModalOpen(false) : setHostModalOpen(false)}>
+                                        <div className="modal-content2">
+                                            <button className="closeButton" onClick={() => currentView === 'guest-find-id' ? setGuestModalOpen(false) : setHostModalOpen(false)}>X</button>
+                                            <div className="find-modal-body">
+                                                <h2>결과</h2>
+                                                <p className='find-result'>{currentView === 'guest-find-id' ? `${guestName}님의 아이디는 ${guestId}입니다.` : `${hostName}님의 아이디는 ${hostId}입니다.`}</p>
+                                                <p className='find-password-button' onClick={currentView === 'guest-find-id' ? onGuestFindPasswordButtonClickHandler : onHostFindPasswordButtonClickHandler}>비밀번호 찾기</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                ) : null}
+                            </>
+                        ) : (
+                            <>
+                                <div className="nameBox">
+                                    <InputBox
+                                        messageError={passwordMessageError}
+                                        message={passwordMessage}
+                                        value={guestPassword}
+                                        label="비밀번호"
+                                        type="password"
+                                        placeholder="영문, 숫자를 혼용하여 8 ~ 13자를 입력해주세요."
+                                        onChange={onPasswordChangeHandler} />
+                                    <InputBox
+                                        messageError={passwordCheckMessageError}
+                                        message={passwordCheckMessage}
+                                        value={guestPasswordCheck}
+                                        label="비밀번호 확인"
+                                        type="password"
+                                        placeholder="비밀번호를 재입력해주세요."
+                                        onChange={onPasswordCheckChangeHandler}
+                                    />
+                                </div>
+                                <button className="find-button" disabled={!isPasswordMatch} onClick={onSubmitPasswordChangeHandler}>
+                                    확인
+                                </button>
+                            </>
                         )}
                         <div className='mainPage-movig' onClick={onMainPageGoClickHandler}>
-                            <div className='mainPage-movig-input'>메인페이지에서 로그인하기</div>
+                            <div className='mainPage-movig-input'>{currentView.includes('find-id') ? '메인페이지에서 로그인하기' : '메인페이지로 돌아가기'}</div>
                         </div>
                     </div>
                 </div>
             </div>
-
-        );
-    }
-
-    // render: guest 비밀번호 찾기 화면 렌더링 //
-    if (currentView === 'guest-find-password') {
-        return (
-            <div id='find-wrapper'>
-                <Topbar />
-                <div className="find2">
-                    <div className="find-wrapper">
-                        <div className='find-body'>
-                            <div className='find-title'>(게스트)비밀번호 재설정</div>
-                        </div>
-                        <div className="nameBox">
-                            <InputBox
-                                messageError={passwordMessageError}
-                                message={passwordMessage}
-                                value={guestPassword}
-                                label="비밀번호"
-                                type="password"
-                                placeholder="영문, 숫자를 혼용하여 8 ~ 13자를 입력해주세요."
-                                onChange={onPasswordChangeHandler} />
-                            <InputBox
-                                messageError={passwordCheckMessageError}
-                                message={passwordCheckMessage}
-                                value={guestPasswordCheck}
-                                label="비밀번호 확인"
-                                type="password"
-                                placeholder="비밀번호를 재입력해주세요."
-                                onChange={onPasswordCheckChangeHandler}
-                            />
-                        </div>
-                        <button className="find-button" disabled={!isPasswordMatch} onClick={onSubmitPasswordChangeHandler}>
-                            확인
-                        </button>
-                        <div className='mainPage-movig' onClick={onMainPageGoClickHandler}>
-                            <div className='mainPage-movig-input'>메인페이지로 돌아가기</div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        )
-    }
-
-    // render: guest 비밀번호 찾기 화면 렌더링 //
-    if (currentView === 'host-find-password') {
-        return (
-            <div id='find-wrapper'>
-                <Topbar />
-                <div className="find2">
-                    <div className="find-wrapper">
-                        <div className='find-body'>
-                            <div className='find-title'>(호스트)비밀번호 재설정</div>
-                        </div>
-                        <div className="nameBox">
-                            <InputBox
-                                messageError={passwordMessageError}
-                                message={passwordMessage}
-                                value={guestPassword}
-                                label="비밀번호"
-                                type="password"
-                                placeholder="영문, 숫자를 혼용하여 8 ~ 13자를 입력해주세요."
-                                onChange={onPasswordChangeHandler} />
-                            <InputBox
-                                messageError={passwordCheckMessageError}
-                                message={passwordCheckMessage}
-                                value={guestPasswordCheck}
-                                label="비밀번호 확인"
-                                type="password"
-                                placeholder="비밀번호를 재입력해주세요."
-                                onChange={onPasswordCheckChangeHandler}
-                            />
-                        </div>
-                        <button className="find-button" disabled={!isPasswordMatch} onClick={onSubmitPasswordChangeHandler}>
-                            확인
-                        </button>
-                        <div className='mainPage-movig' onClick={onMainPageGoClickHandler}>
-                            <div className='mainPage-movig-input'>메인페이지로 돌아가기</div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        )
-
-    }
-}
+        </div>
+    );
+    
+};
