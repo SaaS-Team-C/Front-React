@@ -201,6 +201,7 @@ const sortedAccommodations = [...callAccommodationList].sort((a, b) => {
                 <h3>{accommodation.accommodationName}</h3>
                 <p>{accommodation.accommodationType}</p>
                 <p>{accommodation.categoryArea}</p>
+                <p>{accommodation.accommodationAddress}</p>
                 {/* 최저 객실 가격 표시 */}
                 <p>
                   ₩
