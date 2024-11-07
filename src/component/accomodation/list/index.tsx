@@ -40,21 +40,6 @@ const List: React.FC<ListProps> = ({ accommodations }) => {
     }
   };
 
-  // effect: 숙소 리스트 불러오기
-  // useEffect(() => {
-  //function: 메인(홈)에서 고객이 검색(지역, 숙박일자, 체크인, 체크아웃 시간)하여 받아온 숙소 리스트를 화면에 뿌려주는 함수
-  // const getAccommodations = async () => {
-  //   try {
-  // fetchAccommodationList() //는 서버에 요청을 보내 숙소 리스트를 받아오는 함수
-  //       const data = await fetchAccommodationList();
-  //       SetCallAccommodationList(data);
-  //     } catch (error) {
-  //       console.error('Error fetching accommodation list:', error);
-  //     }
-  //   };
-  //   getAccommodations();
-  // }, []);
-
   // 임시 샘플 데이터, 기능 구현 후 삭제 예정
   useEffect(() => {
     const mockData: AccommodationDTO[] = [
@@ -216,6 +201,7 @@ const sortedAccommodations = [...callAccommodationList].sort((a, b) => {
                 <h3>{accommodation.accommodationName}</h3>
                 <p>{accommodation.accommodationType}</p>
                 <p>{accommodation.categoryArea}</p>
+                <p>{accommodation.accommodationAddress}</p>
                 {/* 최저 객실 가격 표시 */}
                 <p>
                   ₩

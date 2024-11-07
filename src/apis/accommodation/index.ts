@@ -31,7 +31,7 @@ const responseErrorHandler = (error: any) => {
   return data as ResponseDto;
 };
 
-// function: 숙소 검색 리스트 가져오기 API 함수 //
+// function: 숙소 검색 리스트 가져오기 요청 API 함수 //
 const GET_ACCOMMODATION_LIST_API_URL = `${ROOMLY_API_DOMAIN}/accommodationList`;
 
 export const fetchAccommodationList = async (): Promise<AccommodationDTO[]> => {
