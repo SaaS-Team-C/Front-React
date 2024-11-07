@@ -12,7 +12,7 @@ import { RegionImages } from './resources/images/region';
 import { useEffect } from 'react';
 import { useCookies } from 'react-cookie';
 
-
+import SignUp from './views/auth';
 import DetailList from './component/accomodation/detaillist';
 
 import FAQ from './views/faq';
@@ -31,7 +31,6 @@ import { MyAccommodationManagement } from './component/mypagehost/MyAccommodatio
 import GuestMypage from './views/mypageguest';
 import Accommodationenrollmentapproval from './views/admin/accommodationenrollmentapproval';
 import AccommodationList from './views/accommodation';
-import SignUp from './views/auth';
 
 
 

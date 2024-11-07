@@ -211,8 +211,8 @@ export default function Topbar() {
                         <div className='log-out' onClick={onlogoutButtonClickHandler}>로그아웃</div>
                     </div>}
                     {!cookies.accessToken && <div className='sign'>
-                        <div className='sign-in' onClick={() => setModalOpen(true)}>로그인</div>
-                        <div className='sign-up-button' onClick={onSignupButtonClickHandler}>회원가입</div>
+                        <div className='sign-in' onClick={() => setModalOpen(true)}>Login</div>
+                        <div className='sign-up-button' onClick={onSignupButtonClickHandler}>SignUp</div>
                     </div>}
                 </div>
             </div>

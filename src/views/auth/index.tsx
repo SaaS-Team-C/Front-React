@@ -18,6 +18,8 @@ import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import { ko } from 'date-fns/locale'; // 한국어 지원
 import BusinessNumberCheckRequestDto from 'src/apis/signUp/dto/request/host/h-business-number-check.request.dto';
+import Login from 'src/component/input/login';
+import { MAIN_PATH } from 'src/constants';
 
 type AuthPath = '회원가입' | '로그인';
 type CurrentView = 'host' | 'guest' ;
@@ -46,11 +48,6 @@ function SnsContainer({ type }: SnsContainnerProps) {
   )
 }
 
-interface AuthComponentProps {
-  onPathChange: (path: AuthPath) => void;
-}
-
-
 // component: 회원가입 화면 컴포넌트 //
 export default function SignUp() {
 
@@ -62,8 +59,8 @@ export default function SignUp() {
 
   // state: Query Parameter 상태 //
   const [queryParam] = useSearchParams();
-  const snsId = queryParam.get('snsId') ?? '';
-  const joinPath = queryParam.get('joinPath') ?? '';
+  const snsId = queryParam.get('snsId');
+  const joinPath = queryParam.get('joinPath');
 
   // state: 공통 입력 정보 상태 //
   const [telNumber, setTelNumber] = useState<string>('');
@@ -540,7 +537,7 @@ export default function SignUp() {
   }, [hostPassword, hostPasswordCheck]);
 
 
-  // 공통 Wrapper
+  // render: 회원가입 화면 컴포넌트 렌더링 //
   return (
     <div id={`${currentView}-signUp-wrapper`}>
       <div style={{ paddingTop: '50px' }}>
@@ -670,6 +667,7 @@ export default function SignUp() {
                   </div>
                 </>
               )}
+
             </div>
           </div>
           <div className={`${currentView}-button-container2`}>
@@ -688,16 +686,18 @@ export default function SignUp() {
             >
               회원가입
             </button>
-            <div className={`${currentView}-alreay-signIn`}>
-              <div className={`${currentView}-alreay`}>이미 Roomly 회원이신가요?</div>
-              <div className={`${currentView}-mainPageGo`} onClick={onMainPageGoClickHandler}>
-                메인페이지에서 로그인하기
-              </div>
+          </div>
+          {/* 이미 Roomly 회원이신가요? 및 로그인 버튼 */}
+          <div className={`${currentView}-alreay-signIn`}>
+            <div className={`${currentView}-alreay`}>이미 Roomly 회원이신가요?</div>
+            <div className={`${currentView}-mainPageGo`} onClick={onMainPageGoClickHandler}>
+              메인페이지에서 로그인하기
             </div>
           </div>
+          {currentView === 'guest' && !isSnsSignUp && <SnsContainer type='회원가입' />}
         </div>
       </div>
     </div>
   );
-
+  
 };
