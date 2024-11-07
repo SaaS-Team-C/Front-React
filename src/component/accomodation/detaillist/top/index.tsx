@@ -272,7 +272,7 @@ export default function AccommodationDetailTop({
     reviewCount: 128,
     reviewSnippet: "아주 훌륭한 숙소입니다.",
     services: ["WiFi", "수영장", "주차"],
-    location: "서울시 종로구",
+    location: "부산광역시 부산진구 중앙대로 668 에이원프라자 빌딩 4층",
     mapLink: "https://maps.example.com",
     images: [
       "Best-Western-Plus-Congress-Hotel-4-800x600.jpg",
