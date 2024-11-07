@@ -4,7 +4,7 @@ import './host-style.css';
 import { ChangeEvent, useEffect, useState } from "react";
 import InputBox from 'src/component/input/logup/guest';
 import InputBox2 from 'src/component/input/logup/host';
-import { useSearchParams } from 'react-router-dom';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 import ResponseDto from 'src/apis/signUp/dto/response/response.dto';
 import GuestIdCheckRequestDto from 'src/apis/signUp/dto/request/guest/g-id-check.requst.dto';
 import HostIdCheckRequestDto from 'src/apis/signUp/dto/request/host/h-id-check.requst.dto';
@@ -20,7 +20,7 @@ import { ko } from 'date-fns/locale'; // 한국어 지원
 import BusinessNumberCheckRequestDto from 'src/apis/signUp/dto/request/host/h-business-number-check.request.dto';
 
 type AuthPath = '회원가입' | '로그인';
-type CurrentView = 'host' | 'guest' | null;
+type CurrentView = 'host' | 'guest' ;
 
 interface SnsContainnerProps {
   type: AuthPath;
@@ -119,6 +119,8 @@ export default function SignUp() {
   const [hostIsButtonEnabled, setHostIsButtonEnabled] = useState(false);
 
 
+  const navigator = useNavigate();
+
   // 1. 회원가입 가능 여부 (게스트)
   useEffect(() => {
     // 모든 필드가 채워졌는지 확인
@@ -136,7 +138,14 @@ export default function SignUp() {
       isCheckedAuthNumber;  // 인증 번호 체크 여부
 
     setGuestIsButtonEnabled(guestAllFieldsFilled);
+    console.log(guestIsButtonEnabled)
+
   }, [guestName, guestId, guestPassword, guestPasswordCheck, telNumber, isCheckedId, isMatchedPassword, isCheckedPassword, isSend, authNumber, isCheckedAuthNumber]);
+
+  useEffect(() => {
+    setCheckedId(false)
+  }, [guestId, hostId])
+
 
   // 2. 회원가입 가능 여부 (호스트)
   useEffect(() => {
@@ -407,7 +416,7 @@ export default function SignUp() {
 
 
     const requestBody: TelAuthRequestDto = {
-      telNumber // 속성의 이름과 담을 변수의 이름이 동일한 경우 하나로 작성
+      guestTelNumber: telNumber // 속성의 이름과 담을 변수의 이름이 동일한 경우 하나로 작성
     }
     telAuthRequest(requestBody).then(telAuthResponse);
   };
@@ -417,7 +426,8 @@ export default function SignUp() {
     if (!authNumber) return;
 
     const requestBody: TelAuthCheckRequestDto = {
-      telNumber, authNumber
+      guestTelNumber: telNumber, 
+      guestAuthNumber: authNumber
     }
     telAuthCheckRequest(requestBody).then(telAuthCheckResponse);
 
@@ -464,16 +474,17 @@ export default function SignUp() {
     if (!guestIsButtonEnabled) return;
 
     const requestBody: GuestSignUpRequestDto = {
-      guestName: guestName, // guestName 변수를 사용
+      name: guestName, // guestName 변수를 사용
       guestId: guestId, // guestId 변수를 사용
-      guestPassword: guestPassword, // guestPassword 변수를 사용
-      snsId: snsId // guestSnsId 변수를 사용
-      ,
-      telNumber: telNumber,
+      password: guestPassword, // guestPassword 변수를 사용
+      snsId: snsId, // guestSnsId 변수를 사용
+      guestTelNumber: telNumber,
       authNumber: authNumber
     };
 
     guestSignUpRequest(requestBody).then(guestSignUpResponse);
+    navigator('/main')
+    
   };
 
   // Host 회원가입 버튼 클릭 이벤트 처리 //
@@ -672,8 +683,7 @@ export default function SignUp() {
               <div className={`${currentView}-agreeMessage`}>개인정보 수집 및 이용약관에 동의합니다.</div>
             </div>
             <button
-              className={`${currentView}-button-clear`}
-              disabled={currentView === 'guest' ? !guestIsButtonEnabled : !hostIsButtonEnabled}
+              className={`${currentView}-button-clear-${guestIsButtonEnabled ? 'active' : 'disable'}` }
               onClick={currentView === 'guest' ? onGuestSignUpButtonHandler : onHostSignUpButtonHandler}
             >
               회원가입

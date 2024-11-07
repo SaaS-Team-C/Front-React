@@ -153,7 +153,7 @@ export default function FindId () {
         }
 
         const requestBody: TelAuthRequestDto = {
-            telNumber // 속성의 이름과 담을 변수의 이름이 동일한 경우 하나로 작성
+            guestTelNumber: telNumber // 속성의 이름과 담을 변수의 이름이 동일한 경우 하나로 작성
         }
         telAuthRequest(requestBody).then(telAuthResponse);
     };
@@ -163,7 +163,8 @@ export default function FindId () {
         if (!authNumber) return;
 
         const requestBody: TelAuthCheckRequestDto = {
-            telNumber, authNumber
+            guestTelNumber: telNumber,
+            guestAuthNumber: authNumber
         }
         telAuthCheckRequest(requestBody).then(telAuthCheckResponse);
 
