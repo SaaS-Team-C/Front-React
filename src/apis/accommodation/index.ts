@@ -1,7 +1,6 @@
 import axios, { AxiosResponse } from "axios";
 import { ResponseDto } from "./dto/response";
 import { AccommodationDTO } from "./dto/response/accommodation.response.dto";
-import { AccommodationSearchListDTO } from "./dto/request/accommodation.request.dto";
 
 // variable: API URL 상수 //
 const ROOMLY_API_DOMAIN = process.env.REACT_APP_API_URL;
@@ -35,7 +34,7 @@ const responseErrorHandler = (error: any) => {
 // function: 숙소 검색 리스트 가져오기 요청 API 함수 //
 const GET_ACCOMMODATION_LIST_API_URL = `${ROOMLY_API_DOMAIN}/accommodationList`;
 
-export const fetchAccommodationList = async (): Promise<AccommodationSearchListDTO[]> => {
+export const fetchAccommodationList = async (): Promise<AccommodationDTO[]> => {
   try {
     const response = await api.get<AccommodationDTO[]>(
       GET_ACCOMMODATION_LIST_API_URL
