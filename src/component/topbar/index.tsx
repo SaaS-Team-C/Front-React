@@ -39,6 +39,29 @@ export default function Topbar() {
 
 
 
+    // function: 로그인 응답 처리 함수 //
+    const logInResponse = (responseBody: LogInResponseDto | ResponseDto | null) => {
+        const message = 
+            !responseBody ? '서버에 문제가 있습니다.' :
+            responseBody.code === 'VF' ? '아이디와 비밀번호를 모두 입력하세요.' :
+            responseBody.code === 'SF' ? '로그인 정보가 일치하지 않습니다.' : 
+            responseBody.code === 'TCF' ? '서버에 문제가 있습니다.' :
+            responseBody.code === 'DBE' ? '서버에 문제가 있습니다.' : '';
+        
+        const isSuccessed = responseBody !== null && responseBody.code === 'SU';
+        if (!isSuccessed) {
+            setPwMessage(message);
+            return;
+        }
+        const { accessToken, expiration } = responseBody as LogInResponseDto;
+        const expires = new Date(Date.now() + (expiration * 1000));
+        setCookie('accessToken', accessToken, { path: '/', expires });
+        setModalOpen(false)
+
+        navigator('/main')
+
+    };
+
     // event handler: 아이디 변경 이벤트 처리 //
     const onIdChangeHandler = (event: ChangeEvent<HTMLInputElement>) => {
         const { value } = event.target;
@@ -64,45 +87,18 @@ export default function Topbar() {
             setErrorMessage(true);
             return;
         }
-        //  if (!id || !password) return;
+        if (!id || !password) return;
     
-        //     const requestBody: GuestLogInRequestDto = {
-        //         guestId: id,
-        //         password: password
-        //     };
-        //     logInRequest(requestBody).then(logInResponse);
-
-        if (id === "qwer1234" && password === "qwer1234") {
-            setCookie("accessToken", "accessToken")
-            setModalOpen(false)
-            setId('')
-            setPassword('')
+            const requestBody: GuestLogInRequestDto = {
+                guestId: id,
+                password: password
+            };
+            logInRequest(requestBody).then(logInResponse);
         }
-
-
-        }
-
-
-    // function: 로그인 응답 처리 함수 //
-    const logInResponse = (responseBody: LogInResponseDto | ResponseDto | null) => {
-        const message = 
-            !responseBody ? '서버에 문제가 있습니다.' :
-            responseBody.code === 'VF' ? '아이디와 비밀번호를 모두 입력하세요.' :
-            responseBody.code === 'SF' ? '로그인 정보가 일치하지 않습니다.' : 
-            responseBody.code === 'TCF' ? '서버에 문제가 있습니다.' :
-            responseBody.code === 'DBE' ? '서버에 문제가 있습니다.' : '';
-         
-        const isSuccessed = responseBody !== null && responseBody.code === 'SU';
-        if (!isSuccessed) {
-            setPwMessage(message);
-            return;
-        }
-        const { accessToken, expiration } = responseBody as LogInResponseDto;
-        const expires = new Date(Date.now() + (expiration * 1000));
-        setCookie('accessToken', accessToken, { path: '/', expires });
-        setModalOpen(false)
-
-    };
+        // effect: 아이디 및 비밀번호 변경시 실행할 함수 //
+        useEffect(() => {
+            setMessage('');
+        }, [id, password]);
 
 
     // function: url 값 가져오기 //
@@ -215,8 +211,8 @@ export default function Topbar() {
                         <div className='log-out' onClick={onlogoutButtonClickHandler}>로그아웃</div>
                     </div>}
                     {!cookies.accessToken && <div className='sign'>
-                        <div className='sign-in' onClick={() => setModalOpen(true)}>로그인</div>
-                        <div className='sign-up-button' onClick={onSignupButtonClickHandler}>회원가입</div>
+                        <div className='sign-in' onClick={() => setModalOpen(true)}>Login</div>
+                        <div className='sign-up-button' onClick={onSignupButtonClickHandler}>SignUp</div>
                     </div>}
                 </div>
             </div>

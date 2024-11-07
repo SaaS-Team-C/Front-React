@@ -5,13 +5,13 @@ export default function Bottombar() {
 
     const navigate = useNavigate();
 
-    // 카카오톡 문의 핸들러
-    const handleKakaoClick = () => {
+    //event handler: 카카오톡 문의 버튼 핸들러 //
+    const kakaoClickHandler = () => {
         window.open('http://pf.kakao.com/_axcqVn', '_blank', 'noopener,noreferrer');
     };
 
-    // FAQ 핸들러
-    const handleFaqClick = () => {
+    //event handler: FAQ 버튼 핸들러 //
+    const faqClickHandler = () => {
         navigate('/faq');
     };
 
@@ -23,8 +23,8 @@ export default function Bottombar() {
                     <div className="top-footer1-content1">카카오톡 문의: 오전 9시 ~ 새벽 3시 운영</div>
                     <div className="top-footer1-content2">FAQ: 24시간 운영</div>
                     <div className="top-footer1-button">
-                        <button className='top-footer1-kakao' onClick={handleKakaoClick}>카카오톡 문의</button>
-                        <button className="top-footer1-faq" onClick={handleFaqClick}>FAQ</button>
+                        <button className='top-footer1-kakao' onClick={kakaoClickHandler}>카카오톡 문의</button>
+                        <button className="top-footer1-faq" onClick={faqClickHandler}>FAQ</button>
                     </div>
                 </div>
                 <div className="top-footer2">
