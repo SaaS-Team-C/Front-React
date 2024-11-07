@@ -9,6 +9,7 @@ import { telAuthCheckRequest, telAuthRequest } from 'src/apis/signUp';
 import TelAuthRequestDto from 'src/apis/signUp/dto/request/common/tel-auth.request.dto';
 import TelAuthCheckRequestDto from 'src/apis/signUp/dto/request/common/tel-auth-check.request.dto';
 import React from 'react';
+import Bottombar from 'src/component/bottombar';
 type CurrentView = 'host-find-id' | 'guest-find-id' | 'host-find-password' | 'guest-find-password';
 
 export default function FindId () {
@@ -318,7 +319,7 @@ export default function FindId () {
             <div className="find2">
                 <div className="find-wrapper">
                     <div className='find-body'>
-                        <div className='find-body2'>
+                        <div className='find-body'>
                             {/* 제목 영역 */}
                             <div className='find-title'>
                                 {currentView.includes('find-password') ? '비밀번호 재설정' : '아이디 찾기'}
@@ -425,6 +426,7 @@ export default function FindId () {
                     </div>
                 </div>
             </div>
+            <Bottombar />
         </div>
     );
     

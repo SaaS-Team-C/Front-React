@@ -192,3 +192,9 @@
     background-image: url(/public/images/google-button.png);
     
 }  
+
+.sns-container {
+    position: relative;
+    z-index: 1000; /* 다른 요소들보다 위에 보이도록 설정 */
+  }
+  
