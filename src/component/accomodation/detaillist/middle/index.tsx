@@ -3,7 +3,23 @@ import './style.css';
 import RoomList from './roomlist'
 import { RoomDTO } from 'src/apis/accommodation/dto/request/room.request.dto';
 import FacilitiesCard from './facilities';
+
 import Map from './navermap';
+import MapWithMarkers from './mapmarker';
+import {Status, Wrapper} from "@googlemaps/react-wrapper";
+import GoogleMap from './googlemap';
+
+
+const render = (status: Status) => {
+  switch (status) {
+    case Status.LOADING:
+      return <>로딩중...</>;
+    case Status.FAILURE:
+      return <>에러 발생</>;
+    case Status.SUCCESS:
+      return <GoogleMap/>;
+  }
+};
 
 const mockRoomsData: RoomDTO[] = [
   {
@@ -30,16 +46,32 @@ const mockRoomsData: RoomDTO[] = [
       "https://example.com/images/deluxe-room2.jpg"
     ]
   },
-  // 필요한 만큼 다른 객실 객체를 추가 하시면 되셔용 ㅎㅎ.
 ];
 
-export default function AccommodationDetailMiddle() {
+const markersData = [
+  { id: 1, latitude: 37.7749, longitude: -122.4194, label: 'San Francisco' },
+  { id: 2, latitude: 34.0522, longitude: -118.2437, label: 'Los Angeles' },
+  { id: 3, latitude: 36.1699, longitude: -115.1398, label: 'Las Vegas' },
+];
+
+const AccommodationDetailMiddle: React.FC = () => {
+
+  const latitude = 37.7749; // 임의의 위도 값
+  const longitude = -122.4194; // 임의의 경도 값
+  const accommodationAddress = '부산광역시 부산진구 중앙대로 668 에이원프라자 빌딩 4층'
+  
   return (
     <div className='middle-wrapper'>
       <RoomList roomsData={mockRoomsData} />
       <FacilitiesCard/>
-      <Map/>
+      <Map latitude={latitude} longitude={longitude} accommodationAddress={accommodationAddress} />
+      <MapWithMarkers markers={markersData} />
+      <Wrapper apiKey="AIzaSyCqPhfzQDCxqzMIJNBeMTJuzJ9o71CqRM4" render={render} libraries={['marker']}/>
+  
+
     </div>
   )
 }
+
+export default AccommodationDetailMiddle
 

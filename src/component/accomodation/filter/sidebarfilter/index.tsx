@@ -63,6 +63,7 @@ const Sidebar: React.FC<SidebarProps> = ({
         <h3>Review Score</h3>
         <ul>
           {['5 stars', '4 stars', '3 stars', '2 stars', '1 star'].map((label, index) => (
+            
             <li key={index}>
               <input
                 type="checkbox"

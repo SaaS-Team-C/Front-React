@@ -1,39 +1,37 @@
-// import React, { useEffect } from 'react';
-// import { RenderAfterNavermapsLoaded, NaverMap, Marker } from 'react-naver-maps';
-
-// const MapSection: React.FC = () => {
-//   const position = { lat: 35.1535, lng: 129.1186 }; // 부산 광안리 해수욕장 근처 좌표 예시
-
-//   return (
-//     <div style={{ width: '100%', height: '400px' }}>
-//       <RenderAfterNavermapsLoaded
-//         ncpClientId={'695k34pt07'} // 네이버 API 키를 여기에 입력
-//         error={<p>Maps Load Error</p>}
-//         loading={<p>Loading Maps...</p>}
-//       >
-//         <NaverMap
-//           mapDivId={'j3OepXuHtMnzspSVAHsbGn6D3m0GEkg2dVRjZfb6'} // 맵 엘리먼트 ID
-//           style={{ width: '100%', height: '100%' }}
-//           defaultCenter={position}
-//           defaultZoom={15}
-//         >
-//           <Marker position={position} />
-//         </NaverMap>
-//       </RenderAfterNavermapsLoaded>
-//     </div>
-//   );
-// };
-
-//  export default MapSection;
-import React from 'react'
+import React from 'react';
 import './style.css';
+import { GoogleMap, LoadScript, Marker } from '@react-google-maps/api';
 
-export default function Map() {
-  return (
-    <div id='map-wrapper'>
-    <h2>위치</h2>
-    <div>지도 들어갈 곳</div>
-    </div>
-  )
+interface MapProps {
+  accommodationAddress: string;
+  latitude: number;
+  longitude: number;
 }
 
+const Map: React.FC<MapProps> = ({ latitude, longitude, accommodationAddress }) => {
+  return (
+    <>
+      <h3>위치</h3>
+      <LoadScript googleMapsApiKey="AIzaSyCqPhfzQDCxqzMIJNBeMTJuzJ9o71CqRM4">
+        <GoogleMap
+          mapContainerStyle={{ width: '100%', height: '400px' }}
+          center={{ lat: latitude, lng: longitude }}
+          zoom={15}
+        >
+          <Marker 
+            position={{ lat: latitude, lng: longitude }}
+            label={{
+              text: accommodationAddress,
+              color: "#FBBC04",
+              fontWeight: "bold",
+            }}
+          />
+        </GoogleMap>
+      </LoadScript>
+      <div>{accommodationAddress}</div>
+      <button>주소복사</button>
+    </>
+  );
+};
+
+export default Map;
