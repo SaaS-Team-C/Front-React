@@ -114,12 +114,14 @@
     align-items: start;
   }
 
-  .last-warpper {
-    width: 100%;
+  .last-wrapper {
     height: 600px;
     margin-top: 50px;
-    background-color: blanchedalmond;
-  }
+    background-color: #f1ecef;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
 
   /* 종료날짜 버튼 css */
 

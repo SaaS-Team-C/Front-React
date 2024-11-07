@@ -89,6 +89,12 @@
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   }
   
+  .card-action {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+  }
+
   .card-date {
     font-size: 14px;
     color: #666;
@@ -169,3 +175,26 @@
     background-color: #5CC3D6;
     color: #fff;
   }
+
+  .edit-button, .delete-button {
+    background-color: #5CC3D6;
+    color: white;
+    border: none;
+    padding: 8px 12px;
+    margin: 4px 0;
+    cursor: pointer;
+    font-size: 14px;
+    border-radius: 4px;
+  }
+  
+  .delete-button {
+    background-color: #FFFFFF;
+    color: #282828;
+    border: 1px solid #ddd;
+    
+  }
+  
+  .edit-button:hover, .delete-button:hover {
+    opacity: 0.8;
+  }
+  

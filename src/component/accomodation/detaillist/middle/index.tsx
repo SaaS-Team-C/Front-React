@@ -1,6 +1,9 @@
 import React from 'react'
+import './style.css';
 import RoomList from './roomlist'
 import { RoomDTO } from 'src/apis/accommodation/dto/request/room.request.dto';
+import FacilitiesCard from './facilities';
+import Map from './navermap';
 
 const mockRoomsData: RoomDTO[] = [
   {
@@ -32,8 +35,10 @@ const mockRoomsData: RoomDTO[] = [
 
 export default function AccommodationDetailMiddle() {
   return (
-    <div>
+    <div className='middle-wrapper'>
       <RoomList roomsData={mockRoomsData} />
+      <FacilitiesCard/>
+      <Map/>
     </div>
   )
 }

@@ -7,6 +7,7 @@ import HostMypageLayout from "src/layout/mypageHost";
 // AccommodationManagementPage.tsx
 import React, { useState } from 'react';
 import './style.css';
+import PaginationFuction from "src/component/accomodation/pagination";
 
 type Accommodation = {
   id: string;
@@ -104,7 +105,11 @@ const AccommodationManagementPage: React.FC = () => {
           <AccommodationCard key={accommodation.id} accommodation={accommodation} />
         ))}
       </div>
+      <PaginationFuction totalItems={100} itemsPerPage={10} currentPage={1} onPageChange={function (page: number): void {
+          throw new Error("Function not implemented.");
+        } }/>
     </div>
+    
   );
 };
 
@@ -112,7 +117,24 @@ type AccommodationCardProps = {
   accommodation: Accommodation;
 };
 
+
 const AccommodationCard: React.FC<AccommodationCardProps> = ({ accommodation }) => {
+  const navigate = useNavigate();
+
+  // 수정 버튼 클릭 핸들러 (숙소 수정 페이지로 이동)
+  const handleEdit = (id: string) => {
+    navigate(`/mypagehost/accommodations/edit/${id}`);
+  }
+
+  // 삭제 버튼 클릭 핸들러 
+  const handleDelete = (id: string) => {
+    if (window.confirm("정말로 이 숙소를 삭제하시겠습니까?")) {
+      // (삭제 api 작성)
+      console.log(`숙소 ${id} 삭제`);
+      // 삭제 후 상태 업데이트 로직 필요 (filteredAccommodations에서 해당 숙소 제거 하는 로직)
+    }
+  }
+  
   return (
     <div className="accommodation-card">
       <div className="card-date">{accommodation.date}</div>
@@ -133,7 +155,17 @@ const AccommodationCard: React.FC<AccommodationCardProps> = ({ accommodation }) 
           {accommodation.price.toLocaleString()}원
         </div>
       </div>
+
+      <div className="card-actions">
+        <button className="edit-button" onClick={() => handleEdit(accommodation.id)}>
+          수정
+        </button>
+        <button className="delete-button" onClick={() => handleDelete(accommodation.id)}>
+          삭제
+        </button>
+      </div>
     </div>
+    
   );
 };
 
@@ -148,6 +180,9 @@ export function MyAccommodationManagement() {
         <HostMypageLayout />
         <div id="host-accommodation-register-wrapper">
         <AccommodationManagementPage/>
+        </div>
+        <div className="pagination">
+
         </div>
         </div>
     </>

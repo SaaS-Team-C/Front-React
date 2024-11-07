@@ -8,6 +8,8 @@ interface SidebarProps {
   setReviewScore: (scores: boolean[]) => void;
   accommodationType: boolean[];
   setAccommodationType: (types: boolean[]) => void;
+  categoryArea: string[];
+  setCategoryArea: (area: string[]) => void;
   facilities: boolean[];
   setFacilities: (facilities: boolean[]) => void;
 }
@@ -19,6 +21,8 @@ const Sidebar: React.FC<SidebarProps> = ({
   setReviewScore,
   accommodationType,
   setAccommodationType,
+  categoryArea,
+  setCategoryArea,
   facilities,
   setFacilities,
 }) => {
@@ -26,6 +30,7 @@ const Sidebar: React.FC<SidebarProps> = ({
     setPriceRange({ min: 0, max: 5000000 });
     setReviewScore([false, false, false, false, false]);
     setAccommodationType([false, false, false]);
+    setCategoryArea([]);
     setFacilities([false, false, false, false, false, false, false]);
   };
 
@@ -44,14 +49,16 @@ const Sidebar: React.FC<SidebarProps> = ({
         <button className="reset-btn" onClick={resetFilters}>Reset</button>
       </div>
 
+      {/* 가격 필터 */}
       <div className="filter-section">
-        <h3>Filter Price</h3>
+        <h3>Price Range</h3>
         <div className="range-container">
           <input type="range" min="0" max="5000000" step="10000" value={priceRange.min} onChange={(e) => handlePriceChange(e, 'min')} />
           <input type="range" min="0" max="5000000" step="10000" value={priceRange.max} onChange={(e) => handlePriceChange(e, 'max')} />
         </div>
       </div>
 
+      {/* 리뷰 점수 필터 */}
       <div className="filter-section">
         <h3>Review Score</h3>
         <ul>
@@ -72,6 +79,7 @@ const Sidebar: React.FC<SidebarProps> = ({
         </ul>
       </div>
 
+      {/* 숙소 타입 필터 */}
       <div className="filter-section">
         <h3>Accommodation Type</h3>
         <ul>
@@ -92,6 +100,29 @@ const Sidebar: React.FC<SidebarProps> = ({
         </ul>
       </div>
 
+      {/* 지역 카테고리 필터 */}
+      <div className="filter-section">
+        <h3>Area</h3>
+        <ul>
+          {['Seoul', 'Busan', 'Jeju', 'Gangwon'].map((label) => (
+            <li key={label}>
+              <input
+                type="checkbox"
+                checked={categoryArea.includes(label)}
+                onChange={() => {
+                  const updatedAreas = categoryArea.includes(label)
+                    ? categoryArea.filter((area) => area !== label)
+                    : [...categoryArea, label];
+                  setCategoryArea(updatedAreas);
+                }}
+              />
+              {label}
+            </li>
+          ))}
+        </ul>
+      </div>
+
+      {/* 시설 필터 */}
       <div className="filter-section">
         <h3>Facilities</h3>
         <ul>

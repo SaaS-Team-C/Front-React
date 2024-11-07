@@ -267,7 +267,7 @@ export default function Main() {
                         <ImageSlider4 imageContents={proposeImages} />
                     </div>
                 </div>
-                <div className='last-warpper'>
+                <div className='last-wrapper'>
                     <Bottombar />
                 </div>
             </div>
