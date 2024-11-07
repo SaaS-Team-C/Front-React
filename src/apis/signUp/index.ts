@@ -16,7 +16,7 @@ const GUEST_ID_CHECK_API_URL = `${AUTH_MODULE_URL}/id-check`;
 const HOST_ID_CHECK_API_URL = `${AUTH_MODULE_URL}/id-check-host`;
 const TEL_AUTH_API_URL = `${AUTH_MODULE_URL}/tel-auth`;
 const TEL_AUTH_CHECK_API_URL = `${AUTH_MODULE_URL}/tel-auth-check`;
-const GUEST_SIGN_UP_API_URL = `${AUTH_MODULE_URL}/sign-up-guest`;
+const GUEST_SIGN_UP_API_URL = `${AUTH_MODULE_URL}/sign-up`;
 const HOST_SIGN_UP_API_URL = `${AUTH_MODULE_URL}/sign-up-host`;
 const BUSINESS_NUMBER_CHECK_API_URL = `${AUTH_MODULE_URL}/business_number`;
 
