@@ -82,7 +82,9 @@
 }
 
 .sign-in,
-.sign-up-button {
+.sign-up-button,
+.my-page,
+.log-out {
   margin-bottom: 15px;
   font-family: 'Poppins', sans-serif;
   position: relative;
@@ -109,7 +111,9 @@
 }
 
 .sign-in::before,
-.sign-up-button::before {
+.sign-up-button::before,
+.my-page::before,
+.log-out::before  {
   position: absolute;
   content: '';
   width: 100%;
@@ -124,25 +128,33 @@
 }
 
 .sign-in:hover,
-.sign-up-button:hover {
+.sign-up-button:hover,
+.my-page:hover,
+.log-out:hover  {
   background: var(--pink);
   transform: translate(0, 0.25em);
 }
 
 .sign-in:hover::before,
-.sign-up-button:hover::before {
+.sign-up-button:hover::before,
+.my-page:hover::before,
+.log-out:hover::before  {
   box-shadow: 0 0 0 2px var(--pink-border), 0 0.5em 0 0 var(--pink-shadow);
   transform: translate3d(0, 0.5em, -1em);
 }
 
 .sign-in:active,
-.sign-up-button:active {
+.sign-up-button:active,
+.my-page:active,
+.log-out:active{
   background: var(--pink);
   transform: translate(0em, 0.75em);
 }
 
 .sign-in:active::before,
-.sign-up-button:active::before {
+.sign-up-button:active::before,
+.my-page:active::before,
+.log-out:active::before {
   box-shadow: 0 0 0 2px var(--pink-border), 0 0 var(--pink-shadow);
   transform: translate3d(0, 0, -1em);
 }
