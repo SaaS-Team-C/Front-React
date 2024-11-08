@@ -1,5 +1,6 @@
-import React from 'react';
-import './style.css';
+import React, { useState } from "react";
+import "./style.css";
+import RangeSlider from "./priceRagebar";
 
 interface SidebarProps {
   priceRange: { min: number; max: number };
@@ -26,6 +27,9 @@ const Sidebar: React.FC<SidebarProps> = ({
   facilities,
   setFacilities,
 }) => {
+  // state: 상태 관리 //
+  const [showAllAreas, setShowAllAreas] = useState(false); 
+
   const resetFilters = () => {
     setPriceRange({ min: 0, max: 5000000 });
     setReviewScore([false, false, false, false, false]);
@@ -34,7 +38,10 @@ const Sidebar: React.FC<SidebarProps> = ({
     setFacilities([false, false, false, false, false, false, false]);
   };
 
-  const handlePriceChange = (e: React.ChangeEvent<HTMLInputElement>, side: 'min' | 'max') => {
+  const handlePriceChange = (
+    e: React.ChangeEvent<HTMLInputElement>,
+    side: "min" | "max"
+  ) => {
     const value = Number(e.target.value);
     setPriceRange({
       ...priceRange,
@@ -43,48 +50,63 @@ const Sidebar: React.FC<SidebarProps> = ({
   };
 
   return (
-    <aside className="sidebar">
+    <aside id="sidebar">
       <div className="filter-header">
-        <h2>FILTER BY</h2>
-        <button className="reset-btn" onClick={resetFilters}>Reset</button>
+        <div className="filter-title-box">
+          <div className="mini-bar"></div>
+          <div className="filter-title">FILTER BY</div>
+        </div>
+
+        <div className="reset-box">
+          <div className="reset">검색 초기화</div>
+          <button className="reset-btn" onClick={resetFilters}></button>
+        </div>
       </div>
 
       {/* 가격 필터 */}
       <div className="filter-section">
-        <h3>Price Range</h3>
-        <div className="range-container">
-          <input type="range" min="0" max="5000000" step="10000" value={priceRange.min} onChange={(e) => handlePriceChange(e, 'min')} />
-          <input type="range" min="0" max="5000000" step="10000" value={priceRange.max} onChange={(e) => handlePriceChange(e, 'max')} />
+        <div className="filter-section-box">
+          <div className="filter-price-title-box">
+            <div className="filter-categories-title">Filter Price</div>
+            <div className="filter-price-title-second">/ 1박 기준</div>
+          </div>
+
+          {/* 레인지 바*/}
+          <RangeSlider/>
         </div>
       </div>
 
       {/* 리뷰 점수 필터 */}
       <div className="filter-section">
-        <h3>Review Score</h3>
-        <ul>
-          {['5 stars', '4 stars', '3 stars', '2 stars', '1 star'].map((label, index) => (
-            
-            <li key={index}>
-              <input
-                type="checkbox"
-                checked={reviewScore[index]}
-                onChange={() => {
-                  const updatedScores = [...reviewScore];
-                  updatedScores[index] = !updatedScores[index];
-                  setReviewScore(updatedScores);
-                }}
-              />
-              {label}
-            </li>
-          ))}
+        <div className="filter-section-box">
+        <div className="filter-categories-title">리뷰</div>
+        <ul className="star">
+          {["★★★★★", "★★★★", "★★★", "★★", "★"].map(
+            (label, index) => (
+              <li key={index}>
+                <input
+                  type="checkbox"
+                  checked={reviewScore[index]}
+                  onChange={() => {
+                    const updatedScores = [...reviewScore];
+                    updatedScores[index] = !updatedScores[index];
+                    setReviewScore(updatedScores);
+                  }}
+                />
+                {label}
+              </li>
+            )
+          )}
         </ul>
+        </div>
       </div>
 
       {/* 숙소 타입 필터 */}
       <div className="filter-section">
-        <h3>Accommodation Type</h3>
+      <div className="filter-section-box">
+        <div className="filter-categories-title">숙소 유형</div>
         <ul>
-          {['Hotel', 'Pension', 'Guesthouse'].map((label, index) => (
+          {["호텔", "펜션", "게스트하우스"].map((label, index) => (
             <li key={index}>
               <input
                 type="checkbox"
@@ -99,35 +121,50 @@ const Sidebar: React.FC<SidebarProps> = ({
             </li>
           ))}
         </ul>
+        </div>
       </div>
 
-      {/* 지역 카테고리 필터 */}
-      <div className="filter-section">
-        <h3>Area</h3>
-        <ul>
-          {['Seoul', 'Busan', 'Jeju', 'Gangwon'].map((label) => (
-            <li key={label}>
-              <input
-                type="checkbox"
-                checked={categoryArea.includes(label)}
-                onChange={() => {
-                  const updatedAreas = categoryArea.includes(label)
-                    ? categoryArea.filter((area) => area !== label)
-                    : [...categoryArea, label];
-                  setCategoryArea(updatedAreas);
-                }}
-              />
-              {label}
-            </li>
-          ))}
-        </ul>
+    {/* 지역 카테고리 필터 */}
+    <div className="filter-section">
+        <div className="filter-section-box">
+          <div className="filter-categories-title">지역</div>
+          <ul>
+            {["제주도", "서울", "부산", "경주", ...(showAllAreas ? ["강릉", "인천", "가평", "여수", "속초"] : [])].map((label) => (
+              <li key={label}>
+                <input
+                  type="checkbox"
+                  checked={categoryArea.includes(label)}
+                  onChange={() => {
+                    const updatedAreas = categoryArea.includes(label)
+                      ? categoryArea.filter((area) => area !== label)
+                      : [...categoryArea, label];
+                    setCategoryArea(updatedAreas);
+                  }}
+                />
+                {label}
+              </li>
+            ))}
+          </ul>
+          <button onClick={() => setShowAllAreas(!showAllAreas)}>
+            {showAllAreas ? "숨기기" : "더보기"}
+          </button>
+        </div>
       </div>
 
       {/* 시설 필터 */}
       <div className="filter-section">
-        <h3>Facilities</h3>
+      <div className="filter-section-box">
+        <div className="filter-categories-title">부대 시설</div>
         <ul>
-          {['Free Wi-Fi', 'Parking', 'Pool', 'Pet-friendly', 'Non smoking room', 'Indoor Spa', 'Dinner Party'].map((label, index) => (
+          {[
+            "무료 와이파이",
+            "주차장",
+            "수영장",
+            "펫 동반 가능",
+            "금연 객실",
+            "실내 스파",
+            "바베큐",
+          ].map((label, index) => (
             <li key={index}>
               <input
                 type="checkbox"
@@ -142,6 +179,7 @@ const Sidebar: React.FC<SidebarProps> = ({
             </li>
           ))}
         </ul>
+        </div>
       </div>
     </aside>
   );
