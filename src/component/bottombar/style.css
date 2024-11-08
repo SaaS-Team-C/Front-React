@@ -1,38 +1,51 @@
+/* 전체 푸터 스타일 */
+#footer-wrapper {
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 20px;
+    width: 100%;
+    max-width: 1200px; /* 고정된 최대 너비 */
+    margin: 0 auto; /* 좌우 중앙 정렬 */
+
+}
 
 .footer {
-    display: flex;
-    justify-content: center;
-
-    width: 100%;
+    background-color: #f1ecef;
+    position: absolute;
+    width: 1200px;
+    height: 500px;
+    top: 1500px;
+    padding: 20px;
 }
 
 .top-footer {
-    height: 300px;
-    width: 1150px;
-    margin-top: 10px;
-    display: flex;
-    padding: 20px;
-    /* border-bottom: 2px solid #ccc; */
-    
+
+    display: flex;  
+    gap: 190px;
+    margin-top: 25px;
+    border-bottom: 1px solid #dfdcdc; /* 얇은 선 */
+    padding-bottom: 50px; /* 텍스트와 선 사이의 여백 */
 }
 
-.top-footer1 {
-    text-align: left;    
-    margin-right: 210px;
-
+.top-footer1-content1,
+.top-footer1-content2 {
+    width: 280px;
 }
 
-.top-footer2,
-.top-footer3 {
-    text-align: left;
-    margin-right: 210px;
+
+.top-footer2-content,
+.top-footer4-content1,
+.top-footer4-content2 {
+    width: 80px;
 }
 
-.top-footer4 {
-    text-align: left; 
+.top-footer3-content1,
+.top-footer3-content2 {
+    width: 160px;
 }
 
-/* 제목 스타일 */
 .top-footer1-title,
 .top-footer2-title,
 .top-footer3-title,
@@ -45,55 +58,116 @@
     --tw-text-opacity: 1;
 }
 
-/* 내용 스타일 */
+/* Content 스타일 */
 .top-footer1-content1,
 .top-footer1-content2,
 .top-footer2-content,
 .top-footer3-content1,
 .top-footer3-content2,
 .top-footer4-content1,
-.top-footer4-content2 {
+.top-footer4-content2,
+.bottom-footer1-content1,
+.bottom-footer1-content2,
+.bottom-footer1-content3,
+.bottom-footer1-content4,
+.bottom-footer2-content1,
+.bottom-footer2-content2,
+.bottom-footer2-content3,
+.bottom-footer2-content4,
+.bottom-footer2-content5,
+.bottom-footer2-content1-1,
+.bottom-footer2-content2-1,
+.bottom-footer2-content3-1,
+.bottom-footer2-content4-1,
+.bottom-footer2-content5-1,
+.bottom-footer2-content6,
+.bottom-footer3 {
     color: #999999;
     font-size: 14px;
     font-weight: 600;
     margin: 5px 0;
 }
 
+.top-footer2-content:hover,
+.top-footer3-content1:hover,
+.top-footer3-content2:hover,
+.top-footer4-content1:hover,
+.top-footer4-content2:hover {
+    cursor: pointer;
+    color: #686565;
+}
+
 /* 버튼 컨테이너 */
 .top-footer1-button {
     display: flex;
     justify-content: flex-start;
-    gap: 15px;
     margin-top: 13px;
+    gap: 15px;
 }
 
 /* 카카오 버튼 */
-.top-footer1-kakao,
-.top-footer1-faq {
-    padding: 10px 15px;
-    font-size: 14px;
-    font-weight: bold;
-    color: #fff;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: background-color 0.3s;
-    outline: none;
-}
-
 .top-footer1-kakao {
-    background-color: rgb(235, 181, 201);
+    font-family: 'Poppins', sans-serif; /* 폰트 설정 */
+    font-size: 14px; /* 폰트 크기 */
+    font-weight: 600; /* 폰트 두께 */
+    text-transform: uppercase; /* 대문자화 */
+    padding: 10px 10px; /* 패딩 */
+    border-radius: 10px; /* 모서리 둥글게 */
+    cursor: pointer; /* 마우스 커서 */
+    transition: background-color 0.3s, color 0.3s, transform 0.3s, border 0.3s; /* 트랜지션 효과 */
+    display: inline-block; /* 가로로 배열 */
+    text-align: center; /* 텍스트 가운데 정렬 */
+    color: rgb(221, 173, 191); /* 기본 텍스트 색 */
+    border: solid 3px rgb(221, 173, 191); /* 기본 테두리 색 */
+
 }
 
 .top-footer1-faq {
-    background-color: rgb(222, 120, 157);
+    font-family: 'Poppins', sans-serif; /* 폰트 설정 */
+    font-size: 14px; /* 폰트 크기 */
+    font-weight: 600; /* 폰트 두께 */
+    text-transform: uppercase; /* 대문자화 */
+    padding: 10px 15px; /* 패딩 */
+    border-radius: 10px; /* 모서리 둥글게 */
+    cursor: pointer; /* 마우스 커서 */
+    transition: background-color 0.3s, color 0.3s, transform 0.3s, border 0.3s; /* 트랜지션 효과 */
+    display: inline-block; /* 가로로 배열 */
+    text-align: center; /* 텍스트 가운데 정렬 */
+    color: rgb(221, 173, 191); /* 기본 텍스트 색 */
+    border: solid 3px rgb(221, 173, 191); /* 기본 테두리 색 */
+}
+
+/* 카카오 버튼 스타일 */
+.top-footer1-kakao {
+    background-color: transparent; /* 배경색 투명 */
+}
+
+/* FAQ 버튼 스타일 */
+.top-footer1-faq {
+    background-color: transparent; /* 배경색 투명 */
 }
 
 /* 버튼 hover 효과 */
-.top-footer1-kakao:hover {
-    background-color: rgb(223, 161, 182);
+.top-footer1-kakao:hover,
+.top-footer1-faq:hover {
+    background-color: rgb(223, 161, 182); /* 호버 시 배경색 */
+    border: solid 3px rgb(223, 161, 182); /* 호버 시 테두리 색 */
+    color: white; /* 호버 시 텍스트 색상 변경 */
+    transform: scale(1.05); /* 호버 시 크기 확대 */
 }
 
-.top-footer1-faq:hover {
-    background-color: rgb(202, 100, 137);
+
+.bottom-footer {
+    margin-top: 30px;
 }
+
+
+.bottom-footer2 {
+
+    display: flex;
+    gap: 15px;
+    margin-top: 50px;
+    margin-bottom: 10px;
+}
+
+

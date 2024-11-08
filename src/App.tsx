@@ -31,6 +31,7 @@ import { MyAccommodationManagement } from './component/mypagehost/MyAccommodatio
 import GuestMypage from './views/mypageguest';
 import Accommodationenrollmentapproval from './views/admin/accommodationenrollmentapproval';
 import AccommodationList from './views/accommodation';
+import Roomly from './views/roomly';
 
 
 
@@ -85,6 +86,7 @@ export default function App() {
       <Route path={AUTH_PATH} element={<SignUp />} />
       <Route path='/payment' element={<Payment onPathChange={() => { }} />} />
       <Route path={FINDID_PATH} element={<FindId />} />
+      <Route path='/roomly-company' element={<Roomly />} />
       <Route path='/adminHost' element={<HostEnrollmentapproval/>}/>
       <Route path='/adminAccommodation' element={<Accommodationenrollmentapproval/>}/>
       <Route path='/faq' element={<FAQ/>}/>
