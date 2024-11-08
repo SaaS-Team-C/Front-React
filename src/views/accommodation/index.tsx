@@ -30,8 +30,8 @@ const [callAccommodationList, SetCallAccommodationList] = useState<Accommodation
 
   return (
     <div className="AccommodationList">
+          <Topbar />
       <div className="app-container">
-        <Topbar />
         <div className="content-container">
           <Filter />
           <List accommodations={[]} />
