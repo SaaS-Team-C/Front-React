@@ -1,0 +1,72 @@
+#roomly-top-wrapper {
+    position: fixed;
+    height: 100vh;
+    top: 0;
+    left: 0;
+    width: 100%;
+    background-color: black;
+    z-index: -1;
+}
+
+#roomly-bar {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    background-color: rgba(168, 164, 167, 0.164); /* 투명도 적용 */
+    padding: 10px;
+    color: rgb(212, 193, 193);
+    font-size: 32px;
+    font-weight: bold;
+    text-align: center;
+    z-index: 2;
+}
+
+#roomly-bar:hover {
+    cursor: pointer;
+}
+
+.roomly-video {
+    height: 450px;
+    width: 100%;
+}
+
+.roomly-ment {
+    position: absolute;
+    top: 32%;
+    left: 33%;
+    color: white;
+    font-size: 26px;
+    font-weight: bold;
+    text-align: left;
+    text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.7);
+    animation: fadeIn 2s ease-out;
+    z-index: 1;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+#roomly-bottom-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+        width: 100%;
+    max-width: 1200px; /* 고정된 최대 너비 */
+    margin: 0 auto; /* 좌우 중앙 정렬 */
+    background-color: antiquewhite;
+}
+
+.roomly-bottom-content1,
+.roomly-bottom-content2,
+.roomly-bottom-content3,
+.roomly-bottom-content4 {
+    background-color: black;
+    position: absolute;
+    width: 1200px;
+    height: 500px;
+    top: 1000px;
+    padding: 20px;
+}
