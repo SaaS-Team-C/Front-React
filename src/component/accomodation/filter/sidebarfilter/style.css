@@ -23,7 +23,7 @@
 /* 검색 초기화 */
 #sidebar .reset-box{
   display: flex;
-  width: 92px;
+  width: 80px;
   height: 20px;
   justify-content: space-between;
   font-family: "Noto Sans KR", sans-serif;
@@ -184,7 +184,7 @@ input[type="range"] {
 }
 
 #sidebar ul.star li input[type="checkbox"] {
-  margin-top: 10px;
+  margin-top: 6px;
 }
 
 /* 셀렉터 공통 스타일 */
@@ -193,6 +193,56 @@ input[type="range"] {
 display: flex;
 justify-content: center;
 margin-bottom: 20px;
+}
+
+/* 버튼 스타일 */
+#sidebar .button-wrapper{
+  width: 170px;
+  display: flex;
+  flex-direction:row-reverse;
+}
+
+#sidebar .show-all-button{
+  cursor: pointer;
+  color:#00ACCF;
+  font-size: 11px;
+  font-family: inherit;
+  font-weight: 400;
+  padding: 0%;
+  text-decoration: none;
+  background: none;
+  border: none;
+}
+
+#sidebar .show-all-button:hover{
+  text-decoration: underline;
+  font-weight: 700;
+}
+
+#sidebar .arrow-down{
+  background-image: url('../../../../../public/images/accommodationlist/Sort\ Down.png');
+  width: 12px;
+  height: 13px;
+  background-repeat: no-repeat;
+  background-size: 99%;
+  cursor: pointer;
+  position: relative;
+  top: -1px;
+  margin-left: 1.5px;
+
+}
+
+#sidebar .arrow-up{
+  background-image: url('../../../../../public/images/accommodationlist/Sort\ Up.png');
+  width: 12px;
+  height: 13px;
+  background-repeat: no-repeat;
+  background-size: 99%;
+  cursor: pointer;
+  position: relative;
+  bottom: -1.1px;
+  margin-left: 1.5px;
+
 }
 
 

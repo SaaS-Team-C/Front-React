@@ -77,7 +77,7 @@
     gap: 15px;
   }
   
-  .accommodation-card {
+  #accommodation-card {
     width: 800px;
     display: flex;
     align-items: flex-start;

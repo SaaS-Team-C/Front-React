@@ -136,7 +136,7 @@ const AccommodationCard: React.FC<AccommodationCardProps> = ({ accommodation }) 
   }
   
   return (
-    <div className="accommodation-card">
+    <div id="accommodation-card">
       <div className="card-date">{accommodation.date}</div>
       <div className="card-content">
         <img src="https://via.placeholder.com/80" alt="Room" className="card-image" />
