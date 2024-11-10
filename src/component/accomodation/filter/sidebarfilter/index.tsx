@@ -145,9 +145,13 @@ const Sidebar: React.FC<SidebarProps> = ({
               </li>
             ))}
           </ul>
-          <button onClick={() => setShowAllAreas(!showAllAreas)}>
-            {showAllAreas ? "숨기기" : "더보기"}
+          <div className="button-wrapper">
+          <div className={showAllAreas ? "arrow-up" : "arrow-down"}></div>
+          <button className="show-all-button" onClick={() => setShowAllAreas(!showAllAreas)}>
+            {showAllAreas ? "숨기기" : "더 보기"}
           </button>
+         
+          </div>
         </div>
       </div>
 

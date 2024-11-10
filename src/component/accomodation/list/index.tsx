@@ -45,7 +45,7 @@ const List: React.FC<ListProps> = ({ accommodations }) => {
     const mockData: AccommodationDTO[] = [
       {
         accommodationName: "해운대 호텔",
-        accommodationGradeAverage: 5,
+        accommodationGradeAverage: 4.2,
         accommodationAddress: "부산광역시 해운대구 해운로 해운대 해수욕장 13번길",
         categoryArea: "부산광역시",
         categoryPet: true,
@@ -63,7 +63,7 @@ const List: React.FC<ListProps> = ({ accommodations }) => {
       },
       {
         accommodationName: "웨스틴 조선",
-        accommodationGradeAverage: 3,
+        accommodationGradeAverage: 4.8,
         categoryArea: "서울시",
         accommodationAddress: "서울특별심 해운대구 해운로 해운대 해수욕장 13번길 소진이네집",
         categoryPet: false,
@@ -141,14 +141,15 @@ const sortedAccommodations = [...callAccommodationList].sort((a, b) => {
     if (accommodation.categoryWifi) facilities.push("와이파이");
     if (accommodation.categoryCarPark) facilities.push("주차 공간");
     if (accommodation.categoryPool) facilities.push("수영장");
-
-    return facilities.join(", ");
+  
+    // 텍스트로만 점 구분자 결합하여 반환
+    return facilities.join(" · ");
   };
 
   return (
-    <div className="accommodation-list">
+    <div id="accommodation-search-list">
       <div className="list-header">
-        <p>{callAccommodationList.length}개의 검색 결과가 있습니다.</p>
+        <div className="search-length-result">{callAccommodationList.length}개의 검색 결과가 있습니다.</div>
         <div className="sort-dropdown">
           <label htmlFor="sortOptions">분류 기준:</label>
           <select
@@ -172,11 +173,11 @@ const sortedAccommodations = [...callAccommodationList].sort((a, b) => {
           <p>필터를 다시 설정해 보세요.</p>
         </div>
       ) : (
-        <div className="accommodation-cards">
+        <div className="accommodation-cards-container">
           {currentAccommodations.map((accommodation) => (
             <div
               key={accommodation.accommodationName}
-              className="accommodation-card"
+              className="accommodation-cards"
             >
               <div className="image-wrapper">
                 <img
@@ -197,22 +198,34 @@ const sortedAccommodations = [...callAccommodationList].sort((a, b) => {
                   ♥
                 </div>
               </div>
-              <div className="accommodation-info">
-                <h3>{accommodation.accommodationName}</h3>
-                <p>{accommodation.accommodationType}</p>
-                <p>{accommodation.categoryArea}</p>
-                <p>{accommodation.accommodationAddress}</p>
+              <div id="accommodation-info">
+                <div className="type-area-container">
+                <div className="type">{accommodation.accommodationType}</div>
+                <div className="divider-bar-type-area">|</div>
+                <div className="category-area">{accommodation.categoryArea}</div>
+                </div>
+                <div className="name">{accommodation.accommodationName}</div>
+             
+                <div className="category-facilities">{getFacilities(accommodation)}</div>
+                <div className="address-box">
+                  <div className="map-icon"></div>
+                  <div className="address">{accommodation.accommodationAddress}</div>
+                </div>
+              </div>
+              <div className="divider-bar"></div>
                 {/* 최저 객실 가격 표시 */}
-                <p>
-                  ₩
-                  /박
-                </p>
-                <p>Rating: {accommodation.accommodationGradeAverage}</p>
-                <p>리뷰: {accommodation.countReview}개</p>{" "}
-                {/* ! 합계 구하는걸로 수정 필요 */}
-                <p>Facilities: {getFacilities(accommodation)}</p>
+                <div className="accommodation-price-container">
+                  <div className="price-box">
+                    <div className="min-price">~{accommodation.minRoomPrice}₩</div>
+                    <div className="per-one-day">/박</div>
+                  </div>
+                  <div className="rating-box">
+                    <div className="rating"> {accommodation.accommodationGradeAverage}</div>
+                    <div className="rating-per-score">/5</div>
+                  </div>
+                <div className="review">{accommodation.countReview}개의 리뷰</div>
                 <button
-                  className="details-btn"
+                  className="show-detail-btn"
                   onClick={() =>
                     handleDetailClick(accommodation.accommodationName)
                   }
