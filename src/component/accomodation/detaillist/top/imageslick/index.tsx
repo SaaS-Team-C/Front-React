@@ -12,6 +12,7 @@ interface AccommodationImagesProps {
   onClose: () => void;
 }
 
+
 const AccommodationDetailTopImages: React.FC<AccommodationImagesProps> = ({ images, initialIndex = 0, onClose }) => {
   const [currentImage, setCurrentImage] = useState(initialIndex);
   const sliderRef = useRef<Slider>(null);

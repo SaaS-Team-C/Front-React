@@ -1,6 +1,6 @@
 #map-wrapper{
     display: flex;
-    background-color: chartreuse;
+    background-color: #00ACCF;
     height: 210px ;
     align-items: center;
 }
