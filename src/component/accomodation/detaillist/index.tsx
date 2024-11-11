@@ -1,4 +1,5 @@
 import React, { useRef } from 'react';
+import './style.css';
 import AccommodationDetailTop from './top';
 import AccommodationDetailMiddle from './middle';
 import Topbar from 'src/component/topbar';
@@ -17,7 +18,7 @@ export default function DetailList() {
   };
 
   return (
-    <div>
+    <div id='accommodation-detail-list-wrapper'>
       <Topbar />
       <AccommodationDetailTop onReviewButtonClick={scrollToReviews} accommodation_name={''} />
       <AccommodationDetailMiddle />
