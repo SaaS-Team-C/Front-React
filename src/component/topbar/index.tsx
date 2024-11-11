@@ -207,8 +207,8 @@ export default function Topbar() {
                         <div className='top-search-bar-count'>인원 {urlCount}</div>
                     </div>}
                     {cookies.accessToken && <div className='nowlogin'>
-                        <div className='my-page' onClick={onMyPageClickHandler}>마이페이지</div>
-                        <div className='log-out' onClick={onlogoutButtonClickHandler}>로그아웃</div>
+                        <div className='my-page' onClick={onMyPageClickHandler}>MYPAGE</div>
+                        <div className='log-out' onClick={onlogoutButtonClickHandler}>LOGOUT</div>
                     </div>}
                     {!cookies.accessToken && <div className='sign'>
                         <div className='sign-in' onClick={() => setModalOpen(true)}>Login</div>

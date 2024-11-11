@@ -34,7 +34,7 @@ export default function ImageSlider4({ imageContents }: ImageSliderProps) {
   const showRightButton = startIndex < imageContents.length-4; // 시작 인덱스가 4보다 작을 때 오른쪽 버튼 표시
 
   return (
-    <div className='slider4-warpper'>
+    <div className='slider4-wrapper'>
       <div className='slider4-left'>
         {showLeftButton && <div className='slider4-left-button' onClick={handlePrev}></div>}
       </div>
