@@ -5,7 +5,7 @@ import React from 'react'
 
 export default function index() {
   return (
-    <div id="detail-list-wrapper">
+    <div>
         <DetailList/>
     </div>
   )

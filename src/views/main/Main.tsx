@@ -228,7 +228,7 @@ export default function Main() {
                             <button className='calendar-button' onClick={onstartClickHandler} >
                                 <div>{start}</div>
                             </button>
-                            <div className='123' style={{ position: 'absolute', right: 0, top: '74px' }} >
+                            <div className='123' style={{ position: 'absolute', right: 0, top: '74px' }} > 
                                 {openStartCalender && <Calendar onChange={onChangeStartDateHandler} defaultValue={start} formatDay={(locale, date) => new Date(date).toLocaleDateString("en-us", {day: "2-digit",})
                     }/>}
                             </div>

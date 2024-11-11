@@ -22,12 +22,14 @@
 
 /* 검색 초기화 */
 #sidebar .reset-box{
+
   display: flex;
-  width: 80px;
+  width: 90px;
   height: 20px;
   justify-content: space-between;
   font-family: "Noto Sans KR", sans-serif;
   align-self: flex-end;
+  margin-right: 5px;
 
 }
 
