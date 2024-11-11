@@ -12,7 +12,7 @@ import React from 'react';
 import Bottombar from 'src/component/bottombar';
 type CurrentView = 'host-find-id' | 'guest-find-id' | 'host-find-password' | 'guest-find-password';
 
-export default function FindId () {
+export default function FindId() {
     // state: 현재 화면 상태 관리
     const [currentView, setCurrentView] = useState<CurrentView>('guest-find-id');
 
@@ -283,25 +283,47 @@ export default function FindId () {
             setIsPasswordMatch(false);
         }
     };
-    // event handler: 비밀번호 변경 요청 전송 핸들러 //
-    const onSubmitPasswordChangeHandler = async () => {
+
+    // event handler: 게스트 비밀번호 변경 요청 전송 핸들러
+    const onSubmitGuestPasswordChangeHandler = async () => {
         try {
             const data = {
-                guestPassword,
+                guestId,
+                guestPassword
+            };
+
+            // POST 요청 보내기
+            const response = await axios.post('/api/guest-password-change/{guestId}/{guestPasswrod}', data);
+
+            if (response.status === 200) {
+                alert('게스트 비밀번호가 성공적으로 변경되었습니다.');
+            }
+        } catch (error) {
+            console.error('게스트 비밀번호 변경 오류:', error);
+            alert('게스트 비밀번호 변경 중 문제가 발생했습니다. 다시 시도해주세요.');
+        }
+    };
+
+    // event handler: 호스트 비밀번호 변경 요청 전송 핸들러
+    const onSubmitHostPasswordChangeHandler = async () => {
+        try {
+            const data = {
+                hostId,
                 hostPassword
             };
 
             // POST 요청 보내기
-            const response = await axios.post('/api/password-change', data);
+            const response = await axios.post('/api/host-password-change/{hostId}/{hostPasswrod}', data);
 
             if (response.status === 200) {
-                alert('비밀번호가 성공적으로 변경되었습니다.');
+                alert('호스트 비밀번호가 성공적으로 변경되었습니다.');
             }
         } catch (error) {
-            console.error('비밀번호 변경 오류:', error);
-            alert('비밀번호 변경 중 문제가 발생했습니다. 다시 시도해주세요.');
+            console.error('호스트 비밀번호 변경 오류:', error);
+            alert('호스트 비밀번호 변경 중 문제가 발생했습니다. 다시 시도해주세요.');
         }
     };
+
 
     const [nameMessage, setNameMessage] = useState<string>('');
     const [authNumber, setAuthNumber] = useState<string>('');
@@ -320,12 +342,12 @@ export default function FindId () {
             <div className="find2">
                 <div className="find-wrapper">
                     <div className='find-body'>
-                        <div className='find-body'>
+                        <div className='find-body2'>
                             {/* 제목 영역 */}
                             <div className='find-title'>
                                 {currentView.includes('find-password') ? '비밀번호 재설정' : '아이디 찾기'}
                             </div>
-                            
+
                             {/* 로그인 버튼들 영역 */}
                             <div className='find-login-buttons'>
                                 {currentView === 'guest-find-id' ? (
@@ -341,7 +363,7 @@ export default function FindId () {
                                 )}
                             </div>
                         </div>
-    
+
                         {currentView === 'guest-find-id' || currentView === 'host-find-id' ? (
                             <>
                                 <div className="nameBox">
@@ -416,9 +438,13 @@ export default function FindId () {
                                         onChange={onPasswordCheckChangeHandler}
                                     />
                                 </div>
-                                <button className="find-button" disabled={!isPasswordMatch} onClick={onSubmitPasswordChangeHandler}>
+                                <button
+                                    className="find-button"
+                                    disabled={!isPasswordMatch}
+                                    onClick={currentView === 'guest-find-password' ? onSubmitGuestPasswordChangeHandler : onSubmitHostPasswordChangeHandler}
+                                >
                                     확인
-                                </button>
+                                </button>                            
                             </>
                         )}
                         <div className='mainPage-movig' onClick={onMainPageGoClickHandler}>
@@ -430,5 +456,5 @@ export default function FindId () {
             <Bottombar />
         </div>
     );
-    
+
 };

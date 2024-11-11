@@ -216,7 +216,7 @@ export default function Main() {
                     </div>
                     <div className='main-search-bar'>
                         <div className='destination'>
-                            <div className='word'>지역</div>
+                            <div className='word'>where to?</div>
                             <input className='search' value={Region} onChange={onRegionChangeHandler} />
                         </div>
                         {/* <div className='check-in'>
@@ -224,7 +224,7 @@ export default function Main() {
                             <input className='search' defaultValue={`${year}-${month}-${date}`} value={start} type='date' placeholder='입실 날짜를 입력하세요' onChange={onStartChangeHandler}/>
                         </div> */}
                         <div className='check-out'>
-                            <div className='word'>입실 날짜</div>
+                            <div className='word'>check-in</div>
                             <button className='calendar-button' onClick={onstartClickHandler} >
                                 <div>{start}</div>
                             </button>
@@ -235,7 +235,7 @@ export default function Main() {
 
                         </div>
                         <div className='check-out'>
-                            <div className='word'>퇴실 날짜</div>
+                            <div className='word'>check-out</div>
                             <button className='calendar-button' onClick={onEndClickHandler} >
                                 <div>{end}</div>
                             </button>
@@ -245,10 +245,10 @@ export default function Main() {
                             </div>
                         </div>
                         <div className='people'>
-                            <div className='word'>인원</div>
+                            <div className='word'>people</div>
                             <input className='search' defaultValue={'2'} value={count} onChange={onCountChangeHandler} />
                         </div>
-                        <button className='search-button' onClick={onSerchButtonClick}>검색 하기</button>
+                        <button className='search-button' onClick={onSerchButtonClick}>search</button>
                     </div>
                     <div className='image-slider'>
 
@@ -259,10 +259,10 @@ export default function Main() {
                         <div className='distimction-title'>여행 추천 숙소</div>
                         <div className='distimction-column'>
                             <DistimctionButton text='전체' activite={click === '' || click === '전체'} onClick={onClickButtonHandler} />
-                            <DistimctionButton text='호텔' activite={click === '' || click === '호텔'} onClick={onClickButtonHandler} />
                             <DistimctionButton text='모텔' activite={click === '' || click === '모텔'} onClick={onClickButtonHandler} />
-                            <DistimctionButton text='학원' activite={click === '' || click === '학원'} onClick={onClickButtonHandler} />
-                            <DistimctionButton text='아무거나' activite={click === '' || click === '아무거나'} onClick={onClickButtonHandler} />
+                            <DistimctionButton text='호텔' activite={click === '' || click === '호텔'} onClick={onClickButtonHandler} />
+                            <DistimctionButton text='리조트' activite={click === '' || click === '리조트'} onClick={onClickButtonHandler} />
+                            <DistimctionButton text='펜션' activite={click === '' || click === '펜션'} onClick={onClickButtonHandler} />
                         </div>
                         <ImageSlider4 imageContents={proposeImages} />
                     </div>

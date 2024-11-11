@@ -18,7 +18,7 @@
 
 /* .find-body는 제목과 입력 요소들을 flex로 배치하는 컨테이너 */
 .find-body {
-    
+    align-items: center;
     gap: 70px;
     margin-bottom: 10px;
 }
