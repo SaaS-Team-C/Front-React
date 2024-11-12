@@ -102,8 +102,8 @@ const RoomCard: React.FC<RoomCardProps> = ({ room, isFullyBooked }) => {
       ) : (
         <>
         <div id='room-card-image-container'>
-          <div id="room-card-image">
-            <img
+         
+            <img className='room-card-image'
               src={room.images[0]} // 첫 번째 이미지만 표시
               alt={room.roomName}
               onClick={() => handleImageClick(0)} // 이미지를 클릭하면 이미지 모달 열기
@@ -112,7 +112,7 @@ const RoomCard: React.FC<RoomCardProps> = ({ room, isFullyBooked }) => {
               <div className='image-icon'></div>
               <div className="image-count">{room.images.length}+</div>
             </div>
-          </div>
+         
           </div>
 
           <div id="room-card-info">
@@ -133,16 +133,22 @@ const RoomCard: React.FC<RoomCardProps> = ({ room, isFullyBooked }) => {
             <div className='max-occupancy'>최대 숙박 가능 인원: {room.maxOccupancy}명</div>
             </div>
 
-
           </div>
-          <div className="room-card-action">
+
+          <div id="room-card-action">
+            <div className='detail-btn-container'>
             <button className="detail-btn" onClick={handleOpenDetailModal}>
               상세 정보
             </button>
+            <div className='detail-btn-icon'></div>
+            </div>
             <button className="reserve-btn" onClick={handleChangebooking}>
               숙박 예약
             </button>
-            <p className="price">₩{room.roomPrice.toLocaleString()}원 /1박</p>
+            <div className='room-card-price-container'>
+            <div className="room-card-price">{room.roomPrice.toLocaleString()}원 </div>
+            <div className='price-per-night'>/1박</div>
+            </div>
           </div>
         </>
       )}

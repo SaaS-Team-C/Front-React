@@ -327,14 +327,6 @@ export default function AccommodationDetailTop({
       location: "부산광역시 부산진구 중앙대로 668 에이원프라자 빌딩 4층",
       mapLink: "https://maps.example.com",
       images: [
-        // require("./images/accommodationlist/Best-Western-Plus-Congress-Hotel-4-800x600.jpg"),
-        // require("./images/accommodationlist/ibis-Yerevan-Center-4-800x600.jpg"),
-        // require("./images/Best-Western-Plus-Congress-Hotel-4-800x600.jpg"),
-        // require("./images/Europe-Hotel-4-800x600.jpg"),
-        // require("./images/ibis-Yerevan-Center-4-800x600.jpg"),
-        // require("./images/Best-Western-Plus-Congress-Hotel-4-800x600.jpg"),
-        // require("./images/Europe-Hotel-4-800x600.jpg"),
-
         require("./guamHayattoutdoor.jpg"),
         require("./00fee112.webp"),
         require("./1e934a37.avif"),
