@@ -318,7 +318,7 @@ export default function FindId() {
             if (response.status === 200) {
                 alert('호스트 비밀번호가 성공적으로 변경되었습니다.');
             }
-        } catch (error) {
+        } catch (error) { 
             console.error('호스트 비밀번호 변경 오류:', error);
             alert('호스트 비밀번호 변경 중 문제가 발생했습니다. 다시 시도해주세요.');
         }
@@ -453,7 +453,6 @@ export default function FindId() {
                     </div>
                 </div>
             </div>
-            <Bottombar />
         </div>
     );
 

@@ -41,13 +41,13 @@ export default function Topbar() {
 
     // function: 로그인 응답 처리 함수 //
     const logInResponse = (responseBody: LogInResponseDto | ResponseDto | null) => {
-        const message = 
+        const message =
             !responseBody ? '서버에 문제가 있습니다.' :
-            responseBody.code === 'VF' ? '아이디와 비밀번호를 모두 입력하세요.' :
-            responseBody.code === 'SF' ? '로그인 정보가 일치하지 않습니다.' : 
-            responseBody.code === 'TCF' ? '서버에 문제가 있습니다.' :
-            responseBody.code === 'DBE' ? '서버에 문제가 있습니다.' : '';
-        
+                responseBody.code === 'VF' ? '아이디와 비밀번호를 모두 입력하세요.' :
+                    responseBody.code === 'SF' ? '로그인 정보가 일치하지 않습니다.' :
+                        responseBody.code === 'TCF' ? '서버에 문제가 있습니다.' :
+                            responseBody.code === 'DBE' ? '서버에 문제가 있습니다.' : '';
+
         const isSuccessed = responseBody !== null && responseBody.code === 'SU';
         if (!isSuccessed) {
             setPwMessage(message);
@@ -75,7 +75,7 @@ export default function Topbar() {
     }
 
     /** 
-     * function: 로그인 버튼을 클릭 했을 경우 일어나는 이벤트 처리 */   
+     * function: 로그인 버튼을 클릭 했을 경우 일어나는 이벤트 처리 */
     const onLoginButtonClickHandler = async () => {
         if (!id) {
             setIdMessage('아이디를 입력해 주세요!');
@@ -88,17 +88,17 @@ export default function Topbar() {
             return;
         }
         if (!id || !password) return;
-    
-            const requestBody: GuestLogInRequestDto = {
-                guestId: id,
-                password: password
-            };
-            logInRequest(requestBody).then(logInResponse);
-        }
-        // effect: 아이디 및 비밀번호 변경시 실행할 함수 //
-        useEffect(() => {
-            setMessage('');
-        }, [id, password]);
+
+        const requestBody: GuestLogInRequestDto = {
+            guestId: id,
+            password: password
+        };
+        logInRequest(requestBody).then(logInResponse);
+    }
+    // effect: 아이디 및 비밀번호 변경시 실행할 함수 //
+    useEffect(() => {
+        setMessage('');
+    }, [id, password]);
 
 
     // function: url 값 가져오기 //
@@ -138,7 +138,7 @@ export default function Topbar() {
         }
     }, [cookies]);
 
-    const pressKeyEnter = (event : KeyboardEvent<HTMLInputElement>) => {
+    const pressKeyEnter = (event: KeyboardEvent<HTMLInputElement>) => {
         if (event.key === 'Enter') {
             onLoginButtonClickHandler();
         }
@@ -177,16 +177,45 @@ export default function Topbar() {
         }
     };
 
-    const onModalContentClickHandler = (event : React.MouseEvent) => {
+    const onModalContentClickHandler = (event: React.MouseEvent) => {
         event.stopPropagation()
     };
 
-    const asdasdaszd = (event : React.MouseEvent) => {
+    const asdasdaszd = (event: React.MouseEvent) => {
         setModalOpen(true)
     };
 
-    const asdasdaszd2 = (event : React.MouseEvent) => {
+    const asdasdaszd2 = (event: React.MouseEvent) => {
         setModalOpen(true)
+    };
+
+    // function: 박수 계산 함수 //
+    const differenceInTime = () => {
+        if (!urlEnd || !urlStart) {
+            return 0; // 체크인/체크아웃 시간이 없거나 price가 유효하지 않을 경우 0 반환
+        }
+
+        // 날짜에 시간 정보가 추가된 UTC 기반 날짜 생성
+        const checkInDate = new Date(Date.UTC(
+            parseInt(urlStart.split('-')[0]),
+            parseInt(urlStart.split('-')[1]) - 1, // 월은 0부터 시작하므로 1을 뺌
+            parseInt(urlStart.split('-')[2])
+        ));
+
+        const checkOutDate = new Date(Date.UTC(
+            parseInt(urlEnd.split('-')[0]),
+            parseInt(urlEnd.split('-')[1]) - 1,
+            parseInt(urlEnd.split('-')[2])
+        ));
+
+        const differenceInTime = checkOutDate.getTime() - checkInDate.getTime();
+        const differenceInDays = differenceInTime / (1000 * 3600 * 24); // 밀리초를 일로 변환
+
+        if (differenceInDays <= 0 || Number.isNaN(differenceInDays)) {
+            return 0; // 잘못된 날짜 범위 또는 NaN 값일 경우 0 반환
+        }
+
+        return differenceInDays;
     };
 
     return (
@@ -201,8 +230,8 @@ export default function Topbar() {
                         <div className='top-search-bar-Region'>{urlRegion}</div>
                         <div className='top-search-bar-solid'></div>
                         <div className='top-search-bar-start'>{urlStart}</div>
-                        <div className='top-search-bar-solid'></div>
-                        <div className='top-search-bar-end'>{urlEnd}</div>
+                        <div className='top-search-bar-solid2'>~</div>
+                        <div className='top-search-bar-end'>{urlEnd} ({differenceInTime()}박)</div>
                         <div className='top-search-bar-solid'></div>
                         <div className='top-search-bar-count'>인원 {urlCount}</div>
                     </div>}

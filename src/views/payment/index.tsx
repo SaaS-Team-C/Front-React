@@ -61,18 +61,18 @@ export default function Payment({ onPathChange }: PaymentComponentProps) {
     const [isModalOpen1, setModalOpen1] = useState(false);
     const openModal1 = () => setModalOpen1(true);
     const closeModal1 = () => setModalOpen1(false);
-     // state: 약관 동의 모달 오픈/오프 상태 //
-     const [isModalOpen2, setModalOpen2] = useState(false);
-     const openModal2 = () => setModalOpen2(true);
-     const closeModal2 = () => setModalOpen2(false);
-      // state: 약관 동의 모달 오픈/오프 상태 //
+    // state: 약관 동의 모달 오픈/오프 상태 //
+    const [isModalOpen2, setModalOpen2] = useState(false);
+    const openModal2 = () => setModalOpen2(true);
+    const closeModal2 = () => setModalOpen2(false);
+    // state: 약관 동의 모달 오픈/오프 상태 //
     const [isModalOpen3, setModalOpen3] = useState(false);
     const openModal3 = () => setModalOpen3(true);
     const closeModal3 = () => setModalOpen3(false);
-     // state: 약관 동의 모달 오픈/오프 상태 //
-     const [isModalOpen4, setModalOpen4] = useState(false);
-     const openModal4 = () => setModalOpen4(true);
-     const closeModal4 = () => setModalOpen4(false);
+    // state: 약관 동의 모달 오픈/오프 상태 //
+    const [isModalOpen4, setModalOpen4] = useState(false);
+    const openModal4 = () => setModalOpen4(true);
+    const closeModal4 = () => setModalOpen4(false);
 
     // state: 카카오페이/토스페이 결제 요청 상태 //
     const [amount, setAmount] = useState(0);
@@ -94,9 +94,9 @@ export default function Payment({ onPathChange }: PaymentComponentProps) {
         });
     });
 
-     // function: 박수 계산 함수 //
-     const differenceInTime = () => {
-        if (!checkInTime || !checkOutTime ) {
+    // function: 박수 계산 함수 //
+    const differenceInTime = () => {
+        if (!checkInTime || !checkOutTime) {
             return 0; // 체크인/체크아웃 시간이 없거나 price가 유효하지 않을 경우 0 반환
         }
 
@@ -120,7 +120,7 @@ export default function Payment({ onPathChange }: PaymentComponentProps) {
             return 0; // 잘못된 날짜 범위 또는 NaN 값일 경우 0 반환
         }
 
-        return differenceInDays; 
+        return differenceInDays;
     };
 
     // function: 1박당 가격 계산 함수 //
@@ -245,11 +245,11 @@ export default function Payment({ onPathChange }: PaymentComponentProps) {
             {
                 pg: pg_method, // 결제 방식 지정
                 pay_method: 'card',
-                merchant_uid: dayjs().format('YYYY-MM-DD HH:mm:ss'), 
+                merchant_uid: dayjs().format('YYYY-MM-DD HH:mm:ss'),
                 name: accommodationName,
-                amount: calculatePricePerNight(), 
-                buyer_email: '', 
-                buyer_name: '', 
+                amount: calculatePricePerNight(),
+                buyer_email: '',
+                buyer_name: '',
                 buyer_tel: '010-0000-0000',
                 buyer_addr: '김',
                 buyer_postcode: '김',

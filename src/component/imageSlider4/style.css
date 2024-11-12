@@ -108,42 +108,59 @@
   flex-direction: column;
   justify-content: space-between;
   width: 280px;
-  height: 134px;
+  height: 110px;
 }
 
 .slider4-text-filter {
   margin: 2.5px 0px;
   font-size: 11px;
+  font-family: 'Pretendard-Regular';
+  color: rgb(92, 91, 91);
 }
 
 
 .slider4-text-title {
   margin: 2.5px 0px;
   font-size: 15px;
+  font-family: 'Pretendard-Regular';
+  font-weight: bold;
+  color: rgb(92, 91, 91);
 }
 
 
 .slider4-text-Region {
   margin: 2.5px 0px;
   font-size: 13px;
+  font-family: 'Pretendard-Regular';
+  color: rgb(92, 91, 91);
 }
 
 
 .slider4-text-propose {
   margin: 2.5px 0px;
   font-size: 13px;
+  font-family: 'Pretendard-Regular';
+  color: rgb(92, 91, 91);
 }
 
 
 .slider4-text-price {
   display: flex;
   margin: 2.5px 0px;
+  font-family: 'Pretendard-Regular';
+  color: rgb(92, 91, 91);
 }
 
 .qqaa4411 {
   font-size: 17px;
+  font-family: 'Pretendard-Regular';
+  color: rgb(92, 91, 91);
+  font-weight: bold;
 }
 
 .qaws4152 {
-  font-size: 15px;
+  font-size: 17px;
+  font-family: 'Pretendard-Regular';
+  color: rgb(92, 91, 91);
+  font-weight: bold;
 }

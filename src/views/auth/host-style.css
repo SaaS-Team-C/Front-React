@@ -1,13 +1,16 @@
-#business-wrapper {
+#host-signUp-wrapper {
     display: flex;
+    align-items: center;
     flex-direction: column;
-    gap: 10px;
-    padding: 5px 18px;
-    border-radius: 8px;
-    background-color: white;
-    width: 300px;
-    margin-bottom: 12px;
+    width: 1920px;
+    height: 1250px;
+    background-color: #f1ecef7c;
+    position: relative;
+}
 
+#business-wrapper {
+    margin-bottom: 8px;
+    margin-left: 10px;
 }
 
 .startDay-container {
@@ -24,19 +27,21 @@
 .startDay {
     font-weight: bold;
     font-size: 12px;
+    font-family: 'Pretendard-Regular';
+    color: rgb(73, 73, 73);
     display: flex;
     margin-bottom: 5px;
 }
 
 .host-input-field {
-    width: 300px;
-    height: 30px;
-    padding: 20px;
+    width: 295px;
+    height: 40px;
+    padding: 12px 15px;
+    border: 1px solid rgba(188, 188, 188, 1);
     border-radius: 4px;
     font-size: 12px;
-    box-sizing: border-box;
-
-    /* 패딩과 보더 포함한 너비 계산 */
+    font-family: 'Pretendard-Regular';
+    color: rgb(73, 73, 73);
 }
 
 .host-input-field:focus {
@@ -55,18 +60,6 @@
     margin-bottom: 10px;
 }
 
-#host-signUp-wrapper {
-    display: flex;
-    align-items: center;
-    flex-direction: column;
-    width: 1920px;
-    height: 1250px;
-    background-color: #09cfcf;
-    position: relative;
-    z-index: 1;
-    /* 부모 요소의 z-index 설정 */
-}
-
 .host-input-box-signup {
     display: flex;
     flex-direction: column;
@@ -74,13 +67,12 @@
     max-width: 400px;
     max-height: 1150px;
     /* 높이를 조정하여 요소가 잘리지 않도록 */
-    padding: 30px;
+    padding: 40px;
     /* 패딩을 조정하여 여유 공간 추가 */
     background-color: white;
     border: 1px solid #ddd;
     border-radius: 10px;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-    box-sizing: border-box;
     justify-content: space-between;
     /* 위와 아래 사이의 공간을 자동 조정 */
     z-index: 10;
@@ -90,7 +82,7 @@
     height: 100px;
     flex-direction: column;
     padding: 20px 83px;
-    background-color: #00accf;
+    background-color: #fa919d;
     color: white;
     border: none;
     font-size: 16px;
@@ -105,6 +97,7 @@
     color: white;
     border: none;
     font-size: 16px;
+    font-family: 'Pretendard-Regular';
 }
 
 .HostLogin-button-guest:hover {
@@ -112,7 +105,7 @@
 }
 
 .host-inputBox {
-    margin-bottom: 10px;
+    margin-bottom: 13px;
     /* 간격을 조정 */
 }
 
@@ -121,9 +114,11 @@
     justify-content: center;
     align-items: center;
     font-size: 24px;
+    font-family: 'Pretendard-Regular';
+    color: rgb(73, 73, 73);
     font-weight: bold;
     margin-bottom: 20px;
-    margin-top: 20px;
+    margin-top: 5px;
 }
 
 .host-button-container2 {
@@ -152,6 +147,8 @@
 
 .host-agreeMessage {
     font-size: 12px;
+    font-family: 'Pretendard-Regular';
+    color: rgb(73, 73, 73);
     margin-bottom: 5px;
     /* 간격을 조정 */
 }
@@ -164,28 +161,34 @@
     border: none;
     border-radius: 4px;
     font-size: 16px;
+    font-family: 'Pretendard-Regular';
+    color: rgb(73, 73, 73);
     font-weight: bold;
 }
 
 .host-button-clear :enabled {
-    background-color: #029bb9;
+    background-color: #fa919d;
     cursor: pointer;
 }
 
-.host-alreay-signIn {
+.host-already-signIn {
     margin-bottom: 17px;
-    padding: 0px 0px 0px 17px;
+    padding: 0px 0px 0px 35px;
     display: flex;
     align-items: center;
-    gap: 15px;
+    gap: 20px;
 }
 
-.host-alreay {
+.host-already {
     font-size: 11px;
+    font-family: 'Pretendard-Regular';
+    color: rgb(73, 73, 73);
 }
 
 .host-mainPageGo {
     font-size: 9px;
+    font-family: 'Pretendard-Regular';
+    color: rgb(73, 73, 73);
     font-weight: bold;
     cursor: pointer;
     text-decoration: underline;

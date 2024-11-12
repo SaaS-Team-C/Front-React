@@ -35,10 +35,10 @@
   /* 텍스트가 남은 공간을 차지하도록 */
   font-size: 22px;
   /* 텍스트 크기 */
+  font-family: 'Pretendard-Regular';
+  color: rgb(92, 91, 91);
   font-weight: bold;
   /* 텍스트 굵기 */
-  color: #333;
-  /* 텍스트 색상 */
 }
 
 
@@ -78,6 +78,8 @@
 .left-top-title {
   display: flex;
   font-size: 16px;
+  font-family: 'Pretendard-Regular';
+  color: rgb(92, 91, 91);
   /* 제목 크기 */
   margin-bottom: 35px;
   /* 제목과 입력 필드 간격 */
@@ -105,6 +107,8 @@
 .name-title,
 .telNumber-title {
   font-size: 14px;
+  font-family: 'Pretendard-Regular';
+  color: rgb(92, 91, 91);
   margin-bottom: 7px;
 }
 
@@ -226,11 +230,12 @@
 
 .creditCard {
   font-size: 13px;
+  font-family: 'Pretendard-Regular';
+  color: rgb(92, 91, 91);
   background-color: #fff;
   font-weight: bold;
   border: 1.5px solid #ebebeb;
   border-radius: 8px;
-  color: #333;
   cursor: pointer;
   height: 40px;
   line-height: 37px;
@@ -272,6 +277,8 @@
 
 .right-top-title {
   font-size: 18px;
+  font-family: 'Pretendard-Regular';
+  color: rgb(92, 91, 91);
   font-weight: 600;
   margin-bottom: 4px;
 }
@@ -309,6 +316,8 @@
 
 .right-bottom-title {
   font-size: 18px;
+  font-family: 'Pretendard-Regular';
+  color: rgb(92, 91, 91);
   font-weight: 600;
   margin-bottom: 15px;
 }
@@ -333,16 +342,22 @@
 .room-price1,
 .room-price2 {
   font-size: 14px;
+  font-family: 'Pretendard-Regular';
+  color: rgb(92, 91, 91);
   font-weight: 500;
 }
 
 .room-price-input1 {
   font-size: 16px;
+  font-family: 'Pretendard-Regular';
+  color: rgb(92, 91, 91);
 
 }
 
 .room-price-input2 {
   font-size: 16px;
+  font-family: 'Pretendard-Regular';
+  color: rgb(92, 91, 91);
   font-weight: 600;
 }
 
@@ -382,8 +397,9 @@
   margin-bottom: 2px;
   margin-left: 10px;
   font-size: 15px;
+  font-family: 'Pretendard-Regular';
+  color: rgb(92, 91, 91);
   font-weight: bold;
-  color: #333;
 }
 
 .list-agree1,
@@ -393,7 +409,8 @@
   margin-top: 5px;
   margin-left: 10px;
   font-size: 13px;
-  color: #333;
+  font-family: 'Pretendard-Regular';
+  color: rgb(92, 91, 91);
 }
 
 .list-agree-button {
@@ -433,6 +450,7 @@
   text-align: center;
   padding: 15px;
   font-size: 16px;
+  font-family: 'Pretendard-Regular';
   font-weight: 600;
   border-radius: 10px;
   cursor: pointer;
