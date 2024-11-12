@@ -2,32 +2,43 @@ import "./style.css";
 import { useNavigate } from "react-router";
 import Topbar from "src/component/topbar";
 import HostMypageLayout from "src/layout/mypageHost";
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import PaginationFunction from "src/component/accomodation/pagination";
-import { MyAccommodation } from "src/apis/hostmypage/dto/response/MyAccommodation";
+
+import axios from "axios";
+
+// sample data
+// const accommodations: MyAccommodation[] = 
+
+// [
+//   {
+//     accommodationName: "제주산호호텔 서귀포점",
+//     accommodationMainImage: "https://via.placeholder.com/80",
+//     applyStatus: true,
+//     entryTime: "2024.12.25",
+//   },
+//   {
+//     accommodationName: "부산해운대호텔",
+//     accommodationMainImage: "https://via.placeholder.com/80",
+//     applyStatus: false,
+//     entryTime: "2024.12.20 (금)",
+//   },
+//   {
+//     accommodationName: "서울강남호텔",
+//     accommodationMainImage: "https://via.placeholder.com/80",
+//     applyStatus: false,
+//     entryTime: "2024.12.30 (화)",
+//   },
+
+// ];
 
 
-const accommodations: MyAccommodation[] = [
-  {
-    accommodationName: "제주산호호텔 서귀포점",
-    accommodationMainImage: "https://via.placeholder.com/80",
-    applyStatus: true,
-    entryTime: "2024.12.25",
-  },
-  {
-    accommodationName: "부산해운대호텔",
-    accommodationMainImage: "https://via.placeholder.com/80",
-    applyStatus: false,
-    entryTime: "2024.12.20 (금)",
-  },
-  {
-    accommodationName: "서울강남호텔",
-    accommodationMainImage: "https://via.placeholder.com/80",
-    applyStatus: false,
-    entryTime: "2024.12.30 (화)",
-  },
-
-];
+type MyAccommodation = {
+  accommodationName: string;
+  accommodationMainImage: string;
+  applyStatus: boolean;
+  entryTime: string;
+};
 
 const handleRegisterClick = () => {
   window.location.href = "http://localhost:3000/mypagehost/accommodations/register";
@@ -35,11 +46,40 @@ const handleRegisterClick = () => {
 
 const AccommodationManagementPage: React.FC = () => {
   const [selectedTab, setSelectedTab] = useState<string>("운영중");
+  const [accommodations, setAccommodations] = useState<MyAccommodation[]>([]);
+  const [loading, setLoading] = useState<boolean>(true);
+  const [error, setError] = useState<string | null>(null);
+
+  // effect : 백엔드 API에서 데이터 불러오기
+  useEffect(() => {
+    const fetchAccommodations = async () => {
+      try {
+        const response = await axios.get('http://localhost:4000/api/roomly/host/list/{hostId}'); // 실제 백엔드 URL로 변경 필요
+        setAccommodations(response.data); // 받아온 데이터를 상태에 저장
+      } catch (err) {
+        setError('숙소 정보를 불러오는 데 실패했습니다.');
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchAccommodations();
+  }, []);
+
 
   const filteredAccommodations = accommodations.filter(
     (accommodation) => 
       selectedTab === "운영중" ? accommodation.applyStatus : !accommodation.applyStatus
   );
+
+
+  if (loading) {
+    return <div>로딩 중...</div>;
+  }
+
+  if (error) {
+    return <div>{error}</div>;
+  }
 
   return (
     <div className="accommodation-management-page">
@@ -110,11 +150,11 @@ const AccommodationCard: React.FC<AccommodationCardProps> = ({ accommodation }) 
     <div id="accommodation-card" onClick={handleCardClick} style={{ cursor: "pointer" }}>
       <div className="card-date">{accommodation.entryTime}</div>
       <div className="card-content">
-        <img src={accommodation.accommodationMainImage} alt="Room" className="card-image" />
+        <img src={accommodation.accommodationMainImage} alt="Accommodation" className="card-image" />
         <div className="card-info">
           <div className="card-header">
             <span className="status-tag">
-              {accommodation.applyStatus ? "운영중" : "승인 대기중"}
+              {accommodation.applyStatus ? "운영중" : "등록 승인 대기중"}
             </span>
           </div>
           <h3 className="room-name">{accommodation.accommodationName}</h3>
