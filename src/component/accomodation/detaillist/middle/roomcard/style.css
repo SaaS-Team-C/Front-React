@@ -1,37 +1,113 @@
-.room-card {
-  display: flex;
-  justify-content: space-between;
-  border: 1px solid #ddd;
-  padding: 15px;
-  margin-bottom: 20px;
-  background-color: #fff;
+
+/* 객실 이미지 부분 */
+#room-card-image-container{
+  background-color: aqua;
 }
 
+
+.room-card-image {
+  position:relative;
+  width: 150px;
+  height: 120px;
+  object-fit: cover;
+  border-radius: 5px;
+
+
+}
 
 .room-card-image img {
-  width: 150px;
-  height: 100px;
+
+  width: 100%;
+  height: 100%;
   object-fit: cover;
+
 }
 
-.image-count {
+#room-card-image .image-icon-container{
   position: absolute;
-  top: 5px;
-  right: 5px;
+  width: 40px;
+  height: 20px;
+  border-radius: 5px;
+  display: flex;
+  gap: 3px;
+  
   background: rgba(0, 0, 0, 0.5);
   color: white;
-  padding: 3px 6px;
   font-size: 12px;
+
+  top: 5%;
+  left: 70%;
+
+
+  justify-content: center;
+  align-items: center;
+  
+}
+#room-card-image .image-icon {
+  background-image: url('/public/images/accommodationlist/Image.png');
+  background-repeat: no-repeat;
+  background-size: contain;
+  width: 17px;
+  height: 17px;
 }
 
-.room-card-info {
+#room-card-image .image-count {
+  border-radius: 5px;
+}
+
+
+/* 객실 카드 정보 부분 */
+#room-card-info {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
   flex-grow: 1;
-  padding-left: 20px;
+  padding: 20px;
+  gap: 20px;
 }
 
-.room-card-info h3 {
-  margin: 0;
+#room-card-info .room-name{
+  color: #52607C;
+  font-size: 20px;
 }
+
+#room-card-info .check-in-container,
+#room-card-info .check-out-container,
+#room-card-info .max-occupancy-container{
+  display:flex;
+  font-size: 18px;
+  color: #52607C;
+  gap: 20px;
+
+}
+
+#room-card-info .check-in-icon{
+  background-image: url('/public/images/accommodationlist/Relax.png');
+  background-size: contain;
+  background-repeat: no-repeat;
+
+  width: 30px;
+  height: 30px;
+}
+
+#room-card-info .check-out-icon{
+  background-image: url('/public/images/accommodationlist/Reception.png');
+  background-size: contain;
+  background-repeat: no-repeat;
+
+  width: 30px;
+  height: 30px;
+}
+
+#room-card-info .max-occupancy-icon{
+  background-image: url('/public/images/accommodationlist/Guardian.png');
+  background-size: contain;
+  background-repeat: no-repeat;
+
+  width: 30px;
+  height: 30px;
+}
+
 
 .room-card-info p {
   margin: 5px 0;

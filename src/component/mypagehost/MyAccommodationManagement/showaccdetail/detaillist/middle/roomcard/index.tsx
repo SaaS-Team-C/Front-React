@@ -3,7 +3,7 @@ import { useNavigate, useSearchParams } from 'react-router-dom';
 import './style.css';
 import Modal from 'react-modal';
 import AccommodationDetailTopImages from '../../top/imageslick';
-import { PAYMENT_PATH } from 'src/constants';
+
 import { RoomDTO } from 'src/apis/accommodation/dto/request/room.request.dto';
 import { useCookies } from 'react-cookie';
 
@@ -14,7 +14,7 @@ interface RoomCardProps {
 }
 
 // component: 객실 상세 정보 보여주는 카드 컴포넌트 //
-const RoomCard: React.FC<RoomCardProps> = ({ room, isFullyBooked }) => {
+const HostRoomCard: React.FC<RoomCardProps> = ({ room, isFullyBooked }) => {
 
   // state: 상태 함수 //
   const [isImageModalOpen, setIsImageModalOpen] = useState(false);
@@ -25,14 +25,7 @@ const RoomCard: React.FC<RoomCardProps> = ({ room, isFullyBooked }) => {
   // state: url 값 저장 //
   const [searchParams] = useSearchParams('');
 
-  // function: url 값 가져오기 //
-  const urlRegion = searchParams.get('Region')
-  const urlStart = searchParams.get('start')
-  const urlEnd = searchParams.get('end')
-  const urlCount = searchParams.get('count')
-  const urlName = searchParams.get('accommodationName')
-  const urlRoom = searchParams.get('roomName')
-  
+ 
 
   // function: 네비게이터 함수 //
   const navigator = useNavigate();
@@ -79,13 +72,10 @@ const RoomCard: React.FC<RoomCardProps> = ({ room, isFullyBooked }) => {
   //   }
   // };
 
-  const handleChangebooking = () => {
+  const handleRoomEdit = () => {
     
-      // 로그인 상태인 경우 예약 페이지로 이동
-      navigator(
-        `${PAYMENT_PATH}?Region=${urlRegion}&start=${urlStart}&end=${urlEnd}&count=${urlCount}&roomName=${urlRoom}&accommodationName=${urlName}`,
-        { state: { imageSrc: room.images[0], alert: room.roomName, price: room.roomPrice, checkInTime: urlStart, checkOutTime: urlEnd, personnelCount: urlCount, accommodationName: urlName, roomName: room.roomName } }
-      );
+        navigator('http://localhost:3000/mypagehost/accommodations/edit')
+    
     } 
 
 
@@ -101,7 +91,6 @@ const RoomCard: React.FC<RoomCardProps> = ({ room, isFullyBooked }) => {
         </div>
       ) : (
         <>
-        <div id='room-card-image-container'>
           <div id="room-card-image">
             <img
               src={room.images[0]} // 첫 번째 이미지만 표시
@@ -113,34 +102,21 @@ const RoomCard: React.FC<RoomCardProps> = ({ room, isFullyBooked }) => {
               <div className="image-count">{room.images.length}+</div>
             </div>
           </div>
-          </div>
-
           <div id="room-card-info">
             <div className='room-name'>{room.roomName}</div>
-
-            <div className='check-in-container'>
-            <div className='check-in-icon'></div>
-            <div className='check-in-time'>입실 {room.checkInTime} ~</div>
-            </div>
-
-            <div className='check-out-container'>
-            <div className='check-out-icon'></div>
-            <div className='check-out-time'>퇴실 {room.checkOutTime} ~</div>
-            </div>
-            
-            <div className='max-occupancy-container'>
-            <div className='max-occupancy-icon'></div>
-            <div className='max-occupancy'>최대 숙박 가능 인원: {room.maxOccupancy}명</div>
-            </div>
-
-
+            <p>입실 {room.checkInTime}</p>
+            <p>퇴실 {room.checkOutTime}</p>
+            <p>기준 {room.maxOccupancy}명</p>
           </div>
           <div className="room-card-action">
             <button className="detail-btn" onClick={handleOpenDetailModal}>
               상세 정보
             </button>
-            <button className="reserve-btn" onClick={handleChangebooking}>
-              숙박 예약
+            <button className="reserve-btn" onClick={handleRoomEdit}>
+              객실 수정
+            </button>
+            <button className="reserve-btn" >
+              객실 삭제
             </button>
             <p className="price">₩{room.roomPrice.toLocaleString()}원 /1박</p>
           </div>
@@ -178,4 +154,4 @@ const RoomCard: React.FC<RoomCardProps> = ({ room, isFullyBooked }) => {
   );
 };
 
-export default RoomCard;
+export default HostRoomCard;

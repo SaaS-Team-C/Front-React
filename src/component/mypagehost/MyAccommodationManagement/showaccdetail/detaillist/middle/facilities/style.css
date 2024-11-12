@@ -1,0 +1,51 @@
+.facilities-card {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  
+  .facility-item {
+    display: flex;
+    align-items: center;
+    font-size: 16px;
+  }
+  
+  /* 기본 아이콘 스타일 */
+  .facility-icon {
+    width: 20px;
+    height: 20px;
+    margin-right: 8px;
+    display: inline-block;
+    background-size: cover;
+    background-repeat: no-repeat;
+  }
+  
+  /* 개별 아이콘 이미지 설정 */
+  .dog-icon {
+    background-image: url("/public/images/accommodationlist/Dog.png");
+  }
+  
+  .smoke-free-icon {
+    background-image: url('/public/images/accommodationlist/Smoking.png');
+  }
+  
+  .spa-icon {
+    background-image: url("/public/images/accommodationlist/Spa.png");
+  }
+  
+  .bbq-icon {
+    background-image: url('/public/images/accommodationlist/Grill.png');
+  }
+  
+  .wifi-icon {
+    background-image: url('/public/images/accommodationlist/Wi-Fi.png');
+  }
+  
+  .parking-icon {
+    background-image: url('/public/images/accommodationlist/Parking.png');
+  }
+  
+  .pool-icon {
+    background-image: url('/public/images/accommodationlist/Lap Pool.png');
+  }
+  

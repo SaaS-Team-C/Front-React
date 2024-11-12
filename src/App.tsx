@@ -27,11 +27,14 @@ import FindId from './views/find';
 import HostMypageLayout from './layout/mypageHost';
 import { MyInfoManagement } from './component/mypagehost/ReservationStatus';
 import { ReservationStatus } from './component/mypagehost/myinfo';
-import { MyAccommodationManagement } from './component/mypagehost/MyAccommodationManagement';
+
 import GuestMypage from './views/mypageguest';
 import Accommodationenrollmentapproval from './views/admin/accommodationenrollmentapproval';
 import AccommodationList from './views/accommodation';
 import Roomly from './views/roomly';
+
+import MyAccommodationManagementView from './views/mypagehost/MyAccommodationManagement';
+import ShowDetailList from './component/mypagehost/MyAccommodationManagement/showaccdetail/detaillist';
 
 
 
@@ -106,9 +109,10 @@ export default function App() {
       {/* </Route> */}
 
 
-      <Route path='/mypagehost/accommodations' element={<MyAccommodationManagement/>}/>    
+      <Route path='/mypagehost/accommodations' element={<MyAccommodationManagementView/>}/>    
       <Route path='/mypagehost/accommodations/register' element={<HostAccommodationRegister/>}/>
       <Route path='/mypagehost/accommodations/edit' element={<HostAccommodationRegister/>}/>
+      <Route path='/mypagehost/accommodations/showDetailList' element={<ShowDetailList/>}/>
 
 
       <Route path='*' element={<Index />} />
