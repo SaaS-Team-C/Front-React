@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import './style.css';
-import RoomCard from '../roomcard';
 import { RoomDTO } from 'src/apis/accommodation/dto/request/room.request.dto';
 import { AccommodationDetailRequestDTO } from 'src/apis/accommodation/dto/request/accommodation-detail.request.dto';
+import HostRoomCard from '../roomcard';
 // import MapSection from '../navermap';
 
 interface RoomDetailProps {
@@ -37,7 +37,7 @@ const RoomList: React.FC<RoomDetailProps & AccommodationInfoProps> = ({ roomsDat
       <div className='room-list-title'>객실 선택</div>
       <div className="room-list">
         {roomsData.slice(0, visibleRooms).map((room, index) => (
-          <RoomCard key={index} room={room} isFullyBooked={false} />))}
+          <HostRoomCard key={index} room={room} isFullyBooked={false} />))}
         {!isAllRoomsVisible ? (
           <button className="show-more-btn" onClick={handleShowMore}>
             객실 모두 보기

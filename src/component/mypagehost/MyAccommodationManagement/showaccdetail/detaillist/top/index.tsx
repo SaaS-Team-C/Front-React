@@ -17,7 +17,7 @@ interface AccommodationImagesProps {
   initialImages: string[]; // 숙소 ID를 props로 전달
 }
 
-const AccommodationDetailTopImages: React.FC<AccommodationImagesProps> = ({
+const AccommodationHostDetailTopImages: React.FC<AccommodationImagesProps> = ({
   initialImages,
 }) => {
   // state: 상태 //
@@ -159,7 +159,7 @@ interface AccommodationDetailTopProps {
   onReviewButtonClick: () => void;
 }
 
-const AccommodationDetailTopCard: React.FC<AccommodationDetailTopProps> = ({
+const AccommodationHostDetailTopCard: React.FC<AccommodationDetailTopProps> = ({
   name,
   stars,
   price,
@@ -293,7 +293,7 @@ interface AccommodationDetail {
   accommodationType: string;
 }
 
-export default function AccommodationDetailTop({
+export default function AccommodationHostDetailTop({
   accommodation_name,
   onReviewButtonClick,
 }: {
@@ -368,10 +368,10 @@ export default function AccommodationDetailTop({
 
   return (
     <>
-      <AccommodationDetailTopImages
+      <AccommodationHostDetailTopImages
         initialImages={accommodationDetail.images}
       />
-      <AccommodationDetailTopCard
+      <AccommodationHostDetailTopCard
         name={accommodationDetail.name}
         stars={accommodationDetail.stars}
         price={accommodationDetail.price}
