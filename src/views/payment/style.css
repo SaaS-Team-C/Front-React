@@ -107,6 +107,7 @@
 .name-title,
 .telNumber-title {
   font-size: 14px;
+  font-weight: 500;
   font-family: 'Pretendard-Regular';
   color: rgb(92, 91, 91);
   margin-bottom: 7px;
@@ -149,7 +150,8 @@
 .left-bottom-title {
   display: flex;
   font-size: 16px;
-  /* 제목 크기 */
+  font-family: 'Pretendard-Regular';
+  color: rgb(92, 91, 91);
   margin-top: 55px;
   margin-bottom: 35px;
   /* 제목과 입력 필드 간격 */
@@ -300,11 +302,24 @@
   align-items: center;
 }
 
+.accommodationName,
 .roomType,
-.checkInOut {
-  font-size: 16px;
+.checkInOut,
+.personnel {
+  font-family: 'Pretendard-Regular';
+  color: rgb(61, 60, 60);
+  font-size: 17px;
   font-weight: 500;
+}
 
+.accommodation-input,
+.roomType-input,
+.checkInOut-input,
+.personnel-input {
+  font-family: 'Pretendard-Regular';
+  color: rgb(92, 91, 91);
+  font-size: 17px;
+  font-weight: 500;
 }
 
 .check {
@@ -390,9 +405,6 @@
   margin-top: 10px;
 }
 
-
-
-
 .total-agree {
   margin-bottom: 2px;
   margin-left: 10px;
@@ -445,7 +457,7 @@
 }
 
 .right-bottom-button {
-  background-color: #00accf;
+  background-color: #ff94a0;
   color: white;
   text-align: center;
   padding: 15px;
@@ -455,9 +467,8 @@
   border-radius: 10px;
   cursor: pointer;
   margin-top: 5px;
-  width: 310px;
 }
 
 .right-bottom-button:hover {
-  background-color: #029bb9;
+  background-color: #fc7e8d;
 }

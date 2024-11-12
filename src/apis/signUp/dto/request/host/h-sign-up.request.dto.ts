@@ -9,4 +9,5 @@ export default interface HostSignUpRequestDto {
     businessName: string;
     businessStartDay: Date | null;
     businessNumber: string;
+    businessImage: string;
 }
