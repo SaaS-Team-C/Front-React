@@ -1,18 +1,21 @@
-/* 부모 컨테이너: 너비 1200px로 제한하고 중앙 정렬 */
+
 #room-list-container {
   width: 100%;
   max-width: 1170px;
   margin: 0 auto;
   padding: 20px;
   box-sizing: border-box;
+
  
 }
 
 #room-list-container .room-list-title{
   color: #52607C;
-  font-size: 20px;
+  font-size: 22px;
   font-weight: 600;
-  margin-bottom: 20px;
+
+  padding: 50px 0px 20px 10px;
+
 }
 
 #room-list-container .room-list {
@@ -22,10 +25,26 @@
 
 }
 
+#accommodation-info-section{
+  background-color: palegreen;
+  display: flex;
+}
 
+#accommodation-info-section .accommodation-info {
+ 
+  background-color: #f9f9f9;
+  padding: 15px;
+  border-radius: 5px;
+  margin-top: 15px;
 
-.accommodation-info {
-  margin-top: 20px;
+}
+
+#accommodation-info-section .accommodation-info-introduction{
+
+  font-weight: 600;
+  font-size: 20px;
+
+  margin-bottom: 10px;
 }
 
 .toggle-info-btn {
@@ -49,49 +68,33 @@
   margin-bottom: 20px;
 }
 
-h3 {
-  font-size: 18px;
-  margin-bottom: 10px;
-}
-
 p {
   font-size: 16px;
   line-height: 1.5;
 }
 
-.show-accommodation-info-btn,
-.hide-accommodation-info-btn {
-  background-color: #007bff;
-  color: white;
-  border: none;
-  padding: 10px 20px;
-  margin: 10px 0;
-  cursor: pointer;
-  border-radius: 5px;
-}
-
-.accommodation-info {
-  background-color: #f9f9f9;
-  padding: 15px;
-  border-radius: 5px;
-  margin-top: 15px;
-}
-
-.accommodation-info h3 {
-  margin-top: 0;
-}
 
 .accommodation-info p {
   line-height: 1.6;
 }
+/* 객실 더보기 버튼 */
 
-.show-more-btn,
+#room-list-container .show-more-btn,
 .show-less-btn {
-  background-color: #28a745;
-  color: white;
-  border: none;
+  background-color: #ffff;
+  color: #52607C;
+  border: 1px solid #52607C;
   padding: 10px 20px;
   margin-top: 20px;
+  height: 50px;
   cursor: pointer;
   border-radius: 5px;
+}
+
+#room-list-container .show-more-btn:hover,
+.show-less-btn:hover {
+  cursor: pointer;
+  transition: transform 0.3s ease;
+
+  background-color: rgba(0, 189, 227, 0.4);
 }

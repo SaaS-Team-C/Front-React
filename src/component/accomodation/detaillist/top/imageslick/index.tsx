@@ -12,6 +12,8 @@ interface AccommodationImagesProps {
   onClose: () => void;
 }
 
+Modal.setAppElement('#root');
+
 
 const AccommodationDetailTopImages: React.FC<AccommodationImagesProps> = ({ images, initialIndex = 0, onClose }) => {
   const [currentImage, setCurrentImage] = useState(initialIndex);
@@ -35,6 +37,7 @@ const AccommodationDetailTopImages: React.FC<AccommodationImagesProps> = ({ imag
   };
 
   return (
+   
     <Modal
       isOpen={true}
       onRequestClose={onClose}
@@ -42,7 +45,7 @@ const AccommodationDetailTopImages: React.FC<AccommodationImagesProps> = ({ imag
       className="modal"
       overlayClassName="overlay"
     >
-      <button onClick={onClose}>Close</button>
+      <div className='room-detail-modal-close-btn' onClick={onClose}></div>
       <Slider {...sliderSettings} ref={sliderRef}>
         {images.map((image, index) => (
           <div key={index}>
@@ -51,7 +54,7 @@ const AccommodationDetailTopImages: React.FC<AccommodationImagesProps> = ({ imag
         ))}
       </Slider>
 
-      {/* Thumbnail navigation */}
+      {/* Thumbnail 네비게이션 */}
       <div className="thumbnail-row">
         {images.map((image, index) => (
           <img
