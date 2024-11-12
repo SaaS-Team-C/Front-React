@@ -53,7 +53,7 @@
     color: rgb(112 112 112 / var(--tw-text-opacity));
     font-size: 18px;
     font-weight: 700;
-    font-family: 'Arial', sans-serif;
+    font-family: 'Pretendard-Regular';
     margin-bottom: 20px;
     --tw-text-opacity: 1;
 }
@@ -84,6 +84,7 @@
 .bottom-footer3 {
     color: #999999;
     font-size: 14px;
+    font-family: 'Pretendard-Regular';
     font-weight: 600;
     margin: 5px 0;
 }
@@ -107,7 +108,7 @@
 
 /* 카카오 버튼 */
 .top-footer1-kakao {
-    font-family: 'Poppins', sans-serif; /* 폰트 설정 */
+    font-family: 'Pretendard-Regular';
     font-size: 14px; /* 폰트 크기 */
     font-weight: 600; /* 폰트 두께 */
     text-transform: uppercase; /* 대문자화 */
@@ -123,7 +124,7 @@
 }
 
 .top-footer1-faq {
-    font-family: 'Poppins', sans-serif; /* 폰트 설정 */
+    font-family: 'Pretendard-Regular';
     font-size: 14px; /* 폰트 크기 */
     font-weight: 600; /* 폰트 두께 */
     text-transform: uppercase; /* 대문자화 */

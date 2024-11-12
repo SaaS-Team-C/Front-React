@@ -210,10 +210,8 @@ export default function Main() {
             <Topbar />
             <div id="main-wrapper" >
                 <div className='main-detail' >
-                    <div className='main-image'>
-                        <img className='main-image-1' src={mainImages} alt="이제된다 ㅋㅋㅋ 개꿀" />
+                        <img className='main-image' src={mainImages} alt="이제된다 ㅋㅋㅋ 개꿀" />
                         <div className='main-image-text'> {imagetext} </div>
-                    </div>
                     <div className='main-search-bar'>
                         <div className='destination'>
                             <div className='word'>where to?</div>

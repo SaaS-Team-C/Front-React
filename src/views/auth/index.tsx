@@ -18,11 +18,9 @@ import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import { ko } from 'date-fns/locale'; // 한국어 지원
 import BusinessNumberCheckRequestDto from 'src/apis/signUp/dto/request/host/h-business-number-check.request.dto';
-import Login from 'src/component/input/login';
-import { MAIN_PATH } from 'src/constants';
 
 type AuthPath = '회원가입' | '로그인';
-type CurrentView = 'host' | 'guest' ;
+type CurrentView = 'host' | 'guest';
 
 interface SnsContainnerProps {
   type: AuthPath;
@@ -423,7 +421,7 @@ export default function SignUp() {
     if (!authNumber) return;
 
     const requestBody: TelAuthCheckRequestDto = {
-      guestTelNumber: telNumber, 
+      guestTelNumber: telNumber,
       guestAuthNumber: authNumber
     }
     telAuthCheckRequest(requestBody).then(telAuthCheckResponse);
@@ -481,7 +479,7 @@ export default function SignUp() {
 
     guestSignUpRequest(requestBody).then(guestSignUpResponse);
     navigator('/main')
-    
+
   };
 
   // Host 회원가입 버튼 클릭 이벤트 처리 //
@@ -536,8 +534,11 @@ export default function SignUp() {
     setCheckedPassword(isEqual);
   }, [hostPassword, hostPasswordCheck]);
 
+  const InputComponent = currentView === 'guest' ? InputBox : InputBox2;
 
   // render: 회원가입 화면 컴포넌트 렌더링 //
+
+
   return (
     <div id={`${currentView}-signUp-wrapper`}>
       <div style={{ paddingTop: '50px' }}>
@@ -560,7 +561,7 @@ export default function SignUp() {
             <div className={`${currentView}-title`}>Sign up</div>
             <div className={`${currentView}-input-container3`}>
               {/* 이름 */}
-              <InputBox
+              <InputComponent
                 messageError={nameMessageError}
                 message={nameMessage}
                 value={currentView === 'guest' ? guestName : hostName}
@@ -570,7 +571,7 @@ export default function SignUp() {
                 onChange={onNameChangeHandler}
               />
               {/* 아이디 */}
-              <InputBox
+              <InputComponent
                 messageError={idMessageError}
                 message={idMessage}
                 value={currentView === 'guest' ? guestId : hostId}
@@ -582,7 +583,7 @@ export default function SignUp() {
                 onButtonClick={currentView === 'guest' ? onGuestIdCheckClickHandler : onHostIdCheckClickHandler}
               />
               {/* 비밀번호 */}
-              <InputBox
+              <InputComponent
                 messageError={passwordMessageError}
                 message={passwordMessage}
                 value={currentView === 'guest' ? guestPassword : hostPassword}
@@ -592,7 +593,7 @@ export default function SignUp() {
                 onChange={onPasswordChangeHandler}
               />
               {/* 비밀번호 확인 */}
-              <InputBox
+              <InputComponent
                 messageError={passwordCheckMessageError}
                 message={passwordCheckMessage}
                 value={currentView === 'guest' ? guestPasswordCheck : hostPasswordCheck}
@@ -602,7 +603,7 @@ export default function SignUp() {
                 onChange={onPasswordCheckChangeHandler}
               />
               {/* 전화번호 */}
-              <InputBox
+              <InputComponent
                 messageError={telNumberMessageError}
                 message={telNumberMessage}
                 value={telNumber}
@@ -614,7 +615,7 @@ export default function SignUp() {
                 onButtonClick={onTelNumberSendClickHandler}
               />
               {/* 인증번호 */}
-              <InputBox
+              <InputComponent
                 messageError={authNumberMessageError}
                 message={authNumberMessage}
                 value={authNumber}
@@ -628,7 +629,7 @@ export default function SignUp() {
               {/* 사업자 등록 (호스트만) */}
               {currentView === 'host' && (
                 <>
-                  <InputBox
+                  <InputComponent
                     messageError={businessNameCheckMessageError}
                     message={businessNameCheckMessage}
                     value={businessName}
@@ -637,7 +638,7 @@ export default function SignUp() {
                     placeholder="사업자 등록이름을 입력해주세요."
                     onChange={onBusinessNameChangeHandler}
                   />
-                  <InputBox
+                  <InputComponent
                     messageError={businessNumberCheckMessageError}
                     message={businessNumberCheckMessage}
                     value={businessNumber}
@@ -648,7 +649,7 @@ export default function SignUp() {
                     onChange={onBusinessNumberChangeHandler}
                     onButtonClick={onBusinessNumberCheckClickHandler}
                   />
-                  <div id='business-wrapper'>
+                  <div id="business-wrapper">
                     <div className="startDay-container">
                       <div className="startDay">개업일[선택]</div>
                       <DatePicker
@@ -656,7 +657,7 @@ export default function SignUp() {
                         onChange={onBusinessStartDayChangeHandler}
                         dateFormat="yyyy-MM-dd"
                         locale={ko}
-                        placeholderText="개업일자 선택"
+                        placeholderText="개업일자 선택(클릭)"
                         isClearable
                         className="host-input-field"
                       />
@@ -667,37 +668,36 @@ export default function SignUp() {
                   </div>
                 </>
               )}
-
             </div>
           </div>
           <div className={`${currentView}-button-container2`}>
             <div className={`${currentView}-agree`}>
               <input
                 className={`${currentView}-agreeButton`}
-                type='checkbox'
+                type="checkbox"
                 checked={isAgreed}
                 onChange={onAgreeButtonClickHandler}
               />
               <div className={`${currentView}-agreeMessage`}>개인정보 수집 및 이용약관에 동의합니다.</div>
             </div>
             <button
-              className={`${currentView}-button-clear-${guestIsButtonEnabled ? 'active' : 'disable'}` }
+              className={`${currentView}-button-clear-${guestIsButtonEnabled ? 'active' : 'disable'}`}
               onClick={currentView === 'guest' ? onGuestSignUpButtonHandler : onHostSignUpButtonHandler}
             >
               회원가입
             </button>
           </div>
           {/* 이미 Roomly 회원이신가요? 및 로그인 버튼 */}
-          <div className={`${currentView}-alreay-signIn`}>
-            <div className={`${currentView}-alreay`}>이미 Roomly 회원이신가요?</div>
+          <div className={`${currentView}-already-signIn`}>
+            <div className={`${currentView}-already`}>이미 Roomly 회원이신가요?</div>
             <div className={`${currentView}-mainPageGo`} onClick={onMainPageGoClickHandler}>
               메인페이지에서 로그인하기
             </div>
           </div>
-          {currentView === 'guest' && !isSnsSignUp && <SnsContainer type='회원가입' />}
+          {currentView === 'guest' && !isSnsSignUp && <SnsContainer type="회원가입" />}
         </div>
       </div>
     </div>
   );
-  
+
 };

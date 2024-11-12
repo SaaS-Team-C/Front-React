@@ -1,19 +1,20 @@
 
 #host-logUp-wrapper {
     margin-bottom: 8px;
+    margin-left: 8.5px;
 }
 
 .host-input-container2 {
     flex-direction: column;
     gap: 10px;
-    padding: 5px 18px;
+    padding: 5px 3px;
 
     border-radius: 8px;
     background-color: white;
     width: 100%;
     max-width: 300px; /* 최대 너비를 설정하여 페이지 전체를 차지하지 않게 */
-
 }
+
 .host-input-container2 input {
 
     width: 150%;
@@ -22,7 +23,8 @@
     border: 1px solid rgba(188, 188, 188, 1);
     border-radius: 4px;
     font-size: 12px;
-    box-sizing: border-box;
+    font-family: 'Pretendard-Regular';
+    color: rgb(73, 73, 73);
 }
 
 .host-input-container2 input:focus {
@@ -35,6 +37,8 @@
 .host-input-container2 label {
     font-weight: bold;
     font-size: 12px;
+    font-family: 'Pretendard-Regular';
+    color: rgb(73, 73, 73);
     display: flex;
     margin-bottom: 5px;
 }
@@ -42,19 +46,21 @@
 .host-input-container2 .message {
     color: var(--error-color);
     font-size: 11px;
+    font-family: 'Pretendard-Regular';
     margin-top: 4px;
 }
 
 .host-input-container2 button {
 
     height: 40px;
-    padding: 10px 20 px;
-    background-color: #00ACCF;
+    padding: 10px 20px;
+    background-color: #fa919d;
     color: white;
     border: none;
     border-radius: 4px;
     cursor: pointer;
     font-size: 12px;
+    font-family: 'Pretendard-Regular';
     font-weight: bold;
 }
 
@@ -67,7 +73,7 @@
 .host-input-with-button {
     display: flex;
     align-items: center;
-    gap: 12px;
+    gap: 8px;
     /* 입력 필드와 버튼 사이 간격 */
 }
 
