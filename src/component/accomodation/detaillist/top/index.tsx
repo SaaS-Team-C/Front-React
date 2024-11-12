@@ -265,7 +265,7 @@ const AccommodationDetailTopCard: React.FC<AccommodationDetailTopProps> = ({
 
         <div className="location-section">
           <div className="heder-title">위치 정보</div>
-          <p>{location}</p>
+          <div className="accommodation-address">{location}</div>
           <a href={mapLink}>지도보기</a>
         </div>
       </div>
