@@ -1,79 +1,87 @@
 import "./style.css";
-import { To, useLocation, useNavigate } from "react-router";
+import { useNavigate } from "react-router";
 import Topbar from "src/component/topbar";
 import HostMypageLayout from "src/layout/mypageHost";
+import React, { useEffect, useState } from 'react';
+import PaginationFunction from "src/component/accomodation/pagination";
+
+import axios from "axios";
+
+// sample data
+// const accommodations: MyAccommodation[] = 
+
+// [
+//   {
+//     accommodationName: "제주산호호텔 서귀포점",
+//     accommodationMainImage: "https://via.placeholder.com/80",
+//     applyStatus: true,
+//     entryTime: "2024.12.25",
+//   },
+//   {
+//     accommodationName: "부산해운대호텔",
+//     accommodationMainImage: "https://via.placeholder.com/80",
+//     applyStatus: false,
+//     entryTime: "2024.12.20 (금)",
+//   },
+//   {
+//     accommodationName: "서울강남호텔",
+//     accommodationMainImage: "https://via.placeholder.com/80",
+//     applyStatus: false,
+//     entryTime: "2024.12.30 (화)",
+//   },
+
+// ];
 
 
-// AccommodationManagementPage.tsx
-import React, { useState } from 'react';
-import './style.css';
-import PaginationFuction from "src/component/accomodation/pagination";
-
-type Accommodation = {
-  id: string;
-  name: string;
-  type: string; // e.g., "운영중", "등록 승인 대기중", "삭제 승인 대기중"
-  roomType: string;
-  guestName: string;
-  phoneNumber: string;
-  numberOfGuests: number;
-  date: string;
-  price: number;
+type MyAccommodation = {
+  accommodationName: string;
+  accommodationMainImage: string;
+  applyStatus: boolean;
+  entryTime: string;
 };
-
-// Sample accommodations data
-const accommodations: Accommodation[] = [
-  {
-    id: "#DC-0185-79-568787",
-    name: "제주산호호텔 서귀포점",
-    type: "운영중",
-    roomType: "DELUXE | Double Room",
-    guestName: "이순신",
-    phoneNumber: "010-1212-3434",
-    numberOfGuests: 4,
-    date: "2024.12.25 (수)",
-    price: 280000,
-  },
-  {
-    id: "#DC-0190-88-123456",
-    name: "부산해운대호텔",
-    type: "등록 승인 대기중",
-    roomType: "STANDARD | Single Room",
-    guestName: "김유신",
-    phoneNumber: "010-1111-2222",
-    numberOfGuests: 2,
-    date: "2024.12.20 (금)",
-    price: 150000,
-  },
-  {
-    id: "#DC-0200-45-987654",
-    name: "서울강남호텔",
-    type: "삭제 승인 대기중",
-    roomType: "SUITE | Triple Room",
-    guestName: "박명수",
-    phoneNumber: "010-3333-4444",
-    numberOfGuests: 3,
-    date: "2024.12.30 (화)",
-    price: 350000,
-  },
-  // Add more sample data as needed
-];
-
 
 const handleRegisterClick = () => {
-  window.location.href =
-    "http://localhost:3000/mypagehost/accommodations/register";
+  window.location.href = "http://localhost:3000/mypagehost/accommodations/register";
 };
-
 
 const AccommodationManagementPage: React.FC = () => {
   const [selectedTab, setSelectedTab] = useState<string>("운영중");
+  const [accommodations, setAccommodations] = useState<MyAccommodation[]>([]);
+  const [loading, setLoading] = useState<boolean>(true);
+  const [error, setError] = useState<string | null>(null);
+
+  // effect : 백엔드 API에서 데이터 불러오기
+  useEffect(() => {
+    const fetchAccommodations = async () => {
+      try {
+        const response = await axios.get('http://localhost:4000/api/roomly/host/list/{hostId}'); // 실제 백엔드 URL로 변경 필요
+        setAccommodations(response.data); // 받아온 데이터를 상태에 저장
+      } catch (err) {
+        setError('숙소 정보를 불러오는 데 실패했습니다.');
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchAccommodations();
+  }, []);
+
 
   const filteredAccommodations = accommodations.filter(
-    (accommodation) => accommodation.type === selectedTab
+    (accommodation) => 
+      selectedTab === "운영중" ? accommodation.applyStatus : !accommodation.applyStatus
   );
 
-   return (
+
+  if (loading) {
+    return <div>로딩 중...</div>;
+  }
+
+  if (error) {
+    return <div>{error}</div>;
+  }
+
+  return (
     <div className="accommodation-management-page">
       <h2 className="page-title">내 숙소 정보 관리</h2>
       <p className="page-subtitle">• 호스트님의 숙소 현황을 확인해보세요!</p>
@@ -101,91 +109,91 @@ const AccommodationManagementPage: React.FC = () => {
         </button>
       </div>
       <div className="accommodation-list">
-        {filteredAccommodations.map((accommodation) => (
-          <AccommodationCard key={accommodation.id} accommodation={accommodation} />
+        {filteredAccommodations.map((accommodation, index) => (
+          <AccommodationCard key={index} accommodation={accommodation} />
         ))}
       </div>
-      <PaginationFuction totalItems={100} itemsPerPage={10} currentPage={1} onPageChange={function (page: number): void {
-          throw new Error("Function not implemented.");
-        } }/>
+      <PaginationFunction
+        totalItems={100}
+        itemsPerPage={10}
+        currentPage={1}
+        onPageChange={(page: number) => {
+          // 페이지 변경 로직 추가
+        }}
+      />
     </div>
-    
   );
 };
 
 type AccommodationCardProps = {
-  accommodation: Accommodation;
+  accommodation: MyAccommodation;
 };
-
 
 const AccommodationCard: React.FC<AccommodationCardProps> = ({ accommodation }) => {
   const navigate = useNavigate();
 
-  // 수정 버튼 클릭 핸들러 (숙소 수정 페이지로 이동)
-  const handleEdit = (id: string) => {
-    navigate(`/mypagehost/accommodations/edit/${id}`);
-  }
+  const handleCardClick = () => {
+    navigate("/mypagehost/accommodations/showDetailList");
+  };
 
-  // 삭제 버튼 클릭 핸들러 
-  const handleDelete = (id: string) => {
+  const handleEdit = (name: string) => {
+    navigate(`/mypagehost/accommodations/edit/${name}`);
+  };
+
+  const handleDelete = (name: string) => {
     if (window.confirm("정말로 이 숙소를 삭제하시겠습니까?")) {
-      // (삭제 api 작성)
-      console.log(`숙소 ${id} 삭제`);
-      // 삭제 후 상태 업데이트 로직 필요 (filteredAccommodations에서 해당 숙소 제거 하는 로직)
+      console.log(`숙소 ${name} 삭제`);
     }
-  }
-  
+  };
+
   return (
-    <div id="accommodation-card">
-      <div className="card-date">{accommodation.date}</div>
+    <div id="accommodation-card" onClick={handleCardClick} style={{ cursor: "pointer" }}>
+      <div className="card-date">{accommodation.entryTime}</div>
       <div className="card-content">
-        <img src="https://via.placeholder.com/80" alt="Room" className="card-image" />
+        <img src={accommodation.accommodationMainImage} alt="Accommodation" className="card-image" />
         <div className="card-info">
           <div className="card-header">
-            <span className="status-tag">{accommodation.type}</span>
-            <span className="room-id">{accommodation.id}</span>
+            <span className="status-tag">
+              {accommodation.applyStatus ? "운영중" : "등록 승인 대기중"}
+            </span>
           </div>
-          <h3 className="room-name">{accommodation.name}</h3>
-          <p className="room-type">{accommodation.roomType}</p>
-          <p className="guest-name">{accommodation.guestName}</p>
-          <p className="phone-number">{accommodation.phoneNumber}</p>
-          <p className="number-of-guests">• 숙박 인원: {accommodation.numberOfGuests}명</p>
+          <h3 className="room-name">{accommodation.accommodationName}</h3>
         </div>
-        <div className="card-price">
-          {accommodation.price.toLocaleString()}원
+        <div className="card-actions">
+          <button
+            className="edit-button"
+            onClick={(e) => {
+              e.stopPropagation();
+              handleEdit(accommodation.accommodationName);
+            }}
+          >
+            수정
+          </button>
+          <button
+            className="delete-button"
+            onClick={(e) => {
+              e.stopPropagation();
+              handleDelete(accommodation.accommodationName);
+            }}
+          >
+            삭제
+          </button>
         </div>
-      </div>
-
-      <div className="card-actions">
-        <button className="edit-button" onClick={() => handleEdit(accommodation.id)}>
-          수정
-        </button>
-        <button className="delete-button" onClick={() => handleDelete(accommodation.id)}>
-          삭제
-        </button>
       </div>
     </div>
-    
   );
 };
 
-
 export function MyAccommodationManagement() {
- 
-  // render: 내용물 rendering 부분 //
   return (
     <>
-        <Topbar/>
-        <div className="test">
+      <Topbar />
+      <div className="test">
         <HostMypageLayout />
         <div id="host-accommodation-register-wrapper">
-        <AccommodationManagementPage/>
+          <AccommodationManagementPage />
         </div>
-        <div className="pagination">
-
-        </div>
-        </div>
+      </div>
     </>
   );
 }
-
