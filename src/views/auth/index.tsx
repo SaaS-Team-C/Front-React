@@ -79,6 +79,9 @@ export default function SignUp() {
   const [businessNumber, setBusinessNumber] = useState<string>('');
   const [businessStartDay, setBusinessStartDay] = useState<Date | null>(null);
 
+  const [businessImage, setBusinessImage] = useState<string>('');
+
+
 
   // state: 입력값 검증 상태 //
   const [isCheckedId, setCheckedId] = useState<boolean>(false);
@@ -152,6 +155,7 @@ export default function SignUp() {
       hostPasswordCheck !== '' &&
       businessName !== '' &&
       businessNumber !== '' &&
+      businessImage !== '' &&
       telNumber !== '' &&
       authNumber !== '' &&
       isAgreed &&  // 동의 여부
@@ -159,7 +163,7 @@ export default function SignUp() {
       isCheckedId;  // 아이디 중복 체크 여부
 
     setHostIsButtonEnabled(hostAllFieldsFilled);
-  }, [isSend, isCheckedId, hostName, hostId, hostPassword, hostPasswordCheck, businessName, businessNumber, businessStartDay, telNumber, authNumber, isAgreed]);
+  }, [isSend, isCheckedId, hostName, hostId, hostPassword, hostPasswordCheck, businessName, businessNumber, businessStartDay, businessImage, telNumber, authNumber, isAgreed]);
 
 
 
@@ -256,8 +260,9 @@ export default function SignUp() {
     const message =
       !responseBody ? '서버에 문제가 있습니다.' :
         responseBody.code === 'VF' ? '올바른 데이터가 아닙니다.' :
-          responseBody.code === 'NB' ? '사업자번호 인증에 실패했습니다.' :
-            responseBody.code === 'DBE' ? '서버에 문제가 있습니다.' : '';
+          responseBody.code === 'DI' ? '중복된 사업자등록번호입니다.' :
+            responseBody.code === 'NB' ? '사업자번호 인증에 실패했습니다.' :
+              responseBody.code === 'DBE' ? '서버에 문제가 있습니다.' : '';
 
     const isSuccessed = responseBody !== null && responseBody.code === 'SU';
     if (!isSuccessed) {
@@ -373,7 +378,6 @@ export default function SignUp() {
       setBusinessNumberCheckMessageError(true);
     } else {
       // 10자 숫자 형식이 맞으면 에러 메시지 초기화
-      setBusinessNumberCheckMessage('유효한 사업자 번호입니다.');
       setBusinessNumberCheckMessageError(false);
 
       const requestBody: BusinessNumberCheckRequestDto = {
@@ -464,17 +468,17 @@ export default function SignUp() {
     setAuthNumberMessage('');
   };
 
-  // Guest 회원가입 버튼 클릭 이벤트 처리 //
+  // event handler: Guest 회원가입 버튼 클릭 이벤트 처리 //
   const onGuestSignUpButtonHandler = () => {
     if (!guestIsButtonEnabled) return;
 
-    const requestBody: GuestSignUpRequestDto = {
-      name: guestName, // guestName 변수를 사용
-      guestId: guestId, // guestId 변수를 사용
-      password: guestPassword, // guestPassword 변수를 사용
-      snsId: snsId, // guestSnsId 변수를 사용
-      guestTelNumber: telNumber,
-      authNumber: authNumber
+      const requestBody: GuestSignUpRequestDto = {
+        name: guestName, // guestName 변수를 사용
+        guestId: guestId, // guestId 변수를 사용
+        password: guestPassword, // guestPassword 변수를 사용
+        snsId: snsId, // guestSnsId 변수를 사용
+        guestTelNumber: telNumber,
+        authNumber: authNumber
     };
 
     guestSignUpRequest(requestBody).then(guestSignUpResponse);
@@ -494,7 +498,8 @@ export default function SignUp() {
       authNumber: authNumber,
       businessName: businessName,
       businessStartDay: businessStartDay,
-      businessNumber: businessNumber
+      businessNumber: businessNumber,
+      businessImage: businessImage
     };
 
     hostSignUpRequest(requestBody).then(hostSignUpResponse);
@@ -651,16 +656,19 @@ export default function SignUp() {
                   />
                   <div id="business-wrapper">
                     <div className="startDay-container">
-                      <div className="startDay">개업일[선택]</div>
-                      <DatePicker
-                        selected={businessStartDay}
-                        onChange={onBusinessStartDayChangeHandler}
-                        dateFormat="yyyy-MM-dd"
-                        locale={ko}
-                        placeholderText="개업일자 선택(클릭)"
-                        isClearable
-                        className="host-input-field"
-                      />
+                      <div>
+                        <div className="startDay">개업일[선택]</div>
+                        <DatePicker
+                          selected={businessStartDay}
+                          onChange={onBusinessStartDayChangeHandler}
+                          dateFormat="yyyy-MM-dd"
+                          locale={ko}
+                          placeholderText="개업일자 선택(클릭)"
+                          isClearable
+                          className="host-input-field"
+                        />
+                        <div className="startDay-button" ></div>
+                      </div>
                       {businessStartDayCheckMessageError && (
                         <div className="error-message">{businessStartDayCheckMessage}</div>
                       )}

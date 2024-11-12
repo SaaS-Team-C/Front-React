@@ -361,7 +361,7 @@ export default function Payment({ onPathChange }: PaymentComponentProps) {
 
                             <div className='right-top-container3'>
                                 <div className='checkInOut'>일정</div>
-                                <div className='checkinInOut-input'>
+                                <div className='checkInOut-input'>
                                     {checkInTime ? <div>체크인: {checkInTime} ~</div> : <div>체크인 정보가 없습니다.</div>}
                                     {checkOutTime ? <div>체크아웃: {checkOutTime}</div> : <div>체크아웃 정보가 없습니다.</div>}
                                 </div>
