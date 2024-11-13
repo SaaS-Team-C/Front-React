@@ -111,7 +111,7 @@ const AccommodationDetailTopImages: React.FC<AccommodationImagesProps> = ({
         className="modal"
         overlayClassName="overlay"
       >
-        <button onClick={closeModal}>Close</button>
+        <button className='room-detail-modal-close-btn' onClick={closeModal}></button>
         <Slider {...sliderSettings} ref={sliderRef}>
           {images.map((image, index) => (
             <div key={index}>

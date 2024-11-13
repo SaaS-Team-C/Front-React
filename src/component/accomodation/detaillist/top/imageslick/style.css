@@ -50,16 +50,34 @@
 }
 
 .room-detail-modal-close-btn{
-  background-color: none !important;
-  border: none !important;
-  background-image: url(/public/images/accommodationlist/Multiply.png) !important;
-  background-repeat: no-repeat !important;
-  background-size: contain !important;
+  background: none;
+  border: none;
+  background-image: url(/public/images/accommodationlist/Multiply.png);
+  background-repeat: no-repeat;
+  background-size: contain;
   width: 30px;
   height: 30px;
   cursor: pointer;
-  background-color: aqua !important;
+ 
 }
+
+.slick-prev:before, .slick-next:before {
+    font-family: 'slick';
+    font-size: 40px;
+    line-height: 1;
+    opacity: .75;
+    color:black;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    z-index: 80;
+}
+
+.slick-prev:before{
+  position: absolute;
+  left: 0px;
+ /* margin-right: 100px; */
+}
+
 
 /* .thumbnail-image.active {
   border: 2px solid #007bff;
