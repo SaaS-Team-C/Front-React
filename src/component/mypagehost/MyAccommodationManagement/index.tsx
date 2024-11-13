@@ -7,32 +7,6 @@ import PaginationFunction from "src/component/accomodation/pagination";
 
 import axios from "axios";
 
-// sample data
-// const accommodations: MyAccommodation[] = 
-
-// [
-//   {
-//     accommodationName: "제주산호호텔 서귀포점",
-//     accommodationMainImage: "https://via.placeholder.com/80",
-//     applyStatus: true,
-//     entryTime: "2024.12.25",
-//   },
-//   {
-//     accommodationName: "부산해운대호텔",
-//     accommodationMainImage: "https://via.placeholder.com/80",
-//     applyStatus: false,
-//     entryTime: "2024.12.20 (금)",
-//   },
-//   {
-//     accommodationName: "서울강남호텔",
-//     accommodationMainImage: "https://via.placeholder.com/80",
-//     applyStatus: false,
-//     entryTime: "2024.12.30 (화)",
-//   },
-
-// ];
-
-
 type MyAccommodation = {
   accommodationName: string;
   accommodationMainImage: string;
