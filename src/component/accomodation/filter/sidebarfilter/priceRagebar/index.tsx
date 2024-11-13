@@ -1,23 +1,26 @@
-import React, { useState } from 'react';
+import React from 'react';
 import "./style.css";
 
-const RangeSlider: React.FC = () => {
-  // 슬라이더의 최소값, 최대값, 초기값 설정
-  const [minValue, setMinValue] = useState<number>(2000000);
-  const [maxValue, setMaxValue] = useState<number>(3000000);
+interface RangeSliderProps {
+  value: [number, number];
+  onChange: (range: [number, number]) => void;
+}
 
-  // 슬라이더 값이 바뀔 때마다 색상이 변화하도록 처리
+const RangeSlider: React.FC<RangeSliderProps> = ({ value, onChange }) => {
+  const [minValue, maxValue] = value;
+
   const handleMinChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setMinValue(Number(e.target.value));
+    const newMinValue = Number(e.target.value);
+    onChange([newMinValue, maxValue]);
   };
 
   const handleMaxChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setMaxValue(Number(e.target.value));
+    const newMaxValue = Number(e.target.value);
+    onChange([minValue, newMaxValue]);
   };
 
-  // 슬라이더 트랙의 배경색을 계산
   const getMinTrackBackground = () => {
-    const minTrackPercentage = ((minValue - 0) / (5000000 - 0)) * 100; // 0 ~ 5000000 범위 기준으로 비율 계산
+    const minTrackPercentage = ((minValue - 0) / (5000000 - 0)) * 100;
     return `linear-gradient(to right, #00ACCF ${minTrackPercentage}%, #FF5733 ${minTrackPercentage}%)`;
   };
 
@@ -28,7 +31,6 @@ const RangeSlider: React.FC = () => {
 
   return (
     <div className="range-container" style={{ display: 'flex', width: '200px' }}>
-      {/* 왼쪽 슬라이더 */}
       <input
         className="range-bar-left"
         type="range"
@@ -36,7 +38,7 @@ const RangeSlider: React.FC = () => {
         max={5000000}
         step={10000}
         value={minValue}
-        onInput={handleMinChange}
+        onChange={handleMinChange}
         style={{
           width: '90px',
           height: '10px',
@@ -44,10 +46,9 @@ const RangeSlider: React.FC = () => {
           boxSizing: 'border-box',
           borderTopLeftRadius: '10px',
           borderBottomLeftRadius: '10px',
-          background: getMinTrackBackground(), // 배경색을 상태에 따라 설정
+          background: getMinTrackBackground(),
         }}
       />
-      {/* 오른쪽 슬라이더 */}
       <input
         className="range-bar-right"
         type="range"
@@ -55,7 +56,7 @@ const RangeSlider: React.FC = () => {
         max={5000000}
         step={10000}
         value={maxValue}
-        onInput={handleMaxChange}
+        onChange={handleMaxChange}
         style={{
           width: '90px',
           height: '10px',
@@ -63,7 +64,7 @@ const RangeSlider: React.FC = () => {
           borderTopRightRadius: '10px',
           borderBottomRightRadius: '10px',
           marginLeft: '-2px',
-          background: getMaxTrackBackground(), // 배경색을 상태에 따라 설정
+          background: getMaxTrackBackground(),
         }}
       />
     </div>
