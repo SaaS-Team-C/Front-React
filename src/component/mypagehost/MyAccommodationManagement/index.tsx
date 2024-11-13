@@ -54,7 +54,8 @@ const AccommodationManagementPage: React.FC = () => {
   useEffect(() => {
     const fetchAccommodations = async () => {
       try {
-        const response = await axios.get('http://localhost:4000/api/roomly/host/list/{hostId}'); // 실제 백엔드 URL로 변경 필요
+        const hostId = "qwer1234";
+        const response = await axios.get(`http://localhost:4000/api/roomly/host/list/${hostId}`); // 실제 백엔드 URL로 변경 필요
         setAccommodations(response.data); // 받아온 데이터를 상태에 저장
       } catch (err) {
         setError('숙소 정보를 불러오는 데 실패했습니다.');

@@ -6,6 +6,7 @@
     height: 1250px;
     background-color: #f1ecef7c;
     position: relative;
+    box-sizing: border-box;
 }
 
 #business-wrapper {
@@ -34,8 +35,7 @@
 }
 
 .host-input-field {
-    width: 295px;
-    height: 40px;
+    width: 270px;
     padding: 12px 15px;
     border: 1px solid rgba(188, 188, 188, 1);
     border-radius: 4px;
@@ -63,7 +63,6 @@
 .host-input-box-signup {
     display: flex;
     flex-direction: column;
-    width: 100%;
     max-width: 400px;
     max-height: 1150px;
     /* 높이를 조정하여 요소가 잘리지 않도록 */

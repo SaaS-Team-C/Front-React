@@ -4,6 +4,7 @@ import AccommodationDetailTop from './top';
 import AccommodationDetailMiddle from './middle';
 import Topbar from 'src/component/topbar';
 import ReviewList from './bottom';
+import Bottombar from 'src/component/bottombar';
 
 export default function DetailList() {
   const reviewSectionRef = useRef<HTMLDivElement | null>(null);
@@ -18,6 +19,8 @@ export default function DetailList() {
   };
 
   return (
+    <>
+    
     <div id='accommodation-detail-list-wrapper'>
       <Topbar />
       <AccommodationDetailTop onReviewButtonClick={scrollToReviews} accommodation_name={''} />
@@ -26,5 +29,9 @@ export default function DetailList() {
         <ReviewList />
       </div>
     </div>
+    {/* <Bottombar/> */}
+    
+    
+    </>
   );
 }

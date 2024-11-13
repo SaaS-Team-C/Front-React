@@ -9,11 +9,21 @@ interface MapProps {
 }
 
 const Map: React.FC<MapProps> = ({ latitude, longitude, accommodationAddress }) => {
+  // 주소 복사 기능
+  const copyToClipboard = () => {
+    navigator.clipboard.writeText(accommodationAddress).then(() => {
+      alert('주소가 복사되었습니다.');
+    }).catch((err) => {
+      console.error('주소 복사 실패:', err);
+    });
+  };
+  
   return (
-    <>
-      <h3>위치</h3>
+    <div id='room-detail-map-wrapper'>
+      <div className='map-title'>위치</div>
       <LoadScript googleMapsApiKey="AIzaSyCqPhfzQDCxqzMIJNBeMTJuzJ9o71CqRM4">
-        <GoogleMap
+        <GoogleMap 
+       
           mapContainerStyle={{ width: '100%', height: '400px' }}
           center={{ lat: latitude, lng: longitude }}
           zoom={15}
@@ -28,9 +38,11 @@ const Map: React.FC<MapProps> = ({ latitude, longitude, accommodationAddress }) 
           />
         </GoogleMap>
       </LoadScript>
+      <div className='address-container'>
       <div>{accommodationAddress}</div>
-      <button>주소복사</button>
-    </>
+      <button className='address-copy-button' onClick={copyToClipboard}>주소복사</button>
+      </div>
+    </div>
   );
 };
 

@@ -19,22 +19,30 @@ const ReviewCard: React.FC<{
   onLike: (id: number) => void;
 }> = ({ review, onLike }) => {
   return (
+    <div className='review-wrapper'>
+    <div id='review-card-wrapper'>
     <div className="review-card">
       <div className="review-header">
-        <div className="user-name">{review.user}</div>
+        <div className='review-user-icon'></div>
+        <div className='review-user-date-box'>
+        <div className="review-user-id">{review.user}</div>
         <div className="review-date">{review.date}</div>
+        </div>
+        <div className='review-like-box'>
+        <div className="review-like-button" onClick={() => onLike(review.id)}></div> 
+        <div className='review-like-count'>{review.likes}</div>
+        </div>
+        
       </div>
       <div className="review-rating">
-        {'⭐'.repeat(review.rating)}
+        {'★'.repeat(review.rating)}
       </div>
       <div className="review-content">
         {review.content}
       </div>
-      <div className="review-footer">
-        <button className="like-button" onClick={() => onLike(review.id)}>
-          👍
-        </button> {review.likes}
-      </div>
+
+    </div>
+    </div>
     </div>
   );
 };
@@ -156,14 +164,15 @@ const ReviewList: React.FC = () => {
   const currentReviews = sortedReviews.slice(indexOfFirstReview, indexOfLastReview);
 
   return (
+    <div id='review-list-wrapper'>
     <div className="review-list-container">
-      <h3>Reviews</h3>
+      <div className='review-title'>Reviews</div>
 
       {/* 정렬 기준 선택 */}
-      <div className="sort-options">
-        <label htmlFor="sort">정렬 기준: </label>
+      <div className="sort-dropdown">
+        <label htmlFor="sortOptions"> </label>
         <select
-          id="sort"
+          id="sortOptions"
           value={sortCriteria}
           onChange={(e) => setSortCriteria(e.target.value)}
         >
@@ -174,10 +183,14 @@ const ReviewList: React.FC = () => {
         </select>
       </div>
 
-      <div className="review-overall">
+      <div id="review-overall">
+
+        <div className='review-box'>
+          <div className='review-star-icon'></div>
         <div className="rating-score">5/5</div>
         <div className="rating-text">Excellent</div>
         <div className="rating-count">({reviews.length} Reviews)</div>
+        </div>
       </div>
 
       {currentReviews.map((review) => (
@@ -192,6 +205,7 @@ const ReviewList: React.FC = () => {
           onPageChange={setCurrentPage} // 페이지 변경 함수
         />
       )}
+    </div>
     </div>
   );
 };

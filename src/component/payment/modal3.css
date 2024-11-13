@@ -4,7 +4,7 @@
     left: 0;
     right: 0;
     bottom: 0;
-    background: rgba(0, 0, 0, 0.5);
+    background: #f1ecef7c;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -20,6 +20,8 @@
     padding: 20px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
     position: relative; /* 위치를 relative로 설정 */
+    font-family: 'Pretendard-Regular';
+    color: rgb(77, 76, 76);
 }
 
 .closeButton {
@@ -32,4 +34,6 @@
     cursor: pointer;
     color: #333;
     align-items: right;
+    font-family: 'Pretendard-Regular';
+    color: rgb(77, 76, 76);
 }
