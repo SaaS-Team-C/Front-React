@@ -266,9 +266,8 @@ export default function Main() {
                     </div>
                 </div>
             </div>
-            <div className='last-wrapper'>
+            <div style={{ paddingTop: '400px' }} />
             <Bottombar />
-            </div>
         </>
     )
 

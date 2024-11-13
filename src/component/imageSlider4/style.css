@@ -43,6 +43,7 @@
   height: 180px;
   margin: 0;
   border: solid 6px rgba(247, 219, 219, 0.637);
+  box-sizing: border-box;
 }
 
 

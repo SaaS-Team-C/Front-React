@@ -38,6 +38,7 @@
   width: 1200px;
   height: 220px;
   display: flex;
+  gap: 3px;
   transition: transform 0.3s ease-in-out;
 }
 
@@ -53,20 +54,21 @@
   width: 100%;
   height: 180px;
   max-width: 180px;
-  margin: 0 15px;
+  margin-left: 15px;
   border: solid 6px rgba(247, 219, 219, 0.637);
+  box-sizing: border-box;
 
 }
 
 .slider6-ranktext {
-  width: 180px;
+  width: 177px;
   height: 20px;
   margin-top: 5px;
   margin-left: 19px;
   font-size: 16px;
   font-weight: bold;
   font-family: 'Pretendard-Regular';
-  color: rgb(92, 91, 91);  color: rgb(92, 91, 91);
+  color: rgb(92, 91, 91);
 
 }
 

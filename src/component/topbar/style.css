@@ -77,16 +77,13 @@
   --pink-shadow: #ffe3e2;
 }
 
-* {
-  box-sizing: border-box;
-}
-
 .sign-in,
 .sign-up-button,
 .my-page,
 .log-out {
+  box-sizing: border-box;
   margin-bottom: 15px;
-  font-family: 'Poppins', sans-serif;
+  font-family: 'Pretendard-Regular';
   position: relative;
   display: flex;
   flex-direction: row;
@@ -158,14 +155,6 @@
   box-shadow: 0 0 0 2px var(--pink-border), 0 0 var(--pink-shadow);
   transform: translate3d(0, 0, -1em);
 }
-
-
-
-
-
-
-
-
 
 /* .sign-in {
     cursor: pointer;
@@ -343,45 +332,6 @@
   display: flex;
   justify-content: space-between;
 }
-
-.log-out {
-  cursor: pointer;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  border: solid 3px var(--input-solid-color);
-  border-radius: 15px;
-  margin-right: 15px;
-  margin-top: 5px;
-
-  font-size: 15px;
-  font-weight: 700;
-  color: var(--input-text-color);
-
-  width: 90px;
-  height: 40px;
-
-}
-
-.my-page {
-  cursor: pointer;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  border: solid 3px var(--main-button-color);
-  background-color: var(--main-button-color);
-  border-radius: 15px;
-  margin-right: 15px;
-  margin-top: 5px;
-
-  font-size: 15px;
-  font-weight: 700;
-  color: var(--main-button-text-color);
-
-  width: 90px;
-  height: 40px;
-}
-
 
 /* !search-bar */
 .top-search-bar-container {
