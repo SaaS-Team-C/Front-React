@@ -15,6 +15,7 @@ import GuestSignUpRequestDto from 'src/apis/signUp/dto/request/guest/g-sign-up.r
 import HostSignUpRequestDto from 'src/apis/signUp/dto/request/host/h-sign-up.request.dto';
 import React from 'react';
 import DatePicker from 'react-datepicker';
+import { format } from 'date-fns';
 import 'react-datepicker/dist/react-datepicker.css';
 import { ko } from 'date-fns/locale'; // 한국어 지원
 import BusinessNumberCheckRequestDto from 'src/apis/signUp/dto/request/host/h-business-number-check.request.dto';
@@ -78,9 +79,10 @@ export default function SignUp() {
   const [businessName, setBusinessName] = useState<string>('');
   const [businessNumber, setBusinessNumber] = useState<string>('');
   const [businessStartDay, setBusinessStartDay] = useState<Date | null>(null);
+  const [startStringDay, setStartStringDay] = useState<string>('');
 
   const [businessImage, setBusinessImage] = useState<string>('');
-
+  const [formattedBusinessStartDay, setFormattedBusinessStartDay] = useState<string>('');
 
 
   // state: 입력값 검증 상태 //
@@ -128,6 +130,7 @@ export default function SignUp() {
       guestPassword !== '' &&
       guestPasswordCheck !== '' &&
       telNumber !== '' &&
+      isAgreed &&
       isCheckedId &&  // 아이디 중복 체크 여부
       isMatchedPassword &&  // 비밀번호 확인 일치 여부
       isCheckedPassword &&  // 비밀번호 체크 여부
@@ -136,9 +139,7 @@ export default function SignUp() {
       isCheckedAuthNumber;  // 인증 번호 체크 여부
 
     setGuestIsButtonEnabled(guestAllFieldsFilled);
-    console.log(guestIsButtonEnabled)
-
-  }, [guestName, guestId, guestPassword, guestPasswordCheck, telNumber, isCheckedId, isMatchedPassword, isCheckedPassword, isSend, authNumber, isCheckedAuthNumber]);
+  }, [businessStartDay]);
 
   useEffect(() => {
     setCheckedId(false)
@@ -156,6 +157,7 @@ export default function SignUp() {
       businessName !== '' &&
       businessNumber !== '' &&
       businessImage !== '' &&
+      formattedBusinessStartDay !== '' &&
       telNumber !== '' &&
       authNumber !== '' &&
       isAgreed &&  // 동의 여부
@@ -163,14 +165,8 @@ export default function SignUp() {
       isCheckedId;  // 아이디 중복 체크 여부
 
     setHostIsButtonEnabled(hostAllFieldsFilled);
-  }, [isSend, isCheckedId, hostName, hostId, hostPassword, hostPasswordCheck, businessName, businessNumber, businessStartDay, businessImage, telNumber, authNumber, isAgreed]);
 
-
-
-  // variable: SNS 회원가입 여부 //
-  const isSnsSignUp = snsId !== null && joinPath !== null;
-
-
+  }, [isSend, isCheckedId, hostName, hostId, hostPassword, hostPasswordCheck, businessName, businessNumber, businessStartDay, businessImage, formattedBusinessStartDay, telNumber, authNumber, isAgreed]);
 
   // function: 아이디 중복확인 Response 처리 함수 //
   const IdCheckResponse = (responseBody: ResponseDto | null) => {
@@ -262,13 +258,16 @@ export default function SignUp() {
         responseBody.code === 'VF' ? '올바른 데이터가 아닙니다.' :
           responseBody.code === 'DI' ? '중복된 사업자등록번호입니다.' :
             responseBody.code === 'NB' ? '사업자번호 인증에 실패했습니다.' :
-              responseBody.code === 'DBE' ? '서버에 문제가 있습니다.' : '';
+              responseBody.code === 'DBE' ? '서버에 문제가 있습니다.' : 
+              responseBody.code === 'SU' ? '인증에 성공 했습니다.' : '';
 
     const isSuccessed = responseBody !== null && responseBody.code === 'SU';
     if (!isSuccessed) {
       alert(message);
       return;
     }
+    
+    alert(message);
   };
 
   // event handler: 이름 변경 이벤트 처리 //
@@ -381,7 +380,9 @@ export default function SignUp() {
       setBusinessNumberCheckMessageError(false);
 
       const requestBody: BusinessNumberCheckRequestDto = {
-        businessNumber
+        b_no: businessNumber,
+        start_dt: startStringDay,
+        p_nm: hostName
       };
       businessNumberCheckRequest(requestBody).then(businessNumberCheckResponse);
     }
@@ -394,11 +395,23 @@ export default function SignUp() {
     if (!date) {
       setBusinessStartDayCheckMessage('개업일자를 선택해주세요.');
       setBusinessStartDayCheckMessageError(true);
+      setStartStringDay('');
     } else {
       setBusinessStartDayCheckMessage('');
       setBusinessStartDayCheckMessageError(false);
+      setStartStringDay(format(date, 'yyyyMMdd'));
     }
   };
+
+  useEffect (() => {
+    console.log(startStringDay)
+  } , [
+    startStringDay
+  ])
+
+  const onChangeStsratStringDay = (businessStartDay: Date) => {
+
+  }
 
   // event handler: 전화번호 인증 버튼 클릭 이벤트 처리 //
   const onTelNumberSendClickHandler = () => {
@@ -472,13 +485,13 @@ export default function SignUp() {
   const onGuestSignUpButtonHandler = () => {
     if (!guestIsButtonEnabled) return;
 
-      const requestBody: GuestSignUpRequestDto = {
-        name: guestName, // guestName 변수를 사용
-        guestId: guestId, // guestId 변수를 사용
-        password: guestPassword, // guestPassword 변수를 사용
-        snsId: snsId, // guestSnsId 변수를 사용
-        guestTelNumber: telNumber,
-        authNumber: authNumber
+    const requestBody: GuestSignUpRequestDto = {
+      name: guestName, // guestName 변수를 사용
+      guestId: guestId, // guestId 변수를 사용
+      password: guestPassword, // guestPassword 변수를 사용
+      snsId: snsId, // guestSnsId 변수를 사용
+      guestTelNumber: telNumber,
+      authNumber: authNumber
     };
 
     guestSignUpRequest(requestBody).then(guestSignUpResponse);
@@ -491,11 +504,11 @@ export default function SignUp() {
     if (!hostIsButtonEnabled) return;
 
     const requestBody: HostSignUpRequestDto = {
-      hostName: hostName,
+      hostName,
       hostId: hostId,
-      hostPassword: hostPassword,
-      telNumber: telNumber,
-      authNumber: authNumber,
+      hostPw: hostPassword,
+      hostTelNumber: telNumber,
+      hostAuthNumber: authNumber,
       businessName: businessName,
       businessStartDay: businessStartDay,
       businessNumber: businessNumber,
@@ -702,7 +715,7 @@ export default function SignUp() {
               메인페이지에서 로그인하기
             </div>
           </div>
-          {currentView === 'guest' && !isSnsSignUp && <SnsContainer type="회원가입" />}
+          {/* {currentView === 'guest' && !isSnsSignUp && <SnsContainer type="회원가입" />} */}
         </div>
       </div>
     </div>

@@ -29,6 +29,17 @@ const AccommodationDetailTopImages: React.FC<AccommodationImagesProps> = ({ imag
     afterChange: (index: number) => setCurrentImage(index),
   };
 
+  const thumbnailSettings = {
+    dots: false,
+    infinite: false,
+    speed: 300,
+    slidesToShow: 8, // 한 화면에 표시할 썸네일 이미지 개수
+    slidesToScroll: 1,
+    focusOnSelect: true,
+    centerMode: false,
+    afterChange: (index: number) => setCurrentImage(index),
+  };
+
   const handleThumbnailClick = (index: number) => {
     setCurrentImage(index);
     if (sliderRef.current) {
@@ -54,18 +65,18 @@ const AccommodationDetailTopImages: React.FC<AccommodationImagesProps> = ({ imag
         ))}
       </Slider>
 
-      {/* Thumbnail 네비게이션 */}
-      <div className="thumbnail-row">
+       {/* Thumbnail 슬라이더 */}
+      <Slider {...thumbnailSettings} className="thumbnail-slider">
         {images.map((image, index) => (
-          <img
-            key={index}
-            src={image}
-            alt={`Thumbnail ${index + 1}`}
-            className={`thumbnail-image ${currentImage === index ? 'active' : ''}`}
-            onClick={() => handleThumbnailClick(index)}
-          />
+          <div key={index} onClick={() => handleThumbnailClick(index)}>
+            <img
+              src={image}
+              alt={`Thumbnail ${index + 1}`}
+              className={`thumbnail-image ${currentImage === index ? 'active' : ''}`}
+            />
+          </div>
         ))}
-      </div>
+      </Slider>
     </Modal>
   );
 };

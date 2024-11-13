@@ -203,17 +203,17 @@ const AccommodationDetailTopCard: React.FC<AccommodationDetailTopProps> = ({
         </div>
       </div>
 
-      <div id="content">
-        <div className="review-section">
+      <div id="content" >
+        <div className="review-section" onClick={() => {
+                  onReviewButtonClick();
+                }}>
           <div className="review-score-box">
             <div className="review-score">⭐ {reviewScore}</div>
             <div className="heder-title">{reviewCount}개의 리뷰</div>
             <div className="right-arrow-icon-box">
               <button
                 className="right-arrow-icon-button"
-                onClick={() => {
-                  onReviewButtonClick();
-                }}
+                
               ></button>
             </div>
           </div>
@@ -222,12 +222,12 @@ const AccommodationDetailTopCard: React.FC<AccommodationDetailTopProps> = ({
           {/* Call the onReviewButtonClick function when the button is clicked */}
         </div>
 
-        <div className="services-section">
+        <div className="services-section" onClick={openFacilityModal}>
           <div className="heder-title-container">
           <div className="heder-title">서비스 및 부대시설</div>
           <button
             className="view-all-facilities-btn"
-            onClick={openFacilityModal}></button>
+            ></button>
           </div>
           <div className="services">
             {services.map((service, index) => (

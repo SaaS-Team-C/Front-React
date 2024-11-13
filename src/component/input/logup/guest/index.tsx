@@ -33,7 +33,7 @@ export default function InputBox({
                 <label>{label}</label>
                 <div className="guest-input-with-button">
                     <input type={type} value={value} placeholder={placeholder} onChange={onChange} />
-                    {buttonName && <button onClick={onButtonClick}>{buttonName}</button>}
+                    {buttonName && <button className={`guest-input-button-${value ? 'disable' : 'active' }`} onClick={onButtonClick}>{buttonName}</button>}
                 </div>
                 {message && <p className="message">{message}</p>}
                 {messageError && <p className="messageError">{messageError}</p>}
@@ -42,5 +42,6 @@ export default function InputBox({
 
 
     );
+
 };
 

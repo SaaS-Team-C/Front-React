@@ -33,7 +33,7 @@ export default function InputBox2({
                 <label>{label}</label>
                 <div className="host-input-with-button">
                     <input type={type} value={value} placeholder={placeholder} onChange={onChange} />
-                    {buttonName && <button onClick={onButtonClick}>{buttonName}</button>}
+                    {buttonName && <button className={`host-input-button-${value ? 'active' : 'disable' }`} onClick={onButtonClick}>{buttonName}</button>}
                 </div>
                 {message && <p className="message">{message}</p>}
                 {messageError && <p className="messageError">{messageError}</p>}

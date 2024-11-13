@@ -6,6 +6,7 @@
     height: 1050px;
     background-color: #f1ecef7c;
     position: relative;
+    box-sizing: border-box;
 }
 
 .GuestLogin-button-host {
@@ -40,7 +41,6 @@
 .guest-input-box-signup {
     display: flex;
     flex-direction: column;
-    width: 100%;
     max-width: 400px;
     max-height: 950px;
     /* 높이를 조정하여 요소가 잘리지 않도록 */
@@ -53,6 +53,7 @@
     justify-content: space-between;
     /* 위와 아래 사이의 공간을 자동 조정 */
     z-index: 10;
+    box-sizing: border-box;
 }
 
 .guest-inputBox {

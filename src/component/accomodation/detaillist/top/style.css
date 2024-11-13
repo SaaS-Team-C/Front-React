@@ -84,7 +84,82 @@
   background-color: rgb(186, 245, 255,0.5);
   cursor: pointer;
 }
-/*
+
+/* 모달 스타일 */
+.modal {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 80%;
+  max-width: 800px;
+  background-color: white;
+  border-radius: 8px;
+  padding: 20px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  outline: none;
+}
+
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+}
+
+/* 닫기 버튼 스타일 */
+/* .room-detail-modal-close-btn {
+  color: #52607C;
+  position: absolute;
+  top: 15px;
+  right: 10px;
+  background: transparent;
+  border: none;
+  font-size: 22px;
+  cursor: pointer;
+  text-shadow: #5C666A; 
+}
+  */
+
+/* 큰 이미지 스타일 */
+.large-modal-image {
+  width: 100%;
+  height: auto;
+  border-radius: 4px;
+  object-fit: cover;
+}
+
+/* 썸네일 컨테이너 스타일 */
+.thumbnail-row {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin-top: 10px;
+  flex-wrap: wrap;
+}
+
+/* 썸네일 이미지 스타일 */
+.thumbnail-image {
+  width: 60px;
+  height: 60px;
+  object-fit: cover;
+  cursor: pointer;
+  border-radius: 4px;
+  opacity: 0.7;
+  transition: opacity 0.3s, transform 0.3s;
+}
+
+.thumbnail-image:hover {
+  opacity: 1;
+  transform: scale(1.05);
+}
+
+.thumbnail-image.active {
+  border: 2px solid #00ACCF;
+  opacity: 1;
+}
 
 
 /*  숙소 정보 카드  */
@@ -172,6 +247,12 @@ margin-left: 10px;
   display: flex;
   flex-direction: column;
 }
+
+#content .review-section:hover,
+#content .services-section:hover,
+#content .location-section:hover 
+{  cursor: pointer;
+  transform: scale(1.03);}
 
 
 #content .review-score-box{

@@ -1,25 +1,58 @@
-.facilities-card {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
+#facilitiesCard-wrapper{
+  display:flex;
+  flex-direction: column;
+
+  gap: 20px;
+  width: 96.5%;
+  max-width: 1170px;
+  margin: 0 auto;
+ 
+  box-sizing: border-box;
+    color: #52607C;
+    background-color: #f9f9f9;
+    padding: 40px;
+  margin-bottom: 20px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+
+}
+
+
+#facilitiesCard-wrapper .facilities-card {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr); /* 한 줄에 두 개씩 */
+    gap: 10px; 
+    
   }
-  
-  .facility-item {
-    display: flex;
-    align-items: center;
-    font-size: 16px;
-  }
-  
+
+  #facilitiesCard-wrapper .facility-item {
+  display: flex;
+  align-items: center;
+  font-size: 16px;
+}
+
+
   /* 기본 아이콘 스타일 */
-  .facility-icon {
+  #facilitiesCard-wrapper .facility-icon {
     width: 20px;
     height: 20px;
     margin-right: 8px;
     display: inline-block;
     background-size: cover;
     background-repeat: no-repeat;
+    
   }
   
+
+
+
+#facilitiesCard-wrapper .facilitiesCard-title{
+  
+  font-weight: 600;
+  font-size: 22px;
+}
+
+ 
+
   /* 개별 아이콘 이미지 설정 */
   .dog-icon {
     background-image: url('../../../../../../public/images/accommodationlist/Dog.png');

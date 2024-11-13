@@ -4,6 +4,7 @@ import axios, { AxiosResponse } from 'axios';
 import { MAIN_PATH } from 'src/constants';
 import LogInResponseDto from './dto/response/login.responsw.dto';
 import ResponseDto from './dto/response/response.dto';
+import MypageAuthRequestDto from './dto/request/guest/mypageauth.request.dto';
 
 // function: response data 처리 함수 //
 const responseDataHandler = <T>(response: AxiosResponse<T, any>) => {
@@ -17,6 +18,10 @@ export const logInRequest = async (requestBody: GuestLogInRequestDto) => {
         .catch(responseErrorHandler);
     return responseBody;
 };
+
+export const MypageAuthRequest = async (requestBody: MypageAuthRequestDto) => {
+    const responseBody = await axios.delete('http://localhos:4000/api/romly/bookmark/delete-bookmark/&{}/&{}')
+}
 
 // function: response error 처리 함수 //
 const responseErrorHandler = (error: any) => {
