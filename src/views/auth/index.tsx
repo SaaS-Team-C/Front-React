@@ -15,9 +15,10 @@ import GuestSignUpRequestDto from 'src/apis/signUp/dto/request/guest/g-sign-up.r
 import HostSignUpRequestDto from 'src/apis/signUp/dto/request/host/h-sign-up.request.dto';
 import React from 'react';
 import DatePicker from 'react-datepicker';
-import 'react-datepicker/dist/react-datepicker.css';
+// import 'react-datepicker/dist/react-datepicker.css';
 import { ko } from 'date-fns/locale'; // 한국어 지원
 import BusinessNumberCheckRequestDto from 'src/apis/signUp/dto/request/host/h-business-number-check.request.dto';
+import { format } from 'date-fns';
 
 type AuthPath = '회원가입' | '로그인';
 type CurrentView = 'host' | 'guest';
@@ -80,7 +81,7 @@ export default function SignUp() {
   const [businessStartDay, setBusinessStartDay] = useState<Date | null>(null);
 
   const [businessImage, setBusinessImage] = useState<string>('');
-
+  const [formattedBusinessStartDay, setFormattedBusinessStartDay] = useState<string>('');
 
 
   // state: 입력값 검증 상태 //
@@ -156,6 +157,7 @@ export default function SignUp() {
       businessName !== '' &&
       businessNumber !== '' &&
       businessImage !== '' &&
+      formattedBusinessStartDay !== '' &&
       telNumber !== '' &&
       authNumber !== '' &&
       isAgreed &&  // 동의 여부
@@ -163,14 +165,8 @@ export default function SignUp() {
       isCheckedId;  // 아이디 중복 체크 여부
 
     setHostIsButtonEnabled(hostAllFieldsFilled);
-  }, [isSend, isCheckedId, hostName, hostId, hostPassword, hostPasswordCheck, businessName, businessNumber, businessStartDay, businessImage, telNumber, authNumber, isAgreed]);
 
-
-
-  // variable: SNS 회원가입 여부 //
-  const isSnsSignUp = snsId !== null && joinPath !== null;
-
-
+  }, [isSend, isCheckedId, hostName, hostId, hostPassword, hostPasswordCheck, businessName, businessNumber, businessStartDay, businessImage, formattedBusinessStartDay, telNumber, authNumber, isAgreed]);
 
   // function: 아이디 중복확인 Response 처리 함수 //
   const IdCheckResponse = (responseBody: ResponseDto | null) => {
@@ -394,9 +390,11 @@ export default function SignUp() {
     if (!date) {
       setBusinessStartDayCheckMessage('개업일자를 선택해주세요.');
       setBusinessStartDayCheckMessageError(true);
+      setFormattedBusinessStartDay(''); // 선택 취소 시 표시용 날짜 초기화
     } else {
       setBusinessStartDayCheckMessage('');
       setBusinessStartDayCheckMessageError(false);
+      setFormattedBusinessStartDay(format(date, 'yyyyMMdd')); // 선택된 날짜를 yyyy-MM-dd 형식으로 저장
     }
   };
 
@@ -472,13 +470,13 @@ export default function SignUp() {
   const onGuestSignUpButtonHandler = () => {
     if (!guestIsButtonEnabled) return;
 
-      const requestBody: GuestSignUpRequestDto = {
-        name: guestName, // guestName 변수를 사용
-        guestId: guestId, // guestId 변수를 사용
-        password: guestPassword, // guestPassword 변수를 사용
-        snsId: snsId, // guestSnsId 변수를 사용
-        guestTelNumber: telNumber,
-        authNumber: authNumber
+    const requestBody: GuestSignUpRequestDto = {
+      name: guestName, // guestName 변수를 사용
+      guestId: guestId, // guestId 변수를 사용
+      password: guestPassword, // guestPassword 변수를 사용
+      snsId: snsId, // guestSnsId 변수를 사용
+      guestTelNumber: telNumber,
+      authNumber: authNumber
     };
 
     guestSignUpRequest(requestBody).then(guestSignUpResponse);
@@ -702,7 +700,7 @@ export default function SignUp() {
               메인페이지에서 로그인하기
             </div>
           </div>
-          {currentView === 'guest' && !isSnsSignUp && <SnsContainer type="회원가입" />}
+          {/* {currentView === 'guest' && !isSnsSignUp && <SnsContainer type="회원가입" />} */}
         </div>
       </div>
     </div>

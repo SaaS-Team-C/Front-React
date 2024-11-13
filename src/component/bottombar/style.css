@@ -16,7 +16,7 @@
     position: absolute;
     width: 1200px;
     height: 500px;
-    top: 1500px;
+
     padding: 20px;
 }
 
@@ -27,6 +27,7 @@
     margin-top: 25px;
     border-bottom: 1px solid #dfdcdc; /* 얇은 선 */
     padding-bottom: 50px; /* 텍스트와 선 사이의 여백 */
+    margin-left: 25px;
 }
 
 .top-footer1-content1,
@@ -157,11 +158,10 @@
     transform: scale(1.05); /* 호버 시 크기 확대 */
 }
 
-
 .bottom-footer {
     margin-top: 30px;
+    margin-left: 25px;
 }
-
 
 .bottom-footer2 {
 

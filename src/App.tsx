@@ -87,7 +87,7 @@ export default function App() {
       <Route path={ACCOMMODATION_LIST_PATH} element={<AccommodationList />} />
       <Route path={ACCOMMODATION_LIST_DETAIL_PATH} element={<DetailList />} />
       <Route path={AUTH_PATH} element={<SignUp />} />
-      <Route path='/payment' element={<Payment onPathChange={() => { }} />} />
+      <Route path='/payment' element={<Payment onPathChange={() => { } }/>} />
       <Route path={FINDID_PATH} element={<FindId />} />
       <Route path='/roomly-company' element={<Roomly />} />
       <Route path='/adminHost' element={<HostEnrollmentapproval/>}/>
