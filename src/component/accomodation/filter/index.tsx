@@ -11,20 +11,35 @@ const Filter: React.FC = () => {
   const [categoryArea, setCategoryArea] = useState<string[]>([]);
   const [facilities, setFacilities] = useState([false, false, false, false, false, false, false]);
 
+
+  const onFilterChange = (filters: any) => {
+    // 필터가 변경될 때의 로직
+  };
+
+  const resetFilters = () => {
+    setPriceRange({ min: 0, max: 5000000 });
+    setReviewScore([false, false, false, false, false]);
+    setAccommodationType([false, false, false]);
+    setCategoryArea([]);
+    setFacilities([false, false, false, false, false, false, false]);
+  };
+  
   return (
     <div id="filter-wrapper">
       <MapFilter />
       <Sidebar
-        priceRange={priceRange}
-        setPriceRange={setPriceRange}
-        reviewScore={reviewScore}
-        setReviewScore={setReviewScore}
-        accommodationType={accommodationType}
-        setAccommodationType={setAccommodationType}
-        categoryArea={categoryArea}
-        setCategoryArea={setCategoryArea}
-        facilities={facilities}
-        setFacilities={setFacilities}
+                onFilterChange={onFilterChange}
+                resetFilters={resetFilters}
+                priceRange={priceRange}
+                setPriceRange={setPriceRange}
+                reviewScore={reviewScore}
+                setReviewScore={setReviewScore}
+                accommodationType={accommodationType}
+                setAccommodationType={setAccommodationType}
+                categoryArea={categoryArea}
+                setCategoryArea={setCategoryArea}
+                facilities={facilities}
+                setFacilities={setFacilities}
       />
     </div>
   );
