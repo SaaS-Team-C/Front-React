@@ -253,8 +253,9 @@ const AccommodationDetailMiddle: React.FC = () => {
       accommodationData={mockAccommodationData}  />
       <FacilitiesCard/>
       <Map latitude={latitude} longitude={longitude} accommodationAddress={accommodationAddress} />
-      <MapWithMarkers markers={markersData} />
+      {/* <MapWithMarkers markers={markersData} />
       <Wrapper apiKey="AIzaSyCqPhfzQDCxqzMIJNBeMTJuzJ9o71CqRM4" render={render} libraries={['marker']}/>
+       */}
   
 
     </div>
