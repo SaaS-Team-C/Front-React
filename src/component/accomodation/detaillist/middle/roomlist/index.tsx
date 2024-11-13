@@ -50,20 +50,26 @@ const RoomList: React.FC<RoomDetailProps & AccommodationInfoProps> = ({ roomsDat
             <div className="accommodation-info">
               {accommodationData ? (
                 <>
+                <div className='accommodation-info-introduction-container'>
+                  <div className='accommodation-info-container-left-icon'></div>
                   <div className='accommodation-info-introduction'>숙소 소개</div>
-                  <p>{accommodationData.introduction}</p>
-                  <h3>숙소 이용 정보</h3>
-                  <div dangerouslySetInnerHTML={{ __html: accommodationData.usage_info }} />
+                  <div className='accommodation-info-content'>{accommodationData.introduction}</div>
+                  <div className='accommodation-info-introduction-divider'></div>
+                </div>
+
+                <div className='accommodation-info-content-container'>
+                  <div className='accommodation-info-introduction'>숙소 이용 정보</div>
+                  <div className='accommodation-info-content' dangerouslySetInnerHTML={{ __html: accommodationData.usage_info }} />
+                  <div className='accommodation-info-container-right-icon'></div>
+                </div>
                 </>
               ) : (
-                <p>등록된 숙소 정보가 없습니다.</p>
+                <div className='accommodation-info-introduction'>등록된 숙소 정보가 없습니다.</div>
               )}
             </div>
           </>
         
       </div>
-      {/* 지도 섹션 */}
-      {/* {isAccommodationInfoVisible && <MapSection />} */}
 
 
     </div>
