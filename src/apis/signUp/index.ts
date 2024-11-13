@@ -18,7 +18,7 @@ const TEL_AUTH_API_URL = `${AUTH_MODULE_URL}/tel-auth`;
 const TEL_AUTH_CHECK_API_URL = `${AUTH_MODULE_URL}/tel-auth-check`;
 const GUEST_SIGN_UP_API_URL = `${AUTH_MODULE_URL}/sign-up`;
 const HOST_SIGN_UP_API_URL = `${AUTH_MODULE_URL}/sign-up-host`;
-const BUSINESS_NUMBER_CHECK_API_URL = `${AUTH_MODULE_URL}/business_number`;
+const BUSINESS_NUMBER_CHECK_API_URL = `${ROOMLY_API_DOMAIN}/api/validate-business`;
 
 // function : Authorization Bearer 헤더 //
 const bearerAuthorization = (accessToken: string) => ({
@@ -96,7 +96,7 @@ export const hostSignUpRequest = async (
     requestBody: HostSignUpRequestDto
 ) => {
     const responseBody = await axios
-        .post(HOST_SIGN_UP_API_URL, requestBody)
+        .post('http://localhost4000/api/roomly/auth/host/sign-up', requestBody)
         .then(responseDataHandler<ResponseDto>)
         .catch(responseErrorHandler);
     return responseBody;
