@@ -1,3 +1,6 @@
 export default interface BusinessNumberCheckRequestDto {
-    businessNumber: string;
+    b_no: string;
+    start_dt: string;
+    p_nm: string;
+
 }
