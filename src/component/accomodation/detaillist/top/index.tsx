@@ -15,10 +15,11 @@ import "slick-carousel/slick/slick-theme.css";
 // interface: 숙소 이미지 모달 + 슬라이더 //
 interface AccommodationImagesProps {
   initialImages: string[]; // 숙소 ID를 props로 전달
+  
 }
 
 const AccommodationDetailTopImages: React.FC<AccommodationImagesProps> = ({
-  initialImages,
+  initialImages
 }) => {
   // state: 상태 //
   const [images, setImages] = useState<string[]>(initialImages);
@@ -167,6 +168,7 @@ interface AccommodationDetailTopProps {
   accommodationType: string;
   onReviewButtonClick: () => void;
   onCardClick: () => void;
+  onLocationClick: () => void;
 }
 
 const AccommodationDetailTopCard: React.FC<AccommodationDetailTopProps> = ({
@@ -181,14 +183,15 @@ const AccommodationDetailTopCard: React.FC<AccommodationDetailTopProps> = ({
   mapLink,
   accommodationType,
   onReviewButtonClick, 
-  onCardClick
+  onCardClick,
+  onLocationClick
 }) => {
   // state: 상태 관리 //
   const [isFacilityModalOpen, setIsFacilityModalOpen] = useState(false);
 
   // 부대시설 모달 열기 및 닫기 함수
   const openFacilityModal = () => setIsFacilityModalOpen(true);
-  const closeFacilityModal = () => setIsFacilityModalOpen(true);
+  const closeFacilityModal = () => setIsFacilityModalOpen(false);
 
   // 리액트 아이콘 라이브러리 사용 //
   const iconMap: Record<string, JSX.Element> = {
@@ -197,12 +200,6 @@ const AccommodationDetailTopCard: React.FC<AccommodationDetailTopProps> = ({
     Pool: <FaSwimmingPool />,
   
   };
-
-
-
-
-  function onFacilityButtonClick() {
-    }
 
   return (
     <div id="accommodation-detail">
@@ -238,9 +235,9 @@ const AccommodationDetailTopCard: React.FC<AccommodationDetailTopProps> = ({
           <div className="review-snippet">{reviewSnippet}</div>
                 </div>
 
-        <div className="services-section" onClick={() => {
-                  onFacilityButtonClick();
-                }} >
+        <div className="services-section"  onClick={() => {
+                  onCardClick();
+                }}>
           <div className="heder-title-container">
           <div className="heder-title">서비스 및 부대시설</div>
           <button
@@ -271,10 +268,10 @@ const AccommodationDetailTopCard: React.FC<AccommodationDetailTopProps> = ({
               <div className="facility-modal-title" >서비스 및 부대시설</div>
               </div>
 
-              <div className="facility-icons-box">
+              <div id="facility-icons-box">
               <div className="facility-icons">
                 {services.map((service, index) => (
-                  <div key={index} className="facility-item">
+                  <div key={index} className="facility-top-item">
                     {iconMap[service] || <FaConciergeBell />}{" "}
                     {/* 부대시설 아이콘 넣기*/}
                     <span>{service}</span>
@@ -287,7 +284,9 @@ const AccommodationDetailTopCard: React.FC<AccommodationDetailTopProps> = ({
           </Modal>
         </div>
 
-        <div className="location-section">
+        <div className="location-section" onClick={() => {
+                  onLocationClick();
+                }}>
           <div className="heder-title-container">
           <div className="heder-title">위치 정보</div>
           <div className="view-all-location-btn"></div>
@@ -320,12 +319,18 @@ interface AccommodationDetail {
 export default function AccommodationDetailTop({
   accommodation_name,
   onReviewButtonClick,
-  onFacilityButtonClick
+  onCardClick,
+  onLocationClick
+ 
+
   
 }: {
   accommodation_name: string;
   onReviewButtonClick: () => void;
-  onFacilityButtonClick: () => void;
+  onCardClick: () => void;
+  onLocationClick: () => void;
+
+
 }) {
   // const [accommodationDetail, setAccommodationDetail] = useState<AccommodationDetail | null>(null);
 
@@ -385,9 +390,7 @@ export default function AccommodationDetailTop({
 
   if (!accommodationDetail) return <p>Loading...</p>; // 로딩 표시
 
-  function onCardClick(): void {
-    throw new Error("Function not implemented.");
-  }
+
 
   return (
     <>
@@ -405,7 +408,7 @@ export default function AccommodationDetailTop({
         location={accommodationDetail.location}
         mapLink={accommodationDetail.mapLink}
         accommodationType={accommodationDetail.accommodationType}
-        onReviewButtonClick={onReviewButtonClick} onCardClick={onCardClick}        
+        onReviewButtonClick={onReviewButtonClick} onCardClick={onCardClick} onLocationClick={onLocationClick}     
    
       />
     </>

@@ -238,42 +238,19 @@ const markersData = [
 ];
 
 
-  const latitude = 37.7749; // 임의의 위도 값
-  const longitude = -122.4194; // 임의의 경도 값
-  const accommodationAddress = '부산광역시 부산진구 중앙대로 668 에이원프라자 빌딩 4층'
-  
+
 
   const AccommodationDetailMiddle = () => {
-    const facilitySectionRef = useRef<HTMLDivElement | null>(null);
-  
-    // 스크롤 함수 정의
-    const scrollToFacilities = () => {
-      if (facilitySectionRef.current) {
-        facilitySectionRef.current.scrollIntoView({ behavior: 'smooth', block: 'start' });
-      }
-    };
-
+    
   return (
     <div className='middle-wrapper'>
-      {/* RoomList에 scrollToFacilities 함수 전달 */}
+    
       <RoomList
         roomsData={mockAccommodationData.rooms}
         accommodationData={mockAccommodationData}
-        onCardClick={scrollToFacilities}
-      
-        
+
       />
-
-    <div ref={facilitySectionRef} id="facilitySection">
-      <FacilitiesCard />
-      </div>
-      <Map latitude={latitude} longitude={longitude} accommodationAddress={accommodationAddress} />
-      {/* <MapWithMarkers markers={markersData} />
-      <Wrapper apiKey="AIzaSyCqPhfzQDCxqzMIJNBeMTJuzJ9o71CqRM4" render={render} libraries={['marker']}/>
-       */}
-  
-
-    </div>
+</div>
   )
 }
 
