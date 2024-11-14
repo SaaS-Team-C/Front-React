@@ -1,5 +1,10 @@
 // variable: 상대 경로 상수 //
 
+import axios, { AxiosResponse } from "axios";
+import GetGuestSignInResponseDto from "src/apis/login/dto/response/get-guest-sign-in.response.dto";
+import GetSignInResponseDto from "src/apis/login/dto/response/get-guest-sign-in.response.dto";
+import { ResponseDto } from "src/apis/signUp/dto/response";
+
 export const ROOT_PATH = "/";
 
 export const MAIN_PATH = "/main"
@@ -48,6 +53,7 @@ export const BUSINESS_NUMBER_CHECK_API_URL = `${HOST_AUTH_MODULE_URL}/business-n
 export const HOST_SIGN_UP_API_MODULE = `${HOST_AUTH_MODULE_URL}/sign-up`;
 // 호스트 로그인
 export const HOST_SIGN_IN_API_URL = `${HOST_AUTH_MODULE_URL}/sign-in`;
+
 // variable: 게스트 인증 모듈 
 export const GUEST_AUTH_MODULE_URL = `${ROOMLY_API_DOMAIN}/api/roomly/auth/guest`;
 // 게스트 아이디 중복 확인
@@ -80,6 +86,8 @@ export const HOST_ID_FIND_API_URL = (hostId:string)=>`${HOST_MODULE_URL}/id-find
 export const HOST_ID_FIND_TEL_AUTH_CHECK_API_URL = `${HOST_MODULE_URL}/tel-auth-check`;
 // 호스트 비밀번호 변경(로그인상태 x)
 export const PATCH_HOST_PASSWORD_FIND_API_URL = `${HOST_MODULE_URL}/pw-find`;
+// // 호스트 로그인 정보 불러오기
+// export const GET_HOST_SIGN_IN = `${HOST_MODULE_URL}/sign-in`;
 
 // variable: 게스트 모듈
 export const GUEST_MODULE_URL = `${ROOMLY_API_DOMAIN}/api/roomly/guest`;
@@ -96,6 +104,8 @@ export const GUEST_ID_FIND_API_URL = `${GUEST_MODULE_URL}/id-find`;
 export const GUEST_ID_FIND_TEL_AUTH_CHECK_API_URL = `${GUEST_MODULE_URL}/tel-auth-check`;
 // 게스트 비밀번호 변경(로그인 상태 x)
 export const PATCH_GUEST_PASSWORD_FIND_API_URL = `${GUEST_MODULE_URL}/pw-find`;
+// 게스트 로그인 정보 불러오기
+export const GET_GUEST_SIGN_IN = `${GUEST_MODULE_URL}/sign-in`;
 
 // variable: 숙소 모듈
 export const ACCOMMODATION_MODULE_URL = `${ROOMLY_API_DOMAIN}/api/roomly/accommodation`;
@@ -169,3 +179,31 @@ export const POST_REVIEW_API_URL = (guestId:string)=>`${REVIEW_MODULE_URL}/add/$
 export const GET_GUEST_REVIEW_LIST_API_URL = (guestId:string)=>`${REVIEW_MODULE_URL}/guest-list/${guestId}`;
 // 숙소에 관란 리뷰리스트
 export const GET_ACCOMMODATION_REVIEW_LIST_API_URL = (accommodationName:string) => `${REVIEW_MODULE_URL}/acc-list/${accommodationName}`;
+
+// 로그인 관련
+// ! 중복되는 성공에 대한 함수를 따로 만들었음.
+// function: response data 처리 함수 //
+const responseDataHandler = <T>(response: AxiosResponse<T, any>) => {
+    const { data } = response;
+    return data;
+}
+// ! 중복되는 error에 대한 함수를 따로 만들었음.
+// function : Response Error 처리 함수 //
+const responseErrorHandler = (error: any) =>{ 
+    if(!error.response) return null; 
+    const { data } = error.response;
+    return data as ResponseDto;
+}
+// // function: Authorization Bearer 헤더 //
+// const bearerAuthorization = (accessToken: string) => ({headers: {'Authorization': `Bearer ${accessToken}`}})
+// function : Authorization Bearer 헤더 //
+const bearerAuthorization = (accessToken: string) => ({
+    headers: { Authorization: `Bearer ${accessToken}` },
+});
+// function: get sign in 요청 함수 //
+export const getSignInRequest = async (accessToken: string) => {
+    const responseBody = await axios.get(GET_GUEST_SIGN_IN, bearerAuthorization(accessToken))
+    .then(responseDataHandler<GetGuestSignInResponseDto>)
+    .catch(responseErrorHandler)
+    return  responseBody;
+}
