@@ -173,13 +173,18 @@ const RoomCard: React.FC<RoomCardProps> = ({ room, isFullyBooked }) => {
           overlayClassName="roomcard-detail-info-modal-overlay"
         >
           <div className='test-test-test'>
-          <h2>{room.roomName} - 상세정보</h2>
-          <p>{room.description}</p>
-          <p>입실 시간: {room.checkInTime}</p>
-          <p>퇴실 시간: {room.checkOutTime}</p>
-          <p>최대 수용 인원: {room.maxOccupancy}명</p>
-          <p>가격: ₩{room.roomPrice.toLocaleString()}원</p>
-          <button className='roomcard-detail-modal-close-button' onClick={closeDetailModal}>닫기</button>
+            <div className='roomcard-detail-modal-close-title-box'>
+          <button className='roomcard-detail-modal-close-button' onClick={closeDetailModal}></button>
+          <div className='roomcard-detail-info-modal-title'>{room.roomName} </div>
+          </div>
+          <div className='room-modal-info-container'>
+          <div className='room-modal-info'>객실 정보</div>
+          <div className='room-modal-info-detail'>{room.description}</div>
+          <div className='room-modal-info-detail' >· 입실 시간: {room.checkInTime}</div>
+          <div className='room-modal-info-detail' >· 퇴실 시간: {room.checkOutTime}</div>
+          <div className='room-modal-info-detail' >· 최대 수용 인원: {room.maxOccupancy}명</div>
+          <div className='room-modal-info-detail' >· 가격: ₩{room.roomPrice.toLocaleString()}원</div>
+          </div>
           </div>
         </Modal>
       )}

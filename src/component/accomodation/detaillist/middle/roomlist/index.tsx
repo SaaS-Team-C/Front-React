@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useRef, useState } from 'react';
 import './style.css';
 import RoomCard from '../roomcard';
 import { RoomDTO } from 'src/apis/accommodation/dto/request/room.request.dto';
@@ -7,13 +7,14 @@ import { AccommodationDetailRequestDTO } from 'src/apis/accommodation/dto/reques
 
 interface RoomDetailProps {
   roomsData: RoomDTO[];
+  onCardClick: () => void;
 }
 interface AccommodationInfoProps {
   accommodationData?: AccommodationDetailRequestDTO;
 }
 
 // component: middel 객실 리스트 컴보넌트(객실 카드, 숙소 소개)
-const RoomList: React.FC<RoomDetailProps & AccommodationInfoProps> = ({ roomsData, accommodationData }) => {
+const RoomList: React.FC<RoomDetailProps & AccommodationInfoProps> = ({ roomsData, accommodationData, onCardClick }) => {
   const [visibleRooms, setVisibleRooms] = useState(3); // 처음에는 3개의 객실만 보이도록 설정
   const [isAllRoomsVisible, setIsAllRoomsVisible] = useState(false); // 모든 객실 표시 여부
 
@@ -28,12 +29,22 @@ const RoomList: React.FC<RoomDetailProps & AccommodationInfoProps> = ({ roomsDat
     setIsAllRoomsVisible(false); // 상태를 false로 변경
   };
 
+  const facilitySectionRef = useRef<HTMLDivElement | null>(null);
+  
+  // 스크롤 함수 정의
+  const scrollToFacilities = () => {
+    if (facilitySectionRef.current) {
+      facilitySectionRef.current.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+  };
+
   return (
     <div id="room-list-container">
       <div className='room-list-title'>객실 선택</div>
       <div className="room-list">
         {roomsData.slice(0, visibleRooms).map((room, index) => (
-          <RoomCard key={index} room={room} isFullyBooked={false} />))}
+          <RoomCard 
+          key={index} room={room} isFullyBooked={false}/>))}
         {!isAllRoomsVisible ? (
           <button className="show-more-btn" onClick={handleShowMore}>
             객실 모두 보기

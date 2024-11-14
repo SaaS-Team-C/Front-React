@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import "./style.css";
 import { AccommodationDTO } from "src/apis/accommodation/dto/response/accommodation.response.dto";
@@ -108,6 +108,7 @@ const List = () => {
               className="accommodation-cards"
               onClick={() => handleDetailClick(accommodations.accommodationName)}
             >
+              
               <div className="image-wrapper">
                 <img
                   src={accommodations.accommodationMainImage}
