@@ -10,6 +10,9 @@ import ModalComponent3 from 'src/component/payment/modal3';
 import ModalComponent4 from 'src/component/payment/modal4';
 import axios from 'axios';
 import dayjs from 'dayjs';
+import { SignInUser } from 'src/stores';
+
+
 
 interface Agreements {
     ruleAgreement: boolean;
@@ -24,6 +27,8 @@ interface PaymentComponentProps {
 
 // component: 결제 화면 컴포넌트 //
 export default function Payment({ onPathChange }: PaymentComponentProps) {
+    const {signInUser} = SignInUser();
+    
     const location = useLocation();
 
     // state: 예약 상세 정보 불러오기 상태 //
@@ -36,6 +41,8 @@ export default function Payment({ onPathChange }: PaymentComponentProps) {
 
     // state: 최종 입력 상태 확인 //
     const [isAgreed, setIsAgreed] = useState(false);
+    const [guestName, setGuestName] = useState<string>('');
+    const [guestTelNumber, setGuestTelNumber] = useState<string>('');
 
     // state: 입력 메세지 상태 //
     const [nameMessage, setNameMessage] = useState<string>('');
@@ -225,6 +232,13 @@ export default function Payment({ onPathChange }: PaymentComponentProps) {
         setSelectedPaymentMethod(method);
     };
 
+    useEffect (() => {
+    
+        if(!signInUser) return;
+        setGuestName(signInUser.guestName)
+        setGuestTelNumber(signInUser.guestTelNumber)
+    },[signInUser])
+
 
     // event handler: 결제 요청 버튼 클릭 이벤트 처리 // 
     const onChargeClickButtonHandler = (
@@ -317,11 +331,11 @@ export default function Payment({ onPathChange }: PaymentComponentProps) {
                             <div className="payment-input-container3">
                                 <div className='guest-name'>
                                     <div className='name-title'>이름</div>
-                                    <div className='name-value'></div>
+                                    <div className='name-value'>{guestName}</div>
                                 </div>
                                 <div className='guest-telNumber'>
                                     <div className='telNumber-title'>전화번호</div>
-                                    <div className='telNumber-value'></div>
+                                    <div className='telNumber-value'>{guestTelNumber}</div>
                                 </div>
                             </div>
                         </div>

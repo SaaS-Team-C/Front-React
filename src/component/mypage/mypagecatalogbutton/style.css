@@ -29,7 +29,7 @@
     max-width: 200px;
     height: 100%;    
     margin-right: 15px;
-    background-color: rgb(245, 187, 208);
+    background-color: #ff94a0;
     border: solid 2px rgba(240, 203, 203, 0.637);;
     border-radius: 15px;
     font-weight: 700;
@@ -52,7 +52,7 @@
     font-size: 18px;
     margin-right: 15px;
     background-color: white;
-    border: solid 2px var(--input-solid-color);
+    border: solid 3px var(--input-solid-color);
     border-radius: 15px;
 
 
@@ -66,5 +66,5 @@
 }
 
 .catalogbutton-text{
-    color: black;
+    color: var(--text);
 }

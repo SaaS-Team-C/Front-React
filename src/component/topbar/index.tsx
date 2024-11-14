@@ -1,11 +1,10 @@
 import { ChangeEvent, KeyboardEvent, useEffect, useState } from 'react';
 import './style.css';
-import { useLocation, useNavigate, useParams } from 'react-router';
+import { useNavigate } from 'react-router';
 
 // import { LogInResponseDto } from 'src/apis/login/response';
 // import { ResponseDto } from 'src/apis/dto/response';
 import { useCookies } from 'react-cookie';
-import { MAIN_PATH } from 'src/constants';
 import { useSearchParams } from 'react-router-dom';
 import { logInRequest } from 'src/apis/login';
 import GuestLogInRequestDto from 'src/apis/login/dto/request/guest/login.request.dto';
@@ -23,14 +22,16 @@ export default function Topbar() {
     // state: 모달창 상태 //
     const [modalOpen, setModalOpen] = useState(false);
 
+    // state: 로그인 모드 전환 상태 //
+    const [mode, setMode] = useState<group>('guest')
+
     // state: 게스트 로그인 입력 정보 상태 //
-    const [gusetId, setGusetId] = useState<string>('');
-    const [gusetPassword, setGusetPassword] = useState<string>('');
+    const [gusetId, setGuestId] = useState<string>('');
+    const [gusetPassword, setGuestPassword] = useState<string>('');
     // state: 호스트 로그인 입력 정보 상태 //
     const [hostId, setHostId] = useState<string>('');
     const [hostPassword, setHostPassword] = useState<string>('');
 
-    const [group, setGroup] = useState<group>('guest');
     // state: 메세지 출력 정보 상태 //
     const [message, setMessage] = useState<string>('');
     const [idmessage, setIdMessage] = useState<string>('');
@@ -71,13 +72,13 @@ export default function Topbar() {
     // event handler: 아이디 변경 이벤트 처리 //
     const onIdChangeHandler = (event: ChangeEvent<HTMLInputElement>) => {
         const { value } = event.target;
-        setGusetId(value);
+        setGuestId(value);
     }
 
     // event handler: 비밀번호 변경 이벤트 처리 //
     const onPasswordChangeHandler = (event: ChangeEvent<HTMLInputElement>) => {
         const { value } = event.target;
-        setGusetPassword(value);
+        setGuestPassword(value);
     }
 
     /** 
@@ -113,7 +114,7 @@ export default function Topbar() {
     const urlEnd = searchParams.get('end')
     const urlCount = searchParams.get('count')
 
-    
+
 
     // effect: 검색값이 있을 경우 실행할 함수 //
     useEffect(() => {
@@ -189,7 +190,7 @@ export default function Topbar() {
         setModalOpen(true)
     };
 
-
+    
 
     return (
         <>
@@ -209,8 +210,8 @@ export default function Topbar() {
                         <div className='top-search-bar-count'>인원 {urlCount}</div>
                     </div>}
                     {cookies.accessToken && <div className='nowlogin'>
-                        <div className='my-page' onClick={onMyPageClickHandler}>마이페이지</div>
-                        <div className='log-out' onClick={onlogoutButtonClickHandler}>로그아웃</div>
+                        <div className='my-page' onClick={onMyPageClickHandler}>MYPAGE</div>
+                        <div className='log-out' onClick={onlogoutButtonClickHandler}>LOGOUT</div>
                     </div>}
                     {!cookies.accessToken && <div className='sign'>
                         <div className='sign-in' onClick={() => setModalOpen(true)}>Login</div>
@@ -229,7 +230,37 @@ export default function Topbar() {
                             <div className='log-in-word'>Log In</div>
                             <div className='log-in-close' onClick={() => setModalOpen(false)}></div>
                         </div>
+                        <div className='log-in-mode-select-button'>
+                            <div className={`log-in-mode-guest-${ mode === 'guest' ? 'active' : 'disable'}`} ></div>
+                            <div className={`log-in-mode-host-${ mode === 'host' ? 'active' : 'disable'}`}></div>
+                        </div>
                         {<div>
+                            <div className='input-log'>
+                                <div className='log-in-id-icon'></div>
+                                <InputBox
+                                    type='text'
+                                    placeholder='아이디를 입력해 주세요.'
+                                    value={gusetId}
+                                    message={idmessage}
+                                    messageError={errorMessage}
+                                    onChange={onIdChangeHandler}
+                                    onKey={pressKeyEnter}
+                                />
+                            </div>
+                            <div className='input-log'>
+                                <div className='log-in-pw-icon'></div>
+                                <InputBox
+                                    type='password'
+                                    placeholder='비밀번호를 입력해 주세요.'
+                                    value={gusetPassword}
+                                    message={pwmessage}
+                                    messageError={errorMessage}
+                                    onChange={onPasswordChangeHandler}
+                                    onKey={pressKeyEnter}
+                                />
+                            </div>
+                        </div>}
+                        { <div>
                             <div className='input-log'>
                                 <div className='log-in-id-icon'></div>
                                 <InputBox
