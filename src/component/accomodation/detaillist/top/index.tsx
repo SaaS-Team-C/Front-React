@@ -143,6 +143,15 @@ const AccommodationDetailTopImages: React.FC<AccommodationImagesProps> = ({
   );
 };
 
+
+
+
+
+
+
+
+
+
 // 숙소 디테일 상단 정보 카드 //
 interface AccommodationDetailTopProps {
   //! dto 타입 백엔드와 맞춰서 수정 필요. 특히 카테고리(=서비스) 부분
@@ -157,6 +166,7 @@ interface AccommodationDetailTopProps {
   mapLink: string;
   accommodationType: string;
   onReviewButtonClick: () => void;
+  onCardClick: () => void;
 }
 
 const AccommodationDetailTopCard: React.FC<AccommodationDetailTopProps> = ({
@@ -171,13 +181,14 @@ const AccommodationDetailTopCard: React.FC<AccommodationDetailTopProps> = ({
   mapLink,
   accommodationType,
   onReviewButtonClick, 
+  onCardClick
 }) => {
   // state: 상태 관리 //
   const [isFacilityModalOpen, setIsFacilityModalOpen] = useState(false);
 
   // 부대시설 모달 열기 및 닫기 함수
   const openFacilityModal = () => setIsFacilityModalOpen(true);
-  const closeFacilityModal = () => setIsFacilityModalOpen(false);
+  const closeFacilityModal = () => setIsFacilityModalOpen(true);
 
   // 리액트 아이콘 라이브러리 사용 //
   const iconMap: Record<string, JSX.Element> = {
@@ -186,6 +197,12 @@ const AccommodationDetailTopCard: React.FC<AccommodationDetailTopProps> = ({
     Pool: <FaSwimmingPool />,
   
   };
+
+
+
+
+  function onFacilityButtonClick() {
+    }
 
   return (
     <div id="accommodation-detail">
@@ -219,14 +236,15 @@ const AccommodationDetailTopCard: React.FC<AccommodationDetailTopProps> = ({
           </div>
 
           <div className="review-snippet">{reviewSnippet}</div>
-          {/* Call the onReviewButtonClick function when the button is clicked */}
-        </div>
+                </div>
 
-        <div className="services-section" onClick={openFacilityModal}>
+        <div className="services-section" onClick={() => {
+                  onFacilityButtonClick();
+                }} >
           <div className="heder-title-container">
           <div className="heder-title">서비스 및 부대시설</div>
           <button
-            className="view-all-facilities-btn"
+            className="view-all-facilities-btn" onClick={openFacilityModal}
             ></button>
           </div>
           <div className="services">
@@ -241,25 +259,31 @@ const AccommodationDetailTopCard: React.FC<AccommodationDetailTopProps> = ({
           </div>
           {/* 부대시설 모달 */}
           <Modal
-            isOpen={isFacilityModalOpen}
-            onRequestClose={closeFacilityModal}
-            contentLabel="Facility Information"
-            className="modal"
-            overlayClassName="overlay"
-          >
-            <button onClick={closeFacilityModal}>Close</button>
-            <div className="facility-info">
-              <h3>부대시설</h3>
+              isOpen={isFacilityModalOpen}
+              onRequestClose={closeFacilityModal}
+              contentLabel="Facility Information"
+              className="facility-modal"
+              overlayClassName="overlay"
+            >
+              <div className="facility-modal">
+              <div id="facility-modal-close-box">
+              <button className="facility-modal-close-btn" onClick={closeFacilityModal} ></button>
+              <div className="facility-modal-title" >서비스 및 부대시설</div>
+              </div>
+
+              <div className="facility-icons-box">
               <div className="facility-icons">
                 {services.map((service, index) => (
                   <div key={index} className="facility-item">
-                    <i className={`facility-icon ${service}-icon`} />{" "}
+                    {iconMap[service] || <FaConciergeBell />}{" "}
                     {/* 부대시설 아이콘 넣기*/}
                     <span>{service}</span>
                   </div>
                 ))}
               </div>
-            </div>
+              </div>
+              </div>
+            
           </Modal>
         </div>
 
@@ -296,9 +320,12 @@ interface AccommodationDetail {
 export default function AccommodationDetailTop({
   accommodation_name,
   onReviewButtonClick,
+  onFacilityButtonClick
+  
 }: {
   accommodation_name: string;
   onReviewButtonClick: () => void;
+  onFacilityButtonClick: () => void;
 }) {
   // const [accommodationDetail, setAccommodationDetail] = useState<AccommodationDetail | null>(null);
 
@@ -317,8 +344,8 @@ export default function AccommodationDetailTop({
       ],
       services: [
         "WiFi",
-        "수영장",
-        "주차",
+        "Parking", 
+        "Pool",
         "애견 동반 가능",
         "실내 스파",
         "금연 객실",
@@ -358,6 +385,10 @@ export default function AccommodationDetailTop({
 
   if (!accommodationDetail) return <p>Loading...</p>; // 로딩 표시
 
+  function onCardClick(): void {
+    throw new Error("Function not implemented.");
+  }
+
   return (
     <>
       <AccommodationDetailTopImages
@@ -374,7 +405,8 @@ export default function AccommodationDetailTop({
         location={accommodationDetail.location}
         mapLink={accommodationDetail.mapLink}
         accommodationType={accommodationDetail.accommodationType}
-        onReviewButtonClick={onReviewButtonClick}
+        onReviewButtonClick={onReviewButtonClick} onCardClick={onCardClick}        
+   
       />
     </>
   );

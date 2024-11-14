@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useRef } from 'react'
 import './style.css';
 import RoomList from './roomlist'
 import { RoomDTO } from 'src/apis/accommodation/dto/request/room.request.dto';
@@ -231,27 +231,42 @@ const mockAccommodationData: AccommodationDetailRequestDTO = {
 };
 
 
-const mockRoomsData: RoomDTO[] = [
-  
-];
-
 const markersData = [
   { id: 1, latitude: 37.7749, longitude: -122.4194, label: 'San Francisco' },
   { id: 2, latitude: 34.0522, longitude: -118.2437, label: 'Los Angeles' },
   { id: 3, latitude: 36.1699, longitude: -115.1398, label: 'Las Vegas' },
 ];
 
-const AccommodationDetailMiddle: React.FC = () => {
 
   const latitude = 37.7749; // 임의의 위도 값
   const longitude = -122.4194; // 임의의 경도 값
   const accommodationAddress = '부산광역시 부산진구 중앙대로 668 에이원프라자 빌딩 4층'
   
+
+  const AccommodationDetailMiddle = () => {
+    const facilitySectionRef = useRef<HTMLDivElement | null>(null);
+  
+    // 스크롤 함수 정의
+    const scrollToFacilities = () => {
+      if (facilitySectionRef.current) {
+        facilitySectionRef.current.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+    };
+
   return (
     <div className='middle-wrapper'>
-      <RoomList roomsData={mockAccommodationData.rooms} 
-      accommodationData={mockAccommodationData}  />
-      <FacilitiesCard/>
+      {/* RoomList에 scrollToFacilities 함수 전달 */}
+      <RoomList
+        roomsData={mockAccommodationData.rooms}
+        accommodationData={mockAccommodationData}
+        onCardClick={scrollToFacilities}
+      
+        
+      />
+
+    <div ref={facilitySectionRef} id="facilitySection">
+      <FacilitiesCard />
+      </div>
       <Map latitude={latitude} longitude={longitude} accommodationAddress={accommodationAddress} />
       {/* <MapWithMarkers markers={markersData} />
       <Wrapper apiKey="AIzaSyCqPhfzQDCxqzMIJNBeMTJuzJ9o71CqRM4" render={render} libraries={['marker']}/>
@@ -263,4 +278,3 @@ const AccommodationDetailMiddle: React.FC = () => {
 }
 
 export default AccommodationDetailMiddle
-

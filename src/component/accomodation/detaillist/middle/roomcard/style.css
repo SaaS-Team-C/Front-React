@@ -230,21 +230,35 @@
 /* 상세 정보 modal */
 
 .roomcard-detail-info-modal{
+  display: flex;
+  flex-direction: column;
 
-    position: absolute;
+   position: absolute;
     top: 50%;
     left: 50%;
     right: auto;
     bottom: auto;
     transform: translate(-50%, -50%);
-    background-color: pink;
+    background-color: #ffff;
     padding: 25px;
-    width: 1200px;
+    width: 400px;
     height: auto;
-  
+
     max-width: 1200px;
     z-index:50;
+
+    border-radius: 10px;
   
+}
+
+.roomcard-detail-info-modal-title{
+  text-align: center;
+  color: #52607C;
+  font-size: 22px;
+  font-weight: 600;
+
+  padding: 50px;
+
 }
 
 .roomcard-detail-info-modal-overlay{
@@ -259,7 +273,49 @@
 }
 
 .test-test-test{
-  background-color: pink;
-  width: 500px;
+  display: flex;
+  flex-direction: column;
+
+  
+
+  width: 400px;
   height: 500px;
+}
+
+
+.roomcard-detail-modal-close-button{
+  background-image: url('/public/images/accommodationlist/Multiply.png');
+  background-repeat: no-repeat;
+  background-size: contain;
+  width: 30px;
+  height: 30px;
+  border: none;
+  background-color: #ffff;
+}
+
+.room-modal-info-container{
+ 
+  padding: 20px 0;
+  margin: 30px 0px;
+  display: flex;
+  flex-direction: column;
+  border-bottom: 1px solid #52607C;
+  border-top: 1px solid #52607C;
+
+}
+
+.room-modal-info{
+
+  color: #52607C;
+  font-size: 18px;
+  font-weight: 600;
+  padding: 10px;
+}
+
+.room-modal-info-detail{
+
+  margin-left: 20px;
+  color: #52607C;
+  font-size: 15px;
+  padding: 10px;
 }

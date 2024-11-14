@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import "./style.css";
 import { ACCESS_TOKEN, ACCOMMODATION_LIST_DETAIL_PATH } from "src/constants";
@@ -120,6 +120,7 @@ const List = () => {
               className="accommodation-cards"
               onClick={() => handleDetailClick(accommodations.accommodationName)}
             >
+              
               <div className="image-wrapper">
                 <img
                   src={accommodations.accommodationMainImage}
