@@ -7,7 +7,7 @@ export default interface HostSignUpRequestDto {
     hostTelNumber: string;
     hostAuthNumber: string;
     businessName: string;
-    businessStartDay: Date | null;
-    businessNumber: string;
+    businessStartDay: string;
+    hostBusinessNumber: string;
     businessImage: string;
 }

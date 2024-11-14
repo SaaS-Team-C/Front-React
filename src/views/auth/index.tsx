@@ -114,6 +114,7 @@ export default function SignUp() {
   const [authNumberMessageError, setAuthNumberMessageError] = useState<boolean>(false);
   const [businessNameCheckMessageError, setBusinessNameCheckMessageError] = useState<boolean>(false);
   const [businessNumberCheckMessageError, setBusinessNumberCheckMessageError] = useState<boolean>(false);
+  const [businessImageCheckMessageError, setBusinessImageCheckMessageError] = useState<boolean>(false);
   const [businessStartDayCheckMessageError, setBusinessStartDayCheckMessageError] = useState<boolean>(false);
   const [guestIsButtonEnabled, setGuestIsButtonEnabled] = useState(false);
   const [hostIsButtonEnabled, setHostIsButtonEnabled] = useState(false);
@@ -249,6 +250,9 @@ export default function SignUp() {
       alert(message);
       return;
     }
+    if (isSuccessed) {
+      navigator('/main')
+    }
   };
 
   // function : 사업자 번호 전송 Response 처리 함수 //
@@ -361,6 +365,12 @@ export default function SignUp() {
     setBusinessNumber(value); // 상태 업데이트
   };
 
+  // event handler: 사업자 번호 변경 이벤트 처리 //
+  const onBusinessImageChangeHandler = (event: ChangeEvent<HTMLInputElement>) => {
+    const { value } = event.target; // 입력된 값을 가져옴
+    setBusinessImage(value); // 상태 업데이트
+  };
+
   // event handler: 사업자 번호 버튼 클릭 이벤트 처리 //
   const onBusinessNumberCheckClickHandler = () => {
     if (!businessNumber) {
@@ -382,7 +392,7 @@ export default function SignUp() {
       const requestBody: BusinessNumberCheckRequestDto = {
         b_no: businessNumber,
         start_dt: startStringDay,
-        p_nm: hostName
+        p_nm: businessName
       };
       businessNumberCheckRequest(requestBody).then(businessNumberCheckResponse);
     }
@@ -504,14 +514,14 @@ export default function SignUp() {
     if (!hostIsButtonEnabled) return;
 
     const requestBody: HostSignUpRequestDto = {
-      hostName,
       hostId: hostId,
       hostPw: hostPassword,
+      hostName,
       hostTelNumber: telNumber,
       hostAuthNumber: authNumber,
+      hostBusinessNumber: businessNumber,
       businessName: businessName,
-      businessStartDay: businessStartDay,
-      businessNumber: businessNumber,
+      businessStartDay: startStringDay,
       businessImage: businessImage
     };
 
@@ -664,8 +674,17 @@ export default function SignUp() {
                     type="text"
                     placeholder="사업자 등록번호 10자를 입력해주세요."
                     buttonName="등록"
-                    onChange={onBusinessNumberChangeHandler}
+                    onChange={onBusinessNumberChangeHandler} 
                     onButtonClick={onBusinessNumberCheckClickHandler}
+                  />
+                  <InputComponent
+                    messageError={businessImageCheckMessageError}
+                    message=''
+                    value={businessImage}
+                    label="사업자 등록증 사진"
+                    type="file"
+                    placeholder=""
+                    onChange={onBusinessImageChangeHandler}
                   />
                   <div id="business-wrapper">
                     <div className="startDay-container">
