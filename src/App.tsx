@@ -39,6 +39,7 @@ import {SignInUser} from './stores';
 import { ResponseDto } from './apis/signUp/dto/response';
 import GetSignInResponseDto from './apis/login/dto/response/get-guest-sign-in.response.dto';
 import GetGuestSignInResponseDto from './apis/login/dto/response/get-guest-sign-in.response.dto';
+import List from './component/accomodation/list';
 
 
 
