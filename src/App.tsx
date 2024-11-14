@@ -6,7 +6,7 @@ import Main from './views/main/Main';
 
 import Payment from './views/payment';
 
-import { ACCOMMODATION_LIST_DETAIL_PATH, ACCOMMODATION_LIST_PATH, AUTH_PATH, FINDID_PATH, MAIN_PATH } from './constants';
+import { ACCESS_TOKEN, ACCOMMODATION_LIST_DETAIL_PATH, ACCOMMODATION_LIST_PATH, AUTH_PATH, FINDID_PATH, getSignInRequest, MAIN_PATH } from './constants';
 
 import { RegionImages } from './resources/images/region';
 import { useEffect } from 'react';
@@ -35,7 +35,10 @@ import Roomly from './views/roomly';
 
 import MyAccommodationManagementView from './views/mypagehost/MyAccommodationManagement';
 import ShowDetailList from './component/mypagehost/MyAccommodationManagement/showaccdetail/detaillist';
-
+import {SignInUser} from './stores';
+import { ResponseDto } from './apis/signUp/dto/response';
+import GetSignInResponseDto from './apis/login/dto/response/get-guest-sign-in.response.dto';
+import GetGuestSignInResponseDto from './apis/login/dto/response/get-guest-sign-in.response.dto';
 
 
 
@@ -73,10 +76,47 @@ function Booking() {
 
 export default function App() {
   
-    // onPathChange 함수 정의
-    const handlePathChange = () => {
-      console.log('Path changed!');
-    };
+  // 로그인 유저 정보 상태 //
+  const {signInUser, setSignInUser} = SignInUser();
+
+  // state : cookie 상태 //
+  const [cookies, setCookie, removeCookie] = useCookies();
+
+  // function : 네비게이터 함수 //
+  const navigator = useNavigate();
+  
+
+  const getSignInResponse = (responseBody: GetGuestSignInResponseDto | ResponseDto | null) => {
+  const message = 
+  !responseBody ? '로그인 유저 정보를 불러오는데 문제가 발생했습니다.' :
+  responseBody.code === 'NI' ? '로그인 유저 정보가 존재하지 않습니다.' :
+  responseBody.code === 'AF' ? '잘못된 접근입니다.' :
+  responseBody.code === 'DBE' ? '로그인 유저 정보를 불러오는데 문제가 발생했습니다.' : '';
+  
+  const isSuccessde = responseBody !== null && responseBody.code === 'SU';
+  
+  // if (!isSuccessde) {
+  //   alert(message)
+  //   removeCookie(ACCESS_TOKEN, { path: ROOT_PATH })
+  //   setSignInUser(null);
+  //   navigator(AUTH_ABSOLUTE_PATH)
+  //   return;
+  // }
+
+  const {guestId, guestName, guestTelNumber} = responseBody as GetGuestSignInResponseDto
+  setSignInUser({guestId, guestName, guestTelNumber});
+}
+
+useEffect(() => {
+  const accessToken = cookies[ACCESS_TOKEN];
+  if (accessToken) getSignInRequest(accessToken).then(getSignInResponse)
+  else setSignInUser(null);
+}, [cookies[ACCESS_TOKEN]])
+
+  // onPathChange 함수 정의
+  const handlePathChange = () => {
+    console.log('Path changed!');
+  };
   
   return (
     <Routes>

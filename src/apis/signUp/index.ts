@@ -7,7 +7,8 @@ import HostSignUpRequestDto from "./dto/request/host/h-sign-up.request.dto";
 import TelAuthRequestDto from "./dto/request/common/tel-auth.request.dto";
 import TelAuthCheckRequestDto from "./dto/request/common/tel-auth-check.request.dto";
 import BusinessNumberCheckRequestDto from "./dto/request/host/h-business-number-check.request.dto";
-import { HOST_ID_CHECK, HOST_SIGN_UP_API_MODULE } from "src/constants";
+import { GUEST_SIGN_IN_API_URL, HOST_ID_CHECK, HOST_SIGN_UP_API_MODULE } from "src/constants";
+import GetSignInResponseDto from "../login/dto/response/get-guest-sign-in.response.dto";
 
 // variable: API URL 상수 //
 const ROOMLY_API_DOMAIN = process.env.REACT_APP_API_URL;
@@ -19,10 +20,17 @@ const TEL_AUTH_CHECK_API_URL = `${AUTH_MODULE_URL}/tel-auth-check`;
 const GUEST_SIGN_UP_API_URL = `${AUTH_MODULE_URL}/sign-up`;
 const BUSINESS_NUMBER_CHECK_API_URL = `${ROOMLY_API_DOMAIN}/api/validate-business`;
 
-// function : Authorization Bearer 헤더 //
-const bearerAuthorization = (accessToken: string) => ({
-    headers: { Authorization: `Bearer ${accessToken}` },
-});
+// // function : Authorization Bearer 헤더 //
+// const bearerAuthorization = (accessToken: string) => ({
+//     headers: { Authorization: `Bearer ${accessToken}` },
+// });
+// // function: get sign in 요청 함수 //
+// export const getSignInRequest = async (accessToken: string) => {
+//     const responseBody = await axios.get(GUEST_SIGN_IN_API_URL, bearerAuthorization(accessToken))
+//     .then(responseDataHandler<GetSignInResponseDto>)
+//     .catch(responseErrorHandler)
+//     return  responseBody;
+// }
 
 // function : response data 처리 함수 //
 const responseDataHandler = <T>(response: AxiosResponse<T>) => {
