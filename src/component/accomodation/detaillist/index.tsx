@@ -68,7 +68,7 @@ export default function DetailList() {
       </div>
 
     </div>
-    <Bottombar/>
+    {/* <Bottombar/> */}
     
     
     </>
