@@ -140,7 +140,20 @@ export default function SignUp() {
       isCheckedAuthNumber;  // 인증 번호 체크 여부
 
     setGuestIsButtonEnabled(guestAllFieldsFilled);
-  }, [guestName,guestId,guestPassword,guestPasswordCheck]);
+  }, [
+    guestName,
+    guestId,
+    guestPassword,
+    guestPasswordCheck,
+    telNumber,
+    isAgreed,
+    isCheckedId,
+    isMatchedPassword,
+    isCheckedPassword,
+    isSend,
+    authNumber,
+    isCheckedAuthNumber  
+  ]);
 
   useEffect(() => {
     setCheckedId(false)
@@ -502,7 +515,6 @@ export default function SignUp() {
       snsId: snsId, // guestSnsId 변수를 사용
       guestTelNumber: telNumber,
       guestAuthNumber: authNumber
-
     };
 
     guestSignUpRequest(requestBody).then(guestSignUpResponse);

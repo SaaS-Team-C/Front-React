@@ -124,7 +124,7 @@ useEffect(() => {
       <Route path={MAIN_PATH} element={<Main />} />
       <Route path='mypage' element={<GuestMypage />} />
 
-      <Route path={ACCOMMODATION_LIST_PATH} element={<AccommodationList />} />
+      <Route path={ACCOMMODATION_LIST_PATH} element={<List />} />
       <Route path={ACCOMMODATION_LIST_DETAIL_PATH} element={<DetailList />} />
       <Route path={AUTH_PATH} element={<SignUp />} />
       <Route path='/payment' element={<Payment onPathChange={() => { } }/>} />
