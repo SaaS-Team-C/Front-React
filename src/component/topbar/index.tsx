@@ -1,11 +1,10 @@
 import { ChangeEvent, KeyboardEvent, useEffect, useState } from 'react';
 import './style.css';
-import { useLocation, useNavigate, useParams } from 'react-router';
+import { useNavigate } from 'react-router';
 
 // import { LogInResponseDto } from 'src/apis/login/response';
 // import { ResponseDto } from 'src/apis/dto/response';
 import { useCookies } from 'react-cookie';
-import { MAIN_PATH } from 'src/constants';
 import { useSearchParams } from 'react-router-dom';
 import { logInRequest } from 'src/apis/login';
 import GuestLogInRequestDto from 'src/apis/login/dto/request/guest/login.request.dto';
@@ -14,6 +13,8 @@ import ResponseDto from 'src/apis/login/dto/response/response.dto';
 import InputBox from '../input/login';
 
 // 컴포넌트: 메인페이지 화면 컴포넌트 //
+    type group = 'guest' | 'host' ;
+
 export default function Topbar() {
     // 쿠키 상태 초기화
     const [cookies, setCookie, removeCookies] = useCookies(['accessToken']);
@@ -21,9 +22,15 @@ export default function Topbar() {
     // state: 모달창 상태 //
     const [modalOpen, setModalOpen] = useState(false);
 
-    // state: 로그인 입력 정보 상태 //
-    const [id, setId] = useState<string>('');
-    const [password, setPassword] = useState<string>('');
+    // state: 로그인 모드 전환 상태 //
+    const [mode, setMode] = useState<group>('guest')
+
+    // state: 게스트 로그인 입력 정보 상태 //
+    const [gusetId, setGuestId] = useState<string>('');
+    const [gusetPassword, setGuestPassword] = useState<string>('');
+    // state: 호스트 로그인 입력 정보 상태 //
+    const [hostId, setHostId] = useState<string>('');
+    const [hostPassword, setHostPassword] = useState<string>('');
 
     // state: 메세지 출력 정보 상태 //
     const [message, setMessage] = useState<string>('');
@@ -65,40 +72,40 @@ export default function Topbar() {
     // event handler: 아이디 변경 이벤트 처리 //
     const onIdChangeHandler = (event: ChangeEvent<HTMLInputElement>) => {
         const { value } = event.target;
-        setId(value);
+        setGuestId(value);
     }
 
     // event handler: 비밀번호 변경 이벤트 처리 //
     const onPasswordChangeHandler = (event: ChangeEvent<HTMLInputElement>) => {
         const { value } = event.target;
-        setPassword(value);
+        setGuestPassword(value);
     }
 
     /** 
      * function: 로그인 버튼을 클릭 했을 경우 일어나는 이벤트 처리 */   
     const onLoginButtonClickHandler = async () => {
-        if (!id) {
+        if (!gusetId) {
             setIdMessage('아이디를 입력해 주세요!');
             setErrorMessage(true);
             return;
         }
-        if (!password) {
+        if (!gusetPassword) {
             setPwMessage('비밀번호를 입력해 주세요!');
             setErrorMessage(true);
             return;
         }
-        if (!id || !password) return;
+        if (!gusetId || !gusetPassword) return;
     
             const requestBody: GuestLogInRequestDto = {
-                guestId: id,
-                guestPw: password
+                guestId: gusetId,
+                guestPw: gusetPassword
             };
             logInRequest(requestBody).then(logInResponse);
         }
         // effect: 아이디 및 비밀번호 변경시 실행할 함수 //
         useEffect(() => {
             setMessage('');
-        }, [id, password]);
+        }, [gusetId, gusetPassword]);
 
 
     // function: url 값 가져오기 //
@@ -108,28 +115,26 @@ export default function Topbar() {
     const urlCount = searchParams.get('count')
 
 
+
     // effect: 검색값이 있을 경우 실행할 함수 //
     useEffect(() => {
         // eslint-disable-next-line no-restricted-globals
         if (urlRegion && urlStart && urlEnd && urlCount && (location.pathname !== '/main')) {
             setSearchBar(true);
             return;
-
         };
-
         setSearchBar(false);
-
     }, [searchParams])
 
     // effect: 아이디 및 비밀번호 변경시 실행할 함수 //
     useEffect(() => {
         setIdMessage('');
-    }, [id]);
+    }, [gusetId]);
 
     // effect: 비밀번호 변경시 실행할 함수 //
     useEffect(() => {
         setPwMessage('');
-    }, [password]);
+    }, [gusetPassword]);
 
     // effect: 토큰값 있을 경우 실행할 함수 //
     useEffect(() => {
@@ -181,13 +186,11 @@ export default function Topbar() {
         event.stopPropagation()
     };
 
-    const asdasdaszd = (event : React.MouseEvent) => {
+    const backGroundClickModalClose = (event : React.MouseEvent) => {
         setModalOpen(true)
     };
 
-    const asdasdaszd2 = (event : React.MouseEvent) => {
-        setModalOpen(true)
-    };
+    
 
     return (
         <>
@@ -207,8 +210,8 @@ export default function Topbar() {
                         <div className='top-search-bar-count'>인원 {urlCount}</div>
                     </div>}
                     {cookies.accessToken && <div className='nowlogin'>
-                        <div className='my-page' onClick={onMyPageClickHandler}>마이페이지</div>
-                        <div className='log-out' onClick={onlogoutButtonClickHandler}>로그아웃</div>
+                        <div className='my-page' onClick={onMyPageClickHandler}>MYPAGE</div>
+                        <div className='log-out' onClick={onlogoutButtonClickHandler}>LOGOUT</div>
                     </div>}
                     {!cookies.accessToken && <div className='sign'>
                         <div className='sign-in' onClick={() => setModalOpen(true)}>Login</div>
@@ -218,8 +221,7 @@ export default function Topbar() {
             </div>
             {modalOpen &&
                 <div className='modal-container' onMouseDown={onContainerClickHandler}
-                
-                onMouseUp={asdasdaszd}  >
+                onMouseUp={backGroundClickModalClose}  >
                     <div
                         className='modal-content'
                         onClick={onModalContentClickHandler}
@@ -228,30 +230,62 @@ export default function Topbar() {
                             <div className='log-in-word'>Log In</div>
                             <div className='log-in-close' onClick={() => setModalOpen(false)}></div>
                         </div>
-                        <div className='input-log'>
-                            <div className='log-in-id-icon'></div>
-                            <InputBox
-                                type='text'
-                                placeholder='아이디를 입력해 주세요.'
-                                value={id}
-                                message={idmessage}
-                                messageError={errorMessage}
-                                onChange={onIdChangeHandler}
-                                onKey={pressKeyEnter}
-                            />
+                        <div className='log-in-mode-select-button'>
+                            <div className={`log-in-mode-guest-${ mode === 'guest' ? 'active' : 'disable'}`} ></div>
+                            <div className={`log-in-mode-host-${ mode === 'host' ? 'active' : 'disable'}`}></div>
                         </div>
-                        <div className='input-log'>
-                            <div className='log-in-pw-icon'></div>
-                            <InputBox
-                                type='password'
-                                placeholder='비밀번호를 입력해 주세요.'
-                                value={password}
-                                message={pwmessage}
-                                messageError={errorMessage}
-                                onChange={onPasswordChangeHandler}
-                                onKey={pressKeyEnter}
-                            />
-                        </div>
+                        {<div>
+                            <div className='input-log'>
+                                <div className='log-in-id-icon'></div>
+                                <InputBox
+                                    type='text'
+                                    placeholder='아이디를 입력해 주세요.'
+                                    value={gusetId}
+                                    message={idmessage}
+                                    messageError={errorMessage}
+                                    onChange={onIdChangeHandler}
+                                    onKey={pressKeyEnter}
+                                />
+                            </div>
+                            <div className='input-log'>
+                                <div className='log-in-pw-icon'></div>
+                                <InputBox
+                                    type='password'
+                                    placeholder='비밀번호를 입력해 주세요.'
+                                    value={gusetPassword}
+                                    message={pwmessage}
+                                    messageError={errorMessage}
+                                    onChange={onPasswordChangeHandler}
+                                    onKey={pressKeyEnter}
+                                />
+                            </div>
+                        </div>}
+                        { <div>
+                            <div className='input-log'>
+                                <div className='log-in-id-icon'></div>
+                                <InputBox
+                                    type='text'
+                                    placeholder='아이디를 입력해 주세요.'
+                                    value={gusetId}
+                                    message={idmessage}
+                                    messageError={errorMessage}
+                                    onChange={onIdChangeHandler}
+                                    onKey={pressKeyEnter}
+                                />
+                            </div>
+                            <div className='input-log'>
+                                <div className='log-in-pw-icon'></div>
+                                <InputBox
+                                    type='password'
+                                    placeholder='비밀번호를 입력해 주세요.'
+                                    value={gusetPassword}
+                                    message={pwmessage}
+                                    messageError={errorMessage}
+                                    onChange={onPasswordChangeHandler}
+                                    onKey={pressKeyEnter}
+                                />
+                            </div>
+                        </div>}
                         <div className='log-in-button' onClick={onLoginButtonClickHandler}>로그인</div>
                         <div className='find'>
                             <div className='find-id' onClick={onFindIdPwButtonClickHandler}>아이디/비밀번호 찾기</div>

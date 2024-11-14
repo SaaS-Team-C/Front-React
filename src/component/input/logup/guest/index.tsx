@@ -3,7 +3,7 @@ import './style.css';
 
 interface Props {
     label: string;
-    type: 'text' | 'password';
+    type: 'text' | 'password' | 'file';
     placeholder: string;
     value: string;
     message: string;

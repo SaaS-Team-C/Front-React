@@ -19,7 +19,7 @@ export default function GuestMypage() {
     const datail3 = "즐겨찾기"
 
     const [click, setClick] = useState<string>(datail1)
-    const [cookies , setCookie] = useCookies();
+    const [cookies, setCookie] = useCookies();
 
     const navigator = useNavigate();
 
@@ -28,10 +28,10 @@ export default function GuestMypage() {
         setClick(distimction);
     }
 
-    const testValue = true ;
+    const testValue = true;
 
     useEffect(() => {
-        if(!cookies['accessToken']) navigator(MAIN_PATH);
+        if (!cookies['accessToken']) navigator(MAIN_PATH);
     }, [Topbar]);
 
     const ConSortArea = styled.div`
@@ -42,22 +42,25 @@ export default function GuestMypage() {
   `;
 
 
-  return (
-    <>
-    <Topbar/>
-    <div id='mypage-wrapper'>
-        <div className='guestMypage-side-bar'>
-            <MypageCatalogButton text={datail1} activite={click === datail1 || click === ''} onClick={onClickButtonHandler} />
-            <MypageCatalogButton text={datail2} activite={click === datail2 || click === ''} onClick={onClickButtonHandler} />
-            <MypageCatalogButton text={datail3} activite={click === datail3 || click === ''} onClick={onClickButtonHandler} />
+    return (
+        <>
+            <Topbar />
+            <div id='mypage-wrapper'>
+                <div id='mypage-container'>
+                    <div className='guestMypage-side-bar'>
+                        <MypageCatalogButton text={datail1} activite={click === datail1 || click === ''} onClick={onClickButtonHandler} />
+                        <MypageCatalogButton text={datail2} activite={click === datail2 || click === ''} onClick={onClickButtonHandler} />
+                        <MypageCatalogButton text={datail3} activite={click === datail3 || click === ''} onClick={onClickButtonHandler} />
+                    </div>
+                    <div className='guestMypage-main'>
+                        <Information activite={click === datail1 || click === ''} titletext={datail1} username={'옥진서'} />
+                        <Booking activite={click === datail2 || click === ''} titletext={datail2} username={'옥진서'} />
+                        <Information activite={click === datail3 || click === ''} titletext={datail3} username={'옥진서'} />
+                    </div>
+                </div>
+
             </div>
-        <div className='guestMypage-main'>
-                <Information activite={click === datail1 || click === ''} titletext={datail1} username={'옥진서'} />
-                <Booking activite={click === datail2 || click === ''} titletext={datail2} username={'옥진서'} />
-                <Information activite={click === datail3 || click === ''} titletext={datail3} username={'옥진서'} />
-            </div>
-    </div>
-    </>
-  )
+        </>
+    )
 
 }

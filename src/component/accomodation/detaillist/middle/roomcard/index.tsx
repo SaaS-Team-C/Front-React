@@ -6,6 +6,8 @@ import AccommodationDetailTopImages from '../../top/imageslick';
 import { PAYMENT_PATH } from 'src/constants';
 import { RoomDTO } from 'src/apis/accommodation/dto/request/room.request.dto';
 import { useCookies } from 'react-cookie';
+import SignInUser from './../../../../../types/sign-in-user.interface';
+import useStore from 'src/stores/sign-in-user.store';
 
 // props: 객실 카드 컴포넌트의 props 정의 //
 interface RoomCardProps {
@@ -79,8 +81,13 @@ const RoomCard: React.FC<RoomCardProps> = ({ room, isFullyBooked }) => {
   //   }
   // };
 
+  const {signInUser} = useStore();
+
   const handleChangebooking = () => {
     
+    
+
+
       // 로그인 상태인 경우 예약 페이지로 이동
       navigator(
         `${PAYMENT_PATH}?Region=${urlRegion}&start=${urlStart}&end=${urlEnd}&count=${urlCount}&roomName=${urlRoom}&accommodationName=${urlName}`,
@@ -88,7 +95,6 @@ const RoomCard: React.FC<RoomCardProps> = ({ room, isFullyBooked }) => {
       );
     } 
 
-  Modal.setAppElement('#root');
 
   return (
     <div id="room-card">
@@ -169,8 +175,8 @@ const RoomCard: React.FC<RoomCardProps> = ({ room, isFullyBooked }) => {
           isOpen={isDetailModalOpen}
           onRequestClose={closeDetailModal} // 모달 외부를 클릭하거나 닫기 버튼을 누르면 닫기
           contentLabel="Room Details Modal"
-          className="roomcard-detail-info-modal"
-          overlayClassName="roomcard-detail-info-modal-overlay"
+          className="modal"
+          overlayClassName="modal-overlay"
         >
           <div className='test-test-test'>
             <div className='roomcard-detail-modal-close-title-box'>

@@ -47,9 +47,9 @@ export default function BookingList() {
                         <div className='bookinglist-start'>입실시간:00:00</div>
                         <div className='bookinglist-end'>퇴실시간:00:00</div>
                     </div>
-                    <div className='bookinglist-count-cancelbox'>
+                    <div className='bookinglist-count-reviewbox'>
                         <div className='bookinglist-count'>인원:0</div>
-                        <button className='bookinglist-cancelbox'>취소하기</button>
+                        <button className='bookinglist-reviewbox'>리뷰하기</button>
                     </div>
                 </div>
             </div>

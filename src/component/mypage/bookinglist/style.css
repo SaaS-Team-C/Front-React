@@ -4,7 +4,7 @@
 
     --input-solid-color: rgba(188,188,188,1);
     --input-text-color: rgba(201,201,201,1);
-    --mypage-text-color: rgba(100,100,100,1);
+    --mypage-text-color: rgb(92, 91, 91);
 
     
     --diable-button-color: rgba(157,160,165,1);
@@ -21,7 +21,7 @@
 
     width: min-content;
     height: auto;
-    border: solid 1px var(--input-solid-color);
+    border: solid 3px rgb(238, 185, 185);
     border-radius: 10px;
 
     margin: 10px 15px;
@@ -39,7 +39,8 @@
     width: 100%;
     min-width: 700px;
     height: 30px;
-    
+    font-family: 'Pretendard-Regular';
+    color: rgb(51, 51, 51);
     font-size: 17px;
     font-weight: 600;
     text-shadow: 2px 2px 1px rgb(220, 220, 220)
@@ -101,7 +102,15 @@
                 margin-left: 20px;
             }
 
-        .bookinglist-count-cancelbox {
+        .bookinglist-count-reviewbox {
             display: flex;
             justify-content: space-between;
+        }
+
+        .bookinglist-reviewbox {
+            padding: 10px 20px;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            background-color: #ff94a0;
         }
