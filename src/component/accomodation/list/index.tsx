@@ -5,7 +5,7 @@ import PaginationFuction from "../pagination";
 import { AccommodationDTO } from "src/apis/accommodation/dto/response/accommodation.response.dto";
 import { fetchAccommodationList } from "src/apis/accommodation";
 import { ACCOMMODATION_LIST_DETAIL_PATH } from "src/constants";
-import Filter from "../filter/sidebarfilter";
+
 
 // interface: 메인 화면에서 검색 된 숙소 리스트 props //
 interface ListProps {
@@ -21,27 +21,8 @@ interface Filters {
 }
 
 const List: React.FC<ListProps> = ({ accommodations }) => {
-    // 필터 상태 정의
-    const [priceRange, setPriceRange] = useState({ min: 0, max: 5000000 });
-    const [reviewScore, setReviewScore] = useState([false, false, false, false, false]);
-    const [accommodationType, setAccommodationType] = useState([false, false, false]);
-    const [categoryArea, setCategoryArea] = useState<string[]>([]);
-    const [facilities, setFacilities] = useState([false, false, false, false, false, false, false]);
-  
-  
-    const onFilterChange = (filters: any) => {
-      // 필터가 변경될 때의 로직
-    };
-  
-    const resetFilters = () => {
-      setPriceRange({ min: 0, max: 5000000 });
-      setReviewScore([false, false, false, false, false]);
-      setAccommodationType([false, false, false]);
-      setCategoryArea([]);
-      setFacilities([false, false, false, false, false, false, false]);
-    };
 
-    // state: 필터 상태 관리
+// state: 필터 상태 관리
     const [filters, setFilters] = useState<Partial<Filters>>({
       priceRange: undefined,
       reviewScore: undefined,
@@ -51,9 +32,9 @@ const List: React.FC<ListProps> = ({ accommodations }) => {
     });
 
   // state: 숙소 리스트 불러오기 상태 관리
-  const [callAccommodationList, SetCallAccommodationList] = useState<
-    AccommodationDTO[]
-  >([]);
+  // const [callAccommodationList, SetCallAccommodationList] = useState<
+  //   AccommodationDTO[]
+  // >([]);
 
   const [filteredAccommodations, setFilteredAccommodations] = useState(accommodations);
 
@@ -124,228 +105,228 @@ const List: React.FC<ListProps> = ({ accommodations }) => {
   
 
   // 임시 샘플 데이터, 기능 구현 후 삭제 예정
-  // useEffect(() => {
-  //   const mockData: AccommodationDTO[] = [
-  //     {
-  //       accommodationName: "해운대 호텔",
-  //       accommodationGradeAverage: 4.2,
-  //       accommodationAddress: "부산광역시 해운대구 해운로 해운대 해수욕장 13번길",
-  //       categoryArea: "부산광역시",
-  //       categoryPet: true,
-  //       categoryNonSmokingArea: true,
-  //       categoryIndoorSpa: false,
-  //       categoryDinnerParty: true,
-  //       categoryWifi: true,
-  //       categoryCarPark: true,
-  //       categoryPool: true,
-  //       accommodationMainImage: "https://example.com/image1.jpg",
-  //       accommodationType: "호텔",
-  //       countReview: 4,
-  //       minRoomPrice: 300000,
-  //       applyStatus: false
-  //     },
-  //     {
-  //       accommodationName: "웨스틴 조선",
-  //       accommodationGradeAverage: 4.8,
-  //       categoryArea: "서울시",
-  //       accommodationAddress: "서울특별심 해운대구 해운로 해운대 해수욕장 13번길 소진이네집",
-  //       categoryPet: false,
-  //       categoryNonSmokingArea: true,
-  //       categoryIndoorSpa: false,
-  //       categoryDinnerParty: true,
-  //       categoryWifi: false,
-  //       categoryCarPark: false,
-  //       categoryPool: true,
-  //       accommodationMainImage: "https://example.com/image1.jpg",
-  //       accommodationType: "리조트",
-  //       countReview: 54,
-  //       minRoomPrice: 500000,
-  //       applyStatus: true
-  //     },
-  //       {
-  //         accommodationName: "서울 시티 호텔",
-  //         accommodationGradeAverage: 4.5,
-  //         categoryArea: "서울 강남",
-  //         accommodationType: "호텔",
-  //         categoryPet: false,
-  //         categoryNonSmokingArea: true,
-  //         categoryWifi: true,
-  //         categoryIndoorSpa: true,
-  //         categoryPool: false,
-  //         categoryCarPark: true,
-  //         categoryDinnerParty: false,
-  //         accommodationMainImage: "https://example.com/images/seoul_city_hotel.jpg",
-  //         accommodationAddress: "서울시 강남구 테헤란로 123",
-  //         minRoomPrice: 85000,
-  //         countReview: 123,
-  //         applyStatus: true,
-  //       },
-  //       {
-  //         accommodationName: "해운대 비치 리조트",
-  //         accommodationGradeAverage: 4.3,
-  //         categoryArea: "부산 해운대",
-  //         accommodationType: "리조트",
-  //         categoryPet: true,
-  //         categoryNonSmokingArea: true,
-  //         categoryWifi: true,
-  //         categoryIndoorSpa: false,
-  //         categoryPool: true,
-  //         categoryCarPark: true,
-  //         categoryDinnerParty: true,
-  //         accommodationMainImage: "https://example.com/images/haeundae_resort.jpg",
-  //         accommodationAddress: "부산시 해운대구 해변로 456",
-  //         minRoomPrice: 150000,
-  //         countReview: 89,
-  //         applyStatus: true,
-  //       },
-  //       {
-  //         accommodationName: "남산 게스트하우스",
-  //         accommodationGradeAverage: 4.0,
-  //         categoryArea: "서울 중구",
-  //         accommodationType: "게스트하우스",
-  //         categoryPet: false,
-  //         categoryNonSmokingArea: false,
-  //         categoryWifi: true,
-  //         categoryIndoorSpa: false,
-  //         categoryPool: false,
-  //         categoryCarPark: false,
-  //         categoryDinnerParty: false,
-  //         accommodationMainImage: "https://example.com/images/namsan_guesthouse.jpg",
-  //         accommodationAddress: "서울시 중구 명동길 78",
-  //         minRoomPrice: 40000,
-  //         countReview: 45,
-  //         applyStatus: true,
-  //       },
-  //       {
-  //         accommodationName: "인천 공항 호텔",
-  //         accommodationGradeAverage: 4.6,
-  //         categoryArea: "인천 중구",
-  //         accommodationType: "호텔",
-  //         categoryPet: false,
-  //         categoryNonSmokingArea: true,
-  //         categoryWifi: true,
-  //         categoryIndoorSpa: true,
-  //         categoryPool: false,
-  //         categoryCarPark: true,
-  //         categoryDinnerParty: false,
-  //         accommodationMainImage: "https://example.com/images/incheon_airport_hotel.jpg",
-  //         accommodationAddress: "인천시 중구 공항로 100",
-  //         minRoomPrice: 90000,
-  //         countReview: 150,
-  //         applyStatus: true,
-  //       },
-  //       {
-  //         accommodationName: "제주 자연 펜션",
-  //         accommodationGradeAverage: 4.7,
-  //         categoryArea: "제주 서귀포",
-  //         accommodationType: "펜션",
-  //         categoryPet: true,
-  //         categoryNonSmokingArea: false,
-  //         categoryWifi: true,
-  //         categoryIndoorSpa: false,
-  //         categoryPool: false,
-  //         categoryCarPark: true,
-  //         categoryDinnerParty: true,
-  //         accommodationMainImage: "https://example.com/images/jeju_nature_pension.jpg",
-  //         accommodationAddress: "제주도 서귀포시 산록로 50",
-  //         minRoomPrice: 70000,
-  //         countReview: 98,
-  //         applyStatus: true,
-  //       },
-  //       {
-  //         accommodationName: "강릉 오션 호텔",
-  //         accommodationGradeAverage: 4.4,
-  //         categoryArea: "강원 강릉",
-  //         accommodationType: "호텔",
-  //         categoryPet: false,
-  //         categoryNonSmokingArea: true,
-  //         categoryWifi: true,
-  //         categoryIndoorSpa: false,
-  //         categoryPool: true,
-  //         categoryCarPark: true,
-  //         categoryDinnerParty: true,
-  //         accommodationMainImage: "https://example.com/images/gangneung_ocean_hotel.jpg",
-  //         accommodationAddress: "강원도 강릉시 해안로 20",
-  //         minRoomPrice: 110000,
-  //         countReview: 72,
-  //         applyStatus: true,
-  //       },
-  //       {
-  //         accommodationName: "부산 마린 리조트",
-  //         accommodationGradeAverage: 4.2,
-  //         categoryArea: "부산 광안리",
-  //         accommodationType: "리조트",
-  //         categoryPet: true,
-  //         categoryNonSmokingArea: false,
-  //         categoryWifi: true,
-  //         categoryIndoorSpa: true,
-  //         categoryPool: true,
-  //         categoryCarPark: true,
-  //         categoryDinnerParty: false,
-  //         accommodationMainImage: "https://example.com/images/busan_marine_resort.jpg",
-  //         accommodationAddress: "부산시 수영구 광안해변로 200",
-  //         minRoomPrice: 160000,
-  //         countReview: 67,
-  //         applyStatus: true,
-  //       },
-  //       {
-  //         accommodationName: "경주 전통 한옥",
-  //         accommodationGradeAverage: 4.8,
-  //         categoryArea: "경북 경주",
-  //         accommodationType: "한옥",
-  //         categoryPet: false,
-  //         categoryNonSmokingArea: true,
-  //         categoryWifi: true,
-  //         categoryIndoorSpa: false,
-  //         categoryPool: false,
-  //         categoryCarPark: true,
-  //         categoryDinnerParty: false,
-  //         accommodationMainImage: "https://example.com/images/gyeongju_traditional_hanok.jpg",
-  //         accommodationAddress: "경상북도 경주시 양남면 한옥길 88",
-  //         minRoomPrice: 50000,
-  //         countReview: 55,
-  //         applyStatus: true,
-  //       },
-  //       {
-  //         accommodationName: "대전 비즈니스 호텔",
-  //         accommodationGradeAverage: 4.3,
-  //         categoryArea: "대전 서구",
-  //         accommodationType: "호텔",
-  //         categoryPet: false,
-  //         categoryNonSmokingArea: true,
-  //         categoryWifi: true,
-  //         categoryIndoorSpa: false,
-  //         categoryPool: false,
-  //         categoryCarPark: true,
-  //         categoryDinnerParty: false,
-  //         accommodationMainImage: "https://example.com/images/daejeon_business_hotel.jpg",
-  //         accommodationAddress: "대전시 서구 대덕대로 45",
-  //         minRoomPrice: 60000,
-  //         countReview: 95,
-  //         applyStatus: true,
-  //       },
-  //       {
-  //         accommodationName: "양양 바다 캠핑장",
-  //         accommodationGradeAverage: 4.1,
-  //         categoryArea: "강원 양양",
-  //         accommodationType: "캠핑장",
-  //         categoryPet: true,
-  //         categoryNonSmokingArea: false,
-  //         categoryWifi: false,
-  //         categoryIndoorSpa: false,
-  //         categoryPool: false,
-  //         categoryCarPark: true,
-  //         categoryDinnerParty: true,
-  //         accommodationMainImage: "https://example.com/images/yangyang_sea_camp.jpg",
-  //         accommodationAddress: "강원도 양양군 해변길 23",
-  //         minRoomPrice: 30000,
-  //         countReview: 32,
-  //         applyStatus: true,
-  //       }
-  //     ];
-      
-  //   SetCallAccommodationList(mockData);
-  // }, []);
+  useEffect(() => {
+    const mockData: AccommodationDTO[] = [
+      {
+        accommodationName: "해운대 호텔",
+        accommodationGradeAverage: 4.2,
+        accommodationAddress: "부산광역시 해운대구 해운로 해운대 해수욕장 13번길",
+        categoryArea: "부산광역시",
+        categoryPet: true,
+        categoryNonSmokingArea: true,
+        categoryIndoorSpa: false,
+        categoryDinnerParty: true,
+        categoryWifi: true,
+        categoryCarPark: true,
+        categoryPool: true,
+        accommodationMainImage:  require("./01318c06.webp"),
+        accommodationType: "호텔",
+        countReview: 4,
+        minRoomPrice: 300000,
+        applyStatus: false
+      },
+      {
+        accommodationName: "웨스틴 조선",
+        accommodationGradeAverage: 4.8,
+        categoryArea: "서울시",
+        accommodationAddress: "서울특별심 해운대구 해운로 해운대 해수욕장 13번길 소진이네집",
+        categoryPet: false,
+        categoryNonSmokingArea: true,
+        categoryIndoorSpa: false,
+        categoryDinnerParty: true,
+        categoryWifi: false,
+        categoryCarPark: false,
+        categoryPool: true,
+        accommodationMainImage: require("./1bf0d245.jpg"),
+        accommodationType: "리조트",
+        countReview: 54,
+        minRoomPrice: 500000,
+        applyStatus: true
+      },
+        {
+          accommodationName: "서울 시티 호텔",
+          accommodationGradeAverage: 4.5,
+          categoryArea: "서울 강남",
+          accommodationType: "호텔",
+          categoryPet: false,
+          categoryNonSmokingArea: true,
+          categoryWifi: true,
+          categoryIndoorSpa: true,
+          categoryPool: false,
+          categoryCarPark: true,
+          categoryDinnerParty: false,
+          accommodationMainImage: require("./3823cff1.avif"),
+          accommodationAddress: "서울시 강남구 테헤란로 123",
+          minRoomPrice: 85000,
+          countReview: 123,
+          applyStatus: true,
+        },
+        {
+          accommodationName: "해운대 비치 리조트",
+          accommodationGradeAverage: 4.3,
+          categoryArea: "부산 해운대",
+          accommodationType: "리조트",
+          categoryPet: true,
+          categoryNonSmokingArea: true,
+          categoryWifi: true,
+          categoryIndoorSpa: false,
+          categoryPool: true,
+          categoryCarPark: true,
+          categoryDinnerParty: true,
+          accommodationMainImage: require("./40e2f776.webp"),
+          accommodationAddress: "부산시 해운대구 해변로 456",
+          minRoomPrice: 150000,
+          countReview: 89,
+          applyStatus: true,
+        },
+        {
+          accommodationName: "남산 게스트하우스",
+          accommodationGradeAverage: 4.0,
+          categoryArea: "서울 중구",
+          accommodationType: "게스트하우스",
+          categoryPet: false,
+          categoryNonSmokingArea: false,
+          categoryWifi: true,
+          categoryIndoorSpa: false,
+          categoryPool: false,
+          categoryCarPark: false,
+          categoryDinnerParty: false,
+          accommodationMainImage:  require("./45674698.avif"),
+          accommodationAddress: "서울시 중구 명동길 78",
+          minRoomPrice: 40000,
+          countReview: 45,
+          applyStatus: true,
+        },
+        {
+          accommodationName: "인천 공항 호텔",
+          accommodationGradeAverage: 4.6,
+          categoryArea: "인천 중구",
+          accommodationType: "호텔",
+          categoryPet: false,
+          categoryNonSmokingArea: true,
+          categoryWifi: true,
+          categoryIndoorSpa: true,
+          categoryPool: false,
+          categoryCarPark: true,
+          categoryDinnerParty: false,
+          accommodationMainImage: require("./5330fe64.webp"),
+          accommodationAddress: "인천시 중구 공항로 100",
+          minRoomPrice: 90000,
+          countReview: 150,
+          applyStatus: true,
+        },
+        {
+          accommodationName: "제주 자연 펜션",
+          accommodationGradeAverage: 4.7,
+          categoryArea: "제주 서귀포",
+          accommodationType: "펜션",
+          categoryPet: true,
+          categoryNonSmokingArea: false,
+          categoryWifi: true,
+          categoryIndoorSpa: false,
+          categoryPool: false,
+          categoryCarPark: true,
+          categoryDinnerParty: true,
+          accommodationMainImage: require("./554ab663.avif"),
+          accommodationAddress: "제주도 서귀포시 산록로 50",
+          minRoomPrice: 70000,
+          countReview: 98,
+          applyStatus: true,
+        },
+        {
+          accommodationName: "강릉 오션 호텔",
+          accommodationGradeAverage: 4.4,
+          categoryArea: "강원 강릉",
+          accommodationType: "호텔",
+          categoryPet: false,
+          categoryNonSmokingArea: true,
+          categoryWifi: true,
+          categoryIndoorSpa: false,
+          categoryPool: true,
+          categoryCarPark: true,
+          categoryDinnerParty: true,
+          accommodationMainImage: require("./6bbd092b.avif"),
+          accommodationAddress: "강원도 강릉시 해안로 20",
+          minRoomPrice: 110000,
+          countReview: 72,
+          applyStatus: true,
+        },
+        {
+          accommodationName: "부산 마린 리조트",
+          accommodationGradeAverage: 4.2,
+          categoryArea: "부산 광안리",
+          accommodationType: "리조트",
+          categoryPet: true,
+          categoryNonSmokingArea: false,
+          categoryWifi: true,
+          categoryIndoorSpa: true,
+          categoryPool: true,
+          categoryCarPark: true,
+          categoryDinnerParty: false,
+          accommodationMainImage: require("./84ca12b6.jpg"),
+          accommodationAddress: "부산시 수영구 광안해변로 200",
+          minRoomPrice: 160000,
+          countReview: 67,
+          applyStatus: true,
+        },
+        {
+          accommodationName: "경주 전통 한옥",
+          accommodationGradeAverage: 4.8,
+          categoryArea: "경북 경주",
+          accommodationType: "한옥",
+          categoryPet: false,
+          categoryNonSmokingArea: true,
+          categoryWifi: true,
+          categoryIndoorSpa: false,
+          categoryPool: false,
+          categoryCarPark: true,
+          categoryDinnerParty: false,
+          accommodationMainImage: require("./8522be81.avif"),
+          accommodationAddress: "경상북도 경주시 양남면 한옥길 88",
+          minRoomPrice: 50000,
+          countReview: 55,
+          applyStatus: true,
+        },
+        {
+          accommodationName: "대전 비즈니스 호텔",
+          accommodationGradeAverage: 4.3,
+          categoryArea: "대전 서구",
+          accommodationType: "호텔",
+          categoryPet: false,
+          categoryNonSmokingArea: true,
+          categoryWifi: true,
+          categoryIndoorSpa: false,
+          categoryPool: false,
+          categoryCarPark: true,
+          categoryDinnerParty: false,
+          accommodationMainImage: require("./869eb449.avif"),
+          accommodationAddress: "대전시 서구 대덕대로 45",
+          minRoomPrice: 60000,
+          countReview: 95,
+          applyStatus: true,
+        },
+        {
+          accommodationName: "양양 바다 캠핑장",
+          accommodationGradeAverage: 4.1,
+          categoryArea: "강원 양양",
+          accommodationType: "캠핑장",
+          categoryPet: true,
+          categoryNonSmokingArea: false,
+          categoryWifi: false,
+          categoryIndoorSpa: false,
+          categoryPool: false,
+          categoryCarPark: true,
+          categoryDinnerParty: true,
+          accommodationMainImage: require("./91519b60.webp"),
+          accommodationAddress: "강원도 양양군 해변길 23",
+          minRoomPrice: 30000,
+          countReview: 32,
+          applyStatus: true,
+        }
+      ];
+
+    setFilteredAccommodations(mockData);
+  }, []);
 
   // function: url 값 가져오기 //
   const urlRegion = searchParams.get("Region");
@@ -371,7 +352,7 @@ const List: React.FC<ListProps> = ({ accommodations }) => {
   };
 
   // function: 분류 로직
-const sortedAccommodations = [...callAccommodationList].sort((a, b) => {
+const sortedAccommodations = [...filteredAccommodations].sort((a, b) => {
   const aMinPrice = a.minRoomPrice; 
   const bMinPrice = b.minRoomPrice;
 
@@ -410,22 +391,10 @@ const sortedAccommodations = [...callAccommodationList].sort((a, b) => {
   };
 
   return (
-    <div id="accommodation-list-container">
-      <Filter   onFilterChange={onFilterChange}
-                resetFilters={resetFilters}
-                priceRange={priceRange}
-                setPriceRange={setPriceRange}
-                reviewScore={reviewScore}
-                setReviewScore={setReviewScore}
-                accommodationType={accommodationType}
-                setAccommodationType={setAccommodationType}
-                categoryArea={categoryArea}
-                setCategoryArea={setCategoryArea}
-                facilities={facilities}
-                setFacilities={setFacilities} /*resetFilters={() => setFilters({})} *//>
+        
     <div id="accommodation-search-list">
       <div className="list-header">
-        <div className="search-length-result">{callAccommodationList.length}개의 검색 결과가 있습니다.</div>
+        <div className="search-length-result">{filteredAccommodations.length}개의 검색 결과가 있습니다.</div>
         <div className="sort-dropdown">
           <label htmlFor="sortOptions"></label>
           <select
@@ -520,14 +489,14 @@ const sortedAccommodations = [...callAccommodationList].sort((a, b) => {
       {currentAccommodations.length > 0 && (
               <PaginationFuction
               currentPage={currentPage} // 현재 페이지
-              totalItems={callAccommodationList.length} // 전체 숙소 개수
+              totalItems={filteredAccommodations.length} // 전체 숙소 개수
               itemsPerPage={itemsPerPage} // 페이지당 표시할 숙소 수
               onPageChange={handlePageChange} // 페이지 변경 핸들러
             />
 
       )}
     </div>
-    </div>
+  
   );
 };
 
