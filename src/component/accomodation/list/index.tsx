@@ -1,332 +1,53 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import "./style.css";
-import PaginationFuction from "../pagination";
 import { AccommodationDTO } from "src/apis/accommodation/dto/response/accommodation.response.dto";
-import { fetchAccommodationList } from "src/apis/accommodation";
 import { ACCOMMODATION_LIST_DETAIL_PATH } from "src/constants";
+import axios from "axios";
 
-
-// interface: 메인 화면에서 검색 된 숙소 리스트 props //
-interface ListProps {
-  accommodations: AccommodationDTO[];
-}
-
-interface Filters {
-  priceRange?: [number, number];
-  reviewScore?: boolean[];
-  accommodationType?: boolean[];
-  categoryArea?: string[];
-  facilities?: Array<keyof AccommodationDTO>;
-}
-
-const List: React.FC<ListProps> = ({ accommodations }) => {
-
-// state: 필터 상태 관리
-    const [filters, setFilters] = useState<Partial<Filters>>({
-      priceRange: undefined,
-      reviewScore: undefined,
-      accommodationType: undefined,
-      categoryArea: undefined,
-      facilities: undefined,
-    });
-
+const List = () => {
   // state: 숙소 리스트 불러오기 상태 관리
-  // const [callAccommodationList, SetCallAccommodationList] = useState<
-  //   AccommodationDTO[]
-  // >([]);
-
-  const [filteredAccommodations, setFilteredAccommodations] = useState(accommodations);
-
-
-  // state: 페이지네이션을 위한 상태 관리 //
-  const [currentPage, setCurrentPage] = useState(1);
-  const itemsPerPage = 7;
-
+  const [callAccommodationList, SetCallAccommodationList] = useState<AccommodationDTO[]>([]);
   // state: url 값 저장 //
   const [searchParams] = useSearchParams("");
-
-  // state: 분류 상태 관리 (분류 옵션 기본값) //
-  const [sortOption, setSortOption] = useState("추천순");
-
   // state: 북마크 상태 관리 //
   const [bookmarks, setBookmarks] = useState<string[]>([]);
 
-  const handleBookmarkToggle = (accommodation_name: string) => {
-    if (bookmarks.includes(accommodation_name)) {
+  const handleBookmarkToggle = (accommodationName: string) => {
+    if (bookmarks.includes(accommodationName)) {
       setBookmarks(
-        bookmarks.filter((bookmarkedId) => bookmarkedId !== accommodation_name)
+        bookmarks.filter((bookmarkedId) => bookmarkedId !== accommodationName)
       );
     } else {
-      setBookmarks([...bookmarks, accommodation_name]);
+      setBookmarks([...bookmarks, accommodationName]);
     }
   };
-  useEffect(() => {
-    const applyFilters = () => {
-      let result = accommodations;
-
-    // 가격 필터
-    if (filters.priceRange) {
-      result = result.filter((item) => item.minRoomPrice >= filters.priceRange![0] && item.minRoomPrice <= filters.priceRange![1]);
-    }
-    
-    // 리뷰 점수 필터
-    if (filters.reviewScore) {
-      const minRating = 5 - filters.reviewScore.findIndex((checked) => checked);
-      result = result.filter((item) => item.accommodationGradeAverage >= minRating);
-    }
-    
-    // 숙소 유형 필터
-    if (filters.accommodationType) {
-      const selectedTypes = ["호텔", "펜션", "게스트하우스"].filter((_, idx) => filters.accommodationType![idx]);
-      result = result.filter((item) => selectedTypes.includes(item.accommodationType));
-    }
-
-    // 지역 필터
-    if (filters.categoryArea?.length) {
-      result = result.filter((item) => filters.categoryArea!.includes(item.categoryArea));
-    }
-
-    // 시설 필터
-    if (filters.facilities?.length) {
-      result = result.filter((item) =>
-        filters.facilities!.every((facility) => item[facility])
-      );
-    }
-
-    setFilteredAccommodations(result);
-  };
-
-  applyFilters();
-}, [filters, accommodations]);
-
-
 
   
+  // Effect: 백엔드에서 숙소 리스트 데이터 요청 (axios) //
+  const fetchAccommodationList = async () => {
+    try {
+      const response = await axios.get('/api/accommodations'); 
+      return response.data;
+    } catch (error) {
+      throw new Error('데이터를 불러오는 중 오류가 발생했습니다.');
+    }
+  };
 
-  // 임시 샘플 데이터, 기능 구현 후 삭제 예정
+
+  // Effect: 백엔드에서 숙소 리스트 데이터 요청 //
   useEffect(() => {
-    const mockData: AccommodationDTO[] = [
-      {
-        accommodationName: "해운대 호텔",
-        accommodationGradeAverage: 4.2,
-        accommodationAddress: "부산광역시 해운대구 해운로 해운대 해수욕장 13번길",
-        categoryArea: "부산광역시",
-        categoryPet: true,
-        categoryNonSmokingArea: true,
-        categoryIndoorSpa: false,
-        categoryDinnerParty: true,
-        categoryWifi: true,
-        categoryCarPark: true,
-        categoryPool: true,
-        accommodationMainImage:  require("./01318c06.webp"),
-        accommodationType: "호텔",
-        countReview: 4,
-        minRoomPrice: 300000,
-        applyStatus: false
-      },
-      {
-        accommodationName: "웨스틴 조선",
-        accommodationGradeAverage: 4.8,
-        categoryArea: "서울시",
-        accommodationAddress: "서울특별심 해운대구 해운로 해운대 해수욕장 13번길 소진이네집",
-        categoryPet: false,
-        categoryNonSmokingArea: true,
-        categoryIndoorSpa: false,
-        categoryDinnerParty: true,
-        categoryWifi: false,
-        categoryCarPark: false,
-        categoryPool: true,
-        accommodationMainImage: require("./1bf0d245.jpg"),
-        accommodationType: "리조트",
-        countReview: 54,
-        minRoomPrice: 500000,
-        applyStatus: true
-      },
-        {
-          accommodationName: "서울 시티 호텔",
-          accommodationGradeAverage: 4.5,
-          categoryArea: "서울 강남",
-          accommodationType: "호텔",
-          categoryPet: false,
-          categoryNonSmokingArea: true,
-          categoryWifi: true,
-          categoryIndoorSpa: true,
-          categoryPool: false,
-          categoryCarPark: true,
-          categoryDinnerParty: false,
-          accommodationMainImage: require("./3823cff1.avif"),
-          accommodationAddress: "서울시 강남구 테헤란로 123",
-          minRoomPrice: 85000,
-          countReview: 123,
-          applyStatus: true,
-        },
-        {
-          accommodationName: "해운대 비치 리조트",
-          accommodationGradeAverage: 4.3,
-          categoryArea: "부산 해운대",
-          accommodationType: "리조트",
-          categoryPet: true,
-          categoryNonSmokingArea: true,
-          categoryWifi: true,
-          categoryIndoorSpa: false,
-          categoryPool: true,
-          categoryCarPark: true,
-          categoryDinnerParty: true,
-          accommodationMainImage: require("./40e2f776.webp"),
-          accommodationAddress: "부산시 해운대구 해변로 456",
-          minRoomPrice: 150000,
-          countReview: 89,
-          applyStatus: true,
-        },
-        {
-          accommodationName: "남산 게스트하우스",
-          accommodationGradeAverage: 4.0,
-          categoryArea: "서울 중구",
-          accommodationType: "게스트하우스",
-          categoryPet: false,
-          categoryNonSmokingArea: false,
-          categoryWifi: true,
-          categoryIndoorSpa: false,
-          categoryPool: false,
-          categoryCarPark: false,
-          categoryDinnerParty: false,
-          accommodationMainImage:  require("./45674698.avif"),
-          accommodationAddress: "서울시 중구 명동길 78",
-          minRoomPrice: 40000,
-          countReview: 45,
-          applyStatus: true,
-        },
-        {
-          accommodationName: "인천 공항 호텔",
-          accommodationGradeAverage: 4.6,
-          categoryArea: "인천 중구",
-          accommodationType: "호텔",
-          categoryPet: false,
-          categoryNonSmokingArea: true,
-          categoryWifi: true,
-          categoryIndoorSpa: true,
-          categoryPool: false,
-          categoryCarPark: true,
-          categoryDinnerParty: false,
-          accommodationMainImage: require("./5330fe64.webp"),
-          accommodationAddress: "인천시 중구 공항로 100",
-          minRoomPrice: 90000,
-          countReview: 150,
-          applyStatus: true,
-        },
-        {
-          accommodationName: "제주 자연 펜션",
-          accommodationGradeAverage: 4.7,
-          categoryArea: "제주 서귀포",
-          accommodationType: "펜션",
-          categoryPet: true,
-          categoryNonSmokingArea: false,
-          categoryWifi: true,
-          categoryIndoorSpa: false,
-          categoryPool: false,
-          categoryCarPark: true,
-          categoryDinnerParty: true,
-          accommodationMainImage: require("./554ab663.avif"),
-          accommodationAddress: "제주도 서귀포시 산록로 50",
-          minRoomPrice: 70000,
-          countReview: 98,
-          applyStatus: true,
-        },
-        {
-          accommodationName: "강릉 오션 호텔",
-          accommodationGradeAverage: 4.4,
-          categoryArea: "강원 강릉",
-          accommodationType: "호텔",
-          categoryPet: false,
-          categoryNonSmokingArea: true,
-          categoryWifi: true,
-          categoryIndoorSpa: false,
-          categoryPool: true,
-          categoryCarPark: true,
-          categoryDinnerParty: true,
-          accommodationMainImage: require("./6bbd092b.avif"),
-          accommodationAddress: "강원도 강릉시 해안로 20",
-          minRoomPrice: 110000,
-          countReview: 72,
-          applyStatus: true,
-        },
-        {
-          accommodationName: "부산 마린 리조트",
-          accommodationGradeAverage: 4.2,
-          categoryArea: "부산 광안리",
-          accommodationType: "리조트",
-          categoryPet: true,
-          categoryNonSmokingArea: false,
-          categoryWifi: true,
-          categoryIndoorSpa: true,
-          categoryPool: true,
-          categoryCarPark: true,
-          categoryDinnerParty: false,
-          accommodationMainImage: require("./84ca12b6.jpg"),
-          accommodationAddress: "부산시 수영구 광안해변로 200",
-          minRoomPrice: 160000,
-          countReview: 67,
-          applyStatus: true,
-        },
-        {
-          accommodationName: "경주 전통 한옥",
-          accommodationGradeAverage: 4.8,
-          categoryArea: "경북 경주",
-          accommodationType: "한옥",
-          categoryPet: false,
-          categoryNonSmokingArea: true,
-          categoryWifi: true,
-          categoryIndoorSpa: false,
-          categoryPool: false,
-          categoryCarPark: true,
-          categoryDinnerParty: false,
-          accommodationMainImage: require("./8522be81.avif"),
-          accommodationAddress: "경상북도 경주시 양남면 한옥길 88",
-          minRoomPrice: 50000,
-          countReview: 55,
-          applyStatus: true,
-        },
-        {
-          accommodationName: "대전 비즈니스 호텔",
-          accommodationGradeAverage: 4.3,
-          categoryArea: "대전 서구",
-          accommodationType: "호텔",
-          categoryPet: false,
-          categoryNonSmokingArea: true,
-          categoryWifi: true,
-          categoryIndoorSpa: false,
-          categoryPool: false,
-          categoryCarPark: true,
-          categoryDinnerParty: false,
-          accommodationMainImage: require("./869eb449.avif"),
-          accommodationAddress: "대전시 서구 대덕대로 45",
-          minRoomPrice: 60000,
-          countReview: 95,
-          applyStatus: true,
-        },
-        {
-          accommodationName: "양양 바다 캠핑장",
-          accommodationGradeAverage: 4.1,
-          categoryArea: "강원 양양",
-          accommodationType: "캠핑장",
-          categoryPet: true,
-          categoryNonSmokingArea: false,
-          categoryWifi: false,
-          categoryIndoorSpa: false,
-          categoryPool: false,
-          categoryCarPark: true,
-          categoryDinnerParty: true,
-          accommodationMainImage: require("./91519b60.webp"),
-          accommodationAddress: "강원도 양양군 해변길 23",
-          minRoomPrice: 30000,
-          countReview: 32,
-          applyStatus: true,
-        }
-      ];
-
-    setFilteredAccommodations(mockData);
+    const fetchData = async () => {
+      try {
+        const data = await fetchAccommodationList();
+        SetCallAccommodationList(data);
+      } catch (error) {
+        console.error("숙소 데이터를 불러올 수 없습니다.:", error);
+      }
+    };
+    fetchData();
   }, []);
+
 
   // function: url 값 가져오기 //
   const urlRegion = searchParams.get("Region");
@@ -347,44 +68,17 @@ const List: React.FC<ListProps> = ({ accommodations }) => {
     );
   };
 
-  const handlePageChange = (page: number) => {
-    setCurrentPage(page);
-  };
-
-  // function: 분류 로직
-const sortedAccommodations = [...filteredAccommodations].sort((a, b) => {
-  const aMinPrice = a.minRoomPrice; 
-  const bMinPrice = b.minRoomPrice;
-
-  if (sortOption === "평점 높은순") {
-    return b.accommodationGradeAverage - a.accommodationGradeAverage;
-  } else if (sortOption === "리뷰 많은순") {
-    return b.countReview - a.countReview;
-  } else if (sortOption === "낮은 가격순") {
-    return aMinPrice - bMinPrice;
-  } else if (sortOption === "높은 가격순") {
-    return bMinPrice - aMinPrice;
-  }
-  return 0;
-});
-
-  // function: 현재 페이지에 해당하는 숙소 리스트만 표시
-  const startIdx = (currentPage - 1) * itemsPerPage;
-  const currentAccommodations = sortedAccommodations.slice(
-    startIdx,
-    startIdx + itemsPerPage
-  );
 
   // function: 각 숙소의 시설 정보를 문자열로 변환하는 함수 //
-  const getFacilities = (accommodation: AccommodationDTO) => {
+  const getFacilities = (accommodations: AccommodationDTO) => {
     const facilities = [];
-    if (accommodation.categoryPet) facilities.push("애완동물 허용");
-    if (accommodation.categoryNonSmokingArea) facilities.push("금연 구역");
-    if (accommodation.categoryIndoorSpa) facilities.push("실내 스파");
-    if (accommodation.categoryDinnerParty) facilities.push("저녁 파티 가능");
-    if (accommodation.categoryWifi) facilities.push("와이파이");
-    if (accommodation.categoryCarPark) facilities.push("주차 공간");
-    if (accommodation.categoryPool) facilities.push("수영장");
+    if (accommodations.categoryPet) facilities.push("애완동물 허용");
+    if (accommodations.categoryNonSmokingArea) facilities.push("금연 구역");
+    if (accommodations.categoryIndoorSpa) facilities.push("실내 스파");
+    if (accommodations.categoryDinnerParty) facilities.push("저녁 파티 가능");
+    if (accommodations.categoryWifi) facilities.push("와이파이");
+    if (accommodations.categoryCarPark) facilities.push("주차 공간");
+    if (accommodations.categoryPool) facilities.push("수영장");
   
     // 텍스트로만 점 구분자 결합하여 반환
     return facilities.join(" · ");
@@ -394,50 +88,40 @@ const sortedAccommodations = [...filteredAccommodations].sort((a, b) => {
         
     <div id="accommodation-search-list">
       <div className="list-header">
-        <div className="search-length-result">{filteredAccommodations.length}개의 검색 결과가 있습니다.</div>
+        <div className="search-length-result">{callAccommodationList.length}개의 검색 결과가 있습니다.</div>
         <div className="sort-dropdown">
           <label htmlFor="sortOptions"></label>
-          <select
-            id="sortOptions"
-            value={sortOption}
-            onChange={(e) => setSortOption(e.target.value)}
-          >
-            <option value="추천순">추천순</option>
-            <option value="평점 높은순">평점 높은순</option>
-            <option value="리뷰 많은순">리뷰 많은순</option>
-            <option value="낮은 가격순">낮은 가격순</option>
-            <option value="높은 가격순">높은 가격순</option>
-          </select>
         </div>
       </div>
 
       {/* 검색 결과가 없을 때 메시지를 표시 */}
-      {currentAccommodations.length === 0 ? (
+      {callAccommodationList.length === 0 ? (
         <div className="no-results">
           <p>선택한 조건에 맞는 상품이 없어요.</p>
           <p>필터를 다시 설정해 보세요.</p>
         </div>
       ) : (
         <div className="accommodation-cards-container">
-          {filteredAccommodations.map((accommodation) => (
+          {callAccommodationList.map((accommodations) => (
             <div
-              key={accommodation.accommodationName}
+              key={accommodations.accommodationName}
               className="accommodation-cards"
+              onClick={() => handleDetailClick(accommodations.accommodationName)}
             >
               <div className="image-wrapper">
                 <img
-                  src={accommodation.accommodationMainImage}
-                  alt={accommodation.accommodationName}
+                  src={accommodations.accommodationMainImage}
+                  alt={accommodations.accommodationName}
                   className="accommodation-image"
                 />
                 <div
                   className={`bookmark ${
-                    bookmarks.includes(accommodation.accommodationName)
+                    bookmarks.includes(accommodations.accommodationName)
                       ? "active"
                       : ""
                   }`}
                   onClick={() =>
-                    handleBookmarkToggle(accommodation.accommodationName)
+                    handleBookmarkToggle(accommodations.accommodationName)
                   }
                 >
                   ♥
@@ -445,36 +129,36 @@ const sortedAccommodations = [...filteredAccommodations].sort((a, b) => {
               </div>
               <div id="accommodation-info">
                 <div className="type-area-container">
-                <div className="type">{accommodation.accommodationType}</div>
+                <div className="type">{accommodations.accommodationType}</div>
                 <div className="divider-bar-type-area">|</div>
-                <div className="category-area">{accommodation.categoryArea}</div>
+                <div className="category-area">{accommodations.categoryArea}</div>
                 </div>
-                <div className="name">{accommodation.accommodationName}</div>
+                <div className="name">{accommodations.accommodationName}</div>
                 <div className="fake-stars">⭐⭐⭐⭐⭐</div>
-             
-                <div className="category-facilities">{getFacilities(accommodation)}</div>
+
+                <div className="category-facilities">{getFacilities(accommodations)}</div>
                 <div className="address-box">
                   <div className="map-icon"></div>
-                  <div className="address">{accommodation.accommodationAddress}</div>
+                  <div className="address">{accommodations.accommodationAddress}</div>
                 </div>
               </div>
               <div className="divider-bar"></div>
                 {/* 최저 객실 가격 표시 */}
                 <div className="accommodation-price-container">
                   <div className="price-box">
-                    <div className="min-price">{accommodation.minRoomPrice}~</div>
+                    <div className="min-price">{accommodations.minRoomPrice}~</div>
                     <div className="won">원</div>
                     <div className="per-one-day">/박</div>
                   </div>
                   <div className="rating-box">
-                    <div className="rating"> {accommodation.accommodationGradeAverage}</div>
+                    <div className="rating"> {accommodations.accommodationGradeAverage}</div>
                     <div className="rating-per-score">/5</div>
                   </div>
-                <div className="review">{accommodation.countReview}개의 리뷰</div>
+                <div className="review">{accommodations.countReview}개의 리뷰</div>
                 <button
                   className="show-detail-btn"
                   onClick={() =>
-                    handleDetailClick(accommodation.accommodationName)
+                    handleDetailClick(accommodations.accommodationName)
                   }
                 >
                   상세보기
@@ -486,15 +170,7 @@ const sortedAccommodations = [...filteredAccommodations].sort((a, b) => {
       )}
 
       {/* Pagination 컴포넌트 */}
-      {currentAccommodations.length > 0 && (
-              <PaginationFuction
-              currentPage={currentPage} // 현재 페이지
-              totalItems={filteredAccommodations.length} // 전체 숙소 개수
-              itemsPerPage={itemsPerPage} // 페이지당 표시할 숙소 수
-              onPageChange={handlePageChange} // 페이지 변경 핸들러
-            />
 
-      )}
     </div>
   
   );

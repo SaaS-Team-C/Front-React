@@ -35,9 +35,7 @@ import Roomly from './views/roomly';
 
 import MyAccommodationManagementView from './views/mypagehost/MyAccommodationManagement';
 import ShowDetailList from './component/mypagehost/MyAccommodationManagement/showaccdetail/detaillist';
-
-
-
+import List from './views/accommodation';
 
 
 // component: root path 컴포넌트 //
@@ -53,24 +51,6 @@ function Index() {
   );
 }
 
-// component: booking path 컴포넌트 //
-function Booking() {
-  // state: 로그인 쿠키 상태 // 
-  const [cookies] = useCookies();
-  const navigator = useNavigate();
-
-  // effect: 예약하기 클릭 시 마운트 될 상태 //
-  useEffect(() => {
-    if (cookies.accessToken) navigator('/booking');
-    else navigator('/main');
-  }, []);
-
-  return (
-    <></>
-  )
-
-}
-
 export default function App() {
   
     // onPathChange 함수 정의
@@ -84,7 +64,7 @@ export default function App() {
       <Route path={MAIN_PATH} element={<Main />} />
       <Route path='mypage' element={<GuestMypage />} />
 
-      <Route path={ACCOMMODATION_LIST_PATH} element={<AccommodationList />} />
+      <Route path={ACCOMMODATION_LIST_PATH} element={<List />} />
       <Route path={ACCOMMODATION_LIST_DETAIL_PATH} element={<DetailList />} />
       <Route path={AUTH_PATH} element={<SignUp />} />
       <Route path='/payment' element={<Payment onPathChange={() => { } }/>} />
