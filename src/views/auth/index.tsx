@@ -140,7 +140,20 @@ export default function SignUp() {
       isCheckedAuthNumber;  // 인증 번호 체크 여부
 
     setGuestIsButtonEnabled(guestAllFieldsFilled);
-  }, [businessStartDay]);
+  }, [
+    guestName,
+    guestId,
+    guestPassword,
+    guestPasswordCheck,
+    telNumber,
+    isAgreed,
+    isCheckedId,
+    isMatchedPassword,
+    isCheckedPassword,
+    isSend,
+    authNumber,
+    isCheckedAuthNumber  
+  ]);
 
   useEffect(() => {
     setCheckedId(false)
@@ -496,12 +509,12 @@ export default function SignUp() {
     if (!guestIsButtonEnabled) return;
 
     const requestBody: GuestSignUpRequestDto = {
-      name: guestName, // guestName 변수를 사용
+      guestName: guestName, // guestName 변수를 사용
       guestId: guestId, // guestId 변수를 사용
-      password: guestPassword, // guestPassword 변수를 사용
+      guestPw: guestPassword, // guestPassword 변수를 사용
       snsId: snsId, // guestSnsId 변수를 사용
       guestTelNumber: telNumber,
-      authNumber: authNumber
+      guestAuthNumber: authNumber
     };
 
     guestSignUpRequest(requestBody).then(guestSignUpResponse);

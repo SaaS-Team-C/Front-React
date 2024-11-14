@@ -14,6 +14,8 @@ import ResponseDto from 'src/apis/login/dto/response/response.dto';
 import InputBox from '../input/login';
 
 // 컴포넌트: 메인페이지 화면 컴포넌트 //
+    type group = 'guest' | 'host' ;
+
 export default function Topbar() {
     // 쿠키 상태 초기화
     const [cookies, setCookie, removeCookies] = useCookies(['accessToken']);
@@ -28,6 +30,7 @@ export default function Topbar() {
     const [hostId, setHostId] = useState<string>('');
     const [hostPassword, setHostPassword] = useState<string>('');
 
+    const [group, setGroup] = useState<group>('guest');
     // state: 메세지 출력 정보 상태 //
     const [message, setMessage] = useState<string>('');
     const [idmessage, setIdMessage] = useState<string>('');
@@ -110,6 +113,7 @@ export default function Topbar() {
     const urlEnd = searchParams.get('end')
     const urlCount = searchParams.get('count')
 
+    
 
     // effect: 검색값이 있을 경우 실행할 함수 //
     useEffect(() => {
@@ -117,11 +121,8 @@ export default function Topbar() {
         if (urlRegion && urlStart && urlEnd && urlCount && (location.pathname !== '/main')) {
             setSearchBar(true);
             return;
-
         };
-
         setSearchBar(false);
-
     }, [searchParams])
 
     // effect: 아이디 및 비밀번호 변경시 실행할 함수 //
@@ -228,30 +229,32 @@ export default function Topbar() {
                             <div className='log-in-word'>Log In</div>
                             <div className='log-in-close' onClick={() => setModalOpen(false)}></div>
                         </div>
-                        <div className='input-log'>
-                            <div className='log-in-id-icon'></div>
-                            <InputBox
-                                type='text'
-                                placeholder='아이디를 입력해 주세요.'
-                                value={gusetId}
-                                message={idmessage}
-                                messageError={errorMessage}
-                                onChange={onIdChangeHandler}
-                                onKey={pressKeyEnter}
-                            />
-                        </div>
-                        <div className='input-log'>
-                            <div className='log-in-pw-icon'></div>
-                            <InputBox
-                                type='password'
-                                placeholder='비밀번호를 입력해 주세요.'
-                                value={gusetPassword}
-                                message={pwmessage}
-                                messageError={errorMessage}
-                                onChange={onPasswordChangeHandler}
-                                onKey={pressKeyEnter}
-                            />
-                        </div>
+                        {<div>
+                            <div className='input-log'>
+                                <div className='log-in-id-icon'></div>
+                                <InputBox
+                                    type='text'
+                                    placeholder='아이디를 입력해 주세요.'
+                                    value={gusetId}
+                                    message={idmessage}
+                                    messageError={errorMessage}
+                                    onChange={onIdChangeHandler}
+                                    onKey={pressKeyEnter}
+                                />
+                            </div>
+                            <div className='input-log'>
+                                <div className='log-in-pw-icon'></div>
+                                <InputBox
+                                    type='password'
+                                    placeholder='비밀번호를 입력해 주세요.'
+                                    value={gusetPassword}
+                                    message={pwmessage}
+                                    messageError={errorMessage}
+                                    onChange={onPasswordChangeHandler}
+                                    onKey={pressKeyEnter}
+                                />
+                            </div>
+                        </div>}
                         <div className='log-in-button' onClick={onLoginButtonClickHandler}>로그인</div>
                         <div className='find'>
                             <div className='find-id' onClick={onFindIdPwButtonClickHandler}>아이디/비밀번호 찾기</div>
