@@ -420,3 +420,32 @@
   height: 21px;
   color: rgb(97, 97, 97);
 }
+
+.log-in-mode-select-button {
+  display: flex;
+  width: 200px;
+  height: 30px;
+}
+
+.log-in-mode-guest-active {
+  background-color: rgba(238, 185, 185);
+  width: 100px;
+  height: 30px;
+}
+.log-in-mode-guest-disable {
+  background-color: rgba(131, 130, 130, 0.8);
+  width: 100px;
+  height: 30px;
+}
+
+.log-in-mode-host-active {
+  background-color: rgba(238, 185, 185);
+  width: 100px;
+  height: 30px;
+}
+.log-in-mode-host-disable {
+  background-color: rgba(131, 130, 130, 0.8);
+  width: 100px;
+  height: 30px;
+}
+
