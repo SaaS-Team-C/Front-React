@@ -1,60 +1,70 @@
-#booking-warpper {
+.booking-main {
+    margin-left: 150px;
     display: flex;
     flex-direction: column;
     width: 100%;
-    height: 100%;
-    margin-left: 40px;
+    min-width: 700px;
 }
 
-/* 타이틀 */
+.pagination {
+    display: flex;
+    justify-content: center;
+    margin-left: 150px;
+    margin-top: 20px;
+}
+
+.pagination button {
+    padding: 5px 10px;
+    margin: 0 5px;
+    border: 1px solid #ccc;
+    background-color: #f0f0f0;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.pagination button.active {
+    background: var(--dark-pink);
+    color: white;
+    font-weight: bold;
+}
+
+.pagination button:hover {
+    background-color: #ddd;
+}
+
 .booking-title {
     width: 100%;
     height: 50px;
     font-size: 30px;
+    color: rgb(75, 74, 74);
+    font-family: 'Pretendard-Regular';
+    margin-bottom: 50px;
+    margin-top: 30px;
+    margin-left: 150px;
 }
 
 .booking-title-text {
-    font-size: 20px;
+    font-size: 23px;
     font-weight: 700;
-    margin-top: 10px;
-    margin-bottom: 20px;
+    margin-bottom: 30px;
+    color: rgb(75, 74, 74);
+    font-family: 'Pretendard-Regular';
 }
 
 .booking-title-box {
     display: flex;
-    align-items: end;
+    align-items: flex-end;
+    padding-bottom: 5px;
+    margin-bottom: 50px;
+    box-sizing: content-box;
 }
 
-.booking-title-ditail-username {
-    font-size: 17px;
-    font-weight: 600;
-}
-
-.booking-title-ditail {
+.booking-title-detail {
     font-size: 16px;
-    
 }
 
-/* 메인내용 */
-.booking-main {
+.booking-warpper {
     width: 100%;
-    height: 100%;
-    margin-top: 50px;
-
-}
-
-.booking-save-button {
-    cursor: pointer;
-    display: flex;
-
-    margin-top: 40px;
-    margin-left: 20px;
-
-    align-items: center;
-    justify-content: center;
-    width: 200px;
-    height: 40px;
-    background-color: aqua;
-
-    border: solid 1px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    background-color: #f9f9f9;
 }

@@ -95,7 +95,6 @@ const RoomCard: React.FC<RoomCardProps> = ({ room, isFullyBooked }) => {
       );
     } 
 
-  Modal.setAppElement('#root');
 
   return (
     <div id="room-card">
@@ -176,18 +175,16 @@ const RoomCard: React.FC<RoomCardProps> = ({ room, isFullyBooked }) => {
           isOpen={isDetailModalOpen}
           onRequestClose={closeDetailModal} // 모달 외부를 클릭하거나 닫기 버튼을 누르면 닫기
           contentLabel="Room Details Modal"
-          className="roomcard-detail-info-modal"
-          overlayClassName="roomcard-detail-info-modal-overlay"
+          className="modal"
+          overlayClassName="modal-overlay"
         >
-          <div className='test-test-test'>
           <h2>{room.roomName} - 상세정보</h2>
           <p>{room.description}</p>
           <p>입실 시간: {room.checkInTime}</p>
           <p>퇴실 시간: {room.checkOutTime}</p>
           <p>최대 수용 인원: {room.maxOccupancy}명</p>
           <p>가격: ₩{room.roomPrice.toLocaleString()}원</p>
-          <button className='roomcard-detail-modal-close-button' onClick={closeDetailModal}>닫기</button>
-          </div>
+          <button onClick={closeDetailModal}>닫기</button>
         </Modal>
       )}
     </div>
