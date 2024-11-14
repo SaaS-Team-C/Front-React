@@ -1,6 +1,6 @@
-import ResponseDto from "./response.dto";
+import { GetAccommodationListResponseDto } from "./get-accommodation-list.response.dto";
 
-// interface: Response Dto 객체 타입 //
+
 export type {
-    ResponseDto
+    GetAccommodationListResponseDto
 }
