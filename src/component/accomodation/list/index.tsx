@@ -1,17 +1,28 @@
 import React, { useEffect, useMemo, useState } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import "./style.css";
-import { AccommodationDTO } from "src/apis/accommodation/dto/response/accommodation.response.dto";
-import { ACCOMMODATION_LIST_DETAIL_PATH } from "src/constants";
-import axios from "axios";
+import { ACCESS_TOKEN, ACCOMMODATION_LIST_DETAIL_PATH } from "src/constants";
+import { getAccommodationListRequest } from "src/apis";
+import { useCookies } from "react-cookie";
+
+import { ResponseDto } from "src/apis/hostmypage";
+import { Accommodations } from "src/types";
+import { GetAccommodationListResponseDto } from "src/apis/hostmypage/dto/response/get-accommodation-list.response.dto";
+
+
+
+
 
 const List = () => {
   // state: 숙소 리스트 불러오기 상태 관리
-  const [callAccommodationList, SetCallAccommodationList] = useState<AccommodationDTO[]>([]);
+  const [callAccommodationList, SetCallAccommodationList] = useState<Accommodations[]>([]);
   // state: url 값 저장 //
   const [searchParams] = useSearchParams("");
   // state: 북마크 상태 관리 //
   const [bookmarks, setBookmarks] = useState<string[]>([]);
+
+  // state: 쿠키 상태 //
+  const [cookies, setCookie] = useCookies();
 
   const handleBookmarkToggle = (accommodationName: string) => {
     if (bookmarks.includes(accommodationName)) {
@@ -24,28 +35,29 @@ const List = () => {
   };
 
   
-  // Effect: 백엔드에서 숙소 리스트 데이터 요청 (axios) //
-  const fetchAccommodationList = async () => {
-    try {
-      const response = await axios.get('/api/accommodations'); 
-      return response.data;
-    } catch (error) {
-      throw new Error('데이터를 불러오는 중 오류가 발생했습니다.');
-    }
-  };
+  
+  // function: get accommodation list response 처리 함수 //
+  const getAccommodaitonListResponse = (responseBody: GetAccommodationListResponseDto | ResponseDto | null) =>{
+    const message = 
+        !responseBody ? '서버에 문제가 있습니다. ':
+        responseBody.code === 'AF' ? '잘못된 접근입니다. ':
+        responseBody.code === 'DBE' ? '서버에 문제가있습니다. ': '';
+        const isSuccessed = responseBody !== null && responseBody.code === 'SU';
+        if (!isSuccessed) {
+            alert(message);
+            return;
+        };
+        const { accommodations } = responseBody as GetAccommodationListResponseDto;
+        SetCallAccommodationList(accommodations);
 
+        
+  }
 
   // Effect: 백엔드에서 숙소 리스트 데이터 요청 //
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const data = await fetchAccommodationList();
-        SetCallAccommodationList(data);
-      } catch (error) {
-        console.error("숙소 데이터를 불러올 수 없습니다.:", error);
-      }
-    };
-    fetchData();
+    const accessToken = cookies[ACCESS_TOKEN];
+    if (!accessToken) return;
+    getAccommodationListRequest(accessToken).then(getAccommodaitonListResponse);
   }, []);
 
 
@@ -70,7 +82,7 @@ const List = () => {
 
 
   // function: 각 숙소의 시설 정보를 문자열로 변환하는 함수 //
-  const getFacilities = (accommodations: AccommodationDTO) => {
+  const getFacilities = (accommodations: Accommodations) => {
     const facilities = [];
     if (accommodations.categoryPet) facilities.push("애완동물 허용");
     if (accommodations.categoryNonSmokingArea) facilities.push("금연 구역");
@@ -137,10 +149,10 @@ const List = () => {
                 <div className="fake-stars">⭐⭐⭐⭐⭐</div>
 
                 <div className="category-facilities">{getFacilities(accommodations)}</div>
-                <div className="address-box">
+                {/* <div className="address-box">
                   <div className="map-icon"></div>
                   <div className="address">{accommodations.accommodationAddress}</div>
-                </div>
+                </div> */}
               </div>
               <div className="divider-bar"></div>
                 {/* 최저 객실 가격 표시 */}
