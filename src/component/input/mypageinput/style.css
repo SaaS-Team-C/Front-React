@@ -4,8 +4,7 @@
     justify-content: space-between;
 
     width: 100%;
-    height: 50px;
-    background-color: white;
+    height: 80px;
     margin: 10px 0px 10px 20px;
     font-size: 20px;
 }
@@ -21,8 +20,8 @@
 
     width: 300px;
     height: 35px;
-
-    font-size: 17px;
+    padding: 12px 15px;
+    font-size: 23px;
 }
 
 .mypageinformation-input-area-deactivation {
@@ -47,20 +46,29 @@
 
 .mypageinformation-input-title {
     width: 200px;
-    height: 35px;
+    padding: 12px 15px;
+    font-family: 'Pretendard-Regular';
+    font-size: 23px;
+
+    margin-right: 20px;
 }
 
 .mypageinformation-input-inputbox {
-
-    width: 300px;
-    height: 35px;
-
+    width: 60%;
+    padding: 12px 15px;
+    border: 1px solid rgba(188, 188, 188, 1);
+    border-radius: 4px;
+    font-size: 12px;
+    font-family: 'Pretendard-Regular';
+    color: rgb(73, 73, 73);
+    font-family: 'Pretendard-Regular';
     font-size: 17px;
 }
 
 .mypageinformation-input-area{
-    display: flex;
-    flex-direction: column;
+    width: 400px;
+
+    gap: 10px;
 }
 
 .checkMessageError {
@@ -73,6 +81,33 @@
 /* 버튼창 css */
 
 .mypageinformation-telnumber-change-button {
-    margin-left: 20px;
-    border: 30px 40px;
+    flex-shrink: 0;
+    padding: 10px 20px;
+    background-color: rgb(245, 187, 208);
+    color: white;
+    border: none;
+    border-radius: 4px;
+    font-size: 15px;
+    height: 47px;
+    font-family: 'Pretendard-Regular';
+    font-weight: bold;    
+    margin-left: 10px;
+    margin-bottom: 10px;
+}
+
+.mypageinformation-telnumber-change-button:hover {
+    cursor: pointer;
+    background-color: var(--input-solid-color);
+    color: white;
+
+}
+
+.mypageinformation-telnumber-change-button:active {
+
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    font-size: 12px;
+    font-family: 'Pretendard-Regular';
+    font-weight: bold;
 }
