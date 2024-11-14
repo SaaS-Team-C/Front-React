@@ -7,14 +7,14 @@ import { AccommodationDetailRequestDTO } from 'src/apis/accommodation/dto/reques
 
 interface RoomDetailProps {
   roomsData: RoomDTO[];
-  onCardClick: () => void;
+ 
 }
 interface AccommodationInfoProps {
   accommodationData?: AccommodationDetailRequestDTO;
 }
 
 // component: middel 객실 리스트 컴보넌트(객실 카드, 숙소 소개)
-const RoomList: React.FC<RoomDetailProps & AccommodationInfoProps> = ({ roomsData, accommodationData, onCardClick }) => {
+const RoomList: React.FC<RoomDetailProps & AccommodationInfoProps> = ({ roomsData, accommodationData }) => {
   const [visibleRooms, setVisibleRooms] = useState(3); // 처음에는 3개의 객실만 보이도록 설정
   const [isAllRoomsVisible, setIsAllRoomsVisible] = useState(false); // 모든 객실 표시 여부
 

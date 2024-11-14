@@ -11,8 +11,6 @@ import { GetAccommodationListResponseDto } from "src/apis/hostmypage/dto/respons
 
 
 
-
-
 const List = () => {
   // state: 숙소 리스트 불러오기 상태 관리
   const [callAccommodationList, SetCallAccommodationList] = useState<Accommodations[]>([]);
@@ -20,7 +18,6 @@ const List = () => {
   const [searchParams] = useSearchParams("");
   // state: 북마크 상태 관리 //
   const [bookmarks, setBookmarks] = useState<string[]>([]);
-
   // state: 쿠키 상태 //
   const [cookies, setCookie] = useCookies();
 
@@ -114,7 +111,9 @@ const List = () => {
         </div>
       ) : (
         <div className="accommodation-cards-container">
-          {callAccommodationList.map((accommodations) => (
+          {callAccommodationList
+          .filter(accommodations => accommodations.applyStatus) // applyStatus가 true인 항목만 필터링 (암묵적으로 1인 값만 필터링 한다고 함)
+          .map((accommodations) => (
             <div
               key={accommodations.accommodationName}
               className="accommodation-cards"

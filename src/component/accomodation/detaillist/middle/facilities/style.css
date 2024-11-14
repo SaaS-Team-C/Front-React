@@ -1,8 +1,8 @@
-#facilitiesCard-wrapper{
+#facilitiesCard-middle-wrapper{
   display:flex;
   flex-direction: column;
 
-  gap: 20px;
+  gap: 30px;
   width: 96.5%;
   max-width: 1170px;
   margin: 0 auto;
@@ -16,69 +16,73 @@
 
 }
 
+#facilitiesCard-middle-wrapper .facilitiesCard-middle-title{
+  
+  font-weight: 600;
+  font-size: 22px;
+}
 
-#facilitiesCard-wrapper .facilities-card {
+
+#facilitiesCard-middle-wrapper .facilities-middle-card {
+    width: 90%;
     display: grid;
-    grid-template-columns: repeat(2, 1fr); /* 한 줄에 두 개씩 */
+    grid-template-columns: repeat(4, 1fr); /* 한 줄에 두 개씩 */
     gap: 10px; 
     
   }
 
-  #facilitiesCard-wrapper .facility-item {
+  #facilitiesCard-middle-wrapper .facilities-middle-item {
+
+gap: 20px;
   display: flex;
   align-items: center;
+
+
+  align-items: center;
   font-size: 16px;
+  width: 150px;
 }
 
 
   /* 기본 아이콘 스타일 */
-  #facilitiesCard-wrapper .facility-icon {
-    width: 20px;
-    height: 20px;
+  #facilitiesCard-middle-wrapper .facility-middle-icon {
+    width: 40px;
+    height: 40px;
     margin-right: 8px;
     display: inline-block;
-    background-size: cover;
+    background-size: contain;
     background-repeat: no-repeat;
     
   }
   
 
 
-
-#facilitiesCard-wrapper .facilitiesCard-title{
-  
-  font-weight: 600;
-  font-size: 22px;
-}
-
- 
-
   /* 개별 아이콘 이미지 설정 */
   .dog-icon {
-    background-image: url('../../../../../../public/images/accommodationlist/Dog.png');
+    background-image: url('/public/images/accommodationlist/Dog.png');
   }
   
   .smoke-free-icon {
-    background-image: url('../../../../../../public/images/accommodationlist/Smoking.png');
+    background-image: url('/public/images/accommodationlist/Smoking.png');
   }
   
   .spa-icon {
-    background-image: url('../../../../../../public/images/accommodationlist/Spa.png');
+    background-image: url('/public/images/accommodationlist/Spa.png');
   }
   
   .bbq-icon {
-    background-image: url('../../../../../../public/images/accommodationlist/Grill.png');
+    background-image: url('/public/images/accommodationlist/Grill.png');
   }
   
   .wifi-icon {
-    background-image: url('../../../../../../public/images/accommodationlist/Wi-Fi.png');
+    background-image: url('/public/images/accommodationlist/Wi-Fi.png');
   }
   
   .parking-icon {
-    background-image: url('../../../../../../public/images/accommodationlist/Parking.png');
+    background-image: url('/public/images/accommodationlist/Parking.png');
   }
   
   .pool-icon {
-    background-image: url('../../../../../../public/images/accommodationlist/Lap\ Pool.png');
+    background-image: url('/public/images/accommodationlist/Lap\ Pool.png');
   }
   
