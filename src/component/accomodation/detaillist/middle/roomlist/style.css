@@ -1,3 +1,12 @@
+.middle-wrapper{
+  width: 100%;
+max-width: 1170px;
+margin: 0 auto;
+padding: 20px;
+box-sizing: border-box;
+
+}
+
 
 #room-list-container {
   width: 100%;

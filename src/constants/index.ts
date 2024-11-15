@@ -13,7 +13,7 @@ export const FINDID_PATH = "/find";
 export const MODAL3 = "/payment";
 
 export const ACCOMMODATION_LIST_PATH = "/accommodationList";
-export const ACCOMMODATION_LIST_DETAIL_PATH = `${ACCOMMODATION_LIST_PATH}/detail`;
+export const ACCOMMODATION_LIST_DETAIL_PATH = (accommodationName: string) => `${ACCOMMODATION_LIST_PATH}/detail/${accommodationName}`;
 export const ACCOMMODATION_LIST_DETAIL_ACC_SELECT_PATH = (name: string) =>`${ACCOMMODATION_LIST_DETAIL_ACC_SELECT_PATH}/${name}`;
 
 // variable: HTTP BEARER TOKEN COOKIE NAME(토큰 이름 임시 지정) //
