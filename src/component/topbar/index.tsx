@@ -6,11 +6,12 @@ import { useNavigate } from 'react-router';
 // import { ResponseDto } from 'src/apis/dto/response';
 import { useCookies } from 'react-cookie';
 import { useSearchParams } from 'react-router-dom';
-import { logInRequest } from 'src/apis/login';
+import { GuestlogInRequest, HostlogInRequest } from 'src/apis/login';
 import GuestLogInRequestDto from 'src/apis/login/dto/request/guest/login.request.dto';
 import LogInResponseDto from 'src/apis/login/dto/response/login.responsw.dto';
 import ResponseDto from 'src/apis/login/dto/response/response.dto';
 import InputBox from '../input/login';
+import HostLogInRequestDto from 'src/apis/login/dto/request/host/login.request.dto';
 
 // 컴포넌트: 메인페이지 화면 컴포넌트 //
     type group = 'guest' | 'host' ;
@@ -69,21 +70,33 @@ export default function Topbar() {
 
     };
 
-    // event handler: 아이디 변경 이벤트 처리 //
-    const onIdChangeHandler = (event: ChangeEvent<HTMLInputElement>) => {
+    // event handler: 게스트 아이디 변경 이벤트 처리 //
+    const onGuestIdChangeHandler = (event: ChangeEvent<HTMLInputElement>) => {
         const { value } = event.target;
         setGuestId(value);
     }
 
-    // event handler: 비밀번호 변경 이벤트 처리 //
-    const onPasswordChangeHandler = (event: ChangeEvent<HTMLInputElement>) => {
+    // event handler: 게스트 비밀번호 변경 이벤트 처리 //
+    const onGuestPasswordChangeHandler = (event: ChangeEvent<HTMLInputElement>) => {
         const { value } = event.target;
         setGuestPassword(value);
     }
 
+    // event handler: 호스트 아이디 변경 이벤트 처리 //
+    const onHostIdChangeHandler = (event: ChangeEvent<HTMLInputElement>) => {
+        const { value } = event.target;
+        setHostId(value);
+    }
+
+    // event handler: 호스트 비밀번호 변경 이벤트 처리 //
+    const onHostPasswordChangeHandler = (event: ChangeEvent<HTMLInputElement>) => {
+        const { value } = event.target;
+        setHostPassword(value);
+    }
+
     /** 
      * function: 로그인 버튼을 클릭 했을 경우 일어나는 이벤트 처리 */   
-    const onLoginButtonClickHandler = async () => {
+    const onGuestLoginButtonClickHandler = async () => {
         if (!gusetId) {
             setIdMessage('아이디를 입력해 주세요!');
             setErrorMessage(true);
@@ -100,12 +113,38 @@ export default function Topbar() {
                 guestId: gusetId,
                 guestPw: gusetPassword
             };
-            logInRequest(requestBody).then(logInResponse);
+            GuestlogInRequest(requestBody).then(logInResponse);
         }
         // effect: 아이디 및 비밀번호 변경시 실행할 함수 //
         useEffect(() => {
             setMessage('');
         }, [gusetId, gusetPassword]);
+
+        /**
+        * function: 로그인 버튼을 클릭 했을 경우 일어나는 이벤트 처리 */   
+    const onHostLoginButtonClickHandler = async () => {
+        if (!hostId) {
+            setIdMessage('아이디를 입력해 주세요!');
+            setErrorMessage(true);
+            return;
+        }
+        if (!hostPassword) {
+            setPwMessage('비밀번호를 입력해 주세요!');
+            setErrorMessage(true);
+            return;
+        }
+        if (!hostId || !hostPassword) return;
+    
+            const requestBody: HostLogInRequestDto = {
+                hostId: hostId,
+                hostPw: hostPassword
+            };
+            HostlogInRequest(requestBody).then(logInResponse);
+        }
+        // effect: 아이디 및 비밀번호 변경시 실행할 함수 //
+        useEffect(() => {
+            setMessage('');
+        }, [hostId, hostPassword]);
 
 
     // function: url 값 가져오기 //
@@ -145,7 +184,7 @@ export default function Topbar() {
 
     const pressKeyEnter = (event : KeyboardEvent<HTMLInputElement>) => {
         if (event.key === 'Enter') {
-            onLoginButtonClickHandler();
+            onGuestLoginButtonClickHandler();
         }
     }
 
@@ -190,7 +229,19 @@ export default function Topbar() {
         setModalOpen(true)
     };
 
+    const titleGuestModeChangeClickHandler = () => {
+        setMode('guest')
+        setHostId('')
+        setHostPassword('')
+    };
+
+    const titleHostModeChangeClickHandler = () => {
+        setMode('host')
+        setGuestId('')
+        setGuestPassword('')
+    };
     
+
 
     return (
         <>
@@ -210,8 +261,8 @@ export default function Topbar() {
                         <div className='top-search-bar-count'>인원 {urlCount}</div>
                     </div>}
                     {cookies.accessToken && <div className='nowlogin'>
-                        <div className='my-page' onClick={onMyPageClickHandler}>MYPAGE</div>
-                        <div className='log-out' onClick={onlogoutButtonClickHandler}>LOGOUT</div>
+                        <div className='my-page' onClick={onMyPageClickHandler}>마이페이지</div>
+                        <div className='log-out' onClick={onlogoutButtonClickHandler}>로그아웃</div>
                     </div>}
                     {!cookies.accessToken && <div className='sign'>
                         <div className='sign-in' onClick={() => setModalOpen(true)}>Login</div>
@@ -231,10 +282,10 @@ export default function Topbar() {
                             <div className='log-in-close' onClick={() => setModalOpen(false)}></div>
                         </div>
                         <div className='log-in-mode-select-button'>
-                            <div className={`log-in-mode-guest-${ mode === 'guest' ? 'active' : 'disable'}`} ></div>
-                            <div className={`log-in-mode-host-${ mode === 'host' ? 'active' : 'disable'}`}></div>
+                            <div className={`log-in-mode-guest-${ mode === 'guest' ? 'active' : 'disable'}`} onClick={titleGuestModeChangeClickHandler}>Guest</div>
+                            <div className={`log-in-mode-host-${ mode === 'host' ? 'active' : 'disable'}`} onClick={titleHostModeChangeClickHandler}>Host</div>
                         </div>
-                        {<div>
+                        {mode === 'guest' && <div>
                             <div className='input-log'>
                                 <div className='log-in-id-icon'></div>
                                 <InputBox
@@ -243,7 +294,7 @@ export default function Topbar() {
                                     value={gusetId}
                                     message={idmessage}
                                     messageError={errorMessage}
-                                    onChange={onIdChangeHandler}
+                                    onChange={onGuestIdChangeHandler}
                                     onKey={pressKeyEnter}
                                 />
                             </div>
@@ -255,21 +306,21 @@ export default function Topbar() {
                                     value={gusetPassword}
                                     message={pwmessage}
                                     messageError={errorMessage}
-                                    onChange={onPasswordChangeHandler}
+                                    onChange={onGuestPasswordChangeHandler}
                                     onKey={pressKeyEnter}
                                 />
                             </div>
                         </div>}
-                        { <div>
+                        {mode === 'host' && <div>
                             <div className='input-log'>
                                 <div className='log-in-id-icon'></div>
                                 <InputBox
                                     type='text'
                                     placeholder='아이디를 입력해 주세요.'
-                                    value={gusetId}
+                                    value={hostId}
                                     message={idmessage}
                                     messageError={errorMessage}
-                                    onChange={onIdChangeHandler}
+                                    onChange={onHostIdChangeHandler}
                                     onKey={pressKeyEnter}
                                 />
                             </div>
@@ -278,15 +329,17 @@ export default function Topbar() {
                                 <InputBox
                                     type='password'
                                     placeholder='비밀번호를 입력해 주세요.'
-                                    value={gusetPassword}
+                                    value={hostPassword}
                                     message={pwmessage}
                                     messageError={errorMessage}
-                                    onChange={onPasswordChangeHandler}
+                                    onChange={onHostPasswordChangeHandler}
                                     onKey={pressKeyEnter}
                                 />
                             </div>
                         </div>}
-                        <div className='log-in-button' onClick={onLoginButtonClickHandler}>로그인</div>
+                        {mode === 'guest' && <div className='log-in-button' onClick={onGuestLoginButtonClickHandler}>로그인</div>}
+                        {mode === 'host' && <div className='log-in-button' onClick={onHostLoginButtonClickHandler}>로그인</div>}
+                        
                         <div className='find'>
                             <div className='find-id' onClick={onFindIdPwButtonClickHandler}>아이디/비밀번호 찾기</div>
                         </div>
