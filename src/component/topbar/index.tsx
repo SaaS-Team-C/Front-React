@@ -51,15 +51,9 @@ export default function Topbar() {
 
 
 
-<<<<<<< HEAD
     // function: 호스트 로그인 응답 처리 함수 //
     const hostLogInResponse = (responseBody: HostLogInResponseDto | ResponseDto | null) => {
         const message = 
-=======
-    // function: 로그인 응답 처리 함수 //
-    const logInResponse = (responseBody: LogInResponseDto | ResponseDto | null) => {
-        const message =
->>>>>>> 7f2fbaa159cda9acc7a889a209a9088141aea7dc
             !responseBody ? '서버에 문제가 있습니다.' :
                 responseBody.code === 'VF' ? '아이디와 비밀번호를 모두 입력하세요.' :
                     responseBody.code === 'SF' ? '로그인 정보가 일치하지 않습니다.' :
@@ -141,7 +135,6 @@ export default function Topbar() {
             return;
         }
         if (!gusetId || !gusetPassword) return;
-<<<<<<< HEAD
     
             const requestBody: GuestLogInRequestDto = {
                 guestId: gusetId,
@@ -153,19 +146,6 @@ export default function Topbar() {
         useEffect(() => {
             setMessage('');
         }, [gusetId, gusetPassword]);
-=======
->>>>>>> 7f2fbaa159cda9acc7a889a209a9088141aea7dc
-
-        const requestBody: GuestLogInRequestDto = {
-            guestId: gusetId,
-            guestPw: gusetPassword
-        };
-        GuestlogInRequest(requestBody).then(logInResponse);
-    }
-    // effect: 아이디 및 비밀번호 변경시 실행할 함수 //
-    useEffect(() => {
-        setMessage('');
-    }, [gusetId, gusetPassword]);
 
     /**
     * function: 로그인 버튼을 클릭 했을 경우 일어나는 이벤트 처리 */
@@ -181,7 +161,6 @@ export default function Topbar() {
             return;
         }
         if (!hostId || !hostPassword) return;
-<<<<<<< HEAD
     
             const requestBody: HostLogInRequestDto = {
                 hostId: hostId,
@@ -193,19 +172,6 @@ export default function Topbar() {
         useEffect(() => {
             setMessage('');
         }, [hostId, hostPassword]);
-=======
-
-        const requestBody: HostLogInRequestDto = {
-            hostId: hostId,
-            hostPw: hostPassword
-        };
-        HostlogInRequest(requestBody).then(logInResponse);
-    }
-    // effect: 아이디 및 비밀번호 변경시 실행할 함수 //
-    useEffect(() => {
-        setMessage('');
-    }, [hostId, hostPassword]);
->>>>>>> 7f2fbaa159cda9acc7a889a209a9088141aea7dc
 
 
     // function: url 값 가져오기 //
@@ -331,15 +297,9 @@ export default function Topbar() {
                         <div className='top-search-bar-solid'></div>
                         <div className='top-search-bar-count'>인원 {urlCount}</div>
                     </div>}
-<<<<<<< HEAD
                     {hostCookies.hostAccessToken && <div className='nowlogin'>
                         <div className='my-page' onClick={onHostMyPageClickHandler}>호스트마이페이지</div>
                         <div className='log-out' onClick={onHostLogoutButtonClickHandler}>로그아웃</div>
-=======
-                    {cookies.accessToken && <div className='nowlogin'>
-                        <div className='my-page' onClick={onMyPageClickHandler}>MYPAGE</div>
-                        <div className='log-out' onClick={onlogoutButtonClickHandler}>LOGOUT</div>
->>>>>>> 7f2fbaa159cda9acc7a889a209a9088141aea7dc
                     </div>}
                     {guestCookies.guestAccessToken && <div className='nowlogin'>
                         <div className='my-page' onClick={onGuestMyPageClickHandler}>게스트마이페이지</div>

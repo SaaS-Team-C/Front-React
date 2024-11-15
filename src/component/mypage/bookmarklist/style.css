@@ -1,0 +1,115 @@
+:root {
+    --main-button-color: rgba(0,172,207,1);
+    --main-button-text-color: rgba(255,255,255,1);
+
+    --input-solid-color: rgba(188,188,188,1);
+    --input-text-color: rgba(201,201,201,1);
+    --mypage-text-color: rgb(92, 91, 91);
+
+    
+    --diable-button-color: rgba(157,160,165,1);
+    --error-color: rgba(255, 84, 64, 1);
+    --dark-gray-title-color: rgba(56,76,96,1);
+
+    --default-color: rgba(35, 45, 66, 1);
+}
+
+/* 페이지 css */
+#bookmark-warpper {
+    display: flex;
+
+    width: min-content;
+    height: auto;
+    border: solid 3px rgb(238, 185, 185);
+    border-radius: 10px;
+
+    margin: 10px 15px;
+}
+
+.bookmark-image {
+
+}
+
+/* 상단 css */
+.bookmark-list-top-deatail {
+    display: flex;
+    justify-content: space-between;
+
+    width: 100%;
+    min-width: 700px;
+    height: 30px;
+    font-family: 'Pretendard-Regular';
+    color: rgb(51, 51, 51);
+    font-size: 17px;
+    font-weight: 600;
+    text-shadow: 2px 2px 1px rgb(220, 220, 220)
+}
+
+/* 메인내용 css */
+.bookmark-list-main-detail {
+    width: auto;
+    display: flex;
+}
+    /* 사진 */
+    .bookmark-list-image {
+        width: 120px;
+        height: 120px;
+        border-radius: 15px;
+    }
+
+    .bookmark-hotel-detail {
+        display: flex;
+        flex-direction: column;
+
+        margin: 15px 15px;
+        width: 300px;
+        text-overflow: ellipsis;
+    }
+
+        .bookmark-hotel-title {    
+            max-width: 170px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
+        .bookmark-hotel-room{
+            
+            margin-top: 15px;
+            font-size: 13px;
+            color: var(--input-solid-color);
+        }
+
+    .bookmark-detail-list {
+        align-items: center;
+
+        width: 100%;
+
+        color: var(--mypage-text-color);
+    }
+
+        .bookmark-stay {
+            margin-top: 15px;
+        }
+
+        .bookmark-start-end-time {
+            margin: 20px 0px;
+            display: flex;
+        }
+
+            .bookmark-end {
+                margin-left: 20px;
+            }
+
+        .bookmark-count-reviewbox {
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .bookmark-reviewbox {
+            padding: 10px 20px;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            background-color: #ff94a0;
+        }

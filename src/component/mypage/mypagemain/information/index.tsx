@@ -1,14 +1,12 @@
-import React, { ChangeEvent, useEffect, useState } from 'react'
+import { ChangeEvent, useEffect, useState } from 'react'
 import './style.css'
 import MypageInputBox from 'src/component/input/mypageinput';
 import axios from 'axios';
-// import SignInUser from './../../../../types/sign-in-user.interface';
 import { SignInUser } from 'src/stores';
-import { PATCH_GUEST_PASSWORD_API_URL } from 'src/constants';
 import GuestPwChangeRequestDto from 'src/apis/login/dto/request/guest/guestpwchange.request.dto';
 import { ChangeGuestPwRequest } from 'src/apis/login';
 import { ResponseDto } from 'src/apis/hostmypage';
-import { Navigate, useNavigate } from 'react-router';
+import { useNavigate } from 'react-router';
 import { useCookies } from 'react-cookie';
 
 interface Props {
@@ -157,6 +155,7 @@ export default function Information({ titletext, username, activite }: Props) {
                 currentGuestPw: currentPassword,
                 changeGuestPw: guestPassword
             };
+
             ChangeGuestPwRequest(guestId, requestBody).then(passwordChangeResponse);
         }
 
