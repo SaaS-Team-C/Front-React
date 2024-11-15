@@ -19,7 +19,7 @@
     display: flex;
     flex-direction: column;
 
-    width: min-content;
+    width: 800px;
     height: auto;
     border: solid 3px rgb(238, 185, 185);
     border-radius: 10px;
@@ -27,90 +27,3 @@
     margin: 10px 15px;
 }
 
-.bookinglist-box {
-    margin: 10px;
-}
-
-/* 상단 css */
-.bookinglist-list-top-deatail {
-    display: flex;
-    justify-content: space-between;
-
-    width: 100%;
-    min-width: 700px;
-    height: 30px;
-    font-family: 'Pretendard-Regular';
-    color: rgb(51, 51, 51);
-    font-size: 17px;
-    font-weight: 600;
-    text-shadow: 2px 2px 1px rgb(220, 220, 220)
-}
-
-/* 메인내용 css */
-.bookinglist-list-main-detail {
-    width: auto;
-    display: flex;
-}
-    /* 사진 */
-    .bookinglist-list-image {
-        width: 120px;
-        height: 120px;
-        border-radius: 15px;
-    }
-
-    .bookinglist-hotel-detail {
-        display: flex;
-        flex-direction: column;
-
-        margin: 15px 15px;
-        width: 300px;
-        text-overflow: ellipsis;
-    }
-
-        .bookinglist-hotel-title {    
-            max-width: 170px;
-            overflow: hidden;
-            text-overflow: ellipsis;
-            white-space: nowrap;
-        }
-
-        .bookinglist-hotel-room{
-            
-            margin-top: 15px;
-            font-size: 13px;
-            color: var(--input-solid-color);
-        }
-
-    .bookinglist-detail-list {
-        align-items: center;
-
-        width: 100%;
-
-        color: var(--mypage-text-color);
-    }
-
-        .bookinglist-stay {
-            margin-top: 15px;
-        }
-
-        .bookinglist-start-end-time {
-            margin: 20px 0px;
-            display: flex;
-        }
-
-            .bookinglist-end {
-                margin-left: 20px;
-            }
-
-        .bookinglist-count-reviewbox {
-            display: flex;
-            justify-content: space-between;
-        }
-
-        .bookinglist-reviewbox {
-            padding: 10px 20px;
-            color: white;
-            border: none;
-            border-radius: 4px;
-            background-color: #ff94a0;
-        }

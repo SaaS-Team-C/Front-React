@@ -176,7 +176,7 @@ export default function SignUp() {
       authNumber !== '' &&
       isAgreed &&  // 동의 여부
       isSend &&  // 인증 코드 전송 여부
-      isCheckedId;  // 아이디 중복 체크 여부
+      isCheckedId;  // 아이디 중복 체크 여
 
     setHostIsButtonEnabled(hostAllFieldsFilled);
 

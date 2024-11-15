@@ -113,8 +113,13 @@ const getSignInHostResponse =(responseBody: GetHostSignInResponseDto | ResponseD
   const isSuccessde = responseBody !== null && responseBody.code === 'SU';
   if (!isSuccessde) return ;
 
+<<<<<<< HEAD
   const {hostId,hostName,hostTelNumber, hostPw, entryStatus} = responseBody as GetHostSignInResponseDto;
   setSignInHost({hostId,hostName,hostPw,hostTelNumber, entryStatus});
+=======
+  const {hostId,hostName,hostTelNumber, hostPw} = responseBody as GetHostSignInResponseDto;
+  // setSignInHost({hostId,hostName,hostTelNumber, hostPw});
+>>>>>>> cd53c3eb3a6426d0052bc99767a2b246bc3ed00c
 }
 
 useEffect(() => {

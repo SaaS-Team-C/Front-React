@@ -147,8 +147,8 @@ export default function Topbar() {
             setMessage('');
         }, [gusetId, gusetPassword]);
 
-        /**
-        * function: 로그인 버튼을 클릭 했을 경우 일어나는 이벤트 처리 */   
+    /**
+    * function: 로그인 버튼을 클릭 했을 경우 일어나는 이벤트 처리 */
     const onHostLoginButtonClickHandler = async () => {
         if (!hostId) {
             setIdMessage('아이디를 입력해 주세요!');
