@@ -2,6 +2,8 @@ import React, { ChangeEvent, useEffect, useState } from 'react'
 import './style.css'
 import MypageInputBox from 'src/component/input/mypageinput';
 import axios from 'axios';
+// import SignInUser from './../../../../types/sign-in-user.interface';
+import { SignInUser } from 'src/stores';
 
 interface Props {
     titletext: string;
@@ -11,9 +13,14 @@ interface Props {
 
 export default function Information({ titletext, username, activite }: Props) {
 
+    // 게스트 이름 불러오기
+    const {signInUser} = SignInUser(); 
 
+    const [guestName, setGuestName] = useState<string>('');
+    const [guestId, setGuestId] = useState<string>('');
+
+    
     const [idmessage, setIdMessage] = useState<string>('qwer1234');
-    const [guestId, setGuestId] = useState<string | null>(null);
     const [currentPassword, setCurrentPassword] = useState<string>(''); // 현재 비밀번호 추가
     const [guestPassword, setGuestPassword] = useState<string>('');
     const [guestPasswordCheck, setGuestPasswordCheck] = useState<string>('');
@@ -156,13 +163,13 @@ export default function Information({ titletext, username, activite }: Props) {
 
     }
 
-    // useEffect(() => {
-    //     if (!password || !checkPassword) return;
-
-    //     const equal = password === checkPassword;
-
-    //     ;
-    // }, [password, checkPassword]);
+    // 게스트 이름 불러오기
+    useEffect (() => {
+    
+        if(!signInUser) return;
+        setGuestName(signInUser.guestName)
+        setGuestId(signInUser.guestId)
+    },[signInUser])
 
     return (
 
@@ -171,14 +178,14 @@ export default function Information({ titletext, username, activite }: Props) {
                 <div className='information-title'>
                     <div className='information-title-text'>{titletext}</div>
                     <div className='information-title-box'>
-                        <div className='info rmation-title-ditail-username'>'{username}'</div>
+                        <div className='info rmation-title-ditail-username'>'{guestName}'</div>
                         <div className='information-title-ditail'>님 반갑습니다.</div>
                     </div>
                 </div>
                 <div className='information-main'>
                     {/* <div className='information-title'>나의 정보</div> */}
-                    <MypageInputBox activation={false} title='아이디' type='text' value={idmessage} placeholder='아이디를 입력해 주세요' />
-                    <MypageInputBox activation={false} title='이름' type='text' value='value' placeholder='아이디를 입력해 주세요' />
+                    <MypageInputBox activation={false} title='아이디' type='text' value={guestId} placeholder='' />
+                    <MypageInputBox activation={false} title='이름' type='text' value={guestName} placeholder='' />
                     <MypageInputBox
                         activation={true}
                         title='현재 비밀번호'
