@@ -6,7 +6,7 @@ import Main from './views/main/Main';
 
 import Payment from './views/payment';
 
-import { GUEST_ACCESS_TOKEN, ACCOMMODATION_LIST_DETAIL_PATH, ACCOMMODATION_LIST_PATH, AUTH_PATH, FINDID_PATH, getSignInRequest, MAIN_PATH, HOST_ACCESS_TOKEN, getSignInHostRequest } from './constants';
+import { GUEST_ACCESS_TOKEN, ACCOMMODATION_LIST_DETAIL_PATH, ACCOMMODATION_LIST_PATH, AUTH_PATH, FINDID_PATH,  MAIN_PATH, HOST_ACCESS_TOKEN } from './constants';
 
 import { RegionImages } from './resources/images/region';
 import { useEffect } from 'react';
@@ -41,6 +41,8 @@ import GetSignInResponseDto from './apis/login/dto/response/get-guest-sign-in.re
 import { GetHostSignInResponseDto } from './apis/login/dto';
 import GetGuestSignInResponseDto from './apis/login/dto/response/get-guest-sign-in.response.dto';
 import List from './component/accomodation/list';
+import { getGuestSignInRequest } from './apis/login';
+import { getSignInHostRequest } from './apis/signUp';
 
 
 
@@ -89,26 +91,18 @@ export default function App() {
   const navigator = useNavigate();
   
 
-  const getSignInResponse = (responseBody: GetGuestSignInResponseDto | ResponseDto | null) => {
-  const message = 
-  !responseBody ? '로그인 유저 정보를 불러오는데 문제가 발생했습니다.' :
-  responseBody.code === 'NI' ? '로그인 유저 정보가 존재하지 않습니다.' :
-  responseBody.code === 'AF' ? '잘못된 접근입니다.' :
-  responseBody.code === 'DBE' ? '로그인 유저 정보를 불러오는데 문제가 발생했습니다.' : '';
-  
-  const isSuccessde = responseBody !== null && responseBody.code === 'SU';
-  
-  // if (!isSuccessde) {
-  //   alert(message)
-  //   removeCookie(ACCESS_TOKEN, { path: ROOT_PATH })
-  //   setSignInUser(null);
-  //   navigator(AUTH_ABSOLUTE_PATH)
-  //   return;
-  // }
-
+  const getSignInGuestResponse =(responseBody: GetGuestSignInResponseDto | ResponseDto | null) => {
+    const message = 
+        !responseBody ? '로그인 유저 정보를 불러오는데 문제가 발생했습니다.' :
+        responseBody.code === 'NI' ? '로그인 유저 정보가 존재하지 않습니다.' :
+        responseBody.code === 'AF' ? '잘못된 접근입니다.' :
+        responseBody.code === 'DBE' ? '로그인 유저 정보를 불러오는데 문제가 발생했습니다.' : '';
+      const isSuccessde = responseBody !== null && responseBody.code === 'SU';
+      if (!isSuccessde) return ;
   const {guestId, guestName, guestTelNumber} = responseBody as GetGuestSignInResponseDto
   setSignInUser({guestId, guestName, guestTelNumber});
 }
+
 // function: get sign in host response 처리 함수 //
 const getSignInHostResponse =(responseBody: GetHostSignInResponseDto | ResponseDto | null)=>{
   const message = 
@@ -117,18 +111,20 @@ const getSignInHostResponse =(responseBody: GetHostSignInResponseDto | ResponseD
   responseBody.code === 'AF' ? '잘못된 접근입니다.' :
   responseBody.code === 'DBE' ? '로그인 유저 정보를 불러오는데 문제가 발생했습니다.' : '';
   const isSuccessde = responseBody !== null && responseBody.code === 'SU';
+  if (!isSuccessde) return ;
 
-  const {hostId,hostName,hostTelNumber, hostPw} = responseBody as GetHostSignInResponseDto;
-  setSignInHost({hostId,hostName,hostTelNumber, hostPw});
+  const {hostId,hostName,hostTelNumber, hostPw, entryStatus} = responseBody as GetHostSignInResponseDto;
+  setSignInHost({hostId,hostName,hostPw,hostTelNumber, entryStatus});
 }
 
 useEffect(() => {
   const guestAccessToken = cookies[GUEST_ACCESS_TOKEN];
   const hostAccessToken = cookies[HOST_ACCESS_TOKEN];
-  if (guestAccessToken) getSignInRequest(guestAccessToken).then(getSignInResponse)
-  else if (hostAccessToken) getSignInHostRequest(hostAccessToken).then(getSignInHostResponse)
-  else  setSignInUser(null);
-}, [cookies[GUEST_ACCESS_TOKEN]])
+  if (guestAccessToken) getGuestSignInRequest(guestAccessToken).then(getSignInGuestResponse);
+  else if (hostAccessToken) getSignInHostRequest(hostAccessToken).then(getSignInHostResponse);
+  else if(!guestAccessToken) setSignInUser(null);
+  else setSignInHost(null);
+}, [cookies[GUEST_ACCESS_TOKEN], cookies[HOST_ACCESS_TOKEN] ])
 
   // onPathChange 함수 정의
   const handlePathChange = () => {

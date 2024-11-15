@@ -60,5 +60,6 @@ export const getGuestSignInRequest = async(accessToken: string) => {
     const responseBody = await axios.get(GET_GUEST_SIGN_IN, bearerAuthorization(accessToken))
     .then(responseDataHandler<GetGuestSignInResponseDto>)
     .catch(responseErrorHandler)
+    return responseBody;
 }
 
