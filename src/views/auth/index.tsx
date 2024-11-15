@@ -176,7 +176,7 @@ export default function SignUp() {
       authNumber !== '' &&
       isAgreed &&  // 동의 여부
       isSend &&  // 인증 코드 전송 여부
-      isCheckedId;  // 아이디 중복 체크 여부
+      isCheckedId;  // 아이디 중복 체크 여
 
     setHostIsButtonEnabled(hostAllFieldsFilled);
 
@@ -524,7 +524,7 @@ export default function SignUp() {
 
   // Host 회원가입 버튼 클릭 이벤트 처리 //
   const onHostSignUpButtonHandler = () => {
-    if (!hostIsButtonEnabled) return;
+    // if (!hostIsButtonEnabled) return;
 
     const requestBody: HostSignUpRequestDto = {
       hostId: hostId,
