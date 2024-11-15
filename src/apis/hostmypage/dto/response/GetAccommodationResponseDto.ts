@@ -13,6 +13,7 @@ export interface GetAccommodationResponseDto{
   accommodationIntroduce: string;
   useInformations: UseInformation[];
   roomList: Room[];
+  // roomSubList: string[]
   categoryArea: string;
   categoryPet: boolean;
   categoryNonSmokingArea: boolean;
