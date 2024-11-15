@@ -4,6 +4,12 @@ import MypageInputBox from 'src/component/input/mypageinput';
 import axios from 'axios';
 // import SignInUser from './../../../../types/sign-in-user.interface';
 import { SignInUser } from 'src/stores';
+import { PATCH_GUEST_PASSWORD_API_URL } from 'src/constants';
+import GuestPwChangeRequestDto from 'src/apis/login/dto/request/guest/guestpwchange.request.dto';
+import { ChangeGuestPwRequest } from 'src/apis/login';
+import { ResponseDto } from 'src/apis/hostmypage';
+import { Navigate, useNavigate } from 'react-router';
+import { useCookies } from 'react-cookie';
 
 interface Props {
     titletext: string;
@@ -14,12 +20,10 @@ interface Props {
 export default function Information({ titletext, username, activite }: Props) {
 
     // 게스트 이름 불러오기
-    const {signInUser} = SignInUser(); 
+    const { signInUser } = SignInUser();
 
     const [guestName, setGuestName] = useState<string>('');
     const [guestId, setGuestId] = useState<string>('');
-
-    
     const [idmessage, setIdMessage] = useState<string>('qwer1234');
     const [currentPassword, setCurrentPassword] = useState<string>(''); // 현재 비밀번호 추가
     const [guestPassword, setGuestPassword] = useState<string>('');
@@ -33,6 +37,13 @@ export default function Information({ titletext, username, activite }: Props) {
     const [isCurrentPasswordVerified, setIsCurrentPasswordVerified] = useState(false); // 현재 비밀번호 검증 상태
     const [telNumber, setTelNumber] = useState<string>('010-0000-0000');
     const [message, setMessage] = useState<string>('');
+
+
+    // 내가 새로 넣은 변수들 //
+    const [pwButtonBoolean, setPwButtonBoolean] = useState<boolean>(false);
+
+    const navigator = useNavigate();
+    const [cookies , setCookies, removeCookies] = useCookies();
 
 
     // event handler: 현재 비밀번호 입력 이벤트 핸들러 //
@@ -121,13 +132,13 @@ export default function Information({ titletext, username, activite }: Props) {
     //         const requestBody: PatchGuestAuthRequestDto = {
     //             telnumber: telNumber.replace(/-/g, ''), // "-" 제거
     //         };
-    
+
     //         const response = await axios.post(
     //             `/auth-number/${guestId}`,
     //             requestBody,
     //             { headers: { 'Content-Type': 'application/json' } }
     //         );
-    
+
     //         if (response.status === 200) {
     //             setMessage('전화번호가 성공적으로 변경되었습니다.');
     //         } else {
@@ -139,37 +150,54 @@ export default function Information({ titletext, username, activite }: Props) {
     //     }
     // };
 
-    // event handler: 게스트 비밀번호 변경 요청 전송 핸들러
-    const onSubmitGuestPasswordChangeHandler = async () => {
-        try {
-            const data = {
-                guestId,
-                guestPassword
+
+    const onGuestPasswordChangeHandler = async () => {
+    
+            const requestBody: GuestPwChangeRequestDto = {
+                currentGuestPw: currentPassword,
+                changeGuestPw: guestPassword
             };
-
-            // POST 요청 보내기
-            const response = await axios.post('/api/guest-password-change/{guestId}/{guestPasswrod}', data);
-
-            if (response.status === 200) {
-                alert('게스트 비밀번호가 성공적으로 변경되었습니다.');
-            }
-        } catch (error) {
-            console.error('게스트 비밀번호 변경 오류:', error);
-            alert('게스트 비밀번호 변경 중 문제가 발생했습니다. 다시 시도해주세요.');
+            ChangeGuestPwRequest(guestId, requestBody).then(passwordChangeResponse);
         }
-    };
 
-    const onPasswordChangeButtonClickHandlder = () => {
+        const passwordChangeResponse = (responseBody: ResponseDto | null) => {
+            const message = 
+                !responseBody ? '서버에 문제가 있습니다.' :
+                responseBody.code === 'VF' ? '비밀번호를 모두 입력하세요.' :
+                responseBody.code === 'SF' ? '로그인 정보가 일치하지 않습니다.' : 
+                responseBody.code === 'TCF' ? '서버에 문제가 있습니다.' :
+                responseBody.code === 'DBE' ? '서버에 문제가 있습니다.' : '';
+            
+            const isSuccessed = responseBody !== null && responseBody.code === 'SU';
+            if (!isSuccessed) {
+                return;
+            }
+            navigator('/main')
+            removeCookies('accessToken')
+        };
+    
 
-    }
+
 
     // 게스트 이름 불러오기
-    useEffect (() => {
-    
-        if(!signInUser) return;
+    useEffect(() => {
+        if (!signInUser) return;
         setGuestName(signInUser.guestName)
         setGuestId(signInUser.guestId)
-    },[signInUser])
+    }, [signInUser])
+
+    // 비밀번호 변경 버튼 변경 활성화 처리 //
+    useEffect(() => {
+        if(currentPassword && guestPassword && guestPasswordCheck) {
+            setPwButtonBoolean(true)
+        } else {
+            setPwButtonBoolean(false)
+        }
+    }, [
+        currentPassword,
+        guestPassword,
+        guestPasswordCheck
+    ])
 
     return (
 
@@ -178,7 +206,7 @@ export default function Information({ titletext, username, activite }: Props) {
                 <div className='information-title'>
                     <div className='information-title-text'>{titletext}</div>
                     <div className='information-title-box'>
-                        <div className='info rmation-title-ditail-username'>'{guestName}'</div>
+                        <div className='information-title-ditail-username'>'{guestName}'</div>
                         <div className='information-title-ditail'>님 반갑습니다.</div>
                     </div>
                 </div>
@@ -193,7 +221,6 @@ export default function Information({ titletext, username, activite }: Props) {
                         value={currentPassword}
                         placeholder='현재 비밀번호를 입력해 주세요.'
                         onChange={onCurrentPasswordChangeHandler}
-                        buttonName='확인'
                     />
                     <MypageInputBox
                         activation={true}
@@ -213,17 +240,18 @@ export default function Information({ titletext, username, activite }: Props) {
                         messageError={passwordCheckMessageError ? passwordCheckMessage : ''}
                         onChange={onPasswordCheckChangeHandler}
                         buttonName='변경'
-                        />
-<MypageInputBox
-                activation={true}
-                title="전화번호"
-                type="text"
-                value={telNumber}
-                placeholder="-를 빼고 입력해 주세요."
-                onChange={handlePhoneNumberChange}
-                buttonName="변경"
-                // onButtonClick={handleUpdatePhoneNumber}
-            />                </div>
+                        activboolean={pwButtonBoolean}
+                        onButtonClick={onGuestPasswordChangeHandler}
+                    />
+                    <MypageInputBox
+                        activation={false}
+                        title="전화번호"
+                        type="text"
+                        value={telNumber}
+                        placeholder="-를 빼고 입력해 주세요."
+                        onChange={handlePhoneNumberChange}
+                        buttonName="변경" />
+                </div>
             </div>}
         </>
     )

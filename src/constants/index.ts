@@ -2,7 +2,6 @@
 
 import axios, { AxiosResponse } from "axios";
 import GetGuestSignInResponseDto from "src/apis/login/dto/response/get-guest-sign-in.response.dto";
-import GetSignInResponseDto from "src/apis/login/dto/response/get-guest-sign-in.response.dto";
 import { ResponseDto } from "src/apis/signUp/dto/response";
 
 export const ROOT_PATH = "/";
