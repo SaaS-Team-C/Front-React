@@ -1,9 +1,10 @@
 import axios, { AxiosResponse } from "axios";
 
 import { GetHostAccommodationListResponseDto } from "./hostmypage/dto/response/GetHostAccommodationListResponseDto";
-import { GET_ACCOMMODATION_LIST_API_URL } from "src/constants";
+import { GET_ACCOMMODATION_API_URL, GET_ACCOMMODATION_LIST_API_URL } from "src/constants";
 import { ResponseDto } from "./hostmypage";
 import { GetAccommodationListResponseDto } from "./hostmypage/dto/response";
+import GetAccommodationResponseDto from "./hostmypage/dto/response/GetAccommodationResponseDto";
 
 
 
@@ -46,3 +47,14 @@ export const getAccommodationListRequest = (accessToken:string)=> {
     return responseBody;
 }
 
+// 이소진 작성
+// function: Get accommodation detail List 처리 함수
+export const getAccommodationDetailRequest = (accommodationName: string, accessToken:string )=> {
+    const responseBody = axios.get(GET_ACCOMMODATION_API_URL(accommodationName), bearerAuthorization(accessToken))
+        .then(responseDataHandler<GetAccommodationResponseDto>)
+        .catch(responseErrorHandler);
+    return responseBody;
+}
+
+
+ 

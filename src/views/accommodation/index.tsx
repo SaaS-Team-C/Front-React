@@ -1,6 +1,7 @@
 import "./style.css";
 import List from "../../component/accomodation/list";
 import Topbar from "src/component/topbar";
+import Filter from "src/component/accomodation/filter";
 
 const AccommodationList = () => {
 
@@ -9,7 +10,7 @@ const AccommodationList = () => {
           <Topbar />
       <div className="app-container">
         <div className="content-container">
-        {/* <Filter /> */}
+        <Filter />
         <List/>
         </div>
       </div>

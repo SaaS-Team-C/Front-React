@@ -10,7 +10,6 @@ import { Accommodations } from "src/types";
 import { GetAccommodationListResponseDto } from "src/apis/hostmypage/dto/response/get-accommodation-list.response.dto";
 
 
-
 const List = () => {
   // state: 숙소 리스트 불러오기 상태 관리
   const [callAccommodationList, SetCallAccommodationList] = useState<Accommodations[]>([]);
