@@ -6,19 +6,23 @@ import { useNavigate } from 'react-router';
 // import { ResponseDto } from 'src/apis/dto/response';
 import { useCookies } from 'react-cookie';
 import { useSearchParams } from 'react-router-dom';
-import { GuestlogInRequest, HostlogInRequest } from 'src/apis/login';
+import { GuestLogInRequest, HostLogInRequest } from 'src/apis/login';
 import GuestLogInRequestDto from 'src/apis/login/dto/request/guest/login.request.dto';
-import LogInResponseDto from 'src/apis/login/dto/response/login.responsw.dto';
+// import LogInResponseDto from 'src/apis/login/dto/response/host.login.respons.dto';
 import ResponseDto from 'src/apis/login/dto/response/response.dto';
 import InputBox from '../input/login';
 import HostLogInRequestDto from 'src/apis/login/dto/request/host/login.request.dto';
+import HostLogInResponseDto from 'src/apis/login/dto/response/host.login.respons.dto';
+import GuestLogInResponseDto from 'src/apis/login/dto/response/guest.login.respons.dto';
 
 // 컴포넌트: 메인페이지 화면 컴포넌트 //
 type group = 'guest' | 'host';
 
 export default function Topbar() {
     // 쿠키 상태 초기화
-    const [cookies, setCookie, removeCookies] = useCookies(['accessToken']);
+    const [hostCookies, setHostCookie, removeHostCookies] = useCookies(['hostAccessToken']);
+    const [guestCookies, setGuestCookie, removeGuestCookies] = useCookies(['guestAccessToken']);
+    
 
     // state: 모달창 상태 //
     const [modalOpen, setModalOpen] = useState(false);
@@ -47,9 +51,15 @@ export default function Topbar() {
 
 
 
+<<<<<<< HEAD
+    // function: 호스트 로그인 응답 처리 함수 //
+    const hostLogInResponse = (responseBody: HostLogInResponseDto | ResponseDto | null) => {
+        const message = 
+=======
     // function: 로그인 응답 처리 함수 //
     const logInResponse = (responseBody: LogInResponseDto | ResponseDto | null) => {
         const message =
+>>>>>>> 7f2fbaa159cda9acc7a889a209a9088141aea7dc
             !responseBody ? '서버에 문제가 있습니다.' :
                 responseBody.code === 'VF' ? '아이디와 비밀번호를 모두 입력하세요.' :
                     responseBody.code === 'SF' ? '로그인 정보가 일치하지 않습니다.' :
@@ -61,9 +71,32 @@ export default function Topbar() {
             setPwMessage(message);
             return;
         }
-        const { accessToken, expiration } = responseBody as LogInResponseDto;
+        const { hostAccessToken, expiration } = responseBody as HostLogInResponseDto;
         const expires = new Date(Date.now() + (expiration * 1000));
-        setCookie('accessToken', accessToken, { path: '/', expires });
+        setHostCookie('hostAccessToken', hostAccessToken, { path: '/', expires });
+        setModalOpen(false)
+
+        navigator('/main')
+
+    };
+
+     // function: 게스트 로그인 응답 처리 함수 //
+    const guestLogInResponse = (responseBody: GuestLogInResponseDto | ResponseDto | null) => {
+        const message = 
+            !responseBody ? '서버에 문제가 있습니다.' :
+            responseBody.code === 'VF' ? '아이디와 비밀번호를 모두 입력하세요.' :
+            responseBody.code === 'SF' ? '로그인 정보가 일치하지 않습니다.' : 
+            responseBody.code === 'TCF' ? '서버에 문제가 있습니다.' :
+            responseBody.code === 'DBE' ? '서버에 문제가 있습니다.' : '';
+        
+        const isSuccessed = responseBody !== null && responseBody.code === 'SU';
+        if (!isSuccessed) {
+            setPwMessage(message);
+            return;
+        }
+        const { guestAccessToken, expiration } = responseBody as GuestLogInResponseDto;
+        const expires = new Date(Date.now() + (expiration * 1000));
+        setGuestCookie('guestAccessToken', guestAccessToken, { path: '/', expires });
         setModalOpen(false)
 
         navigator('/main')
@@ -108,6 +141,20 @@ export default function Topbar() {
             return;
         }
         if (!gusetId || !gusetPassword) return;
+<<<<<<< HEAD
+    
+            const requestBody: GuestLogInRequestDto = {
+                guestId: gusetId,
+                guestPw: gusetPassword
+            };
+            GuestLogInRequest(requestBody).then(guestLogInResponse);
+        }
+        // effect: 아이디 및 비밀번호 변경시 실행할 함수 //
+        useEffect(() => {
+            setMessage('');
+        }, [gusetId, gusetPassword]);
+=======
+>>>>>>> 7f2fbaa159cda9acc7a889a209a9088141aea7dc
 
         const requestBody: GuestLogInRequestDto = {
             guestId: gusetId,
@@ -134,6 +181,19 @@ export default function Topbar() {
             return;
         }
         if (!hostId || !hostPassword) return;
+<<<<<<< HEAD
+    
+            const requestBody: HostLogInRequestDto = {
+                hostId: hostId,
+                hostPw: hostPassword
+            };
+            HostLogInRequest(requestBody).then(hostLogInResponse);
+        }
+        // effect: 아이디 및 비밀번호 변경시 실행할 함수 //
+        useEffect(() => {
+            setMessage('');
+        }, [hostId, hostPassword]);
+=======
 
         const requestBody: HostLogInRequestDto = {
             hostId: hostId,
@@ -145,6 +205,7 @@ export default function Topbar() {
     useEffect(() => {
         setMessage('');
     }, [hostId, hostPassword]);
+>>>>>>> 7f2fbaa159cda9acc7a889a209a9088141aea7dc
 
 
     // function: url 값 가져오기 //
@@ -180,7 +241,7 @@ export default function Topbar() {
         if (!modalOpen) {
             setModalOpen(false);
         }
-    }, [cookies]);
+    }, [guestCookies,hostCookies]);
 
     const pressKeyEnter = (event: KeyboardEvent<HTMLInputElement>) => {
         if (event.key === 'Enter') {
@@ -188,11 +249,16 @@ export default function Topbar() {
         }
     }
 
-    // event handler: 로그아웃 버튼 클릭 이벤트 처리 //
-    const onlogoutButtonClickHandler = () => {
-        removeCookies("accessToken");
-        navigator('/main')
-    };
+    // event handler: 로그아웃(호스트) 버튼 클릭 이벤트 처리 //
+    const onHostLogoutButtonClickHandler = () => {
+        if (hostCookies) removeHostCookies("hostAccessToken");
+        navigator('main')
+        };
+    // event handler: 로그아웃(호스트) 버튼 클릭 이벤트 처리 //
+    const onGuestLogoutButtonClickHandler = () => {
+        if (guestCookies) removeGuestCookies("guestAccessToken");
+        navigator('main')
+        };
 
     // event handler: 회원가입 버튼 클릭 이벤트 처리 //
     const onSignupButtonClickHandler = () => {
@@ -204,9 +270,14 @@ export default function Topbar() {
         navigator('/find');
     };
 
-    // event handler: 마이페이지 버튼 클릭 이벤트 처리 //
-    const onMyPageClickHandler = () => {
-        navigator('/mypage');
+    // event handler: 호스트 마이페이지 버튼 클릭 이벤트 처리 //
+    const onHostMyPageClickHandler = () => {
+        navigator('/mypageHost');
+    };
+
+    // event handler: 게스트 마이페이지 버튼 클릭 이벤트 처리 //
+    const onGuestMyPageClickHandler = () => {
+        navigator('/mypageGuest');
     };
 
     // event handler: 아이콘 및 로고 클릭 이벤트 처리 //
@@ -260,11 +331,21 @@ export default function Topbar() {
                         <div className='top-search-bar-solid'></div>
                         <div className='top-search-bar-count'>인원 {urlCount}</div>
                     </div>}
+<<<<<<< HEAD
+                    {hostCookies.hostAccessToken && <div className='nowlogin'>
+                        <div className='my-page' onClick={onHostMyPageClickHandler}>호스트마이페이지</div>
+                        <div className='log-out' onClick={onHostLogoutButtonClickHandler}>로그아웃</div>
+=======
                     {cookies.accessToken && <div className='nowlogin'>
                         <div className='my-page' onClick={onMyPageClickHandler}>MYPAGE</div>
                         <div className='log-out' onClick={onlogoutButtonClickHandler}>LOGOUT</div>
+>>>>>>> 7f2fbaa159cda9acc7a889a209a9088141aea7dc
                     </div>}
-                    {!cookies.accessToken && <div className='sign'>
+                    {guestCookies.guestAccessToken && <div className='nowlogin'>
+                        <div className='my-page' onClick={onGuestMyPageClickHandler}>게스트마이페이지</div>
+                        <div className='log-out' onClick={onGuestLogoutButtonClickHandler}>로그아웃</div>
+                    </div>}
+                    {!hostCookies.hostAccessToken && !guestCookies.guestAccessToken &&  <div className='sign'>
                         <div className='sign-in' onClick={() => setModalOpen(true)}>Login</div>
                         <div className='sign-up-button' onClick={onSignupButtonClickHandler}>SignUp</div>
                     </div>}
