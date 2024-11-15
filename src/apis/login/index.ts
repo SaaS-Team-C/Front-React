@@ -1,12 +1,11 @@
-import React from 'react'
 import GuestLogInRequestDto from './dto/request/guest/login.request.dto';
 import axios, { AxiosResponse } from 'axios';
-import { GET_GUEST_SIGN_IN, MAIN_PATH } from 'src/constants';
+import { GET_GUEST_SIGN_IN, GUEST_SIGN_IN_API_URL, HOST_SIGN_IN_API_URL } from 'src/constants';
 import LogInResponseDto from './dto/response/login.responsw.dto';
 import ResponseDto from './dto/response/response.dto';
 import MypageAuthRequestDto from './dto/request/guest/mypageauth.request.dto';
-import GetSignInResponseDto from './dto/response/get-guest-sign-in.response.dto';
 import GetGuestSignInResponseDto from './dto/response/get-guest-sign-in.response.dto';
+import HostLogInRequestDto from './dto/request/host/login.request.dto';
 
 // function : Authorization Bearer 헤더 //
 const bearerAuthorization = (accessToken: string) => ({
@@ -25,8 +24,17 @@ const responseErrorHandler = (error: any) => {
     return data as ResponseDto;
 };
 
-export const logInRequest = async (requestBody: GuestLogInRequestDto) => {
-    const responseBody = await axios.post('http://localhost:4000/api/roomly/auth/guest/sign-in', requestBody)
+// function: 게스트 로그인 처리 함수 //
+export const GuestlogInRequest = async (requestBody: GuestLogInRequestDto) => {
+    const responseBody = await axios.post(GUEST_SIGN_IN_API_URL, requestBody)
+        .then(responseDataHandler<LogInResponseDto>)
+        .catch(responseErrorHandler);
+    return responseBody;
+};
+
+// function: 호스트 로그인 처리 함수 //
+export const HostlogInRequest = async (requestBody: HostLogInRequestDto) => {
+    const responseBody = await axios.post(HOST_SIGN_IN_API_URL, requestBody)
         .then(responseDataHandler<LogInResponseDto>)
         .catch(responseErrorHandler);
     return responseBody;
