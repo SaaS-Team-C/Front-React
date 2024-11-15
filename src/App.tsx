@@ -37,12 +37,12 @@ import MyAccommodationManagementView from './views/mypagehost/MyAccommodationMan
 import ShowDetailList from './component/mypagehost/MyAccommodationManagement/showaccdetail/detaillist';
 import {SignInHost, SignInUser} from './stores';
 import { ResponseDto } from './apis/signUp/dto/response';
-import GetSignInResponseDto from './apis/login/dto/response/get-guest-sign-in.response.dto';
+
 import { GetHostSignInResponseDto } from './apis/login/dto';
 import GetGuestSignInResponseDto from './apis/login/dto/response/get-guest-sign-in.response.dto';
 import List from './component/accomodation/list';
-import { getGuestSignInRequest } from './apis/login';
 import { getSignInHostRequest } from './apis/signUp';
+import { getGuestSignInRequest } from './apis/login';
 
 
 
@@ -106,20 +106,15 @@ export default function App() {
 // function: get sign in host response 처리 함수 //
 const getSignInHostResponse =(responseBody: GetHostSignInResponseDto | ResponseDto | null)=>{
   const message = 
-  !responseBody ? '로그인 유저 정보를 불러오는데 문제가 발생했습니다.' :
-  responseBody.code === 'NI' ? '로그인 유저 정보가 존재하지 않습니다.' :
-  responseBody.code === 'AF' ? '잘못된 접근입니다.' :
-  responseBody.code === 'DBE' ? '로그인 유저 정보를 불러오는데 문제가 발생했습니다.' : '';
-  const isSuccessde = responseBody !== null && responseBody.code === 'SU';
-  if (!isSuccessde) return ;
+    !responseBody ? '로그인 유저 정보를 불러오는데 문제가 발생했습니다.' :
+    responseBody.code === 'NI' ? '로그인 유저 정보가 존재하지 않습니다.' :
+    responseBody.code === 'AF' ? '잘못된 접근입니다.' :
+    responseBody.code === 'DBE' ? '로그인 유저 정보를 불러오는데 문제가 발생했습니다.' : '';
+    const isSuccessde = responseBody !== null && responseBody.code === 'SU';
+    if (!isSuccessde) return ;
 
-<<<<<<< HEAD
   const {hostId,hostName,hostTelNumber, hostPw, entryStatus} = responseBody as GetHostSignInResponseDto;
   setSignInHost({hostId,hostName,hostPw,hostTelNumber, entryStatus});
-=======
-  const {hostId,hostName,hostTelNumber, hostPw} = responseBody as GetHostSignInResponseDto;
-  // setSignInHost({hostId,hostName,hostTelNumber, hostPw});
->>>>>>> cd53c3eb3a6426d0052bc99767a2b246bc3ed00c
 }
 
 useEffect(() => {
