@@ -524,7 +524,7 @@ export default function SignUp() {
 
   // Host 회원가입 버튼 클릭 이벤트 처리 //
   const onHostSignUpButtonHandler = () => {
-    if (!hostIsButtonEnabled) return;
+    // if (!hostIsButtonEnabled) return;
 
     const requestBody: HostSignUpRequestDto = {
       hostId: hostId,
