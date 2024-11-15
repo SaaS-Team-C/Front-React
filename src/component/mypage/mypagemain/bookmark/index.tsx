@@ -23,7 +23,7 @@ export default function BookMark({ titletext, username, activite }: Props) {
 
     // 현재 페이지에 표시할 BookingList 컴포넌트 배열
     const currentItems = Array(totalItems)
-        .fill(<BookMarkList />)
+        .fill(<BookMarkList hotelImage=''hotelName='' hotelAddress='' hotelScore=''  />)
         .slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage);
 
     // 페이지 번호 배열 생성

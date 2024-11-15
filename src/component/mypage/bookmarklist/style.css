@@ -15,9 +15,8 @@
 }
 
 /* 페이지 css */
-#bookinglist-warpper {
+#bookmark-warpper {
     display: flex;
-    flex-direction: column;
 
     width: min-content;
     height: auto;
@@ -27,12 +26,12 @@
     margin: 10px 15px;
 }
 
-.bookinglist-box {
-    margin: 10px;
+.bookmark-image {
+
 }
 
 /* 상단 css */
-.bookinglist-list-top-deatail {
+.bookmark-list-top-deatail {
     display: flex;
     justify-content: space-between;
 
@@ -47,18 +46,18 @@
 }
 
 /* 메인내용 css */
-.bookinglist-list-main-detail {
+.bookmark-list-main-detail {
     width: auto;
     display: flex;
 }
     /* 사진 */
-    .bookinglist-list-image {
+    .bookmark-list-image {
         width: 120px;
         height: 120px;
         border-radius: 15px;
     }
 
-    .bookinglist-hotel-detail {
+    .bookmark-hotel-detail {
         display: flex;
         flex-direction: column;
 
@@ -67,21 +66,21 @@
         text-overflow: ellipsis;
     }
 
-        .bookinglist-hotel-title {    
+        .bookmark-hotel-title {    
             max-width: 170px;
             overflow: hidden;
             text-overflow: ellipsis;
             white-space: nowrap;
         }
 
-        .bookinglist-hotel-room{
+        .bookmark-hotel-room{
             
             margin-top: 15px;
             font-size: 13px;
             color: var(--input-solid-color);
         }
 
-    .bookinglist-detail-list {
+    .bookmark-detail-list {
         align-items: center;
 
         width: 100%;
@@ -89,25 +88,25 @@
         color: var(--mypage-text-color);
     }
 
-        .bookinglist-stay {
+        .bookmark-stay {
             margin-top: 15px;
         }
 
-        .bookinglist-start-end-time {
+        .bookmark-start-end-time {
             margin: 20px 0px;
             display: flex;
         }
 
-            .bookinglist-end {
+            .bookmark-end {
                 margin-left: 20px;
             }
 
-        .bookinglist-count-reviewbox {
+        .bookmark-count-reviewbox {
             display: flex;
             justify-content: space-between;
         }
 
-        .bookinglist-reviewbox {
+        .bookmark-reviewbox {
             padding: 10px 20px;
             color: white;
             border: none;

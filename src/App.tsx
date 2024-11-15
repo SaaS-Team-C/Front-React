@@ -35,7 +35,7 @@ import Roomly from './views/roomly';
 
 import MyAccommodationManagementView from './views/mypagehost/MyAccommodationManagement';
 import ShowDetailList from './component/mypagehost/MyAccommodationManagement/showaccdetail/detaillist';
-import {SignInUser} from './stores';
+import {SignInHost, SignInUser} from './stores';
 import { ResponseDto } from './apis/signUp/dto/response';
 import GetSignInResponseDto from './apis/login/dto/response/get-guest-sign-in.response.dto';
 import { GetHostSignInResponseDto } from './apis/login/dto';
@@ -80,6 +80,7 @@ export default function App() {
   
   // 로그인 유저 정보 상태 //
   const {signInUser, setSignInUser} = SignInUser();
+  const {signInHost, setSignInHost} = SignInHost();
 
   // state : cookie 상태 //
   const [cookies, setCookie, removeCookie] = useCookies();
@@ -118,6 +119,7 @@ const getSignInHostResponse =(responseBody: GetHostSignInResponseDto | ResponseD
   const isSuccessde = responseBody !== null && responseBody.code === 'SU';
 
   const {hostId,hostName,hostTelNumber, hostPw} = responseBody as GetHostSignInResponseDto;
+  // setSignInHost({hostId,hostName,hostTelNumber, hostPw});
 }
 
 useEffect(() => {
@@ -137,7 +139,7 @@ useEffect(() => {
     <Routes>
       <Route index element={<Index />} />
       <Route path={MAIN_PATH} element={<Main />} />
-      <Route path='mypage' element={<GuestMypage />} />
+      <Route path='/mypageGuest' element={<GuestMypage />} />
 
       <Route path={ACCOMMODATION_LIST_PATH} element={<AccommodationList />} />
       <Route path={ACCOMMODATION_LIST_DETAIL_PATH} element={<DetailList />} />

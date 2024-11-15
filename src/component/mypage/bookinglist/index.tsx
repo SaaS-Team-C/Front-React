@@ -5,6 +5,9 @@ import { LsisuerImage } from 'src/resources/images/leisure';
 
 export default function BookingList() {
 
+    const today: Date = new Date();
+
+    const todaytext: string = today.toString();
 
     const navigator = useNavigate();
 
@@ -29,6 +32,7 @@ export default function BookingList() {
         <div id='bookinglist-warpper'>
             <div className='bookinglist-box'>
             <div className='bookinglist-list-top-deatail'>
+                <div className='bookinglist-date'>{todaytext}</div>
                 <div className='bookinglist-bill'>200.000원</div>
             </div>
             <div className='bookinglist-list-main-detail'>

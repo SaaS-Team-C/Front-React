@@ -6,19 +6,23 @@ import { useNavigate } from 'react-router';
 // import { ResponseDto } from 'src/apis/dto/response';
 import { useCookies } from 'react-cookie';
 import { useSearchParams } from 'react-router-dom';
-import { GuestlogInRequest, HostlogInRequest } from 'src/apis/login';
+import { GuestLogInRequest, HostLogInRequest } from 'src/apis/login';
 import GuestLogInRequestDto from 'src/apis/login/dto/request/guest/login.request.dto';
-import LogInResponseDto from 'src/apis/login/dto/response/login.responsw.dto';
+// import LogInResponseDto from 'src/apis/login/dto/response/host.login.respons.dto';
 import ResponseDto from 'src/apis/login/dto/response/response.dto';
 import InputBox from '../input/login';
 import HostLogInRequestDto from 'src/apis/login/dto/request/host/login.request.dto';
+import HostLogInResponseDto from 'src/apis/login/dto/response/host.login.respons.dto';
+import GuestLogInResponseDto from 'src/apis/login/dto/response/guest.login.respons.dto';
 
 // 컴포넌트: 메인페이지 화면 컴포넌트 //
-    type group = 'guest' | 'host' ;
+type group = 'guest' | 'host';
 
 export default function Topbar() {
     // 쿠키 상태 초기화
-    const [cookies, setCookie, removeCookies] = useCookies(['accessToken']);
+    const [hostCookies, setHostCookie, removeHostCookies] = useCookies(['hostAccessToken']);
+    const [guestCookies, setGuestCookie, removeGuestCookies] = useCookies(['guestAccessToken']);
+    
 
     // state: 모달창 상태 //
     const [modalOpen, setModalOpen] = useState(false);
@@ -47,8 +51,31 @@ export default function Topbar() {
 
 
 
-    // function: 로그인 응답 처리 함수 //
-    const logInResponse = (responseBody: LogInResponseDto | ResponseDto | null) => {
+    // function: 호스트 로그인 응답 처리 함수 //
+    const hostLogInResponse = (responseBody: HostLogInResponseDto | ResponseDto | null) => {
+        const message = 
+            !responseBody ? '서버에 문제가 있습니다.' :
+                responseBody.code === 'VF' ? '아이디와 비밀번호를 모두 입력하세요.' :
+                    responseBody.code === 'SF' ? '로그인 정보가 일치하지 않습니다.' :
+                        responseBody.code === 'TCF' ? '서버에 문제가 있습니다.' :
+                            responseBody.code === 'DBE' ? '서버에 문제가 있습니다.' : '';
+
+        const isSuccessed = responseBody !== null && responseBody.code === 'SU';
+        if (!isSuccessed) {
+            setPwMessage(message);
+            return;
+        }
+        const { hostAccessToken, expiration } = responseBody as HostLogInResponseDto;
+        const expires = new Date(Date.now() + (expiration * 1000));
+        setHostCookie('hostAccessToken', hostAccessToken, { path: '/', expires });
+        setModalOpen(false)
+
+        navigator('/main')
+
+    };
+
+     // function: 게스트 로그인 응답 처리 함수 //
+    const guestLogInResponse = (responseBody: GuestLogInResponseDto | ResponseDto | null) => {
         const message = 
             !responseBody ? '서버에 문제가 있습니다.' :
             responseBody.code === 'VF' ? '아이디와 비밀번호를 모두 입력하세요.' :
@@ -61,9 +88,9 @@ export default function Topbar() {
             setPwMessage(message);
             return;
         }
-        const { accessToken, expiration } = responseBody as LogInResponseDto;
+        const { guestAccessToken, expiration } = responseBody as GuestLogInResponseDto;
         const expires = new Date(Date.now() + (expiration * 1000));
-        setCookie('accessToken', accessToken, { path: '/', expires });
+        setGuestCookie('guestAccessToken', guestAccessToken, { path: '/', expires });
         setModalOpen(false)
 
         navigator('/main')
@@ -95,7 +122,7 @@ export default function Topbar() {
     }
 
     /** 
-     * function: 로그인 버튼을 클릭 했을 경우 일어나는 이벤트 처리 */   
+     * function: 로그인 버튼을 클릭 했을 경우 일어나는 이벤트 처리 */
     const onGuestLoginButtonClickHandler = async () => {
         if (!gusetId) {
             setIdMessage('아이디를 입력해 주세요!');
@@ -113,15 +140,15 @@ export default function Topbar() {
                 guestId: gusetId,
                 guestPw: gusetPassword
             };
-            GuestlogInRequest(requestBody).then(logInResponse);
+            GuestLogInRequest(requestBody).then(guestLogInResponse);
         }
         // effect: 아이디 및 비밀번호 변경시 실행할 함수 //
         useEffect(() => {
             setMessage('');
         }, [gusetId, gusetPassword]);
 
-        /**
-        * function: 로그인 버튼을 클릭 했을 경우 일어나는 이벤트 처리 */   
+    /**
+    * function: 로그인 버튼을 클릭 했을 경우 일어나는 이벤트 처리 */
     const onHostLoginButtonClickHandler = async () => {
         if (!hostId) {
             setIdMessage('아이디를 입력해 주세요!');
@@ -139,7 +166,7 @@ export default function Topbar() {
                 hostId: hostId,
                 hostPw: hostPassword
             };
-            HostlogInRequest(requestBody).then(logInResponse);
+            HostLogInRequest(requestBody).then(hostLogInResponse);
         }
         // effect: 아이디 및 비밀번호 변경시 실행할 함수 //
         useEffect(() => {
@@ -180,19 +207,24 @@ export default function Topbar() {
         if (!modalOpen) {
             setModalOpen(false);
         }
-    }, [cookies]);
+    }, [guestCookies,hostCookies]);
 
-    const pressKeyEnter = (event : KeyboardEvent<HTMLInputElement>) => {
+    const pressKeyEnter = (event: KeyboardEvent<HTMLInputElement>) => {
         if (event.key === 'Enter') {
             onGuestLoginButtonClickHandler();
         }
     }
 
-    // event handler: 로그아웃 버튼 클릭 이벤트 처리 //
-    const onlogoutButtonClickHandler = () => {
-        removeCookies("accessToken");
-        navigator('/main')
-    };
+    // event handler: 로그아웃(호스트) 버튼 클릭 이벤트 처리 //
+    const onHostLogoutButtonClickHandler = () => {
+        if (hostCookies) removeHostCookies("hostAccessToken");
+        navigator('main')
+        };
+    // event handler: 로그아웃(호스트) 버튼 클릭 이벤트 처리 //
+    const onGuestLogoutButtonClickHandler = () => {
+        if (guestCookies) removeGuestCookies("guestAccessToken");
+        navigator('main')
+        };
 
     // event handler: 회원가입 버튼 클릭 이벤트 처리 //
     const onSignupButtonClickHandler = () => {
@@ -204,9 +236,14 @@ export default function Topbar() {
         navigator('/find');
     };
 
-    // event handler: 마이페이지 버튼 클릭 이벤트 처리 //
-    const onMyPageClickHandler = () => {
-        navigator('/mypage');
+    // event handler: 호스트 마이페이지 버튼 클릭 이벤트 처리 //
+    const onHostMyPageClickHandler = () => {
+        navigator('/mypageHost');
+    };
+
+    // event handler: 게스트 마이페이지 버튼 클릭 이벤트 처리 //
+    const onGuestMyPageClickHandler = () => {
+        navigator('/mypageGuest');
     };
 
     // event handler: 아이콘 및 로고 클릭 이벤트 처리 //
@@ -221,11 +258,11 @@ export default function Topbar() {
         }
     };
 
-    const onModalContentClickHandler = (event : React.MouseEvent) => {
+    const onModalContentClickHandler = (event: React.MouseEvent) => {
         event.stopPropagation()
     };
 
-    const backGroundClickModalClose = (event : React.MouseEvent) => {
+    const backGroundClickModalClose = (event: React.MouseEvent) => {
         setModalOpen(true)
     };
 
@@ -240,7 +277,7 @@ export default function Topbar() {
         setGuestId('')
         setGuestPassword('')
     };
-    
+
 
 
     return (
@@ -260,11 +297,15 @@ export default function Topbar() {
                         <div className='top-search-bar-solid'></div>
                         <div className='top-search-bar-count'>인원 {urlCount}</div>
                     </div>}
-                    {cookies.accessToken && <div className='nowlogin'>
-                        <div className='my-page' onClick={onMyPageClickHandler}>마이페이지</div>
-                        <div className='log-out' onClick={onlogoutButtonClickHandler}>로그아웃</div>
+                    {hostCookies.hostAccessToken && <div className='nowlogin'>
+                        <div className='my-page' onClick={onHostMyPageClickHandler}>호스트마이페이지</div>
+                        <div className='log-out' onClick={onHostLogoutButtonClickHandler}>로그아웃</div>
                     </div>}
-                    {!cookies.accessToken && <div className='sign'>
+                    {guestCookies.guestAccessToken && <div className='nowlogin'>
+                        <div className='my-page' onClick={onGuestMyPageClickHandler}>게스트마이페이지</div>
+                        <div className='log-out' onClick={onGuestLogoutButtonClickHandler}>로그아웃</div>
+                    </div>}
+                    {!hostCookies.hostAccessToken && !guestCookies.guestAccessToken &&  <div className='sign'>
                         <div className='sign-in' onClick={() => setModalOpen(true)}>Login</div>
                         <div className='sign-up-button' onClick={onSignupButtonClickHandler}>SignUp</div>
                     </div>}
@@ -272,20 +313,24 @@ export default function Topbar() {
             </div>
             {modalOpen &&
                 <div className='modal-container' onMouseDown={onContainerClickHandler}
-                onMouseUp={backGroundClickModalClose}  >
+                    onMouseUp={backGroundClickModalClose}  >
                     <div
                         className='modal-content'
                         onClick={onModalContentClickHandler}
                     >
                         <div className='log-in'>
                             <div className='log-in-word'>Log In</div>
-                            <div className='log-in-close' onClick={() => setModalOpen(false)}></div>
+                            <div className='log-in-box'>
+                                <div className='log-in-mode-select-button'>
+                                    <div className={`log-in-mode-guest-${mode === 'guest' ? 'active' : 'disable'}`} onClick={titleGuestModeChangeClickHandler}>Guest</div>
+                                    <div className={`log-in-mode-host-${mode === 'host' ? 'active' : 'disable'}`} onClick={titleHostModeChangeClickHandler}>Host</div>
+                                </div>
+                                <div className='log-in-close' onClick={() => setModalOpen(false)}></div>
+                            </div>
+
                         </div>
-                        <div className='log-in-mode-select-button'>
-                            <div className={`log-in-mode-guest-${ mode === 'guest' ? 'active' : 'disable'}`} onClick={titleGuestModeChangeClickHandler}>Guest</div>
-                            <div className={`log-in-mode-host-${ mode === 'host' ? 'active' : 'disable'}`} onClick={titleHostModeChangeClickHandler}>Host</div>
-                        </div>
-                        {mode === 'guest' && <div>
+
+                        {mode === 'guest' && <div className='input-log-box'>
                             <div className='input-log'>
                                 <div className='log-in-id-icon'></div>
                                 <InputBox
@@ -311,7 +356,7 @@ export default function Topbar() {
                                 />
                             </div>
                         </div>}
-                        {mode === 'host' && <div>
+                        {mode === 'host' && <div className='input-log-box'>
                             <div className='input-log'>
                                 <div className='log-in-id-icon'></div>
                                 <InputBox
@@ -339,13 +384,13 @@ export default function Topbar() {
                         </div>}
                         {mode === 'guest' && <div className='log-in-button' onClick={onGuestLoginButtonClickHandler}>로그인</div>}
                         {mode === 'host' && <div className='log-in-button' onClick={onHostLoginButtonClickHandler}>로그인</div>}
-                        
+
                         <div className='find'>
                             <div className='find-id' onClick={onFindIdPwButtonClickHandler}>아이디/비밀번호 찾기</div>
+                            <div className='sign-up-text-button' onClick={onSignupButtonClickHandler}>회원가입</div>
                         </div>
                         <div className='sign-up'>
-                            <div className='sign-up-text'>계정이 없으신가요?</div>
-                            <div className='sign-up-text-button' onClick={onSignupButtonClickHandler}>회원가입</div>
+                            {/* <div className='sign-up-text'>계정이 없으신가요?</div> */}
                         </div>
                     </div>
                 </div>
