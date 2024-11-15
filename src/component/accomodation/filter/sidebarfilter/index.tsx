@@ -61,8 +61,6 @@ const Sidebar: React.FC<SidebarProps> = ({ onFilterChange, resetFilters }) => {
             <div className="filter-price-title-second">/ 1박 기준</div>
           </div>
 
-
-
         {/* 레인지 바*/}
         <RangeSlider value={priceRange} onChange={(range) => { setPriceRange(range); handleFilterChange(); }} />
         </div>
@@ -98,7 +96,7 @@ const Sidebar: React.FC<SidebarProps> = ({ onFilterChange, resetFilters }) => {
       <div className="filter-section-box">
         <div className="filter-categories-title">숙소 유형</div>
         <ul>
-          {["호텔", "펜션", "게스트하우스"].map((label, index) => (
+          {["호텔", "펜션", "리조트"].map((label, index) => (
             <li key={index}>
               <input
                 type="checkbox"

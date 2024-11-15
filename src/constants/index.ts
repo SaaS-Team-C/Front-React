@@ -2,7 +2,6 @@
 
 import axios, { AxiosResponse } from "axios";
 import GetGuestSignInResponseDto from "src/apis/login/dto/response/get-guest-sign-in.response.dto";
-import GetSignInResponseDto from "src/apis/login/dto/response/get-guest-sign-in.response.dto";
 import { ResponseDto } from "src/apis/signUp/dto/response";
 
 export const ROOT_PATH = "/";
@@ -18,7 +17,8 @@ export const ACCOMMODATION_LIST_DETAIL_PATH = (accommodationName: string) => `${
 export const ACCOMMODATION_LIST_DETAIL_ACC_SELECT_PATH = (name: string) =>`${ACCOMMODATION_LIST_DETAIL_ACC_SELECT_PATH}/${name}`;
 
 // variable: HTTP BEARER TOKEN COOKIE NAME(토큰 이름 임시 지정) //
-export const ACCESS_TOKEN = 'accessToken';
+export const GUEST_ACCESS_TOKEN = 'guestAccessToken';
+export const HOST_ACCESS_TOKEN = 'hostAccessToken';
 export const OTHERS_PATH = '*';
 
 // variable: API URL 상수 //
@@ -86,8 +86,8 @@ export const HOST_ID_FIND_API_URL = (hostId:string)=>`${HOST_MODULE_URL}/id-find
 export const HOST_ID_FIND_TEL_AUTH_CHECK_API_URL = `${HOST_MODULE_URL}/tel-auth-check`;
 // 호스트 비밀번호 변경(로그인상태 x)
 export const PATCH_HOST_PASSWORD_FIND_API_URL = `${HOST_MODULE_URL}/pw-find`;
-// // 호스트 로그인 정보 불러오기
-// export const GET_HOST_SIGN_IN = `${HOST_MODULE_URL}/sign-in`;
+// 호스트 로그인 정보 불러오기
+export const GET_HOST_SIGN_IN = `${HOST_MODULE_URL}/sign-in`;
 
 // variable: 게스트 모듈
 export const GUEST_MODULE_URL = `${ROOMLY_API_DOMAIN}/api/roomly/guest`;
@@ -206,4 +206,11 @@ export const getSignInRequest = async (accessToken: string) => {
     .then(responseDataHandler<GetGuestSignInResponseDto>)
     .catch(responseErrorHandler)
     return  responseBody;
+}
+// function: get sign in host 요청 함수 //
+export const getSignInHostRequest = async (accessToken: string) => {
+    const responseBody = await axios.get(GET_HOST_SIGN_IN, bearerAuthorization(accessToken))
+        .then(responseDataHandler<GetGuestSignInResponseDto>)
+        .catch(responseErrorHandler);
+        return responseBody;
 }

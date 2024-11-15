@@ -80,7 +80,8 @@
 
 /* 버튼창 css */
 
-.mypageinformation-telnumber-change-button {
+.mypageinformation-telnumber-change-button-active {
+    cursor: pointer;
     flex-shrink: 0;
     padding: 10px 20px;
     background-color: rgb(245, 187, 208);
@@ -95,11 +96,19 @@
     margin-bottom: 10px;
 }
 
-.mypageinformation-telnumber-change-button:hover {
-    cursor: pointer;
-    background-color: var(--input-solid-color);
+.mypageinformation-telnumber-change-button-disable {
+    flex-shrink: 0;
+    padding: 10px 20px;
+    background-color:rgba(131, 130, 130, 0.8);
     color: white;
-
+    border: none;
+    border-radius: 4px;
+    font-size: 15px;
+    height: 47px;
+    font-family: 'Pretendard-Regular';
+    font-weight: bold;    
+    margin-left: 10px;
+    margin-bottom: 10px;
 }
 
 .mypageinformation-telnumber-change-button:active {

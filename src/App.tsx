@@ -6,7 +6,7 @@ import Main from './views/main/Main';
 
 import Payment from './views/payment';
 
-import { ACCESS_TOKEN, ACCOMMODATION_LIST_DETAIL_PATH, ACCOMMODATION_LIST_PATH, AUTH_PATH, FINDID_PATH, getSignInRequest, MAIN_PATH } from './constants';
+import { GUEST_ACCESS_TOKEN, ACCOMMODATION_LIST_DETAIL_PATH, ACCOMMODATION_LIST_PATH, AUTH_PATH, FINDID_PATH, getSignInRequest, MAIN_PATH, HOST_ACCESS_TOKEN, getSignInHostRequest } from './constants';
 
 import { RegionImages } from './resources/images/region';
 import { useEffect } from 'react';
@@ -35,9 +35,10 @@ import Roomly from './views/roomly';
 
 import MyAccommodationManagementView from './views/mypagehost/MyAccommodationManagement';
 import ShowDetailList from './component/mypagehost/MyAccommodationManagement/showaccdetail/detaillist';
-import {SignInUser} from './stores';
+import {SignInHost, SignInUser} from './stores';
 import { ResponseDto } from './apis/signUp/dto/response';
 import GetSignInResponseDto from './apis/login/dto/response/get-guest-sign-in.response.dto';
+import { GetHostSignInResponseDto } from './apis/login/dto';
 import GetGuestSignInResponseDto from './apis/login/dto/response/get-guest-sign-in.response.dto';
 import List from './component/accomodation/list';
 
@@ -79,6 +80,7 @@ export default function App() {
   
   // 로그인 유저 정보 상태 //
   const {signInUser, setSignInUser} = SignInUser();
+  const {signInHost, setSignInHost} = SignInHost();
 
   // state : cookie 상태 //
   const [cookies, setCookie, removeCookie] = useCookies();
@@ -107,12 +109,26 @@ export default function App() {
   const {guestId, guestName, guestTelNumber} = responseBody as GetGuestSignInResponseDto
   setSignInUser({guestId, guestName, guestTelNumber});
 }
+// function: get sign in host response 처리 함수 //
+const getSignInHostResponse =(responseBody: GetHostSignInResponseDto | ResponseDto | null)=>{
+  const message = 
+  !responseBody ? '로그인 유저 정보를 불러오는데 문제가 발생했습니다.' :
+  responseBody.code === 'NI' ? '로그인 유저 정보가 존재하지 않습니다.' :
+  responseBody.code === 'AF' ? '잘못된 접근입니다.' :
+  responseBody.code === 'DBE' ? '로그인 유저 정보를 불러오는데 문제가 발생했습니다.' : '';
+  const isSuccessde = responseBody !== null && responseBody.code === 'SU';
+
+  const {hostId,hostName,hostTelNumber, hostPw} = responseBody as GetHostSignInResponseDto;
+  setSignInHost({hostId,hostName,hostTelNumber, hostPw});
+}
 
 useEffect(() => {
-  const accessToken = cookies[ACCESS_TOKEN];
-  if (accessToken) getSignInRequest(accessToken).then(getSignInResponse)
-  else setSignInUser(null);
-}, [cookies[ACCESS_TOKEN]])
+  const guestAccessToken = cookies[GUEST_ACCESS_TOKEN];
+  const hostAccessToken = cookies[HOST_ACCESS_TOKEN];
+  if (guestAccessToken) getSignInRequest(guestAccessToken).then(getSignInResponse)
+  else if (hostAccessToken) getSignInHostRequest(hostAccessToken).then(getSignInHostResponse)
+  else  setSignInUser(null);
+}, [cookies[GUEST_ACCESS_TOKEN]])
 
   // onPathChange 함수 정의
   const handlePathChange = () => {
@@ -123,7 +139,7 @@ useEffect(() => {
     <Routes>
       <Route index element={<Index />} />
       <Route path={MAIN_PATH} element={<Main />} />
-      <Route path='mypage' element={<GuestMypage />} />
+      <Route path='/mypageGuest' element={<GuestMypage />} />
 
       <Route path={ACCOMMODATION_LIST_PATH} element={<AccommodationList />} />
       <Route path={ACCOMMODATION_LIST_DETAIL_PATH(':accommodationName')} element={<DetailList />} />

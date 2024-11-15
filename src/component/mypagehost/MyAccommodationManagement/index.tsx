@@ -6,8 +6,12 @@ import React, { useEffect, useState } from 'react';
 import PaginationFunction from "src/component/accomodation/pagination";
 
 import axios from "axios";
+import { getHostAccommodationListRequest } from "src/apis";
+import { HOST_ACCESS_TOKEN } from "src/constants";
+import { useCookies } from "react-cookie";
 
 type MyAccommodation = {
+  
   accommodationName: string;
   accommodationMainImage: string;
   applyStatus: boolean;
@@ -23,23 +27,16 @@ const AccommodationManagementPage: React.FC = () => {
   const [accommodations, setAccommodations] = useState<MyAccommodation[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
+  const [cookies] = useCookies();
+  
 
-  // effect : 백엔드 API에서 데이터 불러오기
-  useEffect(() => {
-    const fetchAccommodations = async () => {
-      try {
-        const hostId = "qwer1234";
-        const response = await axios.get(`http://localhost:4000/api/roomly/host/list/${hostId}`); // 실제 백엔드 URL로 변경 필요
-        setAccommodations(response.data); // 받아온 데이터를 상태에 저장
-      } catch (err) {
-        setError('숙소 정보를 불러오는 데 실패했습니다.');
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchAccommodations();
-  }, []);
+  // Effect: 백엔드 API에서 데이터 불러오기
+  // useEffect(() => {
+  //   const hostAccessToken = cookies[HOST_ACCESS_TOKEN];
+  //   if (!hostAccessToken) return ;
+    
+  //   getHostAccommodationListRequest(hostId,hostAccessToken)
+  // }, []);
 
 
   const filteredAccommodations = accommodations.filter(
