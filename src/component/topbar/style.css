@@ -51,8 +51,9 @@
   width: auto;
   height: 50px;
   font-size: 30px;
+  font-family: 'Pretendard-Regular';
   color: rgb(221, 173, 191);
-  font-family: 'Poppins', sans-serif;
+
   font-weight: 600;
 
 }
@@ -99,6 +100,7 @@
   color: var(--text);
   /* 텍스트 색상 변경 */
   font-size: 15px;
+  font-family: 'Pretendard-Regular';
   font-weight: bold;
   text-transform: uppercase;
   width: 100px;
@@ -166,7 +168,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  background: rgba(0, 0, 0, 0.5);
+  background: rgba(85, 84, 84, 0.5);
 }
 
 .modal-content {
@@ -176,37 +178,52 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  border-radius: 30px;
+  border-radius: 20px;
   left: 50%;
   top: 50%;
   transform: translate(-50%, -50%);
 
-  width: 310px;
-  height: 350px;
-  padding: 15px;
+  width: 320px;
+  height: 355px;
+  padding: 14px;
+}
+
+.log-in-box {
+  display: flex;
+  gap: 5px;
 }
 
 .log-in {
+  gap: 65px;
   display: flex;
-  justify-content: space-between;
-  width: 300px;
+  margin-top: 10px;
+  margin-bottom: 30px;
+  align-items: center;
+  /* justify-content: space-between; */
+
 
 }
 
 .log-in-word {
-  margin-top: 15px;
-  margin-left: 20px;
+  margin-left: 10px;
+  align-items: center;
   font-size: 30px;
-
+  font-weight: 700;
+  font-family: 'Pretendard-Regular';
+  color: rgb(109, 108, 108);
 }
 
 .log-in-close {
-  margin-top: 15px;
-  margin-left: 0px;
   cursor: pointer;
   background-image: url(/public/images/main/close.jpg);
   width: 40px;
   height: 40px;
+}
+
+.input-log-box {
+  padding: 10px 10px 10px 5px;
+  border-radius: 4px;
+  background-color: rgb(253, 236, 236);
 }
 
 .input-log {
@@ -216,15 +233,17 @@
 
 .log-in-id-icon {
   background-image: url(/public/images/Email.jpg);
+  background-color: rgb(253, 236, 236); /* 원하는 색상 */
+  background-blend-mode: multiply; /* 이미지와 색상을 혼합 */
   margin-top: 25px;
   width: 40px;
   height: 30px;
 }
-
-
 .log-in-pw-icon {
   background-image: url(/public/images/Lock.jpg);
-  margin-top: 27px;
+  background-color: rgb(253, 236, 236); /* 원하는 색상 */
+  background-blend-mode: multiply; /* 이미지와 색상을 혼합 */
+  margin-top: 24px;
   width: 40px;
   height: 30px;
 }
@@ -237,18 +256,24 @@
   justify-content: center;
   align-items: center;
 
-  width: 200px;
+  width: 280px;
   height: 40px;
-  background-color: var(--main-button-color);
-  border-radius: 10px;
-
-  font-size: 20px;
+  border-radius: 6px;
+  font-size: 19px;
   font-weight: 700;
-  color: var(--main-button-text-color);
+  background-color: #faa5af;
+  color: white;
+  border: none;
+  font-family: 'Pretendard-Regular';
+}
+
+.log-in-button:active {
+  background-color: #fa8290;
 }
 
 .find {
   display: flex;
+  align-items: center;
 }
 
 .find-id {
@@ -256,16 +281,9 @@
   margin-top: 5px;
   margin-right: 50px;
   cursor: pointer;
-  font-size: 12px;
-  color: var(--input-solid-color);
-
-}
-
-.find-pw {
-  margin-top: 5px;
-  cursor: pointer;
-  font-size: 12px;
-  color: var(--input-solid-color);
+  font-size: 14px;
+  font-family: 'Pretendard-Regular';
+  color: rgb(121, 120, 120);
 
 }
 
@@ -276,14 +294,20 @@
 
 .sign-up-text {
   margin-right: 20px;
-  font-size: 17px;
+  font-size: 14px;
+  font-family: 'Pretendard-Regular';
   font-weight: 600;
+  color: rgb(82, 81, 81);
 }
 
 .sign-up-text-button {
+  width: auto;
+  margin-top: 5px;
+
   cursor: pointer;
-  font-size: 18px;
-  color: var(--main-button-color);
+  font-size: 15px;
+  font-family: 'Pretendard-Regular';
+  color: rgb(121, 120, 120);
 }
 
 
@@ -380,35 +404,51 @@
 
 .top-search-bar-solid2 {
   font-weight: bold;
+  font-family: 'Pretendard-Regular';
   height: 21px;
   color: rgb(97, 97, 97);
 }
 
 .log-in-mode-select-button {
+  margin-top: 4px;
   display: flex;
-  width: 200px;
   height: 30px;
+  /* gap: 2px; */
+
 }
 
-.log-in-mode-guest-active {
-  background-color: rgba(238, 185, 185);
-  width: 100px;
-  height: 30px;
-}
-.log-in-mode-guest-disable {
-  background-color: rgba(131, 130, 130, 0.8);
-  width: 100px;
-  height: 30px;
-}
-
+.log-in-mode-guest-active,
 .log-in-mode-host-active {
-  background-color: rgba(238, 185, 185);
-  width: 100px;
-  height: 30px;
-}
-.log-in-mode-host-disable {
-  background-color: rgba(131, 130, 130, 0.8);
-  width: 100px;
-  height: 30px;
+  display: flex; 
+  align-items: center;
+  justify-content: center;
+  border-radius: 5px; /* 테두리 둥글게 */
+  text-decoration: none; /* 링크 밑줄 제거 */
+  font-weight: bold; /* 글씨 두껍게 */
+  transition: background-color 0.3s; /* 호버 시 부드러운 색 변화 */
+  background-color: #fa919d;
+  color: white;
+  border: none;
+  font-size: 16px;
+  width: 50px;
+  height: 35px; /* 높이 지정 */
+
 }
 
+.log-in-mode-guest-disable,
+.log-in-mode-host-disable {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 5px;
+  cursor: pointer;
+  text-decoration: none;
+  font-weight: bold;
+  transition: background-color 0.3s;
+  background-color: rgba(157, 160, 165, 1);
+  color: white;
+  border: none;
+  font-size: 16px;
+  width: 50px;
+  height: 35px; /* 높이 지정 */
+}
