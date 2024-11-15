@@ -1,7 +1,7 @@
 import React, { useEffect, useMemo, useState } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import "./style.css";
-import { ACCESS_TOKEN, ACCOMMODATION_LIST_DETAIL_PATH } from "src/constants";
+import { GUEST_ACCESS_TOKEN, ACCOMMODATION_LIST_DETAIL_PATH, HOST_ACCESS_TOKEN } from "src/constants";
 import { getAccommodationListRequest } from "src/apis";
 import { useCookies } from "react-cookie";
 
@@ -58,9 +58,9 @@ const List = () => {
 
   // Effect: 백엔드에서 숙소 리스트 데이터 요청 //
   useEffect(() => {
-    const accessToken = cookies[ACCESS_TOKEN];
-    if (!accessToken) return;
-    getAccommodationListRequest(accessToken).then(getAccommodaitonListResponse);
+    const guestAccessToken = cookies[GUEST_ACCESS_TOKEN];
+    if (!guestAccessToken) return;
+    getAccommodationListRequest(guestAccessToken).then(getAccommodaitonListResponse);
   }, []);
 
 
