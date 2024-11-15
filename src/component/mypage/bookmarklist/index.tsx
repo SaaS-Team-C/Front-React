@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router'
 import './style.css'
 import { LsisuerImage } from 'src/resources/images/leisure';
 
-export default function BookingList() {
+export default function BookMarkList() {
 
 
     const navigator = useNavigate();
