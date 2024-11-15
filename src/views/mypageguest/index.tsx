@@ -9,6 +9,7 @@ import { MAIN_PATH } from 'src/constants';
 import { useNavigate } from 'react-router';
 import styled from 'styled-components';
 import Booking from 'src/component/mypage/mypagemain/booking';
+// import BookMark from 'src/component/mypage/mypagemain/bookmark';
 
 
 
@@ -55,7 +56,7 @@ export default function GuestMypage() {
                     <div className='guestMypage-main'>
                         <Information activite={click === datail1 || click === ''} titletext={datail1} username={'옥진서'} />
                         <Booking activite={click === datail2 || click === ''} titletext={datail2} username={'옥진서'} />
-                        <Information activite={click === datail3 || click === ''} titletext={datail3} username={'옥진서'} />
+                        {/* <BookMark activite={click === datail3 || click === ''} titletext={datail3} username={'옥진서'} /> */}
                     </div>
                 </div>
 

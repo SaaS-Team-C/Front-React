@@ -7,6 +7,7 @@ interface Props {
     value: string;
     placeholder: string;
     activation: boolean;
+    activboolean?: boolean;
     buttonName?: string;
     messageError?: string; // Change to string for error messages
 
@@ -20,6 +21,7 @@ export default function MypageInputBox({
     value,
     placeholder,
     activation,
+    activboolean,
     buttonName,
     messageError,
     onButtonClick,
@@ -52,7 +54,7 @@ export default function MypageInputBox({
                             onChange={onChange} 
                         />
                         {messageError && <div className='checkMessageError'>{messageError}</div>}
-                        {buttonName && <button className='mypageinformation-telnumber-change-button' onClick={onButtonClick}>{buttonName}</button>}
+                        {buttonName && <button className={`mypageinformation-telnumber-change-button-${activboolean ? 'active' : 'disable'}`} onClick={onButtonClick}>{buttonName}</button>}
                     </div>
                 </div>
             )}

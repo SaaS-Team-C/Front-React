@@ -1,11 +1,12 @@
 import GuestLogInRequestDto from './dto/request/guest/login.request.dto';
 import axios, { AxiosResponse } from 'axios';
-import { GET_GUEST_SIGN_IN, GUEST_SIGN_IN_API_URL, HOST_SIGN_IN_API_URL } from 'src/constants';
+import { GET_GUEST_SIGN_IN, GUEST_SIGN_IN_API_URL, HOST_SIGN_IN_API_URL, PATCH_GUEST_PASSWORD_API_URL } from 'src/constants';
 import LogInResponseDto from './dto/response/login.responsw.dto';
 import ResponseDto from './dto/response/response.dto';
 import MypageAuthRequestDto from './dto/request/guest/mypageauth.request.dto';
 import GetGuestSignInResponseDto from './dto/response/get-guest-sign-in.response.dto';
 import HostLogInRequestDto from './dto/request/host/login.request.dto';
+import GuestPwChangeRequestDto from './dto/request/guest/guestpwchange.request.dto';
 
 // function : Authorization Bearer 헤더 //
 const bearerAuthorization = (accessToken: string) => ({
@@ -40,6 +41,15 @@ export const HostlogInRequest = async (requestBody: HostLogInRequestDto) => {
     return responseBody;
 };
 
+// function: 게스트 비밀번호 처리 함수 //
+export const ChangeGuestPwRequest = async (userId: string, requestBody: GuestPwChangeRequestDto) => {
+    
+    const responseBody = await axios.patch(PATCH_GUEST_PASSWORD_API_URL(userId), requestBody)
+        .then(responseDataHandler<ResponseDto>)
+        .catch(responseErrorHandler);
+    return responseBody;
+};
+
 export const MypageAuthRequest = async (requestBody: MypageAuthRequestDto) => {
     const responseBody = await axios.delete('http://localhos:4000/api/romly/bookmark/delete-bookmark/&{}/&{}')
 }
@@ -49,3 +59,4 @@ export const getGuestSignInRequest = async(accessToken: string) => {
     .then(responseDataHandler<GetGuestSignInResponseDto>)
     .catch(responseErrorHandler)
 }
+
