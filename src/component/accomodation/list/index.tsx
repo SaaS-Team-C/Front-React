@@ -1,7 +1,7 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import "./style.css";
-import { ACCESS_TOKEN, ACCOMMODATION_LIST_DETAIL_PATH } from "src/constants";
+import { GUEST_ACCESS_TOKEN, ACCOMMODATION_LIST_DETAIL_PATH, HOST_ACCESS_TOKEN } from "src/constants";
 import { getAccommodationListRequest } from "src/apis";
 import { useCookies } from "react-cookie";
 
@@ -11,15 +11,23 @@ import { GetAccommodationListResponseDto } from "src/apis/hostmypage/dto/respons
 
 
 
+
+
 const List = () => {
+  
   // state: 숙소 리스트 불러오기 상태 관리
   const [callAccommodationList, SetCallAccommodationList] = useState<Accommodations[]>([]);
+
+  // variable: 승인된 숙소 갯수 //
+  const trueApplyStatusCount =  callAccommodationList.filter(accommodation => accommodation.applyStatus).length;
+
   // state: url 값 저장 //
   const [searchParams] = useSearchParams("");
   // state: 북마크 상태 관리 //
   const [bookmarks, setBookmarks] = useState<string[]>([]);
+
   // state: 쿠키 상태 //
-  const [cookies, setCookie] = useCookies();
+  const [cookies] = useCookies();
 
   const handleBookmarkToggle = (accommodationName: string) => {
     if (bookmarks.includes(accommodationName)) {
@@ -31,8 +39,6 @@ const List = () => {
     }
   };
 
-  
-  
   // function: get accommodation list response 처리 함수 //
   const getAccommodaitonListResponse = (responseBody: GetAccommodationListResponseDto | ResponseDto | null) =>{
     const message = 
@@ -45,16 +51,16 @@ const List = () => {
             return;
         };
         const { accommodations } = responseBody as GetAccommodationListResponseDto;
+
         SetCallAccommodationList(accommodations);
 
-        
   }
 
   // Effect: 백엔드에서 숙소 리스트 데이터 요청 //
   useEffect(() => {
-    const accessToken = cookies[ACCESS_TOKEN];
-    if (!accessToken) return;
-    getAccommodationListRequest(accessToken).then(getAccommodaitonListResponse);
+    const guestAccessToken = cookies[GUEST_ACCESS_TOKEN];
+    if (!guestAccessToken) return;
+    getAccommodationListRequest(guestAccessToken).then(getAccommodaitonListResponse);
   }, []);
 
 
@@ -67,6 +73,11 @@ const List = () => {
 
   // function: 네비게이터 함수 //
   const navigator = useNavigate();
+
+  // function: 리뷰 평점 시각화 //
+  const visualReviewGrade = (rating:number) =>{
+    return '⭐'.repeat(Math.round(rating))
+  }
 
   // event handler: 숙소 클릭 시 숙소 디테일 페이지로 이동하는 핸들러 //
   const handleDetailClick = (accommodationName: string) => {
@@ -97,89 +108,72 @@ const List = () => {
         
     <div id="accommodation-search-list">
       <div className="list-header">
-        <div className="search-length-result">{callAccommodationList.length}개의 검색 결과가 있습니다.</div>
+        <div className="search-length-result">{trueApplyStatusCount}개의 검색 결과가 있습니다.</div>
         <div className="sort-dropdown">
           <label htmlFor="sortOptions"></label>
         </div>
       </div>
 
       {/* 검색 결과가 없을 때 메시지를 표시 */}
-      {callAccommodationList.length === 0 ? (
-        <div className="no-results">
-          <p>선택한 조건에 맞는 상품이 없어요.</p>
-          <p>필터를 다시 설정해 보세요.</p>
-        </div>
-      ) : (
+      
+      {callAccommodationList.length !== 0 ? (
         <div className="accommodation-cards-container">
-          {callAccommodationList
-          .filter(accommodations => accommodations.applyStatus) // applyStatus가 true인 항목만 필터링 (암묵적으로 1인 값만 필터링 한다고 함)
-          .map((accommodations) => (
-            <div
-              key={accommodations.accommodationName}
-              className="accommodation-cards"
-              onClick={() => handleDetailClick(accommodations.accommodationName)}
-            >
-              
-              <div className="image-wrapper">
-                <img
-                  src={accommodations.accommodationMainImage}
-                  alt={accommodations.accommodationName}
-                  className="accommodation-image"
-                />
-                <div
-                  className={`bookmark ${
-                    bookmarks.includes(accommodations.accommodationName)
-                      ? "active"
-                      : ""
-                  }`}
-                  onClick={() =>
-                    handleBookmarkToggle(accommodations.accommodationName)
-                  }
-                >
-                  ♥
-                </div>
-              </div>
-              <div id="accommodation-info">
-                <div className="type-area-container">
-                <div className="type">{accommodations.accommodationType}</div>
-                <div className="divider-bar-type-area">|</div>
-                <div className="category-area">{accommodations.categoryArea}</div>
-                </div>
-                <div className="name">{accommodations.accommodationName}</div>
-                <div className="fake-stars">⭐⭐⭐⭐⭐</div>
-
-                <div className="category-facilities">{getFacilities(accommodations)}</div>
-                {/* <div className="address-box">
-                  <div className="map-icon"></div>
-                  <div className="address">{accommodations.accommodationAddress}</div>
-                </div> */}
-              </div>
-              <div className="divider-bar"></div>
-                {/* 최저 객실 가격 표시 */}
-                <div className="accommodation-price-container">
-                  <div className="price-box">
-                    <div className="min-price">{accommodations.minRoomPrice}~</div>
-                    <div className="won">원</div>
-                    <div className="per-one-day">/박</div>
-                  </div>
-                  <div className="rating-box">
-                    <div className="rating"> {accommodations.accommodationGradeAverage}</div>
-                    <div className="rating-per-score">/5</div>
-                  </div>
-                <div className="review">{accommodations.countReview}개의 리뷰</div>
-                <button
-                  className="show-detail-btn"
-                  onClick={() =>
-                    handleDetailClick(accommodations.accommodationName)
-                  }
-                >
-                  상세보기
-                </button>
+          
+        {callAccommodationList.map((accommodations) => accommodations.applyStatus ?(
+          <div
+            key={accommodations.accommodationName}
+            className="accommodation-cards"
+            onClick={() => handleDetailClick(accommodations.accommodationName)}
+          >
+            <div className="image-wrapper">
+              <img
+                src={accommodations.accommodationMainImage}
+                alt={accommodations.accommodationName}
+                className="accommodation-image"
+              />
+              <div className={`bookmark ${bookmarks.includes(accommodations.accommodationName)? "active": ""}`}onClick={() => handleBookmarkToggle(accommodations.accommodationName)}>
+                ♥
               </div>
             </div>
-          ))}
-        </div>
+            <div id="accommodation-info">
+              <div className="type-area-container">
+              <div className="type">{accommodations.accommodationType}</div>
+              <div className="divider-bar-type-area">|</div>
+              <div className="category-area">{accommodations.categoryArea}</div>
+              </div>
+              <div className="name">{accommodations.accommodationName}</div>
+              <div className="fake-stars">{visualReviewGrade(accommodations.accommodationGradeAverage)}</div>
+
+              <div className="category-facilities">{getFacilities(accommodations)}</div>
+
+            </div>
+            <div className="divider-bar"></div>
+              {/* 최저 객실 가격 표시 */}
+              <div className="accommodation-price-container">
+                <div className="price-box">
+                  <div className="min-price">{accommodations.minRoomPrice}~</div>
+                  <div className="won">원</div>
+                  <div className="per-one-day">/박</div>
+                </div>
+                <div className="rating-box">
+                  <div className="rating"> {accommodations.accommodationGradeAverage}</div>
+                  <div className="rating-per-score">/5</div>
+                </div>
+              <div className="review">{accommodations.countReview}개의 리뷰</div>
+              <button className="show-detail-btn" onClick={() => handleDetailClick(accommodations.accommodationName)}>
+                상세보기
+              </button>
+            </div>
+          </div>
+        ) : ('')
       )}
+    </div>
+  ) : (
+    <div className="no-results">
+      <p>선택한 조건에 맞는 상품이 없어요.</p>
+      <p>필터를 다시 설정해 보세요.</p>
+    </div>
+  )}
 
       {/* Pagination 컴포넌트 */}
 
