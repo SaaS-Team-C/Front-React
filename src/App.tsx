@@ -120,7 +120,7 @@ const getSignInHostResponse =(responseBody: GetHostSignInResponseDto | ResponseD
 useEffect(() => {
   const guestAccessToken = cookies[GUEST_ACCESS_TOKEN];
   const hostAccessToken = cookies[HOST_ACCESS_TOKEN];
-  if (guestAccessToken) getGuestSignInRequest(guestAccessToken).then(getSignInGuestResponse);
+  if (guestAccessToken) getGuestSignInRequest(guestAccessToken)
   else if (hostAccessToken) getSignInHostRequest(hostAccessToken).then(getSignInHostResponse);
   else if(!guestAccessToken) setSignInUser(null);
   else setSignInHost(null);

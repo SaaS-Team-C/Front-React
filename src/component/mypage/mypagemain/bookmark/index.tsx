@@ -10,7 +10,7 @@ interface Props {
 export default function BookMark({ titletext, username, activite }: Props) {
 
     const [currentPage, setCurrentPage] = useState(1);
-    const itemsPerPage = 3; // 한 페이지에 표시할 항목 수
+    const itemsPerPage = 4; // 한 페이지에 표시할 항목 수
 
 
     // 페이지 변경 핸들러
@@ -23,7 +23,7 @@ export default function BookMark({ titletext, username, activite }: Props) {
 
     // 현재 페이지에 표시할 BookingList 컴포넌트 배열
     const currentItems = Array(totalItems)
-        .fill(<BookMarkList hotelImage=''hotelName='' hotelAddress='' hotelScore=''  />)
+        .fill(<BookMarkList hotelImage='' hotelName='참좋은 호텔' hotelAddress='부산광역시 서구' hotelScore='3'  />)
         .slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage);
 
     // 페이지 번호 배열 생성
