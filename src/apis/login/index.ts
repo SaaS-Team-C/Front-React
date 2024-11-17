@@ -1,7 +1,6 @@
 import GuestLogInRequestDto from './dto/request/guest/login.request.dto';
 import axios, { AxiosResponse } from 'axios';
 import { GET_GUEST_SIGN_IN, GUEST_SIGN_IN_API_URL, HOST_SIGN_IN_API_URL, PATCH_GUEST_PASSWORD_API_URL } from 'src/constants';
-import LogInResponseDto from './dto/response/host.login.respons.dto';
 import ResponseDto from './dto/response/response.dto';
 import MypageAuthRequestDto from './dto/request/guest/mypageauth.request.dto';
 import GetGuestSignInResponseDto from './dto/response/get-guest-sign-in.response.dto';
@@ -58,8 +57,8 @@ export const MypageAuthRequest = async (requestBody: MypageAuthRequestDto) => {
 
 export const getGuestSignInRequest = async(accessToken: string) => {
     const responseBody = await axios.get(GET_GUEST_SIGN_IN, bearerAuthorization(accessToken))
-    .then(responseDataHandler<GetGuestSignInResponseDto>)
-    .catch(responseErrorHandler)
+        .then(responseDataHandler<GetGuestSignInResponseDto>)
+        .catch(responseErrorHandler)
     return responseBody;
 }
 
