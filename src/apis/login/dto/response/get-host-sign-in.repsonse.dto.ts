@@ -1,4 +1,9 @@
-import { ResponseDto } from "src/apis/signUp/dto/response";
+import { ResponseDto } from "src/apis/guestmypage";
+
+
+
+
+
 
 export default interface GetHostSignInResponseDto extends ResponseDto {
     hostId: string;

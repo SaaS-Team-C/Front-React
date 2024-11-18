@@ -12,6 +12,7 @@ export const AUTH_PATH = "/sign-up"
 export const PAYMENT_PATH = "/payment";
 export const FINDID_PATH = "/find";
 export const MODAL3 = "/payment";
+export const HOST_MYPAGE_PATH = (hostId:string)=> `/mypage-host/${hostId}`
 
 export const ACCOMMODATION_LIST_PATH = "/accommodationList";
 export const ACCOMMODATION_LIST_DETAIL_PATH = (accommodationName:string)=>`${ACCOMMODATION_LIST_PATH}/detail/${accommodationName}`;
