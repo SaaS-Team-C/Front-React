@@ -53,7 +53,7 @@ export const ChangeGuestPwRequest = async (userId: string, requestBody: GuestPwC
 };
 
 // function: 호스트 비밀번호 처리 함수 //
-export const ChangeHostPwRequest = async (userId: string, requestBody: GuestPwChangeRequestDto) => {
+export const ChangeHostPwRequest = async (userId: string, requestBody: HostPwChangeRequestDto) => {
     
     const responseBody = await axios.patch(PATCH_GUEST_PASSWORD_API_URL(userId), requestBody)
         .then(responseDataHandler<ResponseDto>)
