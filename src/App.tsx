@@ -137,7 +137,8 @@ useEffect(() => {
       <Route index element={<Index />} />
       <Route path={MAIN_PATH} element={<Main />} />
       <Route path='/mypageGuest' element={<GuestMypage />} />
-
+      <Route path='/mypageHost' element={<HostMypage />} />
+      {/* <Route path='/mypageHost/ReservationStatus' element={<ReservationStatus titletext={''} username={''} activite={false} />} /> */}
       <Route path={ACCOMMODATION_LIST_PATH} element={<AccommodationList />} />
       <Route path={ACCOMMODATION_LIST_DETAIL_PATH(':accommodationName')} element={<DetailList />} />
       <Route path={AUTH_PATH} element={<SignUp />} />
