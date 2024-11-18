@@ -6,9 +6,12 @@ import MypageAuthRequestDto from './dto/request/guest/mypageauth.request.dto';
 import GetGuestSignInResponseDto from './dto/response/get-guest-sign-in.response.dto';
 import HostLogInRequestDto from './dto/request/host/login.request.dto';
 import GuestPwChangeRequestDto from './dto/request/guest/guestpwchange.request.dto';
-import HostLogInResponseDto from './dto/response/host.login.respons.dto';
-import GuestLogInResponseDto from './dto/response/guest.login.respons.dto';
+import HostLogInResponseDto from './dto/response/host-sign-in.response.dto';
+
 import { ResponseDto } from '../guestmypage';
+
+import HostPwChangeRequestDto from './dto/request/host/hostpwchange.request.dto';
+import GuestSignInResponseDto from './dto/response/guest-sign-in.response.dto';
 
 // function : Authorization Bearer 헤더 //
 const bearerAuthorization = (accessToken: string) => ({
@@ -30,7 +33,7 @@ const responseErrorHandler = (error: any) => {
 // function: 게스트 로그인 처리 함수 //
 export const GuestLogInRequest = async (requestBody: GuestLogInRequestDto) => {
     const responseBody = await axios.post(GUEST_SIGN_IN_API_URL, requestBody)
-        .then(responseDataHandler<GuestLogInResponseDto>)
+        .then(responseDataHandler<GuestSignInResponseDto>)
         .catch(responseErrorHandler);
     return responseBody;
 };
@@ -53,7 +56,7 @@ export const ChangeGuestPwRequest = async (userId: string, requestBody: GuestPwC
 };
 
 // function: 호스트 비밀번호 처리 함수 //
-export const ChangeHostPwRequest = async (userId: string, requestBody: GuestPwChangeRequestDto) => {
+export const ChangeHostPwRequest = async (userId: string, requestBody: HostPwChangeRequestDto) => {
     
     const responseBody = await axios.patch(PATCH_GUEST_PASSWORD_API_URL(userId), requestBody)
         .then(responseDataHandler<ResponseDto>)
