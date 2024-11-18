@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./style.css";
 import { useNavigate, useParams } from "react-router";
 import Topbar from "src/component/topbar";

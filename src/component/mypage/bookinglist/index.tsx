@@ -9,6 +9,7 @@ import { SignInUser } from 'src/stores';
 import { useCookies } from 'react-cookie';
 import { getReservationListRequest } from 'src/apis';
 import { ResponseDto } from "src/apis/accommodation/dto/response";
+import { GetReservationListResponseDto } from 'src/apis/guestmypage/dto/response/ReservationList.response.dto';
 
 export default function BookingList() {
 
@@ -30,6 +31,7 @@ export default function BookingList() {
     const [userId, setUserID] = useState<string>('');
 
     const [accommodations, setAccommodations] = useState([]);
+    const [reservationList, setReservationList] = useState<string[]>([]);
 
     useEffect(() => {
         if (!signInUser) return;
@@ -42,11 +44,26 @@ export default function BookingList() {
     useEffect(() => {
         const guestAccessToken = cookies[GUEST_ACCESS_TOKEN];
       
-        if (guestAccessToken) getReservationListRequest(userId, guestAccessToken).then(getReservationListResponse);
-        else setSignInUser(null)
+        // if (guestAccessToken) getReservationListRequest(userId, guestAccessToken).then(getReservationListResponse);
       }, [cookies[GUEST_ACCESS_TOKEN]])
 
-    const getReservationListResponse = (responseBody: GetReservationListResponseDto | ResponseDto )
+    const getReservationListResponse = (responseBody: GetReservationListResponseDto | ResponseDto | null ) => {
+        const isSuccessde = responseBody !== null && responseBody.code === 'SU';
+        if (!isSuccessde) return ;
+        const {
+            CreatedAt,
+            ReservationId,
+            AccommodationMainImage,
+            AccommodationName,
+            RoomName,
+            RoomCheckIn,
+            RoomCheckOut,
+            ReservationTotalPeople,
+            TotalPrice,
+            TotalNight
+        } = responseBody as GetReservationListResponseDto
+    }
+
 
     /** 
      * event handler: 클릭시 관련된 숙소 상세 페이지로 이동  
