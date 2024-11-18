@@ -97,9 +97,9 @@ const HostAccommodationRegisterForm: React.FC = () => {
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
-    const { name, value } = e.target;
+    const { value } = e.target;
     // setAccommodation((prev) => ({ ...prev, [name]: value }));
-    setAccommodationName(name);
+    setAccommodationName(value);
     
     // setAccommodaitonImages((prevList)=> [...prevList, value])
     // setAccommodationAddress(value);
@@ -107,25 +107,25 @@ const HostAccommodationRegisterForm: React.FC = () => {
     
     
     // 숙소명과 설명의 글자 수 제한 및 경고 메시지 표시
-    if (name === "accommodationName") {
+    if (value === "accommodationName") {
       if (value.length >= 45) {
         setNameError("숙소명은 최대 45자 까지만 입력 가능합니다.");
       } else {
         setNameError("");
       }
       // setAccommodation((prev) => ({ ...prev, [name]: value }));
-    } else if (name === "description") {
+    } else if (value === "description") {
       if (value.length >= 1500) {
         setDescriptionError("숙소 설명은 최대 1500자 까지만 입력 가능합니다.");
         return;
       } else {
         setDescriptionError("");
       } 
-      setAccommodation((prev) => ({ ...prev, [name]: value }));
-    } else if (name === "price" || name === "maxGuests") {
+      setAccommodation((prev) => ({ ...prev, [value]: value }));
+    } else if (value === "price" || value === "maxGuests") {
       const numericValue = Math.max(
         0,
-        Math.min(parseInt(value) || 0, name === "price" ? 50000000 : 10)
+        Math.min(parseInt(value) || 0, value === "price" ? 50000000 : 10)
       );
       // setAccommodation((prev) => ({ ...prev, [name]: numericValue }));
     } else {
