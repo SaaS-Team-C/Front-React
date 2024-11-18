@@ -1,9 +1,14 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router'
 import './style.css'
 import { LsisuerImage } from 'src/resources/images/leisure';
 import onStar from './onstar.png'
 import disableStar from './disablestar.png'
+import { GUEST_ACCESS_TOKEN } from 'src/constants';
+import { SignInUser } from 'src/stores';
+import { useCookies } from 'react-cookie';
+import { getReservationListRequest } from 'src/apis';
+import { ResponseDto } from "src/apis/accommodation/dto/response";
 
 export default function BookingList() {
 
@@ -13,6 +18,8 @@ export default function BookingList() {
 
     const navigator = useNavigate();
 
+    const {signInUser} = SignInUser();
+
     const [reviewWrite, setReviewWrite] = useState<boolean>(false);
 
     const [scoreOne, setScoreOne] = useState<boolean>(false);
@@ -20,6 +27,26 @@ export default function BookingList() {
     const [scoreThree, setScoreThree] = useState<boolean>(false);
     const [scoreFour, setScoreFour] = useState<boolean>(false);
     const [scoreFive, setScoreFive] = useState<boolean>(false);
+    const [userId, setUserID] = useState<string>('');
+
+    const [accommodations, setAccommodations] = useState([]);
+
+    useEffect(() => {
+        if (!signInUser) return;
+        setUserID(signInUser.guestId)
+    }, [signInUser])
+
+
+    const [cookies, setCookie] = useCookies();
+
+    useEffect(() => {
+        const guestAccessToken = cookies[GUEST_ACCESS_TOKEN];
+      
+        if (guestAccessToken) getReservationListRequest(userId, guestAccessToken).then(getReservationListResponse);
+        else setSignInUser(null)
+      }, [cookies[GUEST_ACCESS_TOKEN]])
+
+    const getReservationListResponse = (responseBody: GetReservationListResponseDto | ResponseDto )
 
     /** 
      * event handler: 클릭시 관련된 숙소 상세 페이지로 이동  
@@ -27,6 +54,7 @@ export default function BookingList() {
      */
     const onClickListComponent = () => {
         navigator('/main')
+
     }
 
     const onClickReviewWriteHandler = () => {
@@ -90,7 +118,7 @@ export default function BookingList() {
         <div id='bookinglist-warpper'>
             <div className='bookinglist-box'>
                 <div className='bookinglist-list-top-deatail'>
-                    <div className='bookinglist-date'>{todaytext}</div>
+                    <div className='bookinglist-date'>{accommodations}</div>
                     <div className='bookinglist-bill'>200.000원</div>
                 </div>
                 <div className='bookinglist-list-main-detail'>
