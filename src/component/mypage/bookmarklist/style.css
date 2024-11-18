@@ -5,6 +5,9 @@
     width: 700px;  
     height: 150px;  
     border: solid 6px rgba(247, 219, 219, 0.637);
+
+    margin: 5px 0px;
+    border-radius: 5px;
 }
 
 .bookmark-image {

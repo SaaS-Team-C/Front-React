@@ -18,12 +18,125 @@
 #bookinglist-warpper {
     display: flex;
     flex-direction: column;
+    align-items: center;
+    margin: 5px 0px;
 
-    width: 800px;
-    height: auto;
-    border: solid 3px rgb(238, 185, 185);
-    border-radius: 10px;
+    width: 700px;  
+    height: auto;  
+    border: solid 6px rgba(247, 219, 219, 0.637);
 
-    margin: 10px 15px;
+    font-size: 15px;
+    color: rgb(75, 74, 74);
+    font-family: 'Pretendard-Regular';
+    border-radius: 5px;
 }
 
+.bookinglist-box {
+    margin: 5px;
+}
+
+.bookinglist-list-top-deatail {
+    display: flex;
+    justify-content: space-between;
+
+    width: 690px;
+
+    font-size: 15px;
+    color: rgb(75, 74, 74);
+    font-family: 'Pretendard-Regular';
+}
+
+.bookinglist-list-main-detail {
+    display: flex;
+}
+
+.bookinglist-list-image {
+    width: 160px;
+    height: 150px;
+
+    border-radius: 15px;
+    margin: 5px;
+}
+
+.bookinglist-hotel-detail {
+    display: flex;
+    flex-direction: column;
+    width: 150px;
+
+    margin: 10px 15px;
+
+    font-size: 15px;
+    color: rgb(75, 74, 74);
+    font-family: 'Pretendard-Regular';
+}
+
+.bookinglist-hotel-title{ 
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.bookinglist-hotel-room{
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.bookinglist-detail-list {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    margin: 10px 15px;
+
+}
+
+.bookinglist-count-reviewbox {
+    display: flex;
+    justify-content: space-between;
+    width: 320px;
+}
+
+.bookinglist-reviewbox {
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    width: 100px;
+    height: 100%;    
+    background-color: #ff94a0;
+    border: solid 2px rgba(240, 203, 203, 0.637);;
+    border-radius: 5px;
+
+    font-weight: 700;
+    font-size: 18px;
+    color: rgb(255 , 255, 255, 1);
+}
+
+.reviewwrite-inputbox {
+    width: 670px;
+    height: 60px;
+}
+
+.review-bottom-box {
+    display: flex;
+    justify-content: space-between;
+}
+
+.submission-button {
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    margin:5px 0px;
+    width: 100px;
+    height: 100%;    
+    background-color: #ff94a0;
+    border: solid 2px rgba(240, 203, 203, 0.637);;
+    border-radius: 5px;
+
+    font-weight: 700;
+    font-size: 18px;
+    color: rgb(255 , 255, 255, 1);
+}
