@@ -1,10 +1,12 @@
 // interface: dto//
 import { ResponseDto } from "src/apis/accommodation/dto/response";
-import { Room } from "./Room";
+
 import { UseInformation } from "./UseInformation";
+import Room from "./Room";
 
 
-export interface GetAccommodationResponseDto{
+export default interface GetAccommodationResponseDto extends ResponseDto {
+
   accommodationName: string;
   accommodationMainImage: string;
   accSubImages: string[];
@@ -13,7 +15,7 @@ export interface GetAccommodationResponseDto{
   accommodationIntroduce: string;
   useInformations: UseInformation[];
   roomList: Room[];
-  // roomSubList: string[]
+  roomSubList: string[]
   categoryArea: string;
   categoryPet: boolean;
   categoryNonSmokingArea: boolean;

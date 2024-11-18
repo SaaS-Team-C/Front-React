@@ -4,19 +4,19 @@ import './style.css';
 import Modal from 'react-modal';
 import AccommodationDetailTopImages from '../../top/imageslick';
 import { PAYMENT_PATH } from 'src/constants';
-import { RoomDTO } from 'src/apis/accommodation/dto/request/room.request.dto';
 import { useCookies } from 'react-cookie';
-import SignInUser from './../../../../../types/sign-in-user.interface';
 import useStore from 'src/stores/sign-in-user.store';
+import GetAccommodationResponseDto from 'src/apis/hostmypage/dto/response/GetAccommodationResponseDto';
+import Room from 'src/apis/hostmypage/dto/response/Room';
 
 // props: 객실 카드 컴포넌트의 props 정의 //
-interface RoomCardProps {
-  room: RoomDTO;
-  isFullyBooked: boolean; // 객실 매진 여부를 나타내는 props 추가
+interface Props {
+  accommodation: GetAccommodationResponseDto;
+  room:Room
 }
 
 // component: 객실 상세 정보 보여주는 카드 컴포넌트 //
-const RoomCard: React.FC<RoomCardProps> = ({ room, isFullyBooked }) => {
+const RoomCard = ({ accommodation, room }: Props) => {
 
   // state: 상태 함수 //
   const [isImageModalOpen, setIsImageModalOpen] = useState(false);
@@ -66,39 +66,24 @@ const RoomCard: React.FC<RoomCardProps> = ({ room, isFullyBooked }) => {
   };
 
   // event handler: 숙소 예약 버튼 클릭 시 예약 페이지로 이동하는 핸들러 //
-  // const handleChangebooking = () => {
-  //   if (cookies.accessToken) {
-  //     // 로그인 상태인 경우 예약 페이지로 이동
-  //     navigator(
-  //       `${PAYMENT_PATH}?Region=${urlRegion}&start=${urlStart}&end=${urlEnd}&count=${urlCount}&name=${encodeURIComponent(room.name)}&roomType=${urlRoom}`,
-  //       { state: { imageSrc: room.images[0], price: room.roomPrice, checkInTime: urlStart, checkOutTime: urlEnd, personnelCount: urlCount, roomName: urlName, roomType: urlRoom } }
-  //     );
-  //   } else {
-  //     // 로그인 상태가 아닌 경우 alert 표시 후 회원가입 페이지로 이동
-  //     if (window.confirm('Roomly 회원만 숙박 예약이 가능합니다. 로그인/회원가입 페이지로 이동하시겠습니까?')) {
-  //       navigator('/sign-up');
-  //     }
-  //   }
-  // };
-
-  const {signInUser} = useStore();
-
   const handleChangebooking = () => {
-    
-    
-
-
+    if (cookies.accessToken) {
       // 로그인 상태인 경우 예약 페이지로 이동
       navigator(
-        `${PAYMENT_PATH}?Region=${urlRegion}&start=${urlStart}&end=${urlEnd}&count=${urlCount}&roomName=${urlRoom}&accommodationName=${urlName}`,
-        { state: { imageSrc: room.images[0], alert: room.roomName, price: room.roomPrice, checkInTime: urlStart, checkOutTime: urlEnd, personnelCount: urlCount, accommodationName: urlName, roomName: room.roomName } }
+        `${PAYMENT_PATH}?Region=${urlRegion}&start=${urlStart}&end=${urlEnd}&count=${urlCount}&name=${encodeURIComponent(accommodation.accommodationName)}&roomType=${urlRoom}`,
+        { state: { imageSrc: accommodation.accommodationMainImage[0], price: room.roomPrice, checkInTime: urlStart, checkOutTime: urlEnd, personnelCount: urlCount, roomName: urlName, roomType: urlRoom } }
       );
-    } 
-
+    } else {
+      // 로그인 상태가 아닌 경우 alert 표시 후 회원가입 페이지로 이동
+      if (window.confirm('Roomly 회원만 숙박 예약이 가능합니다. 로그인/회원가입 페이지로 이동하시겠습니까?')) {
+        navigator('/sign-up');
+      }
+    }
+  };
 
   return (
     <div id="room-card">
-      {isFullyBooked ? ( // 객실이 매진된 경우
+      {false ? ( // 객실이 매진된 경우
         <div className="fully-booked-message">
           <p>선택한 날짜의 객실은 매진되었어요.</p>
           <p>상단 검색창에서 날짜나 인원을 다시 설정해보세요.</p>
@@ -111,13 +96,13 @@ const RoomCard: React.FC<RoomCardProps> = ({ room, isFullyBooked }) => {
         <div id='room-card-image-container'>
          
             <img className='room-card-image'
-              src={room.images[0]} // 첫 번째 이미지만 표시
+              src={accommodation.accSubImages[0]} // 첫 번째 이미지만 표시
               alt={room.roomName}
               onClick={() => handleImageClick(0)} // 이미지를 클릭하면 이미지 모달 열기
             />
             <div className='image-icon-container'>
               <div className='image-icon'></div>
-              <div className="image-count">{room.images.length}+</div>
+              <div className="image-count">{accommodation.accSubImages.length}+</div>
             </div>
          
           </div>
@@ -127,17 +112,17 @@ const RoomCard: React.FC<RoomCardProps> = ({ room, isFullyBooked }) => {
 
             <div className='check-in-container'>
             <div className='check-in-icon'></div>
-            <div className='check-in-time'>입실 {room.checkInTime} ~</div>
+            <div className='check-in-time'>입실 {room.roomCheckIn} ~</div>
             </div>
 
             <div className='check-out-container'>
             <div className='check-out-icon'></div>
-            <div className='check-out-time'>퇴실 {room.checkOutTime} ~</div>
+            <div className='check-out-time'>퇴실 {room.roomCheckOut} ~</div>
             </div>
             
             <div className='max-occupancy-container'>
             <div className='max-occupancy-icon'></div>
-            <div className='max-occupancy'>최대 숙박 가능 인원: {room.maxOccupancy}명</div>
+            <div className='max-occupancy'>최대 숙박 가능 인원: {room.roomTotalGuest}명</div>
             </div>
 
           </div>
@@ -162,11 +147,7 @@ const RoomCard: React.FC<RoomCardProps> = ({ room, isFullyBooked }) => {
 
       {/* 이미지 모달: AccommodationDetailTopImages 사용 */}
       {isImageModalOpen && (
-        <AccommodationDetailTopImages
-          initialIndex={currentImageIndex}
-          onClose={closeImageModal}
-          images={room.images} // 객실 이미지 배열 전달
-        />
+        <AccommodationDetailTopImages accommodation={accommodation} room={room} onClose={closeImageModal} />
       )}
 
       {/* 상세 정보 모달 */}
@@ -185,10 +166,10 @@ const RoomCard: React.FC<RoomCardProps> = ({ room, isFullyBooked }) => {
           </div>
           <div className='room-modal-info-container'>
           <div className='room-modal-info'>객실 정보</div>
-          <div className='room-modal-info-detail'>{room.description}</div>
-          <div className='room-modal-info-detail' >· 입실 시간: {room.checkInTime}</div>
-          <div className='room-modal-info-detail' >· 퇴실 시간: {room.checkOutTime}</div>
-          <div className='room-modal-info-detail' >· 최대 수용 인원: {room.maxOccupancy}명</div>
+          <div className='room-modal-info-detail'>{accommodation.accommodationIntroduce}</div>
+          <div className='room-modal-info-detail' >· 입실 시간: {room.roomCheckIn}</div>
+          <div className='room-modal-info-detail' >· 퇴실 시간: {room.roomCheckOut}</div>
+          <div className='room-modal-info-detail' >· 최대 수용 인원: {room.roomTotalGuest}명</div>
           <div className='room-modal-info-detail' >· 가격: ₩{room.roomPrice.toLocaleString()}원</div>
           </div>
           </div>

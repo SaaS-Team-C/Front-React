@@ -1,76 +1,82 @@
-import React, { useRef } from 'react';
-import './style.css';
-import AccommodationDetailTop from './top';
-import AccommodationDetailMiddle from './middle';
-import Topbar from 'src/component/topbar';
-import ReviewList from './bottom';
-import FacilitiesCard from './middle/facilities';
-import Bottombar from 'src/component/bottombar';
-import Map from './middle/navermap';
-
+import "./style.css";
+import Topbar from "src/component/topbar";
+import ReviewList from "./bottom";
+import FacilitiesCard from "./middle/facilities";
+import Map from "./middle/navermap";
+import RoomList from "./middle/roomlist";
+import AccommodationDetailTop from "./top";
+import { useEffect, useState } from "react";
+import { useParams } from "react-router";
+import { useCookies } from "react-cookie";
+import { GUEST_ACCESS_TOKEN } from "src/constants";
+import { HOST_ACCESS_TOKEN } from "src/constants";
+import { getAccommodationDetailRequest } from "src/apis";
+import { ResponseDto } from "src/apis/hostmypage";
+import GetAccommodationResponseDto from "src/apis/hostmypage/dto/response/GetAccommodationResponseDto";
 
 export default function DetailList() {
-  const reviewSectionRef = useRef<HTMLDivElement | null>(null);
 
-  const scrollToReviews = () => {
-    console.log("스크롤 함수 호출됨");
-    console.log("ReviewList ref:", reviewSectionRef.current); // ReviewList ref가 제대로 설정되었는지 확인
-    console.log("reviewSectionRef:", reviewSectionRef.current); // 이 값이 null이 아닌지 확인
-    if (reviewSectionRef.current) {
-      reviewSectionRef.current.scrollIntoView({ behavior: 'smooth' });
-    }
-  };
+  const { accommodationName } = useParams();
+  const [cookies] = useCookies();
+  const [accommodation, setAccommodation] = useState<GetAccommodationResponseDto | null>(null);
 
-
-
-  const facilitySectionRef = useRef<HTMLDivElement | null>(null);
-
-  const scrollToFacility = () => {
-
-    if (facilitySectionRef.current) {
-      facilitySectionRef.current.scrollIntoView({ behavior: 'smooth' });
-    }
-  };
-
-  const locationSectionRef = useRef<HTMLDivElement | null>(null);
-
-  const scrollToLocation = () => {
-
-       if (locationSectionRef.current) {
-        locationSectionRef.current.scrollIntoView({ behavior: 'smooth' });
-    }
-  };
+  const guestAccessToken = cookies[GUEST_ACCESS_TOKEN];
 
   const latitude = 37.7749; // 임의의 위도 값
   const longitude = -122.4194; // 임의의 경도 값
-  const accommodationAddress = '부산광역시 부산진구 중앙대로 668 에이원프라자 빌딩 4층'
-  
-   
+  const accommodationAddress = "부산광역시 부산진구 중앙대로 668 에이원프라자 빌딩 4층";
 
+  // function: get accommodation detail list response 처리 함수 //
+  const getAccommodaitonResponse = (responseBody:  GetAccommodationResponseDto | ResponseDto | null) =>{
+    const message = 
+        !responseBody ? '서버에 문제가 있습니다. ':
+        responseBody.code === 'AF' ? '잘못된 접근입니다. ':
+        responseBody.code === 'DBE' ? '서버에 문제가있습니다. ': '';
+        const isSuccessed = responseBody !== null && responseBody.code === 'SU';
+        if (!isSuccessed) {
+            alert(message);
+            return;
+        };
+        const accommodation = responseBody as GetAccommodationResponseDto;
+        setAccommodation(accommodation);
+  }
+
+  useEffect(() => {
+      if (!guestAccessToken || !accommodationName) return;
+      getAccommodationDetailRequest(accommodationName, guestAccessToken).then(getAccommodaitonResponse);
+  }, [accommodationName])
+
+  if (!accommodation) return null;
+  
   return (
     <>
-    
-    <div id='accommodation-detail-list-wrapper'>
-      <Topbar/>
-      <AccommodationDetailTop onReviewButtonClick={scrollToReviews} accommodation_name={''} onCardClick={scrollToFacility} onLocationClick={scrollToLocation}/>
-      <AccommodationDetailMiddle />
+      <div id="accommodation-detail-list-wrapper">
+        
+        <Topbar />
 
-      <div className ='facilitiesCard-component-wrapper' ref={facilitySectionRef} id="facilitySection">
-      <FacilitiesCard />
+        {/* AccommodationDetailTop 컴포넌트 */}
+        <AccommodationDetailTop accommodation={accommodation}/>
+
+       {/* RoomList 컴포넌트 */}
+        <div className="middle-wrapper">
+          <RoomList accommodation={accommodation} />
+        </div>
+
+        {/* FacilitiesCard 컴포넌트 */}
+          <FacilitiesCard />
+
+        {/* Map 컴포넌트 */}
+          <Map
+            accommodationAddress={accommodationAddress}
+            latitude={latitude}
+            longitude={longitude}
+          />
+
+        {/* ReviewList 컴포넌트 */}
+          <ReviewList />
+
       </div>
-
-      <div className ='location-Card-component-wrapper' ref={locationSectionRef} id="locationSection">
-      <Map accommodationAddress={accommodationAddress} latitude={latitude} longitude={longitude}/>
-      </div>
-
-      <div ref={reviewSectionRef} id="reviewSection">
-        <ReviewList />
-      </div>
-
-    </div>
-    {/* <Bottombar/> */}
-    
-    
+      {/* <Bottombar/> */}
     </>
   );
 }

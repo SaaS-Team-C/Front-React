@@ -1,4 +1,11 @@
 /* 페이지 전체를 감싸는 컨테이너 */
+#mypage-wrapper {
+    position: fixed;
+    left: 360px;
+    width: 1200px;
+    height: 850px;
+}
+
 #mypage-container {
     display: flex;
     justify-content: center;
@@ -6,15 +13,10 @@
     width: 100%;
     max-width: 1200px;
     margin: 0 auto;
-
-}
-
-#mypage-wrapper {
-    position: fixed;
-    left: 360px;
-    width: 1200px;
-    height: 850px;
-    background-color: #f1ecef7c;
+    height: 807px;
+    
+    overflow-y: scroll;
+    overflow-x: hidden;
 }
 
 /* 게스트 페이지 css */
@@ -25,6 +27,7 @@
     display: flex;
     flex-direction: column;
     align-items: end;
+    position: sticky;
 }
 
 .guestMypage-main { 

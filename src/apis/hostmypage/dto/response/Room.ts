@@ -1,6 +1,6 @@
 // room dto //
 
-export interface Room {
+export default interface Room {
   roomId: number;
   roomName: string;
   roomMainImage: string;
