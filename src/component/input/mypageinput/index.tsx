@@ -46,6 +46,7 @@ export default function MypageInputBox({
                 <div className='mypageinformation-input-box'>
                     <div className='mypageinformation-input-title'>{title}</div>
                     <div className='mypageinformation-input-area'>
+                        <div className='mypageinformation-input'>
                         <input 
                             className='mypageinformation-input-inputbox' 
                             type={type} 
@@ -54,6 +55,7 @@ export default function MypageInputBox({
                             onChange={onChange} 
                         />
                         {messageError && <div className='checkMessageError'>{messageError}</div>}
+                        </div>
                         {buttonName && <button className={`mypageinformation-telnumber-change-button-${activboolean ? 'active' : 'disable'}`} onClick={onButtonClick}>{buttonName}</button>}
                     </div>
                 </div>

@@ -1,5 +1,5 @@
 import "./style.css";
-import { useNavigate } from "react-router";
+import { useNavigate, useParams } from "react-router";
 import Topbar from "src/component/topbar";
 import HostMypageLayout from "src/layout/mypageHost";
 import React, { useEffect, useState } from 'react';
@@ -9,49 +9,80 @@ import axios from "axios";
 import { getHostAccommodationListRequest } from "src/apis";
 import { HOST_ACCESS_TOKEN } from "src/constants";
 import { useCookies } from "react-cookie";
+import { SignInHost } from "src/stores";
+import { GetHostAccommodationListResponseDto } from "src/apis/hostmypage/dto/response/GetHostAccommodationListResponseDto";
+import { ResponseDto } from "src/apis/guestmypage";
+import { MyAccommodation } from "src/apis/hostmypage/dto/response/MyAccommodation";
 
-type MyAccommodation = {
+
+// type MyAccommodation = {
   
-  accommodationName: string;
-  accommodationMainImage: string;
-  applyStatus: boolean;
-  entryTime: string;
-};
+//   accommodationName: string;
+//   accommodationMainImage: string;
+//   applyStatus: boolean;
+//   entryTime: string;
+// };
 
 const handleRegisterClick = () => {
   window.location.href = "http://localhost:3000/mypagehost/accommodations/register";
 };
 
 const AccommodationManagementPage: React.FC = () => {
+
+  const { signInHost } = SignInHost();
+  
+  const hostId = signInHost?.hostId 
+
   const [selectedTab, setSelectedTab] = useState<string>("운영중");
-  const [accommodations, setAccommodations] = useState<MyAccommodation[]>([]);
+  const [originalList, setOriginalList] = useState<MyAccommodation[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
   const [cookies] = useCookies();
-  
+
+
+
+  // function: get host accommodation list response 처리 함수 //
+  const getHostAccommodationListResponse = (responseBody: GetHostAccommodationListResponseDto | ResponseDto | null) => {
+    const message = 
+    !responseBody ? '서버에 문제가 있습니다. ':
+    responseBody.code === 'AF' ? '잘못된 접근입니다. ':
+    responseBody.code === 'NI' ? '존재하지 않는 사용자 입니다. ':
+    responseBody.code === 'DBE' ? '서버에 문제가있습니다. ': '';
+    const isSuccessed = responseBody !== null && responseBody.code === 'SU';
+    if (!isSuccessed) {
+        alert(message);
+        return;
+    };
+    const { accommodations } = responseBody as GetHostAccommodationListResponseDto 
+    setOriginalList(accommodations);
+  }
 
   // Effect: 백엔드 API에서 데이터 불러오기
-  // useEffect(() => {
-  //   const hostAccessToken = cookies[HOST_ACCESS_TOKEN];
-  //   if (!hostAccessToken) return ;
+  useEffect(() => {
+    const hostAccessToken = cookies[HOST_ACCESS_TOKEN];
+    if (!hostAccessToken) return ;
     
-  //   getHostAccommodationListRequest(hostId,hostAccessToken)
-  // }, []);
+    if(!signInHost) return;
+    const hostId = signInHost.hostId
+
+    getHostAccommodationListRequest(hostId,hostAccessToken).then(getHostAccommodationListResponse);
+    
+  }, []);
 
 
-  const filteredAccommodations = accommodations.filter(
-    (accommodation) => 
-      selectedTab === "운영중" ? accommodation.applyStatus : !accommodation.applyStatus
+  const filteredAccommodations = originalList.filter(
+    (accommodations) => 
+      selectedTab === "운영중" ? accommodations.applyStatus : !accommodations.applyStatus
   );
 
 
-  if (loading) {
-    return <div>로딩 중...</div>;
-  }
+  // if (loading) {
+  //   return <div>로딩 중...</div>;
+  // }
 
-  if (error) {
-    return <div>{error}</div>;
-  }
+  // if (error) {
+  //   return <div>{error}</div>;
+  // }
 
   return (
     <div className="accommodation-management-page">
@@ -81,9 +112,11 @@ const AccommodationManagementPage: React.FC = () => {
         </button>
       </div>
       <div className="accommodation-list">
-        {filteredAccommodations.map((accommodation, index) => (
-          <AccommodationCard key={index} accommodation={accommodation} />
-        ))}
+        {originalList.map((accommodations, index) => accommodations.applyStatus && selectedTab === '운영중'?(
+          <AccommodationCard key={index} accommodations={accommodations} />
+        ): accommodations.applyStatus === false && selectedTab === '등록 승인 대기중' ?
+        <AccommodationCard key={index} accommodations={accommodations} />:''
+        )}
       </div>
       <PaginationFunction
         totalItems={100}
@@ -98,10 +131,11 @@ const AccommodationManagementPage: React.FC = () => {
 };
 
 type AccommodationCardProps = {
-  accommodation: MyAccommodation;
+  accommodations: MyAccommodation;
 };
 
-const AccommodationCard: React.FC<AccommodationCardProps> = ({ accommodation }) => {
+
+const AccommodationCard: React.FC<AccommodationCardProps> = ({ accommodations }) => {
   const navigate = useNavigate();
 
   const handleCardClick = () => {
@@ -120,23 +154,23 @@ const AccommodationCard: React.FC<AccommodationCardProps> = ({ accommodation }) 
 
   return (
     <div id="accommodation-card" onClick={handleCardClick} style={{ cursor: "pointer" }}>
-      <div className="card-date">{accommodation.entryTime}</div>
+      <div className="card-date">{accommodations.entryTime}</div>
       <div className="card-content">
-        <img src={accommodation.accommodationMainImage} alt="Accommodation" className="card-image" />
+        <img src={accommodations.accommodationMainImage} alt="Accommodation" className="card-image" />
         <div className="card-info">
           <div className="card-header">
             <span className="status-tag">
-              {accommodation.applyStatus ? "운영중" : "등록 승인 대기중"}
+              {accommodations.applyStatus ? "운영중" : "등록 승인 대기중"}
             </span>
           </div>
-          <h3 className="room-name">{accommodation.accommodationName}</h3>
+          <h3 className="room-name">{accommodations.accommodationName}</h3>
         </div>
         <div className="card-actions">
           <button
             className="edit-button"
             onClick={(e) => {
               e.stopPropagation();
-              handleEdit(accommodation.accommodationName);
+              handleEdit(accommodations.accommodationName);
             }}
           >
             수정
@@ -145,7 +179,7 @@ const AccommodationCard: React.FC<AccommodationCardProps> = ({ accommodation }) 
             className="delete-button"
             onClick={(e) => {
               e.stopPropagation();
-              handleDelete(accommodation.accommodationName);
+              handleDelete(accommodations.accommodationName);
             }}
           >
             삭제

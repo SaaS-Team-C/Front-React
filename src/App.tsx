@@ -34,15 +34,18 @@ import Roomly from './views/roomly';
 import MyAccommodationManagementView from './views/mypagehost/MyAccommodationManagement';
 import ShowDetailList from './component/mypagehost/MyAccommodationManagement/showaccdetail/detaillist';
 import {SignInHost, SignInUser} from './stores';
-import { ResponseDto } from './apis/signUp/dto/response';
+
 
 import { GetHostSignInResponseDto } from './apis/login/dto';
-import GetGuestSignInResponseDto from './apis/login/dto/response/get-guest-sign-in.response.dto';
+
 import List from './component/accomodation/list';
 import { getSignInHostRequest } from './apis/signUp';
 import { getGuestSignInRequest } from './apis/login';
-import HostMypage from './views/mypagehost';
-import ReservationStatus from './component/mypagehost/ReservationStatus';
+import GetGuestSignInResponseDto from './apis/login/dto/response/get-guest-sign-in.response.dto';
+import { ResponseDto } from './apis/guestmypage';
+
+
+
 
 
 
@@ -120,12 +123,16 @@ const getSignInHostResponse =(responseBody: GetHostSignInResponseDto | ResponseD
 
 useEffect(() => {
   const guestAccessToken = cookies[GUEST_ACCESS_TOKEN];
+
+  if (guestAccessToken) getGuestSignInRequest(guestAccessToken).then(getSignInGuestResponse);
+  else setSignInUser(null)
+}, [cookies[GUEST_ACCESS_TOKEN]])
+
+useEffect(()=>{
   const hostAccessToken = cookies[HOST_ACCESS_TOKEN];
-  if (guestAccessToken) getGuestSignInRequest(guestAccessToken)
-  else if (hostAccessToken) getSignInHostRequest(hostAccessToken).then(getSignInHostResponse);
-  else if(!guestAccessToken) setSignInUser(null);
-  else setSignInHost(null);
-}, [cookies[GUEST_ACCESS_TOKEN], cookies[HOST_ACCESS_TOKEN] ])
+  if(hostAccessToken) getSignInHostRequest(hostAccessToken).then(getSignInHostResponse)
+    else setSignInHost(null);
+},[cookies[HOST_ACCESS_TOKEN]])
 
   // onPathChange 함수 정의
   const handlePathChange = () => {

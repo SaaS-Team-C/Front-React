@@ -122,13 +122,13 @@ export const businessNumberCheckRequest = async (
 export const getSignInRequest = async (accessToken: string) => {
     const responseBody = await axios.get(GET_GUEST_SIGN_IN, bearerAuthorization(accessToken))
     .then(responseDataHandler<GetGuestSignInResponseDto>)
-    .catch(responseErrorHandler)
-    return  responseBody;
+    .catch(responseErrorHandler);
+    return  responseBody
 }
 // function: get sign in host 요청 함수 //
 export const getSignInHostRequest = async (accessToken: string) => {
     const responseBody = await axios.get(GET_HOST_SIGN_IN, bearerAuthorization(accessToken))
         .then(responseDataHandler<GetHostSignInResponseDto>)
-        .catch(responseErrorHandler);
+        .catch(responseErrorHandler)
         return responseBody;
 }

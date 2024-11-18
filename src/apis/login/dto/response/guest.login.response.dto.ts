@@ -1,4 +1,5 @@
-import ResponseDto from "./response.dto";
+import { ResponseDto } from "src/apis/guestmypage";
+
 
 export default interface GuestLogInResponseDto extends ResponseDto {
     guestAccessToken: string;

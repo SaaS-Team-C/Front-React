@@ -2,6 +2,8 @@ import React, { useState } from 'react'
 import { useNavigate } from 'react-router'
 import './style.css'
 import { LsisuerImage } from 'src/resources/images/leisure';
+import onStar from './image/onstar.png';
+import disableStar from './image/disablestar.png';
 
 export default function BookingList() {
 
@@ -12,6 +14,12 @@ export default function BookingList() {
     const navigator = useNavigate();
 
     const [reviewWrite, setReviewWrite] = useState<boolean>(false);
+
+    const [reviewOne, setReviewOne] = useState<boolean>(false);
+    const [reviewTwo, setReviewTwo] = useState<boolean>(false);
+    const [reviewThree, setReviewThree] = useState<boolean>(false);
+    const [reviewfour, setReviewFour] = useState<boolean>(false);
+    const [reviewfive, setReviewFive] = useState<boolean>(false);
 
 
 
@@ -34,6 +42,59 @@ export default function BookingList() {
 
     const onClickSubmissionHandler = () => {
             setReviewWrite(false)
+    }
+
+    // event handler : 평점 클릭 핸들러 //
+    const onClickOneOnStar = () => {
+        setReviewOne(false)
+        setReviewTwo(false)
+        setReviewThree(false)
+        setReviewFour(false)
+        setReviewFive(false)
+    }
+    const onClickTwoOnStar = () => {
+        setReviewTwo(false)
+        setReviewThree(false)
+        setReviewFour(false)
+        setReviewFive(false)
+    }
+    const onClickThreeOnStar = () => {
+        setReviewThree(false)
+        setReviewFour(false)
+        setReviewFive(false)
+    }
+    const onClickFourOnStar = () => {
+        setReviewFour(false)
+        setReviewFive(false)
+    }
+    const onClickFiveOnStar = () => {
+        setReviewFive(false)
+    }
+
+    const onClickOneDisabeStar = () => {
+        setReviewOne(true)
+    }
+    const onClickTwoDisabeStar = () => {
+        setReviewOne(true)
+        setReviewTwo(true)
+    }
+    const onClickThreeDisabeStar = () => {
+        setReviewOne(true)
+        setReviewTwo(true)
+        setReviewThree(true)
+    }
+    const onClickFourDisabeStar = () => {
+        setReviewOne(true)
+        setReviewTwo(true)
+        setReviewThree(true)
+        setReviewFour(true)
+    }
+    const onClickFiveDisabeStar = () => {
+        setReviewOne(true)
+        setReviewTwo(true)
+        setReviewThree(true)
+        setReviewFour(true)
+        setReviewFive(true)
     }
 
 
@@ -67,7 +128,13 @@ export default function BookingList() {
             {reviewWrite && <div className='reviewwrite-box'>
                 <input className='reviewwrite-inputbox' type="text" />
                 <div className='review-bottom-box'>
-                    <div className='score-component'></div>
+                    <div className='score-component'>
+                        {reviewOne && <img className='star-icon' src={onStar} alt="" onClick={onClickOneOnStar}/>} {!reviewOne && <img className='star-icon' src={disableStar} alt="" onClick={onClickOneDisabeStar}/>}
+                        {reviewTwo && <img className='star-icon' src={onStar} alt="" onClick={onClickTwoOnStar}/>} {!reviewTwo && <img className='star-icon' src={disableStar} alt="" onClick={onClickTwoDisabeStar}/>}
+                        {reviewThree && <img className='star-icon' src={onStar} alt="" onClick={onClickThreeOnStar}/>} {!reviewThree && <img className='star-icon' src={disableStar} alt="" onClick={onClickThreeDisabeStar}/>}
+                        {reviewfour && <img className='star-icon' src={onStar} alt="" onClick={onClickFourOnStar}/>} {!reviewfour && <img className='star-icon' src={disableStar} alt="" onClick={onClickFourDisabeStar}/>}
+                        {reviewfive && <img className='star-icon' src={onStar} alt="" onClick={onClickFiveOnStar}/>} {!reviewfive && <img className='star-icon' src={disableStar} alt="" onClick={onClickFiveDisabeStar}/>}
+                    </div>
                     <div className='submission-button' onClick={onClickSubmissionHandler}>완료</div>
                 </div>
             </div>}
