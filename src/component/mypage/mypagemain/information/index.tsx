@@ -34,7 +34,7 @@ export default function Information({ titletext, username, activite }: Props) {
     const [passwordCheckMessageError, setPasswordCheckMessageError] = useState<boolean>(false);
     const [isPasswordMatch, setIsPasswordMatch] = useState(false);
     const [isCurrentPasswordVerified, setIsCurrentPasswordVerified] = useState(false); // 현재 비밀번호 검증 상태
-    const [telNumber, setTelNumber] = useState<string>('010-0000-0000');
+    const [telNumber, setTelNumber] = useState<string>('');
     const [message, setMessage] = useState<string>('');
 
 
@@ -184,6 +184,7 @@ export default function Information({ titletext, username, activite }: Props) {
         if (!signInUser) return;
         setGuestName(signInUser.guestName)
         setGuestId(signInUser.guestId)
+        setTelNumber(signInUser.guestTelNumber)
     }, [signInUser])
 
     // 비밀번호 변경 버튼 변경 활성화 처리 //
