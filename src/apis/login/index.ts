@@ -1,7 +1,7 @@
 import GuestLogInRequestDto from './dto/request/guest/login.request.dto';
 import axios, { AxiosResponse } from 'axios';
 import { GET_GUEST_SIGN_IN, GUEST_SIGN_IN_API_URL, HOST_SIGN_IN_API_URL, PATCH_GUEST_PASSWORD_API_URL } from 'src/constants';
-import LogInResponseDto from './dto/response/host.login.respons.dto';
+import LogInResponseDto from './dto/response/login.response.dto';
 import ResponseDto from './dto/response/response.dto';
 import MypageAuthRequestDto from './dto/request/guest/mypageauth.request.dto';
 import GetGuestSignInResponseDto from './dto/response/get-guest-sign-in.response.dto';
@@ -45,6 +45,15 @@ export const HostLogInRequest = async (requestBody: HostLogInRequestDto) => {
 
 // function: 게스트 비밀번호 처리 함수 //
 export const ChangeGuestPwRequest = async (userId: string, requestBody: GuestPwChangeRequestDto) => {
+    
+    const responseBody = await axios.patch(PATCH_GUEST_PASSWORD_API_URL(userId), requestBody)
+        .then(responseDataHandler<ResponseDto>)
+        .catch(responseErrorHandler);
+    return responseBody;
+};
+
+// function: 호스트 비밀번호 처리 함수 //
+export const ChangeHostPwRequest = async (userId: string, requestBody: GuestPwChangeRequestDto) => {
     
     const responseBody = await axios.patch(PATCH_GUEST_PASSWORD_API_URL(userId), requestBody)
         .then(responseDataHandler<ResponseDto>)

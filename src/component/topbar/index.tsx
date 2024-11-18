@@ -8,7 +8,7 @@ import { useCookies } from 'react-cookie';
 import { useSearchParams } from 'react-router-dom';
 import { GuestLogInRequest, HostLogInRequest } from 'src/apis/login';
 import GuestLogInRequestDto from 'src/apis/login/dto/request/guest/login.request.dto';
-// import LogInResponseDto from 'src/apis/login/dto/response/host.login.respons.dto';
+import LogInResponseDto from 'src/apis/login/dto/response/login.response.dto';
 import ResponseDto from 'src/apis/login/dto/response/response.dto';
 import InputBox from '../input/login';
 import HostLogInRequestDto from 'src/apis/login/dto/request/host/login.request.dto';
