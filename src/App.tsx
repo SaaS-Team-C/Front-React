@@ -25,8 +25,6 @@ import BookingList from './component/mypage/bookinglist';
 import HostEnrollmentapproval from './views/admin/hostenrollmentapproval/index';
 import FindId from './views/find';
 import HostMypageLayout from './layout/mypageHost';
-import { MyInfoManagement } from './component/mypagehost/ReservationStatus';
-import { ReservationStatus } from './component/mypagehost/myinfo';
 
 import GuestMypage from './views/mypageguest';
 import Accommodationenrollmentapproval from './views/admin/accommodationenrollmentapproval';
@@ -67,6 +65,7 @@ function Index() {
 
 // component: booking path 컴포넌트 //
 function Booking() {
+
   // state: 로그인 쿠키 상태 // 
   const [cookies] = useCookies();
   const navigator = useNavigate();
@@ -156,14 +155,6 @@ useEffect(()=>{
       <Route path='/adminAccommodation' element={<Accommodationenrollmentapproval/>}/>
       <Route path='/faq' element={<FAQ/>}/>
 
-
-      <Route path="/mypagehost" element={<HostMypageLayout />}>
-        <Route index element={<MyInfoManagement />} />
-      </Route>
-
-      <Route path="/mypagehost/books" element={<HostMypageLayout />}>
-        <Route index element={<ReservationStatus />} />
-      </Route>
       // ! 자식 요소로 경로 넣으면 화면이 안뜸. 왜 그런지 아시는 분???
       {/* <Route path="/mypagehost/accommodations" element={<HostMypageLayout />}> */}
             {/* <Route index element={<MyAccommodationManagement/>} />
@@ -175,6 +166,7 @@ useEffect(()=>{
       <Route path='/mypagehost/accommodations/register' element={<HostAccommodationRegister/>}/>
       <Route path='/mypagehost/accommodations/edit' element={<HostAccommodationRegister/>}/>
       <Route path='/mypagehost/accommodations/showDetailList' element={<ShowDetailList/>}/>
+
 
 
       <Route path='*' element={<Index />} />

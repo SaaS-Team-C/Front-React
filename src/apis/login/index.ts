@@ -52,6 +52,15 @@ export const ChangeGuestPwRequest = async (userId: string, requestBody: GuestPwC
     return responseBody;
 };
 
+// function: 호스트 비밀번호 처리 함수 //
+export const ChangeHostPwRequest = async (userId: string, requestBody: GuestPwChangeRequestDto) => {
+    
+    const responseBody = await axios.patch(PATCH_GUEST_PASSWORD_API_URL(userId), requestBody)
+        .then(responseDataHandler<ResponseDto>)
+        .catch(responseErrorHandler);
+    return responseBody;
+};
+
 export const MypageAuthRequest = async (requestBody: MypageAuthRequestDto) => {
     const responseBody = await axios.delete('http://localhos:4000/api/romly/bookmark/delete-bookmark/&{}/&{}')
 }
