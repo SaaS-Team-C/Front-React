@@ -8,17 +8,16 @@ import { useCookies } from 'react-cookie';
 import { useSearchParams } from 'react-router-dom';
 import { GuestLogInRequest, HostLogInRequest } from 'src/apis/login';
 import GuestLogInRequestDto from 'src/apis/login/dto/request/guest/login.request.dto';
-
-import ResponseDto from 'src/apis/login/dto/response/response.dto';
 // import LogInResponseDto from 'src/apis/login/dto/response/host.login.respons.dto';
-
+import ResponseDto from 'src/apis/login/dto/response/response.dto';
 import InputBox from '../input/login';
 import HostLogInRequestDto from 'src/apis/login/dto/request/host/login.request.dto';
 import HostLogInResponseDto from 'src/apis/login/dto/response/host.login.response.dto';
 import GuestLogInResponseDto from 'src/apis/login/dto/response/guest.login.response.dto';
-import HostLogInResponseDto from 'src/apis/login/dto/response/host.login.respons.dto';
-import GuestLogInResponseDto from 'src/apis/login/dto/response/guest.login.respons.dto';
-import { ResponseDto } from 'src/apis/guestmypage';
+
+
+
+
 
 // 컴포넌트: 메인페이지 화면 컴포넌트 //
 type group = 'guest' | 'host';
@@ -51,14 +50,13 @@ export default function Topbar() {
     // state: url 값 저장 //
     const [searchParams, setSearchParams] = useSearchParams('');
     const [searchBar, setSearchBar] = useState<boolean>(false);
-
     // function: 네비게이터 함수 //
     const navigator = useNavigate();
 
 
 
-    // function: 호스트 로그인 응답 처리 함수 //
-    const hostLogInResponse = (responseBody: HostLogInResponseDto | ResponseDto | null) => {
+    // function: 로그인 응답 처리 함수 //
+    const logInResponse = (responseBody: HostLogInResponseDto | ResponseDto | null) => {
         const message =
             !responseBody ? '서버에 문제가 있습니다.' :
                 responseBody.code === 'VF' ? '아이디와 비밀번호를 모두 입력하세요.' :
@@ -172,7 +170,7 @@ export default function Topbar() {
             hostId: hostId,
             hostPw: hostPassword
         };
-        HostLogInRequest(requestBody).then(hostLogInResponse);
+        HostLogInRequest(requestBody).then(hostLoginResponse);
     }
     // effect: 아이디 및 비밀번호 변경시 실행할 함수 //
     useEffect(() => {
@@ -225,8 +223,8 @@ export default function Topbar() {
     const onHostLogoutButtonClickHandler = () => {
         if (hostCookies) removeHostCookies("hostAccessToken");
         navigator('main')
-        };
-    // event handler: 로그아웃(게스트) 버튼 클릭 이벤트 처리 //
+    };
+    // event handler: 로그아웃(호스트) 버튼 클릭 이벤트 처리 //
     const onGuestLogoutButtonClickHandler = () => {
         if (guestCookies) removeGuestCookies("guestAccessToken");
         navigator('main')
@@ -283,6 +281,7 @@ export default function Topbar() {
         setGuestId('')
         setGuestPassword('')
     };
+
 
 
 
