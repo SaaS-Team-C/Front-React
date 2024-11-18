@@ -5,7 +5,7 @@
   flex-direction: column;
   width: 220px;
   height: 100%;
-  background-color: paleturquoise
+
 }
 
 #sidebar .filter-title{
@@ -59,7 +59,7 @@
 /* 공통 스타일 */
 #sidebar .filter-header {
   display: flex;
-  width: 230px;
+  width: 200px;
   height: 100px;
   line-height: 100%;
   padding:10px;
@@ -83,7 +83,7 @@
   border-radius: 10px;
   padding: 25px;
   border: 2px solid #dddd;
-  width: 200px;
+  width: 170px;
 }
 
 #sidebar .filter-section ul{
@@ -175,7 +175,7 @@ input[type="range"] {
   appearance: none;
   margin: 0; 
   border-radius: 0px; 
-  background-color: #00ACCF;
+
 }
 
 #sidebar ul li {
