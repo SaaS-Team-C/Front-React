@@ -1,7 +1,8 @@
-import React, { useState } from 'react';
+
 import './style.css';
-import MapFilter from './mapfilter';
+
 import Sidebar from './sidebarfilter';
+
 import { useFilterStore } from 'src/stores';
 
 const Filter: React.FC = () => {
@@ -22,7 +23,6 @@ const Filter: React.FC = () => {
   
   return (
     <div id="filter-wrapper">
-      <MapFilter />
       <Sidebar resetFilters={resetFilters} />
     </div>
   );
