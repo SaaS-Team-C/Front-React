@@ -18,13 +18,12 @@ import DetailList from './component/accomodation/detaillist';
 import FAQ from './views/faq';
 import HostAccommodationRegister from './component/mypagehost/MyAccommodationManagement/registration';
 
-import AccomodationEnrollApprovalPage from './views/admin/hostenrollmentapproval';
-import MypageInputBox from './component/input/mypageinput';
+
 import BookingList from './component/mypage/bookinglist';
 
 import HostEnrollmentapproval from './views/admin/hostenrollmentapproval/index';
 import FindId from './views/find';
-import HostMypageLayout from './layout/mypageHost';
+
 
 import GuestMypage from './views/mypageguest';
 import Accommodationenrollmentapproval from './views/admin/accommodationenrollmentapproval';
@@ -43,6 +42,11 @@ import { getSignInHostRequest } from './apis/signUp';
 import { getGuestSignInRequest } from './apis/login';
 import GetGuestSignInResponseDto from './apis/login/dto/response/get-guest-sign-in.response.dto';
 import { ResponseDto } from './apis/guestmypage';
+
+import HostMypage from './views/mypagehost';
+import ReservationStatus from './component/mypagehost/ReservationStatus';
+import HostMypageLayout from './layout/mypageHost';
+import MyInfoManagement from './component/mypagehost/myinfo';
 
 
 
@@ -144,8 +148,11 @@ useEffect(()=>{
       <Route index element={<Index />} />
       <Route path={MAIN_PATH} element={<Main />} />
       <Route path='/mypageGuest' element={<GuestMypage />} />
-      <Route path='/mypageHost' element={<HostMypage />} />
-      {/* <Route path='/mypageHost/ReservationStatus' element={<ReservationStatus titletext={''} username={''} activite={false} />} /> */}
+
+      {/* <Route path='/mypagehost' element={<HostMypage />}/>
+      <Route path='/mypagehost/reservationStatus' element={<ReservationStatus titletext={''} username={''} activite={false} />}/>
+      <Route path='/mypagehost/accommodationManagement' element={<AcommodationManagement />}/> */}
+
       <Route path={ACCOMMODATION_LIST_PATH} element={<AccommodationList />} />
       <Route path={ACCOMMODATION_LIST_DETAIL_PATH(':accommodationName')} element={<DetailList />} />
       <Route path={AUTH_PATH} element={<SignUp />} />
@@ -156,6 +163,17 @@ useEffect(()=>{
       <Route path='/adminAccommodation' element={<Accommodationenrollmentapproval/>}/>
       <Route path='/faq' element={<FAQ/>}/>
 
+      <Route path="/mypagehost" element={<HostMypageLayout />}>
+        <Route index element={<MyInfoManagement  titletext=''username='' activite={false} />} />
+      </Route>
+
+      <Route path="/mypagehost/books" element={<HostMypageLayout />}>
+        <Route index element={<ReservationStatus titletext=''username='' activite={false}  />} />
+      </Route>
+      <Route path='/mypagehost' element={<HostMypage />}/>
+      <Route path='/mypagehost/reservationStatus' element={<ReservationStatus titletext={''} username={''} activite={false} />}/>
+      <Route path='/mypagehost/accommodationManagement' element={<MyAccommodationManagementView />}/>
+    
       // ! 자식 요소로 경로 넣으면 화면이 안뜸. 왜 그런지 아시는 분???
       {/* <Route path="/mypagehost/accommodations" element={<HostMypageLayout />}> */}
             {/* <Route index element={<MyAccommodationManagement/>} />

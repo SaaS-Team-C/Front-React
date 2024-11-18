@@ -1,5 +1,7 @@
 import React, { ChangeEvent, useEffect, useState } from 'react';
 import './style.css';
+import MypageInputBox from 'src/component/input/mypageinput';
+import BookingList from 'src/component/mypage/bookinglist';
 import HostList from '../ReservationStatusList';
 
 
@@ -50,24 +52,24 @@ export default function ReservationStatus({ titletext, username, activite }: Pro
     return (
         <>
             {activite && (
-                <div id="reservationstatus-wrapper">
-                    <div className="reservationstatus-title">
-                        <div className="reservationstatus-title-text">{titletext}</div>
-                        <div className="reservationstatus-title-box">
+                <div id="booking-wrapper">
+                    <div className="booking-title">
+                        <div className="booking-title-text">{titletext}</div>
+                        <div className="booking-title-box">
                             <div className="information-title-detail-username">
                                 '{username}'
                             </div>
-                            <div className="reservationstatus-title-detail">님 반갑습니다.</div>
+                            <div className="booking-title-detail">님 반갑습니다.</div>
                         </div>
                     </div>
-                    <div className="reservationstatus-main">
+                    <div className="booking-main">
                         {currentItems}
                     </div>
                     <div className="pagination">
                         {/* 이전 버튼 */}
-                        <button
-                            className="page-arrow"
-                            onClick={() => handlePageChange(currentPage - 1)}
+                        <button 
+                            className="page-arrow" 
+                            onClick={() => handlePageChange(currentPage - 1)} 
                             disabled={currentPage === 1}
                         >
                             &lt;
@@ -85,9 +87,9 @@ export default function ReservationStatus({ titletext, username, activite }: Pro
                         ))}
 
                         {/* 다음 버튼 */}
-                        <button
-                            className="page-arrow"
-                            onClick={() => handlePageChange(currentPage + 1)}
+                        <button 
+                            className="page-arrow" 
+                            onClick={() => handlePageChange(currentPage + 1)} 
                             disabled={currentPage === totalPages}
                         >
                             &gt;
@@ -97,5 +99,4 @@ export default function ReservationStatus({ titletext, username, activite }: Pro
             )}
         </>
     );
-
 }

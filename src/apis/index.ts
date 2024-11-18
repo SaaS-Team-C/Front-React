@@ -66,5 +66,3 @@ export const accommodationMainFileUploadRequest = async(requestBody:FormData)=>{
     return url;
 }
 
-
- 

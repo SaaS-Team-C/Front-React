@@ -9,16 +9,16 @@ import { useSearchParams } from 'react-router-dom';
 import { GuestLogInRequest, HostLogInRequest } from 'src/apis/login';
 import GuestLogInRequestDto from 'src/apis/login/dto/request/guest/login.request.dto';
 
-import ResponseDto from 'src/apis/login/dto/response/response.dto';
 // import LogInResponseDto from 'src/apis/login/dto/response/host.login.respons.dto';
 
 import InputBox from '../input/login';
 import HostLogInRequestDto from 'src/apis/login/dto/request/host/login.request.dto';
-import HostLogInResponseDto from 'src/apis/login/dto/response/host.login.response.dto';
-import GuestLogInResponseDto from 'src/apis/login/dto/response/guest.login.response.dto';
-import HostLogInResponseDto from 'src/apis/login/dto/response/host.login.respons.dto';
-import GuestLogInResponseDto from 'src/apis/login/dto/response/guest.login.respons.dto';
+import HostLogInResponseDto from 'src/apis/login/dto/response/host-sign-in.response.dto';
+
+
 import { ResponseDto } from 'src/apis/guestmypage';
+import GuestSignInResponseDto from 'src/apis/login/dto/response/guest-sign-in.response.dto';
+import HostSignInResponseDto from 'src/apis/login/dto/response/host-sign-in.response.dto';
 
 // 컴포넌트: 메인페이지 화면 컴포넌트 //
 type group = 'guest' | 'host';
@@ -58,7 +58,7 @@ export default function Topbar() {
 
 
     // function: 호스트 로그인 응답 처리 함수 //
-    const hostLogInResponse = (responseBody: HostLogInResponseDto | ResponseDto | null) => {
+    const hostLogInResponse = (responseBody: HostSignInResponseDto | ResponseDto | null) => {
         const message =
             !responseBody ? '서버에 문제가 있습니다.' :
                 responseBody.code === 'VF' ? '아이디와 비밀번호를 모두 입력하세요.' :
@@ -71,7 +71,7 @@ export default function Topbar() {
             setPwMessage(message);
             return;
         }
-        const { hostAccessToken, expiration } = responseBody as HostLogInResponseDto;
+        const { hostAccessToken, expiration } = responseBody as HostSignInResponseDto;
         const expires = new Date(Date.now() + (expiration * 1000));
         setHostCookie('hostAccessToken', hostAccessToken, { path: '/', expires });
         setModalOpen(false)
@@ -81,7 +81,7 @@ export default function Topbar() {
     };
 
     // function: 게스트 로그인 응답 처리 함수 //
-    const guestLogInResponse = (responseBody: GuestLogInResponseDto | ResponseDto | null) => {
+    const guestLogInResponse = (responseBody: GuestSignInResponseDto | ResponseDto | null) => {
         const message =
             !responseBody ? '서버에 문제가 있습니다.' :
                 responseBody.code === 'VF' ? '아이디와 비밀번호를 모두 입력하세요.' :
@@ -94,7 +94,7 @@ export default function Topbar() {
             setPwMessage(message);
             return;
         }
-        const { guestAccessToken, expiration } = responseBody as GuestLogInResponseDto;
+        const { guestAccessToken, expiration } = responseBody as GuestSignInResponseDto;
         const expires = new Date(Date.now() + (expiration * 1000));
         setGuestCookie('guestAccessToken', guestAccessToken, { path: '/', expires });
         setModalOpen(false)
