@@ -1,17 +1,11 @@
+import React, { useState } from "react";
 import "./style.css";
 import { useNavigate } from "react-router";
 import Topbar from "src/component/topbar";
 import HostMypageLayout from "src/layout/mypageHost";
-import React, { useEffect, useState } from 'react';
 import PaginationFunction from "src/component/accomodation/pagination";
 
-import axios from "axios";
-import { getHostAccommodationListRequest } from "src/apis";
-import { HOST_ACCESS_TOKEN } from "src/constants";
-import { useCookies } from "react-cookie";
-
 type MyAccommodation = {
-  
   accommodationName: string;
   accommodationMainImage: string;
   applyStatus: boolean;
@@ -24,34 +18,33 @@ const handleRegisterClick = () => {
 
 const AccommodationManagementPage: React.FC = () => {
   const [selectedTab, setSelectedTab] = useState<string>("운영중");
-  const [accommodations, setAccommodations] = useState<MyAccommodation[]>([]);
-  const [loading, setLoading] = useState<boolean>(true);
-  const [error, setError] = useState<string | null>(null);
-  const [cookies] = useCookies();
-  
 
-  // Effect: 백엔드 API에서 데이터 불러오기
-  // useEffect(() => {
-  //   const hostAccessToken = cookies[HOST_ACCESS_TOKEN];
-  //   if (!hostAccessToken) return ;
-    
-  //   getHostAccommodationListRequest(hostId,hostAccessToken)
-  // }, []);
-
+  // 샘플 데이터
+  const [accommodations] = useState<MyAccommodation[]>([
+    {
+      accommodationName: "오션뷰 펜션",
+      accommodationMainImage: "https://via.placeholder.com/150",
+      applyStatus: true,
+      entryTime: "2024-11-15",
+    },
+    {
+      accommodationName: "힐링 마운틴 리조트",
+      accommodationMainImage: "https://via.placeholder.com/150",
+      applyStatus: false,
+      entryTime: "2024-11-10",
+    },
+    {
+      accommodationName: "시티 호텔",
+      accommodationMainImage: "https://via.placeholder.com/150",
+      applyStatus: true,
+      entryTime: "2024-11-05",
+    },
+  ]);
 
   const filteredAccommodations = accommodations.filter(
-    (accommodation) => 
+    (accommodation) =>
       selectedTab === "운영중" ? accommodation.applyStatus : !accommodation.applyStatus
   );
-
-
-  if (loading) {
-    return <div>로딩 중...</div>;
-  }
-
-  if (error) {
-    return <div>{error}</div>;
-  }
 
   return (
     <div className="accommodation-management-page">
@@ -86,11 +79,11 @@ const AccommodationManagementPage: React.FC = () => {
         ))}
       </div>
       <PaginationFunction
-        totalItems={100}
-        itemsPerPage={10}
+        totalItems={filteredAccommodations.length}
+        itemsPerPage={2}
         currentPage={1}
         onPageChange={(page: number) => {
-          // 페이지 변경 로직 추가
+          console.log(`Page changed to: ${page}`);
         }}
       />
     </div>
@@ -119,7 +112,7 @@ const AccommodationCard: React.FC<AccommodationCardProps> = ({ accommodation }) 
   };
 
   return (
-    <div id="accommodation-card" onClick={handleCardClick} style={{ cursor: "pointer" }}>
+    <div id="accommodation-card" onClick={handleCardClick}>
       <div className="card-date">{accommodation.entryTime}</div>
       <div className="card-content">
         <img src={accommodation.accommodationMainImage} alt="Accommodation" className="card-image" />

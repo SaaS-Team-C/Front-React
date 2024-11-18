@@ -1,31 +1,29 @@
 import React from 'react';
 import "./style.css";
+import { useFilterStore } from 'src/stores';
 
-interface RangeSliderProps {
-  value: [number, number];
-  onChange: (range: [number, number]) => void;
-}
 
-const RangeSlider: React.FC<RangeSliderProps> = ({ value, onChange }) => {
-  const [minValue, maxValue] = value;
+const RangeSlider = () => {
+
+  const {priceRange, setPriceRange} = useFilterStore();
 
   const handleMinChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const newMinValue = Number(e.target.value);
-    onChange([newMinValue, maxValue]);
+    setPriceRange({...priceRange, min: newMinValue});
   };
 
   const handleMaxChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const newMaxValue = Number(e.target.value);
-    onChange([minValue, newMaxValue]);
+    setPriceRange({...priceRange, max: newMaxValue});
   };
 
   const getMinTrackBackground = () => {
-    const minTrackPercentage = ((minValue - 0) / (5000000 - 0)) * 100;
+    const minTrackPercentage = ((priceRange.min - 0) / (5000000 - 0)) * 100;
     return `linear-gradient(to right, #00ACCF ${minTrackPercentage}%, #FF5733 ${minTrackPercentage}%)`;
   };
 
   const getMaxTrackBackground = () => {
-    const maxTrackPercentage = ((maxValue - 0) / (5000000 - 0)) * 100;
+    const maxTrackPercentage = ((priceRange.max - 0) / (5000000 - 0)) * 100;
     return `linear-gradient(to right, #FF5733 ${maxTrackPercentage}%, #00ACCF ${maxTrackPercentage}%)`;
   };
 
@@ -37,7 +35,7 @@ const RangeSlider: React.FC<RangeSliderProps> = ({ value, onChange }) => {
         min={0}
         max={5000000}
         step={10000}
-        value={minValue}
+        value={priceRange.min}
         onChange={handleMinChange}
         style={{
           width: '90px',
@@ -55,7 +53,7 @@ const RangeSlider: React.FC<RangeSliderProps> = ({ value, onChange }) => {
         min={0}
         max={5000000}
         step={10000}
-        value={maxValue}
+        value={priceRange.max}
         onChange={handleMaxChange}
         style={{
           width: '90px',
