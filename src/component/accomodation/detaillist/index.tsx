@@ -20,7 +20,7 @@ export default function DetailList() {
   const [cookies] = useCookies();
   const [accommodation, setAccommodation] = useState<GetAccommodationResponseDto | null>(null);
 
-  const accessToken = cookies[ACCESS_TOKEN];
+  const accessToken = cookies[HOST_ACCESS_TOKEN];
 
   const latitude = 37.7749; // 임의의 위도 값
   const longitude = -122.4194; // 임의의 경도 값
@@ -42,8 +42,8 @@ export default function DetailList() {
   }
 
   useEffect(() => {
-      if (!guestAccessToken || !accommodationName) return;
-      getAccommodationDetailRequest(accommodationName, guestAccessToken).then(getAccommodaitonResponse);
+      if (!accessToken || !accommodationName) return;
+      getAccommodationDetailRequest(accommodationName, accessToken).then(getAccommodaitonResponse);
   }, [accommodationName])
 
   if (!accommodation) return null;
