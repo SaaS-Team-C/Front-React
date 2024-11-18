@@ -1,8 +1,8 @@
+import React, { useState } from "react";
 import "./style.css";
 import { useNavigate, useParams } from "react-router";
 import Topbar from "src/component/topbar";
 import HostMypageLayout from "src/layout/mypageHost";
-import React, { useEffect, useState } from 'react';
 import PaginationFunction from "src/component/accomodation/pagination";
 
 import axios from "axios";
@@ -119,11 +119,11 @@ const AccommodationManagementPage: React.FC = () => {
         )}
       </div>
       <PaginationFunction
-        totalItems={100}
-        itemsPerPage={10}
+        totalItems={filteredAccommodations.length}
+        itemsPerPage={2}
         currentPage={1}
         onPageChange={(page: number) => {
-          // 페이지 변경 로직 추가
+          console.log(`Page changed to: ${page}`);
         }}
       />
     </div>
