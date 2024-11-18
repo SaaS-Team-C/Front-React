@@ -1,6 +1,10 @@
 import "./style.css";
 import React, { useState } from "react";
 import RoomRegister from "../roomRegistrationform";
+import { postAccommodation } from "src/apis/accommodation";
+import { PostAccommodationRequestDto } from "src/apis/accommodation/dto/request/post-accommodation.request.dto";
+import { accommodationMainFileUploadRequest } from "src/apis";
+import Rooms from "src/types/accommodation/rooms.interface";
 
 interface Accommodation {
   name: string;
@@ -35,6 +39,8 @@ const facilitiesOptions = [
   "실내 온수풀",
 ];
 
+const defaultProfileImageUrl = 'https://blog.kakaocdn.net/dn/4CElL/btrQw18lZMc/Q0oOxqQNdL6kZp0iSKLbV1/img.png';
+
 const HostAccommodationRegisterForm: React.FC = () => {
   const [accommodation, setAccommodation] = useState<Accommodation>({
     name: "",
@@ -46,6 +52,7 @@ const HostAccommodationRegisterForm: React.FC = () => {
     facilities: [],
     rooms: [],
   });
+  
 
   // state: 상태 관리 //
   const [nameError, setNameError] = useState<string>("");
@@ -54,6 +61,16 @@ const HostAccommodationRegisterForm: React.FC = () => {
   const [imageError, setImageError] = useState<string>("");
   const [roomErrors, setRoomErrors] = useState<string>("");
   const [isAdmin, setIsAdmin] = useState<boolean>(false);
+  // state: 숙소 정보 입력 상태 //
+  const [accommodationName, setAccommodationName] = useState<string>('');
+  const [accommodationMainImageFile, setAccommodaitonMainImageFile] = useState<File | null>(null);
+  const [accommodationType, setAccommodationType] = useState<string>('')
+  const [accommodationIntroduce, setAccommodationIntroduce] = useState<string>('');
+  const [accommodationImages, setAccommodaitonImages] = useState<string[]>([]);
+  const [accommodationAddress, setAccommodationAddress] = useState<string>('');
+  const [roomList, setRoomList] = useState<Rooms[]>([])
+  const [roomImages, setRoomImages] = useState<string[]>([]);
+  // const [useInformations, setUseInfomaitons] = 
 
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
@@ -192,7 +209,9 @@ const HostAccommodationRegisterForm: React.FC = () => {
     checkAdmin(); // 컴포넌트가 렌더링될 때 관리자 권한을 확인
   }, []);
 
+  
 
+  // event handler: 등록 버튼 클릭 이벤트 처리 함수 //
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
@@ -276,6 +295,27 @@ const HostAccommodationRegisterForm: React.FC = () => {
       //       alert("오류가 발생했습니다. 다시 시도해주세요.");
       //     });
       // }
+      let url: string | null = null;
+        if (accommodationMainImageFile) {
+            const formData = new FormData();
+            formData.append('file', accommodationMainImageFile);
+            url = await accommodationMainFileUploadRequest(formData);
+        };
+
+        url = url ? url:defaultProfileImageUrl;
+
+    //   const requestBody: PostAccommodationRequestDto = {
+
+    //     accommodationName,
+    //     accommodationMainImage: url,
+    //     accommodationType,
+    //     accommodationImages: accommodationImages,
+    //     accommodationAddress,
+    //     useInformations:
+    //   }
+    //   postAccommodation(requestBody, hostAccessToken)
+
+      
     }
   };
 

@@ -1,13 +1,14 @@
 import GuestLogInRequestDto from './dto/request/guest/login.request.dto';
 import axios, { AxiosResponse } from 'axios';
 import { GET_GUEST_SIGN_IN, GUEST_SIGN_IN_API_URL, HOST_SIGN_IN_API_URL, PATCH_GUEST_PASSWORD_API_URL } from 'src/constants';
-import ResponseDto from './dto/response/response.dto';
+
 import MypageAuthRequestDto from './dto/request/guest/mypageauth.request.dto';
 import GetGuestSignInResponseDto from './dto/response/get-guest-sign-in.response.dto';
 import HostLogInRequestDto from './dto/request/host/login.request.dto';
 import GuestPwChangeRequestDto from './dto/request/guest/guestpwchange.request.dto';
 import HostLogInResponseDto from './dto/response/host.login.respons.dto';
 import GuestLogInResponseDto from './dto/response/guest.login.respons.dto';
+import { ResponseDto } from '../guestmypage';
 
 // function : Authorization Bearer 헤더 //
 const bearerAuthorization = (accessToken: string) => ({

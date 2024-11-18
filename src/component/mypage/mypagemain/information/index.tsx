@@ -5,9 +5,10 @@ import axios from 'axios';
 import { SignInUser } from 'src/stores';
 import GuestPwChangeRequestDto from 'src/apis/login/dto/request/guest/guestpwchange.request.dto';
 import { ChangeGuestPwRequest } from 'src/apis/login';
-import { ResponseDto } from 'src/apis/hostmypage';
+
 import { useNavigate } from 'react-router';
 import { useCookies } from 'react-cookie';
+import { ResponseDto } from 'src/apis/guestmypage';
 
 interface Props {
     titletext: string;

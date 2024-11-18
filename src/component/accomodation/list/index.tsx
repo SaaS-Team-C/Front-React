@@ -5,9 +5,10 @@ import { GUEST_ACCESS_TOKEN, ACCOMMODATION_LIST_DETAIL_PATH, HOST_ACCESS_TOKEN }
 import { getAccommodationListRequest } from "src/apis";
 import { useCookies } from "react-cookie";
 
-import { ResponseDto } from "src/apis/hostmypage";
+
 import { Accommodations } from "src/types";
 import { GetAccommodationListResponseDto } from "src/apis/hostmypage/dto/response/get-accommodation-list.response.dto";
+import { ResponseDto } from "src/apis/guestmypage";
 
 
 
