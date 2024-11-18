@@ -1,10 +1,11 @@
 import axios, { AxiosResponse } from "axios";
 
 import { GetHostAccommodationListResponseDto } from "./hostmypage/dto/response/GetHostAccommodationListResponseDto";
-import { GET_ACCOMMODATION_API_URL, GET_ACCOMMODATION_LIST_API_URL } from "src/constants";
-import { ResponseDto } from "./hostmypage";
+import { GET_ACCOMMODATION_API_URL, GET_ACCOMMODATION_LIST_API_URL, HOST_ACCOMMODATION_LIST_API_URL, POST_ACCOMMODATION_MAIN_IMAGE_API_URL } from "src/constants";
+
 import { GetAccommodationListResponseDto } from "./hostmypage/dto/response";
 import GetAccommodationResponseDto from "./hostmypage/dto/response/GetAccommodationResponseDto";
+import { ResponseDto } from "./guestmypage";
 
 
 
@@ -12,8 +13,9 @@ import GetAccommodationResponseDto from "./hostmypage/dto/response/GetAccommodat
 const ROOMLY_API_DOMAIN = process.env.REACT_APP_API_URL;
 
 const ACCOMMODATION_MODULE_URL = `${ROOMLY_API_DOMAIN}/api/roomly/accommodation`;
+const multipart = {headers: { 'Content-Type': 'multipart/form-data' } };
 
-const GET_HOST_ACCOMMODATION_LIST_API_URL = (hostId: string) => `${ACCOMMODATION_MODULE_URL}/${hostId}`;
+
 
 // function: Authorization Bearer Header //
 const bearerAuthorization = (accessToken: string) => ({ headers: { 'Authorization': `Bearer ${accessToken}` }});
@@ -33,7 +35,7 @@ const responseErrorHandler = (error: any) => {
 
 // function: Get host accommodation list 처리함수 //
 export const getHostAccommodationListRequest = async(hostId: string, accessToken: string) => {
-    const responseBody = await axios.get(GET_HOST_ACCOMMODATION_LIST_API_URL(hostId), bearerAuthorization(accessToken))
+    const responseBody = await axios.get(HOST_ACCOMMODATION_LIST_API_URL(hostId), bearerAuthorization(accessToken))
         .then(responseDataHandler<GetHostAccommodationListResponseDto>)
         .catch(responseErrorHandler);
     return responseBody;
@@ -56,5 +58,11 @@ export const getAccommodationDetailRequest = (accommodationName: string, accessT
     return responseBody;
 }
 
+// function: post accommodation Main image file upload 처리 함수 //
+export const accommodationMainFileUploadRequest = async(requestBody:FormData)=>{
+    const url = await axios.post(POST_ACCOMMODATION_MAIN_IMAGE_API_URL, requestBody, multipart)
+        .then(responseDataHandler<string>)
+        .catch(error => null);
+    return url;
+}
 
- 

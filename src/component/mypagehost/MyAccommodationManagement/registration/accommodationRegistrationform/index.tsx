@@ -1,6 +1,15 @@
 import "./style.css";
-import React, { useState } from "react";
+import React, { ChangeEvent, useState } from "react";
 import RoomRegister from "../roomRegistrationform";
+import { postAccommodationRequest } from "src/apis/accommodation";
+import { PostAccommodationRequestDto } from "src/apis/accommodation/dto/request/post-accommodation.request.dto";
+import { accommodationMainFileUploadRequest } from "src/apis";
+import Rooms from "src/types/accommodation/rooms.interface";
+import UseInformations from "src/types/accommodation/use-informaion.interface";
+import { ACCOMMODATION_LIST_PATH, HOST_ACCESS_TOKEN } from "src/constants";
+import { useCookies } from "react-cookie";
+import { useNavigate } from "react-router";
+import { ResponseDto } from "src/apis/guestmypage";
 
 interface Accommodation {
   name: string;
@@ -35,6 +44,8 @@ const facilitiesOptions = [
   "실내 온수풀",
 ];
 
+const defaultProfileImageUrl = 'https://blog.kakaocdn.net/dn/4CElL/btrQw18lZMc/Q0oOxqQNdL6kZp0iSKLbV1/img.png';
+
 const HostAccommodationRegisterForm: React.FC = () => {
   const [accommodation, setAccommodation] = useState<Accommodation>({
     name: "",
@@ -47,6 +58,8 @@ const HostAccommodationRegisterForm: React.FC = () => {
     rooms: [],
   });
 
+  
+
   // state: 상태 관리 //
   const [nameError, setNameError] = useState<string>("");
   const [descriptionError, setDescriptionError] = useState<string>("");
@@ -54,21 +67,53 @@ const HostAccommodationRegisterForm: React.FC = () => {
   const [imageError, setImageError] = useState<string>("");
   const [roomErrors, setRoomErrors] = useState<string>("");
   const [isAdmin, setIsAdmin] = useState<boolean>(false);
-
+  const [cookies, setCookies] = useCookies();
+  // state: 숙소 정보 입력 상태 //
+  const [accommodationName, setAccommodationName] = useState<string>('');
+  const [accommodationMainImageFile, setAccommodaitonMainImageFile] = useState<File | null>(null);
+  const [accommodationType, setAccommodationType] = useState<string>('')
+  const [accommodationIntroduce, setAccommodationIntroduce] = useState<string>('');
+  const [accommodationImages, setAccommodaitonImages] = useState<string[]>([]);
+  const [accommodationAddress, setAccommodationAddress] = useState<string>('');
+  const [roomList, setRoomList] = useState<Rooms[]>([])
+  const [roomImages, setRoomImages] = useState<string[]>([]);
+  const [useInformations, setUseInfomaitons] = useState<UseInformations[]>([]);
+ 
+  const [categoryArea, setCategoryArea] = useState<string>('');
+  const [categoryPet, setCategoryPet] = useState<boolean>(false);
+  const [categoryNonSmokingArea, setCategoryNonSmoking] = useState<boolean>(false);
+  const [categoryIndoorSpa, setCategoryIndoorSpa] = useState<boolean>(false);
+  const [categoryDinnerParty, setCategoryDinnerParty] = useState<boolean>(false);
+  const [categoryWifi, setCategoryWifi] = useState<boolean>(false);
+  const [categoryCarPark, setCategoryCarPark] = useState<boolean>(false);
+  const [categoryPool, setCategoryPool] = useState<boolean>(false);
+  
+  // event handler: 입력값 변경 이벤트 처리 함수 //
+  const onAccommodationChangeEventHandler = (event:ChangeEvent<HTMLInputElement>) => {
+    const { value } = event.target;
+    setAccommodationAddress(value);
+  }
+  
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
     const { name, value } = e.target;
-    setAccommodation((prev) => ({ ...prev, [name]: value }));
-
+    // setAccommodation((prev) => ({ ...prev, [name]: value }));
+    setAccommodationName(name);
+    
+    // setAccommodaitonImages((prevList)=> [...prevList, value])
+    // setAccommodationAddress(value);
+    // setAccommodationIntroduce(value);
+    
+    
     // 숙소명과 설명의 글자 수 제한 및 경고 메시지 표시
-    if (name === "name") {
+    if (name === "accommodationName") {
       if (value.length >= 45) {
         setNameError("숙소명은 최대 45자 까지만 입력 가능합니다.");
       } else {
         setNameError("");
       }
-      setAccommodation((prev) => ({ ...prev, [name]: value }));
+      // setAccommodation((prev) => ({ ...prev, [name]: value }));
     } else if (name === "description") {
       if (value.length >= 1500) {
         setDescriptionError("숙소 설명은 최대 1500자 까지만 입력 가능합니다.");
@@ -82,9 +127,9 @@ const HostAccommodationRegisterForm: React.FC = () => {
         0,
         Math.min(parseInt(value) || 0, name === "price" ? 50000000 : 10)
       );
-      setAccommodation((prev) => ({ ...prev, [name]: numericValue }));
+      // setAccommodation((prev) => ({ ...prev, [name]: numericValue }));
     } else {
-      setAccommodation((prev) => ({ ...prev, [name]: value }));
+      // setAccommodation((prev) => ({ ...prev, [name]: value }));
     }
   };
 
@@ -168,7 +213,7 @@ const HostAccommodationRegisterForm: React.FC = () => {
     const updatedRooms = accommodation.rooms.filter((_, i) => i !== index);
     setAccommodation((prev) => ({ ...prev, rooms: updatedRooms }));
   };
-
+  // 룸타입 복사
   const handleCopyRoom = (index: number) => {
     const roomToCopy = accommodation.rooms[index];
     const copiedRoom: Room = {
@@ -180,6 +225,7 @@ const HostAccommodationRegisterForm: React.FC = () => {
       rooms: [...prev.rooms, copiedRoom],
     }));
   };
+  
 
   // function: 관리자 권한을 확인하는 함수 (예시로 localStorage를 사용)
   const checkAdmin = () => {
@@ -192,7 +238,29 @@ const HostAccommodationRegisterForm: React.FC = () => {
     checkAdmin(); // 컴포넌트가 렌더링될 때 관리자 권한을 확인
   }, []);
 
+  // function: 네비게이트 함수 처리 //
+  const navigator = useNavigate();
 
+  // function: post Accommodation Resposne 처리 함수 //
+  const postAccommodationResposne = (responseBody: ResponseDto | null) => {
+    const message =
+      !responseBody ? '서버에 문제가 있습니다. ':
+        responseBody.code === 'AF' ? '잘못된 접근입니다. ':
+        responseBody.code === 'VF' ? '모두 입력해주세요. ':
+        responseBody.code === 'DAN' ? '중복된 숙소 이름입니다. ':
+        responseBody.code === 'NI' ? '존재하지 않는 계정 입니다. ':
+        responseBody.code === 'NP' ? '승인받지 않은 계정 입니다. ':
+        responseBody.code === 'DBE' ? '서버에 문제가 있습니다. ':'';
+      const isSuccessed = responseBody !== null && responseBody.code === 'SU';
+      if (!isSuccessed){
+        alert(message);
+        return;
+      }
+
+      navigator('/mypagehost/accommodations');
+  }
+
+  // event handler: 등록 버튼 클릭 이벤트 처리 함수 //
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
@@ -257,6 +325,8 @@ const HostAccommodationRegisterForm: React.FC = () => {
         }
       });
 
+      
+
       // dto, api 만들면 다시 활성화 할 예정
       // 서버에 요청을 보내는 부분
       //   fetch("/your-api-endpoint", {
@@ -276,6 +346,41 @@ const HostAccommodationRegisterForm: React.FC = () => {
       //       alert("오류가 발생했습니다. 다시 시도해주세요.");
       //     });
       // }
+      let url: string | null = null;
+        if (accommodationMainImageFile) {
+            const formData = new FormData();
+            formData.append('file', accommodationMainImageFile);
+            url = await accommodationMainFileUploadRequest(formData);
+        };
+
+        url = url ? url:defaultProfileImageUrl;
+
+      const requestBody: PostAccommodationRequestDto = {
+
+        accommodationName,
+        accommodationMainImage: url,
+        accommodationType,
+        accommodationIntroduce,
+        accommodationImages: accommodationImages,
+        accommodationAddress,
+        categoryArea,
+        categoryNonSmokingArea,
+        categoryIndoorSpa,
+        categoryDinnerParty,
+        categoryPet,
+        categoryWifi,
+        categoryCarPark,
+        categoryPool,
+        useInformations: useInformations,
+        rooms:roomList,
+        roomImages: roomImages
+      }
+      const hostAccessToken = cookies[HOST_ACCESS_TOKEN]
+      if (!hostAccessToken) return navigator('/main');
+
+      postAccommodationRequest(requestBody, hostAccessToken).then(postAccommodationResposne);
+
+      
     }
   };
 
@@ -291,7 +396,7 @@ const HostAccommodationRegisterForm: React.FC = () => {
             <input
               type="text"
               name="name"
-              value={accommodation.name}
+              value={accommodationName}
               onChange={handleChange}
               required
               maxLength={45} // HTML 레벨에서도 제한
@@ -306,7 +411,7 @@ const HostAccommodationRegisterForm: React.FC = () => {
             설명:
             <textarea
               name="description"
-              value={accommodation.description}
+              value={accommodationIntroduce}
               onChange={handleChange}
               required
               maxLength={1500} // HTML 레벨에서도 제한
@@ -324,8 +429,8 @@ const HostAccommodationRegisterForm: React.FC = () => {
             <input
               type="text"
               name="location"
-              value={accommodation.location}
-              onChange={handleChange}
+              value={accommodationAddress}
+              onChange={onAccommodationChangeEventHandler}
               required
             />
             <button className="address-search-button" type="button">

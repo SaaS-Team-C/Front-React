@@ -1,8 +1,8 @@
 #information-warpper {
     display: flex;
     flex-direction: column;
-    width: 500px;
-    height: 300px;
+    width: 600px;
+    height: auto;
     margin-left: 150px;
 }
 

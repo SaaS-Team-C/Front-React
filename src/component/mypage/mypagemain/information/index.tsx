@@ -1,15 +1,14 @@
-import React, { ChangeEvent, useEffect, useState } from 'react'
+import { ChangeEvent, useEffect, useState } from 'react'
 import './style.css'
 import MypageInputBox from 'src/component/input/mypageinput';
 import axios from 'axios';
-// import SignInUser from './../../../../types/sign-in-user.interface';
 import { SignInUser } from 'src/stores';
-import { PATCH_GUEST_PASSWORD_API_URL } from 'src/constants';
 import GuestPwChangeRequestDto from 'src/apis/login/dto/request/guest/guestpwchange.request.dto';
 import { ChangeGuestPwRequest } from 'src/apis/login';
-import { ResponseDto } from 'src/apis/hostmypage';
-import { Navigate, useNavigate } from 'react-router';
+
+import { useNavigate } from 'react-router';
 import { useCookies } from 'react-cookie';
+import { ResponseDto } from 'src/apis/guestmypage';
 
 interface Props {
     titletext: string;
@@ -35,7 +34,7 @@ export default function Information({ titletext, username, activite }: Props) {
     const [passwordCheckMessageError, setPasswordCheckMessageError] = useState<boolean>(false);
     const [isPasswordMatch, setIsPasswordMatch] = useState(false);
     const [isCurrentPasswordVerified, setIsCurrentPasswordVerified] = useState(false); // 현재 비밀번호 검증 상태
-    const [telNumber, setTelNumber] = useState<string>('010-0000-0000');
+    const [telNumber, setTelNumber] = useState<string>('');
     const [message, setMessage] = useState<string>('');
 
 
@@ -157,6 +156,7 @@ export default function Information({ titletext, username, activite }: Props) {
                 currentGuestPw: currentPassword,
                 changeGuestPw: guestPassword
             };
+
             ChangeGuestPwRequest(guestId, requestBody).then(passwordChangeResponse);
         }
 
@@ -184,6 +184,7 @@ export default function Information({ titletext, username, activite }: Props) {
         if (!signInUser) return;
         setGuestName(signInUser.guestName)
         setGuestId(signInUser.guestId)
+        setTelNumber(signInUser.guestTelNumber)
     }, [signInUser])
 
     // 비밀번호 변경 버튼 변경 활성화 처리 //

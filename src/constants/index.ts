@@ -2,6 +2,7 @@
 
 import axios, { AxiosResponse } from "axios";
 import GetGuestSignInResponseDto from "src/apis/login/dto/response/get-guest-sign-in.response.dto";
+import GetSignInResponseDto from "src/apis/login/dto/response/get-guest-sign-in.response.dto";
 import { ResponseDto } from "src/apis/signUp/dto/response";
 
 export const ROOT_PATH = "/";
@@ -11,9 +12,10 @@ export const AUTH_PATH = "/sign-up"
 export const PAYMENT_PATH = "/payment";
 export const FINDID_PATH = "/find";
 export const MODAL3 = "/payment";
+export const HOST_MYPAGE_PATH = (hostId:string)=> `/mypage-host/${hostId}`
 
 export const ACCOMMODATION_LIST_PATH = "/accommodationList";
-export const ACCOMMODATION_LIST_DETAIL_PATH = (accommodationName: string) => `${ACCOMMODATION_LIST_PATH}/detail/${accommodationName}`;
+export const ACCOMMODATION_LIST_DETAIL_PATH = (accommodationName:string)=>`${ACCOMMODATION_LIST_PATH}/detail/${accommodationName}`;
 export const ACCOMMODATION_LIST_DETAIL_ACC_SELECT_PATH = (name: string) =>`${ACCOMMODATION_LIST_DETAIL_ACC_SELECT_PATH}/${name}`;
 
 // variable: HTTP BEARER TOKEN COOKIE NAME(토큰 이름 임시 지정) //
@@ -180,37 +182,4 @@ export const GET_GUEST_REVIEW_LIST_API_URL = (guestId:string)=>`${REVIEW_MODULE_
 // 숙소에 관란 리뷰리스트
 export const GET_ACCOMMODATION_REVIEW_LIST_API_URL = (accommodationName:string) => `${REVIEW_MODULE_URL}/acc-list/${accommodationName}`;
 
-// 로그인 관련
-// ! 중복되는 성공에 대한 함수를 따로 만들었음.
-// function: response data 처리 함수 //
-const responseDataHandler = <T>(response: AxiosResponse<T, any>) => {
-    const { data } = response;
-    return data;
-}
-// ! 중복되는 error에 대한 함수를 따로 만들었음.
-// function : Response Error 처리 함수 //
-const responseErrorHandler = (error: any) =>{ 
-    if(!error.response) return null; 
-    const { data } = error.response;
-    return data as ResponseDto;
-}
-// // function: Authorization Bearer 헤더 //
-// const bearerAuthorization = (accessToken: string) => ({headers: {'Authorization': `Bearer ${accessToken}`}})
-// function : Authorization Bearer 헤더 //
-const bearerAuthorization = (accessToken: string) => ({
-    headers: { Authorization: `Bearer ${accessToken}` },
-});
-// function: get sign in 요청 함수 //
-export const getSignInRequest = async (accessToken: string) => {
-    const responseBody = await axios.get(GET_GUEST_SIGN_IN, bearerAuthorization(accessToken))
-    .then(responseDataHandler<GetGuestSignInResponseDto>)
-    .catch(responseErrorHandler)
-    return  responseBody;
-}
-// function: get sign in host 요청 함수 //
-export const getSignInHostRequest = async (accessToken: string) => {
-    const responseBody = await axios.get(GET_HOST_SIGN_IN, bearerAuthorization(accessToken))
-        .then(responseDataHandler<GetGuestSignInResponseDto>)
-        .catch(responseErrorHandler);
-        return responseBody;
-}
+

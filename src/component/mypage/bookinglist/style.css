@@ -18,99 +18,136 @@
 #bookinglist-warpper {
     display: flex;
     flex-direction: column;
+    align-items: center;
+    margin: 5px 0px;
 
-    width: min-content;
-    height: auto;
-    border: solid 3px rgb(238, 185, 185);
-    border-radius: 10px;
+    width: 700px;  
+    height: auto;  
+    border: solid 6px rgba(247, 219, 219, 0.637);
 
-    margin: 10px 15px;
+    font-size: 15px;
+    color: rgb(75, 74, 74);
+    font-family: 'Pretendard-Regular';
+    border-radius: 5px;
 }
 
 .bookinglist-box {
-    margin: 10px;
+    margin: 5px;
 }
 
-/* 상단 css */
 .bookinglist-list-top-deatail {
     display: flex;
     justify-content: space-between;
 
-    width: 100%;
-    min-width: 700px;
-    height: 30px;
+    width: 690px;
+
+    font-size: 15px;
+    color: rgb(75, 74, 74);
     font-family: 'Pretendard-Regular';
-    color: rgb(51, 51, 51);
-    font-size: 17px;
-    font-weight: 600;
-    text-shadow: 2px 2px 1px rgb(220, 220, 220)
 }
 
-/* 메인내용 css */
 .bookinglist-list-main-detail {
-    width: auto;
     display: flex;
 }
-    /* 사진 */
-    .bookinglist-list-image {
-        width: 120px;
-        height: 120px;
-        border-radius: 15px;
-    }
 
-    .bookinglist-hotel-detail {
-        display: flex;
-        flex-direction: column;
+.bookinglist-list-image {
+    width: 160px;
+    height: 150px;
 
-        margin: 15px 15px;
-        width: 300px;
-        text-overflow: ellipsis;
-    }
+    border-radius: 15px;
+    margin: 5px;
+}
 
-        .bookinglist-hotel-title {    
-            max-width: 170px;
-            overflow: hidden;
-            text-overflow: ellipsis;
-            white-space: nowrap;
-        }
+.bookinglist-hotel-detail {
+    display: flex;
+    flex-direction: column;
+    width: 150px;
 
-        .bookinglist-hotel-room{
-            
-            margin-top: 15px;
-            font-size: 13px;
-            color: var(--input-solid-color);
-        }
+    margin: 10px 15px;
 
-    .bookinglist-detail-list {
-        align-items: center;
+    font-size: 15px;
+    color: rgb(75, 74, 74);
+    font-family: 'Pretendard-Regular';
+}
 
-        width: 100%;
+.bookinglist-hotel-title{ 
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
 
-        color: var(--mypage-text-color);
-    }
+.bookinglist-hotel-room{
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
 
-        .bookinglist-stay {
-            margin-top: 15px;
-        }
+.bookinglist-detail-list {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    margin: 10px 15px;
 
-        .bookinglist-start-end-time {
-            margin: 20px 0px;
-            display: flex;
-        }
+}
 
-            .bookinglist-end {
-                margin-left: 20px;
-            }
+.bookinglist-count-reviewbox {
+    display: flex;
+    justify-content: space-between;
+    width: 320px;
+}
 
-        .bookinglist-count-reviewbox {
-            display: flex;
-            justify-content: space-between;
-        }
+.bookinglist-reviewbox {
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 
-        .bookinglist-reviewbox {
-            padding: 10px 20px;
-            color: white;
-            border: none;
-            border-radius: 4px;
-            background-color: #ff94a0;
-        }
+    width: 100px;
+    height: 100%;    
+    background-color: #ff94a0;
+    border: solid 2px rgba(240, 203, 203, 0.637);;
+    border-radius: 5px;
+
+    font-weight: 700;
+    font-size: 18px;
+    color: rgb(255 , 255, 255, 1);
+}
+
+.reviewwrite-inputbox {
+    width: 670px;
+    height: 60px;
+}
+
+.review-bottom-box {
+    display: flex;
+    justify-content: space-between;
+}
+
+.submission-button {
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    margin:5px 0px;
+    width: 100px;
+    height: 100%;    
+    background-color: #ff94a0;
+    border: solid 2px rgba(240, 203, 203, 0.637);;
+    border-radius: 5px;
+
+    font-weight: 700;
+    font-size: 18px;
+    color: rgb(255 , 255, 255, 1);
+}
+
+.score-component{
+    display: flex;
+    margin-top: 5px;
+}
+
+.star-icon {
+    width: 20px;
+    height: 20px;
+    margin-right: 5px;
+}

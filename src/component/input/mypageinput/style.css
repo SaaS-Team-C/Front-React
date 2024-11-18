@@ -54,7 +54,7 @@
 }
 
 .mypageinformation-input-inputbox {
-    width: 60%;
+    width: 85%;
     padding: 12px 15px;
     border: 1px solid rgba(188, 188, 188, 1);
     border-radius: 4px;
@@ -66,9 +66,15 @@
 }
 
 .mypageinformation-input-area{
+    display: flex;
     width: 400px;
 
     gap: 10px;
+}
+
+.mypageinformation-input {
+    display: flex;
+    flex-direction: column;
 }
 
 .checkMessageError {

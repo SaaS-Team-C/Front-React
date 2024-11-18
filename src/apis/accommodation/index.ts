@@ -1,6 +1,9 @@
 import axios, { AxiosResponse } from "axios";
-import { ResponseDto } from "./dto/response";
+
 import { AccommodationDTO } from "./dto/response/accommodation.response.dto";
+import { PostAccommodationRequestDto } from "./dto/request/post-accommodation.request.dto";
+import { POST_ACCOMMODATION_API_URL } from "src/constants";
+import { ResponseDto } from "../guestmypage";
 
 // variable: API URL 상수 //
 const ROOMLY_API_DOMAIN = process.env.REACT_APP_API_URL;
@@ -44,4 +47,14 @@ export const fetchAccommodationList = async (): Promise<AccommodationDTO[]> => {
     console.error("Failed to fetch accommodations:", error);
     throw error;
   }
+
 };
+
+  // function: 숙소 등록 요청 api 함수 //
+  export const postAccommodationRequest = async(requestBody: PostAccommodationRequestDto, accessToken:string) => {
+    const responseBody = await axios.post(POST_ACCOMMODATION_API_URL, requestBody, bearerAuthorization(accessToken))
+      .then(responseDataHandler<ResponseDto>)
+      .catch(responseErrorHandler)
+    return responseBody;
+
+  }

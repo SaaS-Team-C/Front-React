@@ -1,6 +1,8 @@
 // import ResponseDto from "../response.dto";
 
-import { ResponseDto } from "src/apis/signUp/dto/response";
+import { ResponseDto } from "src/apis/hostmypage";
+
+
 
 export default interface GetGuestSignInResponseDto extends ResponseDto {
     guestId:string;

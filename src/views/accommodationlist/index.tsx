@@ -2,8 +2,8 @@ import DetailList from "src/component/accomodation/detaillist";
 import "./style.css";
 import React, { useEffect, useState } from 'react'
 import GetAccommodationResponseDto from "src/apis/hostmypage/dto/response/GetAccommodationResponseDto";
-import { HOST_ACCESS_TOKEN } from "src/constants";
 import { GUEST_ACCESS_TOKEN } from "src/constants";
+import { HOST_ACCESS_TOKEN } from "src/constants";
 import { ResponseDto } from "src/apis/hostmypage";
 import { useCookies } from "react-cookie";
 import { getAccommodationDetailRequest } from "src/apis";
@@ -33,11 +33,7 @@ export default function AccommodationDetailList() {
           };
           const { accommodationsDetail } = responseBody as GetAccommodationDetailListResponseDto;
           setCallAccommodationDetail(accommodationsDetail);
-  
-          
     }
-
-
   return (
     <div>
         <DetailList/>

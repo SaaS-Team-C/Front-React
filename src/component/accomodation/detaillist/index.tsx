@@ -8,10 +8,10 @@ import AccommodationDetailTop from "./top";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router";
 import { useCookies } from "react-cookie";
-import { HOST_ACCESS_TOKEN } from "src/constants";
 import { GUEST_ACCESS_TOKEN } from "src/constants";
+import { HOST_ACCESS_TOKEN } from "src/constants";
 import { getAccommodationDetailRequest } from "src/apis";
-import { ResponseDto } from "src/apis/hostmypage";
+import { ResponseDto } from "src/apis/guestmypage";
 import GetAccommodationResponseDto from "src/apis/hostmypage/dto/response/GetAccommodationResponseDto";
 
 export default function DetailList() {
@@ -20,8 +20,7 @@ export default function DetailList() {
   const [cookies] = useCookies();
   const [accommodation, setAccommodation] = useState<GetAccommodationResponseDto | null>(null);
 
-  const guestAccessToken = cookies[GUEST_ACCESS_TOKEN];
-  const hostAccessToken = cookies[HOST_ACCESS_TOKEN];
+  const accessToken = cookies[ACCESS_TOKEN];
 
   const latitude = 37.7749; // 임의의 위도 값
   const longitude = -122.4194; // 임의의 경도 값

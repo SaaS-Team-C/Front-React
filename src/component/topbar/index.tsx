@@ -8,12 +8,17 @@ import { useCookies } from 'react-cookie';
 import { useSearchParams } from 'react-router-dom';
 import { GuestLogInRequest, HostLogInRequest } from 'src/apis/login';
 import GuestLogInRequestDto from 'src/apis/login/dto/request/guest/login.request.dto';
+
 // import LogInResponseDto from 'src/apis/login/dto/response/host.login.respons.dto';
-import ResponseDto from 'src/apis/login/dto/response/response.dto';
+
 import InputBox from '../input/login';
 import HostLogInRequestDto from 'src/apis/login/dto/request/host/login.request.dto';
-import HostLogInResponseDto from 'src/apis/login/dto/response/host.login.respons.dto';
-import GuestLogInResponseDto from 'src/apis/login/dto/response/guest.login.respons.dto';
+import HostLogInResponseDto from 'src/apis/login/dto/response/host-sign-in.response.dto';
+
+
+import { ResponseDto } from 'src/apis/guestmypage';
+import GuestSignInResponseDto from 'src/apis/login/dto/response/guest-sign-in.response.dto';
+import HostSignInResponseDto from 'src/apis/login/dto/response/host-sign-in.response.dto';
 
 // 컴포넌트: 메인페이지 화면 컴포넌트 //
 type group = 'guest' | 'host';
@@ -22,7 +27,7 @@ export default function Topbar() {
     // 쿠키 상태 초기화
     const [hostCookies, setHostCookie, removeHostCookies] = useCookies(['hostAccessToken']);
     const [guestCookies, setGuestCookie, removeGuestCookies] = useCookies(['guestAccessToken']);
-    
+
 
     // state: 모달창 상태 //
     const [modalOpen, setModalOpen] = useState(false);
@@ -46,13 +51,14 @@ export default function Topbar() {
     // state: url 값 저장 //
     const [searchParams, setSearchParams] = useSearchParams('');
     const [searchBar, setSearchBar] = useState<boolean>(false);
+
     // function: 네비게이터 함수 //
     const navigator = useNavigate();
 
 
 
-    // function: 로그인 응답 처리 함수 //
-    const logInResponse = (responseBody: HostLogInResponseDto | ResponseDto | null) => {
+    // function: 호스트 로그인 응답 처리 함수 //
+    const hostLogInResponse = (responseBody: HostSignInResponseDto | ResponseDto | null) => {
         const message =
             !responseBody ? '서버에 문제가 있습니다.' :
                 responseBody.code === 'VF' ? '아이디와 비밀번호를 모두 입력하세요.' :
@@ -65,7 +71,7 @@ export default function Topbar() {
             setPwMessage(message);
             return;
         }
-        const { hostAccessToken, expiration } = responseBody as HostLogInResponseDto;
+        const { hostAccessToken, expiration } = responseBody as HostSignInResponseDto;
         const expires = new Date(Date.now() + (expiration * 1000));
         setHostCookie('hostAccessToken', hostAccessToken, { path: '/', expires });
         setModalOpen(false)
@@ -74,21 +80,21 @@ export default function Topbar() {
 
     };
 
-     // function: 게스트 로그인 응답 처리 함수 //
-    const guestLogInResponse = (responseBody: GuestLogInResponseDto | ResponseDto | null) => {
-        const message = 
+    // function: 게스트 로그인 응답 처리 함수 //
+    const guestLogInResponse = (responseBody: GuestSignInResponseDto | ResponseDto | null) => {
+        const message =
             !responseBody ? '서버에 문제가 있습니다.' :
-            responseBody.code === 'VF' ? '아이디와 비밀번호를 모두 입력하세요.' :
-            responseBody.code === 'SF' ? '로그인 정보가 일치하지 않습니다.' : 
-            responseBody.code === 'TCF' ? '서버에 문제가 있습니다.' :
-            responseBody.code === 'DBE' ? '서버에 문제가 있습니다.' : '';
-        
+                responseBody.code === 'VF' ? '아이디와 비밀번호를 모두 입력하세요.' :
+                    responseBody.code === 'SF' ? '로그인 정보가 일치하지 않습니다.' :
+                        responseBody.code === 'TCF' ? '서버에 문제가 있습니다.' :
+                            responseBody.code === 'DBE' ? '서버에 문제가 있습니다.' : '';
+
         const isSuccessed = responseBody !== null && responseBody.code === 'SU';
         if (!isSuccessed) {
             setPwMessage(message);
             return;
         }
-        const { guestAccessToken, expiration } = responseBody as GuestLogInResponseDto;
+        const { guestAccessToken, expiration } = responseBody as GuestSignInResponseDto;
         const expires = new Date(Date.now() + (expiration * 1000));
         setGuestCookie('guestAccessToken', guestAccessToken, { path: '/', expires });
         setModalOpen(false)
@@ -166,7 +172,7 @@ export default function Topbar() {
             hostId: hostId,
             hostPw: hostPassword
         };
-        HostLogInRequest(requestBody).then(logInResponse);
+        HostLogInRequest(requestBody).then(hostLogInResponse);
     }
     // effect: 아이디 및 비밀번호 변경시 실행할 함수 //
     useEffect(() => {
@@ -207,7 +213,7 @@ export default function Topbar() {
         if (!modalOpen) {
             setModalOpen(false);
         }
-    }, [guestCookies,hostCookies]);
+    }, [guestCookies, hostCookies]);
 
     const pressKeyEnter = (event: KeyboardEvent<HTMLInputElement>) => {
         if (event.key === 'Enter') {
@@ -220,11 +226,11 @@ export default function Topbar() {
         if (hostCookies) removeHostCookies("hostAccessToken");
         navigator('main')
         };
-    // event handler: 로그아웃(호스트) 버튼 클릭 이벤트 처리 //
+    // event handler: 로그아웃(게스트) 버튼 클릭 이벤트 처리 //
     const onGuestLogoutButtonClickHandler = () => {
         if (guestCookies) removeGuestCookies("guestAccessToken");
         navigator('main')
-        };
+    };
 
     // event handler: 회원가입 버튼 클릭 이벤트 처리 //
     const onSignupButtonClickHandler = () => {
@@ -297,15 +303,15 @@ export default function Topbar() {
                         <div className='top-search-bar-solid'></div>
                         <div className='top-search-bar-count'>인원 {urlCount}</div>
                     </div>}
-                    {guestCookies.guestAccessToken && <div className='nowlogin'>
-                        <div className='my-page' onClick={onGuestMyPageClickHandler}>MYPAGE</div>
-                        <div className='log-out' onClick={onGuestLogoutButtonClickHandler}>LOGOUT</div>
+                    {hostCookies.hostAccessToken && <div className='nowlogin'>
+                        <div className='my-page' onClick={onHostMyPageClickHandler}>호스트마이페이지</div>
+                        <div className='log-out' onClick={onHostLogoutButtonClickHandler}>로그아웃</div>
                     </div>}
                     {guestCookies.guestAccessToken && <div className='nowlogin'>
                         <div className='my-page' onClick={onGuestMyPageClickHandler}>게스트마이페이지</div>
                         <div className='log-out' onClick={onGuestLogoutButtonClickHandler}>로그아웃</div>
                     </div>}
-                    {!hostCookies.hostAccessToken && !guestCookies.guestAccessToken &&  <div className='sign'>
+                    {!hostCookies.hostAccessToken && !guestCookies.guestAccessToken && <div className='sign'>
                         <div className='sign-in' onClick={() => setModalOpen(true)}>Login</div>
                         <div className='sign-up-button' onClick={onSignupButtonClickHandler}>SignUp</div>
                     </div>}
@@ -356,7 +362,7 @@ export default function Topbar() {
                                 />
                             </div>
                         </div>}
-                        {mode === 'host' && <div className='input-log-box'>
+                        {mode === 'host' && <div>
                             <div className='input-log'>
                                 <div className='log-in-id-icon'></div>
                                 <InputBox
@@ -384,7 +390,6 @@ export default function Topbar() {
                         </div>}
                         {mode === 'guest' && <div className='log-in-button' onClick={onGuestLoginButtonClickHandler}>로그인</div>}
                         {mode === 'host' && <div className='log-in-button' onClick={onHostLoginButtonClickHandler}>로그인</div>}
-
                         <div className='find'>
                             <div className='find-id' onClick={onFindIdPwButtonClickHandler}>아이디/비밀번호 찾기</div>
                             <div className='sign-up-text-button' onClick={onSignupButtonClickHandler}>회원가입</div>
