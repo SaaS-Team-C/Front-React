@@ -152,7 +152,7 @@ export default function SignUp() {
     isCheckedPassword,
     isSend,
     authNumber,
-    isCheckedAuthNumber  
+    isCheckedAuthNumber
   ]);
 
   useEffect(() => {
@@ -275,15 +275,15 @@ export default function SignUp() {
         responseBody.code === 'VF' ? '올바른 데이터가 아닙니다.' :
           responseBody.code === 'DI' ? '중복된 사업자등록번호입니다.' :
             responseBody.code === 'NB' ? '사업자번호 인증에 실패했습니다.' :
-              responseBody.code === 'DBE' ? '서버에 문제가 있습니다.' : 
-              responseBody.code === 'SU' ? '인증에 성공 했습니다.' : '';
+              responseBody.code === 'DBE' ? '서버에 문제가 있습니다.' :
+                responseBody.code === 'SU' ? '인증에 성공 했습니다.' : '';
 
     const isSuccessed = responseBody !== null && responseBody.code === 'SU';
     if (!isSuccessed) {
       alert(message);
       return;
     }
-    
+
     alert(message);
   };
 
@@ -426,9 +426,9 @@ export default function SignUp() {
     }
   };
 
-  useEffect (() => {
+  useEffect(() => {
     console.log(startStringDay)
-  } , [
+  }, [
     startStringDay
   ])
 
@@ -544,36 +544,39 @@ export default function SignUp() {
 
   // effect : 비밀번호 및 비밀번호 확인 변경시 실행할 함수 //
   useEffect(() => {
+    // Guest 비밀번호 체크
     if (!guestPassword || !guestPasswordCheck) {
       setPasswordCheckMessage(''); // 초기화
       setPasswordCheckMessageError(false);
       setCheckedPassword(false);
-      return;
+    } else {
+      const isGuestPasswordEqual = guestPassword === guestPasswordCheck;
+      const guestMessage = isGuestPasswordEqual ? '' : '비밀번호가 일치하지 않습니다.';
+
+      setPasswordCheckMessage(guestMessage);
+      setPasswordCheckMessageError(!isGuestPasswordEqual);
+      setCheckedPassword(isGuestPasswordEqual);
     }
 
-    const isEqual = guestPassword === guestPasswordCheck;
-    const message = isEqual ? '' : '비밀번호가 일치하지 않습니다.'
-
-    setPasswordCheckMessage(message);
-    setPasswordCheckMessageError(!isEqual);
-    setCheckedPassword(isEqual);
-  }, [guestPassword, guestPasswordCheck]);
-
-  useEffect(() => {
+    // Host 비밀번호 체크
     if (!hostPassword || !hostPasswordCheck) {
       setPasswordCheckMessage(''); // 초기화
       setPasswordCheckMessageError(false);
       setCheckedPassword(false);
-      return;
+    } else {
+      const isHostPasswordEqual = hostPassword === hostPasswordCheck;
+      const hostMessage = isHostPasswordEqual ? '' : '비밀번호가 일치하지 않습니다.';
+
+      setPasswordCheckMessage(hostMessage);
+      setPasswordCheckMessageError(!isHostPasswordEqual);
+      setCheckedPassword(isHostPasswordEqual);
     }
-
-    const isEqual = hostPassword === hostPasswordCheck;
-    const message = isEqual ? '' : '비밀번호가 일치하지 않습니다.'
-
-    setPasswordCheckMessage(message);
-    setPasswordCheckMessageError(!isEqual);
-    setCheckedPassword(isEqual);
-  }, [hostPassword, hostPasswordCheck]);
+  }, [
+    guestPassword,
+    guestPasswordCheck,
+    hostPassword,
+    hostPasswordCheck
+  ]);
 
   const InputComponent = currentView === 'guest' ? InputBox : InputBox2;
 
@@ -687,7 +690,7 @@ export default function SignUp() {
                     type="text"
                     placeholder="사업자 등록번호 10자를 입력해주세요."
                     buttonName="등록"
-                    onChange={onBusinessNumberChangeHandler} 
+                    onChange={onBusinessNumberChangeHandler}
                     onButtonClick={onBusinessNumberCheckClickHandler}
                   />
                   <InputComponent
@@ -752,5 +755,4 @@ export default function SignUp() {
       </div>
     </div>
   );
-
 };

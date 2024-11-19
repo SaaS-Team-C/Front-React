@@ -2,7 +2,7 @@ import React from 'react';
 import { Route, Routes, useNavigate, useLocation, To } from 'react-router-dom';
 import './style.css';
 import Topbar from 'src/component/topbar';
-import MypageCatalogButton from 'src/component/mypage/mypagecatalogbutton';
+import MypageCatalogButton from 'src/component/mypageguest/mypagecatalogbutton';
 
 
 export default function HostMypageLayout() {

@@ -127,19 +127,21 @@
 
 .name-value {
   border-radius: 4px;
-
-  color: rgba(255, 255, 255, 1);
-  height: 40px;
-  width: 80px;
-  font-size: 20px;
- background-color: rgb(92, 91, 91);
+  padding: 10px 12px;
+  /* height: 40px;
+  width: 80px; */
+  font-size: 15px;
+  background-color: #ddd;
+  font-family: 'Pretendard-Regular';
+  color: rgb(92, 91, 91);
 }
 
 .telNumber-value {
   border-radius: 4px;
   background-color: #ddd;
-  height: 40px;
-  width: 170px;
+  padding: 10px 12px;
+  font-family: 'Pretendard-Regular';
+  color: rgb(92, 91, 91);
 }
 
 /* 구분선 */

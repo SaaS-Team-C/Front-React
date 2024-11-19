@@ -1,11 +1,12 @@
 import axios, { AxiosResponse } from "axios";
 
 import { GetHostAccommodationListResponseDto } from "./hostmypage/dto/response/GetHostAccommodationListResponseDto";
-import { GET_ACCOMMODATION_API_URL, GET_ACCOMMODATION_DETAIL_API_URL, GET_ACCOMMODATION_LIST_API_URL, HOST_ACCOMMODATION_LIST_API_URL, POST_ACCOMMODATION_MAIN_IMAGE_API_URL } from "src/constants";
+import { GET_ACCOMMODATION_API_URL, GET_ACCOMMODATION_DETAIL_API_URL, GET_ACCOMMODATION_LIST_API_URL, GET_RESERVATION_LIST_API_URL, HOST_ACCOMMODATION_LIST_API_URL, POST_ACCOMMODATION_MAIN_IMAGE_API_URL } from "src/constants";
 
 import { GetAccommodationListResponseDto } from "./hostmypage/dto/response";
 import GetAccommodationResponseDto from "./hostmypage/dto/response/GetAccommodationResponseDto";
 import { ResponseDto } from "./guestmypage";
+import { GetReservationListResponseDto } from "./guestmypage/dto/response/ReservationList.response.dto";
 
 
 
@@ -65,4 +66,21 @@ export const accommodationMainFileUploadRequest = async(requestBody:FormData)=>{
         .catch(error => null);
     return url;
 }
+
+// 옥진서 작성
+// function: get 숙소 예약 현황 처리 함수//
+export const getReservationListRequest = async(userId: string, accessToken:string) => {
+    const responseBody = axios.get(GET_RESERVATION_LIST_API_URL(userId), bearerAuthorization(accessToken))
+    .then(responseDataHandler<GetReservationListResponseDto>)
+    .catch(responseErrorHandler)
+    return responseBody;
+}
+
+// // function: get (호스트) 숙소 예약 현황 처리 함수//
+// export const getHostReservationStatusListRequest = async(userId: string, accessToken:string) => {
+//     const responseBody = axios.get(GET_RESERVATION_STATUS_LIST_API_URL(userId), bearerAuthorization(accessToken))
+//     .then(responseDataHandler<GetReservationStatusListResponseDto>)
+//     .catch(responseErrorHandler)
+//     return responseBody;
+// }
 
