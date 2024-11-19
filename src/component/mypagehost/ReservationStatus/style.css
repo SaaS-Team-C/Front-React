@@ -36,7 +36,8 @@
 .reservationstatus-title {
     width: 100%;
     height: 50px;
-    font-size: 30px;
+    font-size: 27px;
+    font-weight: 600;
     color: rgb(75, 74, 74);
     font-family: 'Pretendard-Regular';
     margin-bottom: 50px;

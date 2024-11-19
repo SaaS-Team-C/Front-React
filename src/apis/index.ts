@@ -1,8 +1,7 @@
 import axios, { AxiosResponse } from "axios";
 
 import { GetHostAccommodationListResponseDto } from "./hostmypage/dto/response/GetHostAccommodationListResponseDto";
-import { GET_ACCOMMODATION_API_URL, GET_ACCOMMODATION_LIST_API_URL, GET_BOOKMARK_LIST_API_URL, GET_RESERVATION_LIST_API_URL, HOST_ACCOMMODATION_LIST_API_URL, POST_ACCOMMODATION_MAIN_IMAGE_API_URL, POST_REVIEW_API_URL } from "src/constants";
-import { GET_ACCOMMODATION_API_URL, GET_ACCOMMODATION_DETAIL_API_URL, GET_ACCOMMODATION_LIST_API_URL, HOST_ACCOMMODATION_LIST_API_URL, POST_ACCOMMODATION_MAIN_IMAGE_API_URL } from "src/constants";
+import { GET_ACCOMMODATION_API_URL, GET_ACCOMMODATION_DETAIL_API_URL, GET_ACCOMMODATION_LIST_API_URL, GET_BOOKMARK_LIST_API_URL, GET_RESERVATION_LIST_API_URL, GET_RESERVATION_STATUS_LIST_API_URL, HOST_ACCOMMODATION_LIST_API_URL, POST_ACCOMMODATION_MAIN_IMAGE_API_URL, POST_REVIEW_API_URL } from "src/constants";
 
 import { GetAccommodationListResponseDto } from "./hostmypage/dto/response";
 import GetAccommodationResponseDto from "./hostmypage/dto/response/GetAccommodationResponseDto";
@@ -10,6 +9,7 @@ import { ResponseDto } from "./guestmypage";
 import { GetReservationListResponseDto } from "./guestmypage/dto/response/get-reservationlist.response.dto";
 import { GetBookMarkListResponseDto } from "./guestmypage/dto/response/get-bookmarklist.response.dto";
 import PostReviewRequestDto from './hostmypage/dto/request/post-review.request.dto';
+import { GetReservationStatusListResponseDto } from "./hostmypage/dto/response/GetReservationStatusListResponseDto";
 
 
 // variable: API URL 상수 //
@@ -91,3 +91,12 @@ export const PostReviewRequest = async(userId: string, requestBody: PostReviewRe
     .catch(responseErrorHandler)
     return responseBody;
 }
+
+// function: get (호스트) 숙소 예약 현황 처리 함수//
+export const getHostReservationStatusListRequest = async(userId: string, accessToken:string) => {
+    const responseBody = axios.get(GET_RESERVATION_STATUS_LIST_API_URL(userId), bearerAuthorization(accessToken))
+    .then(responseDataHandler<GetReservationStatusListResponseDto>)
+    .catch(responseErrorHandler)
+    return responseBody;
+}
+

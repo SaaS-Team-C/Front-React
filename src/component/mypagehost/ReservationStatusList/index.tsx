@@ -1,9 +1,29 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router'
 import './style.css'
 import { LsisuerImage } from 'src/resources/images/leisure';
+import { GetHostAccommodationListResponseDto } from 'src/apis/hostmypage/dto/response/GetHostAccommodationListResponseDto';
+import { ResponseDto } from 'src/apis/hostmypage';
+import { HOST_ACCESS_TOKEN } from 'src/constants';
+import { useCookies } from 'react-cookie';
+import { SignInHost } from 'src/stores';
+
+import { ReservationStatus } from 'src/apis/hostmypage/dto/response/ReservationStatus';
+import { GetReservationStatusListResponseDto } from 'src/apis/hostmypage/dto/response/GetReservationStatusListResponseDto';
+
+interface Reservation {
+    guestName: string;
+    guestTelNumber: string;
+    reservationId: number;
+    // 필요한 경우 다른 속성 추가
+}
 
 export default function ReservationStatusList() {
+    const { signInHost } = SignInHost();
+    const [cookies] = useCookies();
+    const [guestName, setguestName] = useState<string>('');
+    const [guestId, setguestId] = useState<string>('');
+    const [reservationStatusList, setReservationStatusList ] = useState<ReservationStatus[]>([]);
 
     const today: Date = new Date();
 
@@ -19,9 +39,34 @@ export default function ReservationStatusList() {
         navigator('/main')
     }
 
+// Function: Get Guest Reservation List Response 처리 함수
+const getHostReservationListResponse = (responseBody: GetReservationStatusListResponseDto | ResponseDto | null) => {
+    const message =
+        !responseBody ? '서버에 문제가 있습니다.' :
+        responseBody.code === 'AF' ? '잘못된 접근입니다.' :
+        responseBody.code === 'NI' ? '존재하지 않는 사용자입니다.' :
+        responseBody.code === 'DBE' ? '서버에 문제가 있습니다.' : '';
+    
+    const isSuccess = responseBody !== null && responseBody.code === 'SU';
+    if (!isSuccess) {
+        alert(message);
+        return;
+    }
 
+    const { reservationStatusList } = responseBody as GetReservationStatusListResponseDto;
+    // setReservationStatusList(reservationStatusList); // 상태로 저장
+};
+    // Effect: 백엔드 API에서 데이터 불러오기
+    useEffect(() => {
+    const hostAccessToken = cookies[HOST_ACCESS_TOKEN];
+    if (!hostAccessToken) return;
+    if (!signInHost) return;
 
+    const hostId = signInHost.hostId;
 
+    // getHostReservationListRequest(hostId, hostAccessToken)
+        // .then(getHostReservationListResponse); // 응답 처리
+}, [cookies, signInHost]);
 
     return (
         <div id='reservationstatus2-warpper'>

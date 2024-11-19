@@ -1,14 +1,14 @@
 import React, { useEffect, useState } from 'react'
 import "./style.css"
 import Topbar from 'src/component/topbar'
-import MypageCatalogButton from 'src/component/mypage/mypagecatalogbutton';
-import Information from 'src/component/mypage/mypagemain/information';
+import MypageCatalogButton from 'src/component/mypageguest/mypagecatalogbutton';
+import Information from 'src/component/mypageguest/mypagemain/information';
 import { useCookies } from 'react-cookie';
 import { MAIN_PATH } from 'src/constants';
 import { useNavigate } from 'react-router';
 import styled from 'styled-components';
-import Booking from 'src/component/mypage/mypagemain/booking';
-import BookMark from 'src/component/mypage/mypagemain/bookmark';
+import Booking from 'src/component/mypageguest/mypagemain/booking';
+import BookMark from 'src/component/mypageguest/mypagemain/bookmark';
 import { SignInHost } from 'src/stores';
 import { hostname } from 'os';
 import MyInfoManagement from 'src/component/mypagehost/myinfo';

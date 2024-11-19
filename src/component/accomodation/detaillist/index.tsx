@@ -49,7 +49,7 @@ export default function DetailList() {
       if (!guestAceessToken || !accommodationName) return;
       const checkInDay = searchParams.get("start") as string;
       const checkOutDay = searchParams.get("end")as string;
-      getAccommodationDetailRequest(accommodationName,checkInDay,checkOutDay,accessToken).then(getAccommodaitonResponse);
+      getAccommodationDetailRequest(accommodationName,checkInDay,checkOutDay, guestAceessToken).then(getAccommodaitonResponse);
   }, [accommodationName])
 
   if (!accommodation) return null;
