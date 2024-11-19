@@ -2,41 +2,26 @@ import React, { useState } from "react";
 
 import "./style.css";
 import RangeSlider from "./priceRagebar";
+import { useFilterStore } from "src/stores";
 
 interface SidebarProps  {
-  onFilterChange: (filters: any) => void;
   resetFilters: () => void;
-  priceRange: { min: number; max: number };
-  setPriceRange: React.Dispatch<React.SetStateAction<{ min: number; max: number }>>;
-  reviewScore: boolean[];
-  setReviewScore: React.Dispatch<React.SetStateAction<boolean[]>>;
-  accommodationType: boolean[];
-  setAccommodationType: React.Dispatch<React.SetStateAction<boolean[]>>;
-  categoryArea: string[];
-  setCategoryArea: React.Dispatch<React.SetStateAction<string[]>>;
-  facilities: boolean[];
-  setFacilities: React.Dispatch<React.SetStateAction<boolean[]>>;
 }
 
-const Sidebar: React.FC<SidebarProps> = ({ onFilterChange, resetFilters }) => {
-  const [priceRange, setPriceRange] = useState<[number, number]>([0, 100000]);
-  const [reviewScore, setReviewScore] = useState<boolean[]>([false, false, false, false, false]);
-  const [accommodationType, setAccommodationType] = useState<boolean[]>([false, false, false]);
-  const [categoryArea, setCategoryArea] = useState<string[]>([]);
+const Sidebar: React.FC<SidebarProps> = ({ resetFilters }) => {
+  // 필터 상태 정의
+  const {reviewScore, setReviewScore} = useFilterStore();
+  const {accommodationType, setAccommodationType} = useFilterStore();
+  const {categoryArea, setCategoryArea} = useFilterStore();
+  const {facilities, setFacilities} = useFilterStore();
   const [showAllAreas, setShowAllAreas] = useState(false);
-  const [facilities, setFacilities] = useState<string[]>([]);
-
   
-
-  const handleFilterChange = () => {
-    onFilterChange({
-      priceRange,
-      reviewScore,
-      accommodationType,
-      categoryArea,
-      facilities,
-    });
-  };
+  // const [priceRange, setPriceRange] = useState<[number, number]>([0, 100000]);
+  // const [reviewScore, setReviewScore] = useState<boolean[]>([false, false, false, false, false]);
+  // const [accommodationType, setAccommodationType] = useState<boolean[]>([false, false, false]);
+  // const [categoryArea, setCategoryArea] = useState<string[]>([]);
+  // const [showAllAreas, setShowAllAreas] = useState(false);
+  // const [facilities, setFacilities] = useState<string[]>([]);
 
   return (
     <aside id="sidebar">
@@ -62,7 +47,7 @@ const Sidebar: React.FC<SidebarProps> = ({ onFilterChange, resetFilters }) => {
           </div>
 
         {/* 레인지 바*/}
-        <RangeSlider value={priceRange} onChange={(range) => { setPriceRange(range); handleFilterChange(); }} />
+        <RangeSlider />
         </div>
       </div>
 
@@ -81,7 +66,6 @@ const Sidebar: React.FC<SidebarProps> = ({ onFilterChange, resetFilters }) => {
                   const updatedScores = [...reviewScore];
                   updatedScores[index] = !updatedScores[index];
                   setReviewScore(updatedScores);
-                  handleFilterChange();
                 }}
               />
               {label}
@@ -100,12 +84,14 @@ const Sidebar: React.FC<SidebarProps> = ({ onFilterChange, resetFilters }) => {
             <li key={index}>
               <input
                 type="checkbox"
-                checked={accommodationType[index]}
+                checked={accommodationType.includes(label)}
                 onChange={() => {
-                  const updatedTypes = [...accommodationType];
-                  updatedTypes[index] = !updatedTypes[index];
-                  setAccommodationType(updatedTypes);
-                  handleFilterChange();
+                  if (accommodationType.includes(label)) {
+                    const newAccommodationType = accommodationType.filter(item => item !== label);
+                    setAccommodationType(newAccommodationType);
+                  } else {
+                    setAccommodationType([...accommodationType, label]);
+                  }
                 }}
               />
               {label}
@@ -131,7 +117,6 @@ const Sidebar: React.FC<SidebarProps> = ({ onFilterChange, resetFilters }) => {
                     ? categoryArea.filter((area) => area !== label)
                     : [...categoryArea, label];
                   setCategoryArea(updatedAreas);
-                  handleFilterChange();
                 }}
               />
               {label}
@@ -163,7 +148,6 @@ const Sidebar: React.FC<SidebarProps> = ({ onFilterChange, resetFilters }) => {
                     ? facilities.filter((f) => f !== label)
                     : [...facilities, label];
                   setFacilities(updatedFacilities);
-                  handleFilterChange();
                 }}
               />
               {label}

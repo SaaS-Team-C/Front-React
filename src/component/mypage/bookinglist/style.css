@@ -140,3 +140,14 @@
     font-size: 18px;
     color: rgb(255 , 255, 255, 1);
 }
+
+.score-component{
+    display: flex;
+    margin-top: 5px;
+}
+
+.star-icon {
+    width: 20px;
+    height: 20px;
+    margin-right: 5px;
+}
