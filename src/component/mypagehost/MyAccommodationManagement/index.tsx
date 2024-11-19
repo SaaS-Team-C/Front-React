@@ -193,9 +193,8 @@ const AccommodationCard: React.FC<AccommodationCardProps> = ({ accommodations })
 export function MyAccommodationManagement() {
   return (
     <>
-      <Topbar />
+      
       <div className="test">
-        <HostMypageLayout />
         <div id="host-accommodation-register-wrapper">
           <AccommodationManagementPage />
         </div>

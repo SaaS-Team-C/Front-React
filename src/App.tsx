@@ -6,7 +6,7 @@ import Main from './views/main/Main';
 
 import Payment from './views/payment';
 
-import { GUEST_ACCESS_TOKEN, ACCOMMODATION_LIST_DETAIL_PATH, ACCOMMODATION_LIST_PATH, AUTH_PATH, FINDID_PATH,  MAIN_PATH, HOST_ACCESS_TOKEN } from './constants';
+import { GUEST_ACCESS_TOKEN, ACCOMMODATION_LIST_DETAIL_PATH, ACCOMMODATION_LIST_PATH, AUTH_PATH, FINDID_PATH, MAIN_PATH, HOST_ACCESS_TOKEN } from './constants';
 
 import { RegionImages } from './resources/images/region';
 import { useEffect } from 'react';
@@ -18,22 +18,20 @@ import DetailList from './component/accomodation/detaillist';
 import FAQ from './views/faq';
 import HostAccommodationRegister from './component/mypagehost/MyAccommodationManagement/registration';
 
-import AccomodationEnrollApprovalPage from './views/admin/hostenrollmentapproval';
-import MypageInputBox from './component/input/mypageinput';
+
 import BookingList from './component/mypage/bookinglist';
 
 import HostEnrollmentapproval from './views/admin/hostenrollmentapproval/index';
 import FindId from './views/find';
-import HostMypageLayout from './layout/mypageHost';
+
 
 import GuestMypage from './views/mypageguest';
 import Accommodationenrollmentapproval from './views/admin/accommodationenrollmentapproval';
 import AccommodationList from './views/accommodation';
 import Roomly from './views/roomly';
 
-import MyAccommodationManagementView from './views/mypagehost/MyAccommodationManagement';
 import ShowDetailList from './component/mypagehost/MyAccommodationManagement/showaccdetail/detaillist';
-import {SignInHost, SignInUser} from './stores';
+import { SignInHost, SignInUser } from './stores';
 
 
 import { GetHostSignInResponseDto } from './apis/login/dto';
@@ -43,6 +41,11 @@ import { getSignInHostRequest } from './apis/signUp';
 import { getGuestSignInRequest } from './apis/login';
 import GetGuestSignInResponseDto from './apis/login/dto/response/get-guest-sign-in.response.dto';
 import { ResponseDto } from './apis/guestmypage';
+
+import HostMypage from './views/mypagehost';
+import ReservationStatus from './component/mypagehost/ReservationStatus';
+import HostMypageLayout from './layout/mypageHost';
+import MyInfoManagement from './component/mypagehost/myinfo';
 
 
 
@@ -83,95 +86,85 @@ function Booking() {
 }
 
 export default function App() {
-  
+
   // 로그인 유저 정보 상태 //
-  const {signInUser, setSignInUser} = SignInUser();
-  const {signInHost, setSignInHost} = SignInHost();
+  const { signInUser, setSignInUser } = SignInUser();
+  const { signInHost, setSignInHost } = SignInHost();
 
   // state : cookie 상태 //
   const [cookies, setCookie, removeCookie] = useCookies();
 
   // function : 네비게이터 함수 //
   const navigator = useNavigate();
-  
 
-  const getSignInGuestResponse =(responseBody: GetGuestSignInResponseDto | ResponseDto | null) => {
-    const message = 
-        !responseBody ? '로그인 유저 정보를 불러오는데 문제가 발생했습니다.' :
+
+  const getSignInGuestResponse = (responseBody: GetGuestSignInResponseDto | ResponseDto | null) => {
+    const message =
+      !responseBody ? '로그인 유저 정보를 불러오는데 문제가 발생했습니다.' :
         responseBody.code === 'NI' ? '로그인 유저 정보가 존재하지 않습니다.' :
-        responseBody.code === 'AF' ? '잘못된 접근입니다.' :
-        responseBody.code === 'DBE' ? '로그인 유저 정보를 불러오는데 문제가 발생했습니다.' : '';
-      const isSuccessde = responseBody !== null && responseBody.code === 'SU';
-      if (!isSuccessde) return ;
-  const {guestId, guestName, guestTelNumber} = responseBody as GetGuestSignInResponseDto
-  setSignInUser({guestId, guestName, guestTelNumber});
-}
-
-// function: get sign in host response 처리 함수 //
-const getSignInHostResponse =(responseBody: GetHostSignInResponseDto | ResponseDto | null)=>{
-  const message = 
-    !responseBody ? '로그인 유저 정보를 불러오는데 문제가 발생했습니다.' :
-    responseBody.code === 'NI' ? '로그인 유저 정보가 존재하지 않습니다.' :
-    responseBody.code === 'AF' ? '잘못된 접근입니다.' :
-    responseBody.code === 'DBE' ? '로그인 유저 정보를 불러오는데 문제가 발생했습니다.' : '';
+          responseBody.code === 'AF' ? '잘못된 접근입니다.' :
+            responseBody.code === 'DBE' ? '로그인 유저 정보를 불러오는데 문제가 발생했습니다.' : '';
     const isSuccessde = responseBody !== null && responseBody.code === 'SU';
-    if (!isSuccessde) return ;
+    if (!isSuccessde) return;
+    const { guestId, guestName, guestTelNumber } = responseBody as GetGuestSignInResponseDto
+    setSignInUser({ guestId, guestName, guestTelNumber });
+  }
 
-  const {hostId,hostName,hostTelNumber, hostPw, entryStatus} = responseBody as GetHostSignInResponseDto;
-  setSignInHost({hostId,hostName,hostPw,hostTelNumber, entryStatus});
-}
+  // function: get sign in host response 처리 함수 //
+  const getSignInHostResponse = (responseBody: GetHostSignInResponseDto | ResponseDto | null) => {
+    const message =
+      !responseBody ? '로그인 유저 정보를 불러오는데 문제가 발생했습니다.' :
+        responseBody.code === 'NI' ? '로그인 유저 정보가 존재하지 않습니다.' :
+          responseBody.code === 'AF' ? '잘못된 접근입니다.' :
+            responseBody.code === 'DBE' ? '로그인 유저 정보를 불러오는데 문제가 발생했습니다.' : '';
+    const isSuccessde = responseBody !== null && responseBody.code === 'SU';
+    if (!isSuccessde) return;
 
-useEffect(() => {
-  const guestAccessToken = cookies[GUEST_ACCESS_TOKEN];
+    const { hostId, hostName, hostTelNumber, hostPw, entryStatus } = responseBody as GetHostSignInResponseDto;
+    setSignInHost({ hostId, hostName, hostPw, hostTelNumber, entryStatus });
+  }
 
-  if (guestAccessToken) getGuestSignInRequest(guestAccessToken).then(getSignInGuestResponse);
-  else setSignInUser(null)
-}, [cookies[GUEST_ACCESS_TOKEN]])
+  useEffect(() => {
+    const guestAccessToken = cookies[GUEST_ACCESS_TOKEN];
 
-useEffect(()=>{
-  const hostAccessToken = cookies[HOST_ACCESS_TOKEN];
-  if(hostAccessToken) getSignInHostRequest(hostAccessToken).then(getSignInHostResponse)
+    if (guestAccessToken) getGuestSignInRequest(guestAccessToken).then(getSignInGuestResponse);
+    else setSignInUser(null)
+  }, [cookies[GUEST_ACCESS_TOKEN]])
+
+  useEffect(() => {
+    const hostAccessToken = cookies[HOST_ACCESS_TOKEN];
+    if (hostAccessToken) getSignInHostRequest(hostAccessToken).then(getSignInHostResponse)
     else setSignInHost(null);
-},[cookies[HOST_ACCESS_TOKEN]])
+  }, [cookies[HOST_ACCESS_TOKEN]])
 
   // onPathChange 함수 정의
   const handlePathChange = () => {
     console.log('Path changed!');
   };
-  
+
   return (
     <Routes>
       <Route index element={<Index />} />
       <Route path={MAIN_PATH} element={<Main />} />
       <Route path='/mypageGuest' element={<GuestMypage />} />
-      <Route path='/mypageHost' element={<HostMypage />} />
-      {/* <Route path='/mypageHost/ReservationStatus' element={<ReservationStatus titletext={''} username={''} activite={false} />} /> */}
+      <Route path='/mypagehost' element={<HostMypage />} />
+
+      {/* <Route path='/mypagehost' element={<HostMypage />}/>
+      <Route path='/mypagehost/reservationStatus' element={<ReservationStatus titletext={''} username={''} activite={false} />}/>
+      <Route path='/mypagehost/accommodationManagement' element={<AcommodationManagement />}/> */}
+
       <Route path={ACCOMMODATION_LIST_PATH} element={<AccommodationList />} />
       <Route path={ACCOMMODATION_LIST_DETAIL_PATH(':accommodationName')} element={<DetailList />} />
       <Route path={AUTH_PATH} element={<SignUp />} />
-      <Route path='/payment' element={<Payment onPathChange={() => { } }/>} />
+      <Route path='/payment' element={<Payment onPathChange={() => { }} />} />
       <Route path={FINDID_PATH} element={<FindId />} />
       <Route path='/roomly-company' element={<Roomly />} />
-      <Route path='/adminHost' element={<HostEnrollmentapproval/>}/>
-      <Route path='/adminAccommodation' element={<Accommodationenrollmentapproval/>}/>
-      <Route path='/faq' element={<FAQ/>}/>
-
-      // ! 자식 요소로 경로 넣으면 화면이 안뜸. 왜 그런지 아시는 분???
-      {/* <Route path="/mypagehost/accommodations" element={<HostMypageLayout />}> */}
-            {/* <Route index element={<MyAccommodationManagement/>} />
-            <Route path="register" element={<HostAccommodationRegister />} /> */}
-      {/* </Route> */}
-
-
-      <Route path='/mypagehost/accommodations' element={<MyAccommodationManagementView/>}/>    
-      <Route path='/mypagehost/accommodations/register' element={<HostAccommodationRegister/>}/>
-      <Route path='/mypagehost/accommodations/edit' element={<HostAccommodationRegister/>}/>
-      <Route path='/mypagehost/accommodations/showDetailList' element={<ShowDetailList/>}/>
-
-
+      <Route path='/adminHost' element={<HostEnrollmentapproval />} />
+      <Route path='/adminAccommodation' element={<Accommodationenrollmentapproval />} />
+      <Route path='/faq' element={<FAQ />} />
 
       <Route path='*' element={<Index />} />
-      <Route path='/test' element= {<BookingList />}/>
+      <Route path='/test' element={<BookingList />} />
     </Routes>
 
   );

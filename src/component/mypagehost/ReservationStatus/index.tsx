@@ -1,6 +1,10 @@
 import React, { ChangeEvent, useEffect, useState } from 'react';
 import './style.css';
+import MypageInputBox from 'src/component/input/mypageinput';
+
 import HostList from '../ReservationStatusList';
+import ReservationStatusList from '../ReservationStatusList';
+
 
 
 interface Props {
@@ -41,7 +45,7 @@ export default function ReservationStatus({ titletext, username, activite }: Pro
 
     // 현재 페이지에 표시할 BookingList 컴포넌트 배열
     const currentItems = Array(totalItems)
-        .fill(<HostList />)
+        .fill(<ReservationStatusList />)
         .slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage);
 
     // 페이지 번호 배열 생성
@@ -65,9 +69,9 @@ export default function ReservationStatus({ titletext, username, activite }: Pro
                     </div>
                     <div className="pagination">
                         {/* 이전 버튼 */}
-                        <button
-                            className="page-arrow"
-                            onClick={() => handlePageChange(currentPage - 1)}
+                        <button 
+                            className="page-arrow" 
+                            onClick={() => handlePageChange(currentPage - 1)} 
                             disabled={currentPage === 1}
                         >
                             &lt;
@@ -85,9 +89,9 @@ export default function ReservationStatus({ titletext, username, activite }: Pro
                         ))}
 
                         {/* 다음 버튼 */}
-                        <button
-                            className="page-arrow"
-                            onClick={() => handlePageChange(currentPage + 1)}
+                        <button 
+                            className="page-arrow" 
+                            onClick={() => handlePageChange(currentPage + 1)} 
                             disabled={currentPage === totalPages}
                         >
                             &gt;
@@ -97,5 +101,4 @@ export default function ReservationStatus({ titletext, username, activite }: Pro
             )}
         </>
     );
-
 }

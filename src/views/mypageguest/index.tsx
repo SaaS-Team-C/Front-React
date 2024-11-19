@@ -43,9 +43,9 @@ export default function GuestMypage() {
 
     const testValue = true;
 
-    useEffect(() => {
-        if (!cookies['guestAccessToken']) navigator(MAIN_PATH);
-    }, [Topbar]);
+    // useEffect(() => {
+    //     if (!cookies['guestAccessToken']) navigator(MAIN_PATH);
+    // }, [Topbar]);
 
     const ConSortArea = styled.div`
     display: flex;
