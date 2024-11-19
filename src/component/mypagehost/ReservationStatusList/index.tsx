@@ -4,13 +4,12 @@ import './style.css'
 import { LsisuerImage } from 'src/resources/images/leisure';
 import { GetHostAccommodationListResponseDto } from 'src/apis/hostmypage/dto/response/GetHostAccommodationListResponseDto';
 import { ResponseDto } from 'src/apis/hostmypage';
-import { GUEST_ACCESS_TOKEN, HOST_ACCESS_TOKEN } from 'src/constants';
+import { HOST_ACCESS_TOKEN } from 'src/constants';
 import { useCookies } from 'react-cookie';
 import { SignInHost } from 'src/stores';
 
-import { getHostReservationListRequest } from 'src/apis';
-import { GetReservationStatusListResponseDto } from 'src/apis/hostmypage/dto/response/GetreservationstatuslistResponseDto';
 import { ReservationStatus } from 'src/apis/hostmypage/dto/response/ReservationStatus';
+import { GetReservationStatusListResponseDto } from 'src/apis/hostmypage/dto/response/GetReservationStatusListResponseDto';
 
 interface Reservation {
     guestName: string;
@@ -65,7 +64,7 @@ const getHostReservationListResponse = (responseBody: GetReservationStatusListRe
 
     const hostId = signInHost.hostId;
 
-    getHostReservationListRequest(hostId, hostAccessToken)
+    // getHostReservationListRequest(hostId, hostAccessToken)
         // .then(getHostReservationListResponse); // 응답 처리
 }, [cookies, signInHost]);
 

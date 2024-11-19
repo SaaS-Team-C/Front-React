@@ -9,6 +9,7 @@ import { ChangeGuestPwRequest } from 'src/apis/login';
 import { useNavigate } from 'react-router';
 import { useCookies } from 'react-cookie';
 import { ResponseDto } from 'src/apis/guestmypage';
+import { GUEST_ACCESS_TOKEN } from 'src/constants';
 
 interface Props {
     titletext: string;
@@ -151,13 +152,14 @@ export default function Information({ titletext, username, activite }: Props) {
 
 
     const onGuestPasswordChangeHandler = async () => {
+            const guestAccessToken = cookies[GUEST_ACCESS_TOKEN];
     
             const requestBody: GuestPwChangeRequestDto = {
                 currentGuestPw: currentPassword,
                 changeGuestPw: guestPassword
             };
 
-            ChangeGuestPwRequest(guestId, requestBody).then(passwordChangeResponse);
+            ChangeGuestPwRequest(guestId, requestBody, guestAccessToken).then(passwordChangeResponse);
         }
 
         const passwordChangeResponse = (responseBody: ResponseDto | null) => {
@@ -173,7 +175,7 @@ export default function Information({ titletext, username, activite }: Props) {
                 return;
             }
             navigator('/main')
-            removeCookies('accessToken')
+            removeCookies('guestAccessToken')
         };
     
 
@@ -189,7 +191,7 @@ export default function Information({ titletext, username, activite }: Props) {
 
     // 비밀번호 변경 버튼 변경 활성화 처리 //
     useEffect(() => {
-        if(currentPassword && guestPassword && guestPasswordCheck) {
+        if(currentPassword && guestPassword && guestPasswordCheck && !passwordCheckMessageError) {
             setPwButtonBoolean(true)
         } else {
             setPwButtonBoolean(false)

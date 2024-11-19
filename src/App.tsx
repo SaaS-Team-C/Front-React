@@ -8,7 +8,6 @@ import Payment from './views/payment';
 
 import { GUEST_ACCESS_TOKEN, ACCOMMODATION_LIST_DETAIL_PATH, ACCOMMODATION_LIST_PATH, AUTH_PATH, FINDID_PATH, MAIN_PATH, HOST_ACCESS_TOKEN } from './constants';
 
-import { RegionImages } from './resources/images/region';
 import { useEffect } from 'react';
 import { useCookies } from 'react-cookie';
 
@@ -35,8 +34,6 @@ import { SignInHost, SignInUser } from './stores';
 
 
 import { GetHostSignInResponseDto } from './apis/login/dto';
-
-import List from './component/accomodation/list';
 import { getSignInHostRequest } from './apis/signUp';
 import { getGuestSignInRequest } from './apis/login';
 import GetGuestSignInResponseDto from './apis/login/dto/response/get-guest-sign-in.response.dto';
@@ -57,9 +54,9 @@ import MyInfoManagement from './component/mypagehost/myinfo';
 function Index() {
   const navigator = useNavigate();
 
-  // useEffect(() => {
-  //   navigator('/main');
-  // }, []);
+  useEffect(() => {
+    navigator('/main');
+  }, []);
 
   return (
     <></>
@@ -161,7 +158,6 @@ export default function App() {
       <Route path='/faq' element={<FAQ/>}/>      
 
       <Route path='*' element={<Index />} />
-      <Route path='/test' element={<BookingList />} />
     </Routes>
 
   );

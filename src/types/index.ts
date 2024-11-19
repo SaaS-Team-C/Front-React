@@ -6,6 +6,8 @@ import Accommodations from "./accommodation/accommodations.interface";
 import Category from "./accommodation/category.interface";
 import SearchedAccommodation from "./accommodation/search-accommodation-list.interface";
 import SignInUser from './sign-in-user.interface';
+import UseInformation from './mypage/reservationList.interface';
+import BookMarkListType from './mypage/bookingList.interface';
 
 export type {
   AccommodationListType,
@@ -14,5 +16,6 @@ export type {
   SearchedAccommodation,
   Accommodations,
   SignInUser,
-  Accommodation
+  UseInformation,
+  BookMarkListType
 };
