@@ -11,6 +11,9 @@ import axios from "axios";
 import "./style.css";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
+import { Accommodations } from "src/types";
+import Rooms from "src/types/accommodation/rooms.interface";
+import { useCookies } from "react-cookie";
 
 // interface: 숙소 이미지 모달 + 슬라이더 //
 interface AccommodationImagesProps {
@@ -25,6 +28,7 @@ const AccommodationHostDetailTopImages: React.FC<AccommodationImagesProps> = ({
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [currentImage, setCurrentImage] = useState(0);
   const sliderRef = useRef<Slider>(null);
+  const [cookies, setCookie] = useCookies();
 
   // effect: 서버에서 이미지 데이터 가져오는 함수 //
   useEffect(() => {
@@ -159,19 +163,33 @@ interface AccommodationDetailTopProps {
   onReviewButtonClick: () => void;
 }
 
-const AccommodationHostDetailTopCard: React.FC<AccommodationDetailTopProps> = ({
-  name,
-  stars,
-  price,
-  reviewScore,
-  reviewCount,
-  reviewSnippet,
-  services,
-  location,
-  mapLink,
-  accommodationType,
-  onReviewButtonClick, 
-}) => {
+interface AccommodationDetailProps {
+  //! dto 타입 백엔드와 맞춰서 수정 필요. 특히 카테고리(=서비스) 부분
+  accommodation: Accommodations;
+  accommodationImages: string[];
+  rooms:Rooms[]
+  roomImages: string[]
+}
+
+// const AccommodationHostDetailTopCard: React.FC<AccommodationDetailTopProps> = ({
+//   name,
+//   stars,
+//   price,
+//   reviewScore,
+//   reviewCount,
+//   reviewSnippet,
+//   services,
+//   location,
+//   mapLink,
+//   accommodationType,
+//   onReviewButtonClick, 
+// }) => {
+  const AccommodationHostDetailTopCard: React.FC<AccommodationDetailProps> = ({
+    accommodation,
+  accommodationImages,
+  rooms,
+  roomImages,
+  }) => {
   // state: 상태 관리 //
   const [isFacilityModalOpen, setIsFacilityModalOpen] = useState(false);
 
@@ -192,13 +210,13 @@ const AccommodationHostDetailTopCard: React.FC<AccommodationDetailTopProps> = ({
       <div className="header">
         <div className="title-section">
           <div className="accommodation-type-container">
-            <div className="accommodation-type">{accommodationType}</div>
-            <div className="stars">{"★".repeat(stars)}</div>
+            <div className="accommodation-type">{accommodation.accommodationType}</div>
+            <div className="stars">{"★".repeat(accommodation.accommodationGradeAverage)}</div>
           </div>
-          <div className="accommodation-name">{name}</div>
+          <div className="accommodation-name">{accommodation.accommodationName}</div>
         </div>
         <div className="price-section">
-          <div className="accommodation-price">{price}원~ </div>
+          <div className="accommodation-price">{accommodation.minRoomPrice}원~ </div>
           <div className="price-per-night"> /1박</div>
         </div>
       </div>
@@ -206,13 +224,13 @@ const AccommodationHostDetailTopCard: React.FC<AccommodationDetailTopProps> = ({
       <div id="content">
         <div className="review-section">
           <div className="review-score-box">
-            <div className="review-score">⭐ {reviewScore}</div>
-            <div className="heder-title">{reviewCount}개의 리뷰</div>
+            <div className="review-score">⭐ {accommodation.accommodationGradeAverage}</div>
+            <div className="heder-title">{accommodation.countReview}개의 리뷰</div>
             <div className="right-arrow-icon-box">
               <button
                 className="right-arrow-icon-button"
                 onClick={() => {
-                  onReviewButtonClick();
+                  // onReviewButtonClick();
                 }}
               ></button>
             </div>
@@ -270,7 +288,7 @@ const AccommodationHostDetailTopCard: React.FC<AccommodationDetailTopProps> = ({
           </div>
           <div className="address-container">
             <div className="address-icon"></div>
-             <div className="accommodation-address">{location}</div>
+             <div className="accommodation-address">{accommodation.categoryArea}</div>
           </div>
           <button className="show-map-detail-button">지도보기</button>
         </div>
@@ -303,65 +321,66 @@ export default function AccommodationHostDetailTop({
   // const [accommodationDetail, setAccommodationDetail] = useState<AccommodationDetail | null>(null);
 
   // 테스트용 (테스트 끝나면 삭제 예정)
-  const [accommodationDetail, setAccommodationDetail] =
-    useState<AccommodationDetail | null>({
-      name: "Best Western Plus",
-      stars: 4,
-      accommodationType: "호텔",
-      price: "100,000",
-      reviewScore: 4.5,
-      reviewCount: 128,
-      reviewSnippet: [
-        "아주 훌륭한 숙소입니다",
-        "숙소가 정말 깨끗하고 교통편도 좋아서 차 없이 방문하기에도 좋았어요, 유명 관광지와 거리가 매우 가까운 숙소이며 직원 분들이 친절하시고 조식도 정말 맛있었습니다.",
-      ],
-      services: [
-        "WiFi",
-        "수영장",
-        "주차",
-        "애견 동반 가능",
-        "실내 스파",
-        "금연 객실",
-        "바베큐",
-      ],
-      location: "부산광역시 부산진구 중앙대로 668 에이원프라자 빌딩 4층",
-      mapLink: "https://maps.example.com",
-      images: [
-        // require("./images/accommodationlist/Best-Western-Plus-Congress-Hotel-4-800x600.jpg"),
-        // require("./images/accommodationlist/ibis-Yerevan-Center-4-800x600.jpg"),
-        // require("./images/Best-Western-Plus-Congress-Hotel-4-800x600.jpg"),
-        // require("./images/Europe-Hotel-4-800x600.jpg"),
-        // require("./images/ibis-Yerevan-Center-4-800x600.jpg"),
-        // require("./images/Best-Western-Plus-Congress-Hotel-4-800x600.jpg"),
-        // require("./images/Europe-Hotel-4-800x600.jpg"),
+  // const [accommodationDetail, setAccommodationDetail] =
+  //   useState<AccommodationDetail | null>({
+  //     name: "Best Western Plus",
+  //     stars: 4,
+  //     accommodationType: "호텔",
+  //     price: "100,000",
+  //     reviewScore: 4.5,
+  //     reviewCount: 128,
+  //     reviewSnippet: [
+  //       "아주 훌륭한 숙소입니다",
+  //       "숙소가 정말 깨끗하고 교통편도 좋아서 차 없이 방문하기에도 좋았어요, 유명 관광지와 거리가 매우 가까운 숙소이며 직원 분들이 친절하시고 조식도 정말 맛있었습니다.",
+  //     ],
+  //     services: [
+  //       "WiFi",
+  //       "수영장",
+  //       "주차",
+  //       "애견 동반 가능",
+  //       "실내 스파",
+  //       "금연 객실",
+  //       "바베큐",
+  //     ],
+  //     location: "부산광역시 부산진구 중앙대로 668 에이원프라자 빌딩 4층",
+  //     mapLink: "https://maps.example.com",
+  //     images: [
+  //       // require("./images/accommodationlist/Best-Western-Plus-Congress-Hotel-4-800x600.jpg"),
+  //       // require("./images/accommodationlist/ibis-Yerevan-Center-4-800x600.jpg"),
+  //       // require("./images/Best-Western-Plus-Congress-Hotel-4-800x600.jpg"),
+  //       // require("./images/Europe-Hotel-4-800x600.jpg"),
+  //       // require("./images/ibis-Yerevan-Center-4-800x600.jpg"),
+  //       // require("./images/Best-Western-Plus-Congress-Hotel-4-800x600.jpg"),
+  //       // require("./images/Europe-Hotel-4-800x600.jpg"),
 
-        require("./guamHayattoutdoor.jpg"),
-        require("./00fee112.webp"),
-        require("./1e934a37.avif"),
-        require("./376a71e5.webp"),
-        require("./3a94d2de.avif"),
-        require("./6410d584.webp"),
-        require("./7d463801.avif"),
-        require("./9015f3a4.avif"),
-        require("./970ac34e.avif"),
-        require("./9841e722.webp"),
-        require("./f4dd89a9.webp"),
-        require("./hayattExteria.jpg"),
-      ],
-    });
+  //       require("./guamHayattoutdoor.jpg"),
+  //       require("./00fee112.webp"),
+  //       require("./1e934a37.avif"),
+  //       require("./376a71e5.webp"),
+  //       require("./3a94d2de.avif"),
+  //       require("./6410d584.webp"),
+  //       require("./7d463801.avif"),
+  //       require("./9015f3a4.avif"),
+  //       require("./970ac34e.avif"),
+  //       require("./9841e722.webp"),
+  //       require("./f4dd89a9.webp"),
+  //       require("./hayattExteria.jpg"),
+  //     ],
+  //   });
 
   useEffect(() => {
-    const fetchAccommodationDetail = async () => {
-      try {
-        const response = await axios.get(
-          `/api/accommodations/${accommodation_name}/details`
-        );
-        setAccommodationDetail(response.data);
-      } catch (error) {
-        console.error("Error fetching accommodation details:", error);
-      }
-    };
-    fetchAccommodationDetail();
+    // const fetchAccommodationDetail = async () => {
+    //   try {
+    //     const response = await axios.get(
+    //       `/api/accommodations/${accommodation_name}/details`
+    //     );
+    //     setAccommodationDetail(response.data);
+    //   } catch (error) {
+    //     console.error("Error fetching accommodation details:", error);
+    //   }
+    // };
+    // fetchAccommodationDetail();
+    const hostAccessToken = cookies[]
   }, [accommodation_name]);
 
   if (!accommodationDetail) return <p>Loading...</p>; // 로딩 표시

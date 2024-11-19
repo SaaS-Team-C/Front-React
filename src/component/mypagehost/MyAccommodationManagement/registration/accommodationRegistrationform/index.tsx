@@ -17,7 +17,7 @@ interface Accommodation {
   location: string;
   images: File[];
   selectedImage?: File;
-  type?: string;
+  type: string;
   facilities: string[];
   rooms: Room[];
 }
@@ -58,7 +58,7 @@ const HostAccommodationRegisterForm: React.FC = () => {
     rooms: [],
   });
 
-  
+
 
   // state: 상태 관리 //
   const [nameError, setNameError] = useState<string>("");
@@ -136,7 +136,7 @@ const HostAccommodationRegisterForm: React.FC = () => {
   const handleMainImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (file) {
-      setAccommodation((prev) => ({ ...prev, selectedImage: file }));
+      setAccommodaitonMainImageFile(file);
     }
   };
 
@@ -152,7 +152,7 @@ const HostAccommodationRegisterForm: React.FC = () => {
         setImageError("");
       }
 
-      setAccommodation((prev) => ({ ...prev, images: selectedFiles }));
+      setAccommodaitonImages((prev) => ({ ...prev, images: selectedFiles }));
 
       const previews = selectedFiles.map((file) => {
         const reader = new FileReader();
@@ -357,9 +357,9 @@ const HostAccommodationRegisterForm: React.FC = () => {
 
       const requestBody: PostAccommodationRequestDto = {
 
-        accommodationName,
+        accommodationName: accommodation.name,
         accommodationMainImage: url,
-        accommodationType,
+        accommodationType: accommodation.type,
         accommodationIntroduce,
         accommodationImages: accommodationImages,
         accommodationAddress,
