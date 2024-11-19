@@ -173,6 +173,10 @@ export const POST_RESERVATION_API_URL = `${RESERVATION_MODULE_URL}/createReserva
 
 // 게스트 예약 현황 리스트
 export const GET_RESERVATION_LIST_API_URL = (guestId:string)=> `${RESERVATION_MODULE_URL}/reservation-status/${guestId}`;
+
+// 호스트 예약 현황 리스트
+export const GET_RESERVATION_STATUS_LIST_API_URL = (hostId: string) => `${RESERVATION_MODULE_URL}/host-reservation-status/${hostId}`;
+
 // variable: 리뷰 모듈
 export const REVIEW_MODULE_URL = `${ROOMLY_API_DOMAIN}/api/roomly/reviews`
 // 리뷰작성

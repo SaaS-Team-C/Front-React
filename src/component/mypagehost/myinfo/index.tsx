@@ -179,7 +179,7 @@ export default function Information({ titletext, username, activite }: Props) {
 
 
 
-    // 게스트 이름 불러오기
+    // 호스트 이름 불러오기
     useEffect(() => {
         if (!signInHost) return;
         setGuestName(signInHost.hostName)

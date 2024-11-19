@@ -362,7 +362,7 @@ export default function Topbar() {
                                 />
                             </div>
                         </div>}
-                        {mode === 'host' && <div>
+                        {mode === 'host' && <div className='input-log-box'>
                             <div className='input-log'>
                                 <div className='log-in-id-icon'></div>
                                 <InputBox
