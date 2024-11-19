@@ -8,7 +8,6 @@ import Payment from './views/payment';
 
 import { GUEST_ACCESS_TOKEN, ACCOMMODATION_LIST_DETAIL_PATH, ACCOMMODATION_LIST_PATH, AUTH_PATH, FINDID_PATH,  MAIN_PATH, HOST_ACCESS_TOKEN } from './constants';
 
-import { RegionImages } from './resources/images/region';
 import { useEffect } from 'react';
 import { useCookies } from 'react-cookie';
 
@@ -17,9 +16,6 @@ import DetailList from './component/accomodation/detaillist';
 
 import FAQ from './views/faq';
 import HostAccommodationRegister from './component/mypagehost/MyAccommodationManagement/registration';
-
-
-import BookingList from './component/mypage/bookinglist';
 
 import HostEnrollmentapproval from './views/admin/hostenrollmentapproval/index';
 import FindId from './views/find';
@@ -36,8 +32,6 @@ import {SignInHost, SignInUser} from './stores';
 
 
 import { GetHostSignInResponseDto } from './apis/login/dto';
-
-import List from './component/accomodation/list';
 import { getSignInHostRequest } from './apis/signUp';
 import { getGuestSignInRequest } from './apis/login';
 import GetGuestSignInResponseDto from './apis/login/dto/response/get-guest-sign-in.response.dto';
@@ -189,7 +183,6 @@ useEffect(()=>{
 
 
       <Route path='*' element={<Index />} />
-      <Route path='/test' element= {<BookingList />}/>
     </Routes>
 
   );

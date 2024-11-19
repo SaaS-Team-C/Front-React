@@ -1,7 +1,5 @@
 import React, { ChangeEvent, useEffect, useState } from 'react';
 import './style.css';
-import MypageInputBox from 'src/component/input/mypageinput';
-import BookingList from 'src/component/mypage/bookinglist';
 import HostList from '../ReservationStatusList';
 
 

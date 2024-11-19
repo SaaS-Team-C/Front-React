@@ -1,13 +1,14 @@
 import axios, { AxiosResponse } from "axios";
 
 import { GetHostAccommodationListResponseDto } from "./hostmypage/dto/response/GetHostAccommodationListResponseDto";
-import { GET_ACCOMMODATION_API_URL, GET_ACCOMMODATION_LIST_API_URL, GET_RESERVATION_LIST_API_URL, HOST_ACCOMMODATION_LIST_API_URL, POST_ACCOMMODATION_MAIN_IMAGE_API_URL } from "src/constants";
+import { GET_ACCOMMODATION_API_URL, GET_ACCOMMODATION_LIST_API_URL, GET_BOOKMARK_LIST_API_URL, GET_RESERVATION_LIST_API_URL, HOST_ACCOMMODATION_LIST_API_URL, POST_ACCOMMODATION_MAIN_IMAGE_API_URL, POST_REVIEW_API_URL } from "src/constants";
 
 import { GetAccommodationListResponseDto } from "./hostmypage/dto/response";
 import GetAccommodationResponseDto from "./hostmypage/dto/response/GetAccommodationResponseDto";
 import { ResponseDto } from "./guestmypage";
-import { GetReservationListResponseDto } from './guestmypage/dto/response/ReservationList.response.dto';
-
+import { GetReservationListResponseDto } from "./guestmypage/dto/response/get-reservationlist.response.dto";
+import { GetBookMarkListResponseDto } from "./guestmypage/dto/response/get-bookmarklist.response.dto";
+import PostReviewRequestDto from './hostmypage/dto/request/post-review.request.dto';
 
 
 // variable: API URL 상수 //
@@ -76,3 +77,16 @@ export const getReservationListRequest = async(userId: string, accessToken:strin
     return responseBody;
 }
 
+export const getBookMarkListRequest = async(userId: string, accessToken:string) => {
+    const responseBody = axios.get(GET_BOOKMARK_LIST_API_URL(userId), bearerAuthorization(accessToken))
+    .then(responseDataHandler<GetBookMarkListResponseDto>)
+    .catch(responseErrorHandler)
+    return responseBody;
+}
+
+export const PostReviewRequest = async(userId: string, requestBody: PostReviewRequestDto, accessToken:string) => {
+    const responseBody = await axios.post(POST_REVIEW_API_URL(userId), requestBody, bearerAuthorization(accessToken))
+    .then(responseDataHandler<ResponseDto>)
+    .catch(responseErrorHandler)
+    return responseBody;
+}
