@@ -13,12 +13,15 @@ import { HOST_ACCESS_TOKEN } from "src/constants";
 import { getAccommodationDetailRequest } from "src/apis";
 import { ResponseDto } from "src/apis/guestmypage";
 import GetAccommodationResponseDto from "src/apis/hostmypage/dto/response/GetAccommodationResponseDto";
+import { useSearchParams } from "react-router-dom";
 
 export default function DetailList() {
 
   const { accommodationName } = useParams();
+  const [searchParams] = useSearchParams();
+
   const [cookies] = useCookies();
-  const [accommodation, setAccommodation] = useState<GetAccommodationResponseDto | null>(null);
+  const [accommodation, setAccommodation] = useState<GetAccommodationResponseDto>();
 
   const accessToken = cookies[HOST_ACCESS_TOKEN];
 
@@ -42,8 +45,11 @@ export default function DetailList() {
   }
 
   useEffect(() => {
-      if (!accessToken || !accommodationName) return;
-      getAccommodationDetailRequest(accommodationName, accessToken).then(getAccommodaitonResponse);
+    const guestAceessToken = cookies[GUEST_ACCESS_TOKEN]
+      if (!guestAceessToken || !accommodationName) return;
+      const checkInDay = searchParams.get("start") as string;
+      const checkOutDay = searchParams.get("end")as string;
+      getAccommodationDetailRequest(accommodationName,checkInDay,checkOutDay,accessToken).then(getAccommodaitonResponse);
   }, [accommodationName])
 
   if (!accommodation) return null;

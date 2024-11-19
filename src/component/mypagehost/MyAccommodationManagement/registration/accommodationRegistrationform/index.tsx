@@ -373,15 +373,13 @@ const HostAccommodationRegisterForm: React.FC = () => {
         categoryCarPark,
         categoryPool,
         useInformations: useInformations,
-        rooms:roomList,
-        roomImages: roomImages
+        rooms:roomList
       }
       const hostAccessToken = cookies[HOST_ACCESS_TOKEN]
       if (!hostAccessToken) return navigator('/main');
 
       postAccommodationRequest(requestBody, hostAccessToken).then(postAccommodationResposne);
 
-      
     }
   };
 
