@@ -23,7 +23,7 @@ export default function DetailList() {
   const [cookies] = useCookies();
   const [accommodation, setAccommodation] = useState<GetAccommodationResponseDto>();
 
-  const accessToken = cookies[HOST_ACCESS_TOKEN];
+  const guestAccessToken = cookies[GUEST_ACCESS_TOKEN];
 
   const latitude = 37.7749; // 임의의 위도 값
   const longitude = -122.4194; // 임의의 경도 값
