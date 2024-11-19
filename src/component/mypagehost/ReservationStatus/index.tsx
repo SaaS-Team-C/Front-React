@@ -1,8 +1,10 @@
 import React, { ChangeEvent, useEffect, useState } from 'react';
 import './style.css';
 import MypageInputBox from 'src/component/input/mypageinput';
-import BookingList from 'src/component/mypage/bookinglist';
+
 import HostList from '../ReservationStatusList';
+import ReservationStatusList from '../ReservationStatusList';
+
 
 
 interface Props {
@@ -43,7 +45,7 @@ export default function ReservationStatus({ titletext, username, activite }: Pro
 
     // 현재 페이지에 표시할 BookingList 컴포넌트 배열
     const currentItems = Array(totalItems)
-        .fill(<HostList />)
+        .fill(<ReservationStatusList />)
         .slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage);
 
     // 페이지 번호 배열 생성
@@ -52,17 +54,17 @@ export default function ReservationStatus({ titletext, username, activite }: Pro
     return (
         <>
             {activite && (
-                <div id="booking-wrapper">
-                    <div className="booking-title">
-                        <div className="booking-title-text">{titletext}</div>
-                        <div className="booking-title-box">
+                <div id="reservationstatus-wrapper">
+                    <div className="reservationstatus-title">
+                        <div className="reservationstatus-title-text">{titletext}</div>
+                        <div className="reservationstatus-title-box">
                             <div className="information-title-detail-username">
                                 '{username}'
                             </div>
-                            <div className="booking-title-detail">님 반갑습니다.</div>
+                            <div className="reservationstatus-title-detail">님 반갑습니다.</div>
                         </div>
                     </div>
-                    <div className="booking-main">
+                    <div className="reservationstatus-main">
                         {currentItems}
                     </div>
                     <div className="pagination">
