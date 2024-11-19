@@ -20,6 +20,5 @@ export interface PostAccommodationRequestDto{
     categoryPool: boolean;
     useInformations:UseInformations[];
     rooms:Rooms[]
-    roomImages:string[];
     
 }

@@ -57,9 +57,9 @@ import MyInfoManagement from './component/mypagehost/myinfo';
 function Index() {
   const navigator = useNavigate();
 
-  useEffect(() => {
-    navigator('/main');
-  }, []);
+  // useEffect(() => {
+  //   navigator('/main');
+  // }, []);
 
   return (
     <></>
@@ -154,7 +154,7 @@ export default function App() {
       <Route path='/mypagehost/accommodationManagement' element={<AcommodationManagement />}/> */}
 
       <Route path={ACCOMMODATION_LIST_PATH} element={<AccommodationList />} />
-      <Route path={ACCOMMODATION_LIST_DETAIL_PATH(':accommodationName')} element={<DetailList />} />
+      <Route path={ACCOMMODATION_LIST_DETAIL_PATH(':accommodationName',':checkInDay','checkOutDay')} element={<DetailList />} />
       <Route path={AUTH_PATH} element={<SignUp />} />
       <Route path='/payment' element={<Payment onPathChange={() => { }} />} />
       <Route path={FINDID_PATH} element={<FindId />} />
