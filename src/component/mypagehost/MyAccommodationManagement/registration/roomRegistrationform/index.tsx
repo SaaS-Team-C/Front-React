@@ -1,35 +1,26 @@
-import "./style.css";
-import React, { useState } from "react";
 
-interface Room {
-  roomName: string;
-  price: number;
-  checkInTime: string;
-  checkOutTime: string;
-  details: string;
-  maxGuests: number;
-  roomImages: File[];
-  selectedRoomImage?: File;
-}
+import "./style.css";
+import React, { ChangeEvent, useState } from "react";
+import Rooms from "src/types/accommodation/rooms.interface";
+
+
 
 const RoomRegister: React.FC<{
-  room: Room;
-  onChange: (updatedRoom: Room) => void;
+  room: Rooms;
+  onChange: (updatedRoom: Rooms) => void;
   onDelete: () => void;
   onCopy: () => void;
 }> = ({ room, onChange, onDelete, onCopy }) => {
-
   // state: 상태 관리 //
   const [roomNameError, setRoomNameError] = useState<string>("");
   const [roomPriceError, setRoomPriceError] = useState<string>("");
   const [roomDetailError, setDescriptionError] = useState<string>("");
   const [roomImageError, setRoomImageError] = useState<string>("");
-  const [roomImagePreviews, setRoomImagePreviews] = useState<string[]>([]);
 
   const handleChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+    event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
-    const { name, value } = e.target as HTMLInputElement | HTMLTextAreaElement;
+    const { name, value } = event.target as HTMLInputElement | HTMLTextAreaElement;
 
     // 객실명과 객실 상세 정보의 글자 수 제한 및 경고 메시지 표시
     if (name === "roomName") {
@@ -37,19 +28,21 @@ const RoomRegister: React.FC<{
         setRoomNameError("객실명은 최대 45자만 입력 가능합니다.");
       } else {
         setRoomNameError("");
-        onChange({ ...room, [name]: value });
+        onChange({ ...room, roomName: value });
       }
-    } else if (name === "details") {
+    } else if (name === "roomInfo") {
       if (value.length > 1500) {
-        setDescriptionError("객실 상세 정보는 최대 1500자 까지만 입력 가능합니다.");
+        setDescriptionError(
+          "객실 상세 정보는 최대 1500자 까지만 입력 가능합니다."
+        );
       } else {
         setDescriptionError("");
-        onChange({ ...room, [name]: value });
+        onChange({ ...room, roomInfo: value });
       }
     } else if (name === "price" || name === "maxGuests") {
       const numericValue = Math.max(
         0,
-        Math.min(parseInt(value) || 0, name === "price" ? 50000000 : 10)
+        Math.min(parseInt(value) || 0, name === "price" ? 5000000 : 100000)
       );
       onChange({ ...room, [name]: numericValue });
     } else {
@@ -57,30 +50,61 @@ const RoomRegister: React.FC<{
     }
   };
 
-  const handleRoomMainImageChange = (
-    e: React.ChangeEvent<HTMLInputElement>
-  ) => {
-    const file = e.target.files?.[0];
-    if (file) {
-      onChange({ ...room, selectedRoomImage: file });
-    }
+  const handleSelectRoomImage = (file: File) => {
+    const fileReader = new FileReader();
+    fileReader.readAsDataURL(file);
+    fileReader.onloadend = () => {
+      onChange({ ...room, roomMainImageFile: file, roomMainImagePreview: fileReader.result as string });
+    };
   };
 
-  const handleFileChange = (
-    e: React.ChangeEvent<HTMLInputElement>
-  ) => {
-    const files = e.target.files;
+  const onImageDeleteHandler = (index: number) => {
+    const updatedImages = room.roomImageFiles.filter((_, i) => i !== index);
+    const updatedPreivews = room.roomImagesPreview.filter((_, i) => i !== index);
+    onChange({ ...room, roomImageFiles: updatedImages, roomImagesPreview: updatedPreivews });
+  };
+
+  const onPriceChangeHandler = (event: ChangeEvent<HTMLInputElement>) => {
+    const { value } = event.target;
+    onChange({ ...room, roomPrice: +value });
+  }
+
+  const onCheckInTimeChangeHandler = (event: ChangeEvent<HTMLInputElement>) => {
+    const { value } = event.target;
+    onChange({ ...room, roomCheckIn: value });
+  };
+
+  const onCheckOutTimeChangeHandler = (event: ChangeEvent<HTMLInputElement>) => {
+    const { value } = event.target;
+    onChange({ ...room, roomCheckOut: value });
+  };
+
+  const onRoomTotalGuestChangeHandler = (event: ChangeEvent<HTMLInputElement>) => {
+    const { value } = event.target;
+    onChange({ ...room, roomTotalGuest: +value });
+  };
+
+  const onRoomMainImageChangeHandler = (event: ChangeEvent<HTMLInputElement>) => {
+    if (!event.target.files || !event.target.files.length) return;
+    const file = event.target.files[0];
+
+    const fileReader = new FileReader();
+    fileReader.readAsDataURL(file);
+    fileReader.onloadend = () => {
+      onChange({ ...room, roomMainImageFile: file, roomMainImagePreview: fileReader.result as string });
+    };
+  };
+
+  const onRoomImageFilesChangeHandler = (event: ChangeEvent<HTMLInputElement>) => {
+    const files = event.target.files;
     if (files) {
       const selectedFiles = Array.from(files);
-
       if (selectedFiles.length < 3) {
-        setRoomImageError("최소 3장의 객실 사진을 선택해야 합니다.");
+        setRoomImageError("최소 3장의 이미지를 선택해야 합니다.");
         return;
       } else {
         setRoomImageError("");
       }
-
-      onChange({ ...room, roomImages: selectedFiles });
 
       const previews = selectedFiles.map((file) => {
         const reader = new FileReader();
@@ -93,21 +117,9 @@ const RoomRegister: React.FC<{
       });
 
       Promise.all(previews).then((results) => {
-        setRoomImagePreviews(results);
+        onChange({ ...room, roomImageFiles: selectedFiles, roomImagesPreview: results });
       });
     }
-  };
-
-  const handleSelectRoomImage = (image: File) => {
-    onChange({ ...room, selectedRoomImage: image });
-  };
-
-  const handleDeleteImage = (index: number) => {
-    const updatedImages = room.roomImages.filter((_, i) => i !== index);
-    onChange({ ...room, roomImages: updatedImages });
-    setRoomImagePreviews((prevPreviews) =>
-      prevPreviews.filter((_, i) => i !== index)
-    );
   };
 
   return (
@@ -131,8 +143,8 @@ const RoomRegister: React.FC<{
           <input
             type="number"
             name="price"
-            value={room.price}
-            onChange={handleChange}
+            value={room.roomPrice}
+            onChange={onPriceChangeHandler}
             required
             min="0"
             max="50000000"
@@ -145,8 +157,8 @@ const RoomRegister: React.FC<{
           <input
             type="time"
             name="checkInTime"
-            value={room.checkInTime}
-            onChange={handleChange}
+            value={room.roomCheckIn}
+            onChange={onCheckInTimeChangeHandler}
             required
           />
         </label>
@@ -157,8 +169,8 @@ const RoomRegister: React.FC<{
           <input
             type="time"
             name="checkOutTime"
-            value={room.checkOutTime}
-            onChange={handleChange}
+            value={room.roomCheckOut}
+            onChange={onCheckOutTimeChangeHandler}
             required
           />
         </label>
@@ -167,15 +179,13 @@ const RoomRegister: React.FC<{
         <label>
           객실 상세 정보:
           <textarea
-            name="details"
-            value={room.details}
+            name="roomInfo"
+            value={room.roomInfo}
             onChange={handleChange}
             required
           />
         </label>
-        {roomDetailError && (
-          <p style={{ color: "red" }}>{roomDetailError}</p>
-        )}
+        {roomDetailError && <p style={{ color: "red" }}>{roomDetailError}</p>}
       </div>
       <div>
         <label>
@@ -183,8 +193,8 @@ const RoomRegister: React.FC<{
           <input
             type="number"
             name="maxGuests"
-            value={room.maxGuests}
-            onChange={handleChange}
+            value={room.roomTotalGuest}
+            onChange={onRoomTotalGuestChangeHandler}
             required
             min="0"
             max="10"
@@ -194,11 +204,11 @@ const RoomRegister: React.FC<{
       <div>
         <label>
           객실 대표 이미지:
-          <input type="file" onChange={handleRoomMainImageChange} />
+          <input type="file" onChange={onRoomMainImageChangeHandler} />
         </label>
-        {room.selectedRoomImage && (
+        {room.roomImages && (
           <img
-            src={URL.createObjectURL(room.selectedRoomImage)}
+            src={room.roomMainImagePreview}
             alt="객실 대표 이미지"
             style={{ width: "100px", height: "100px" }}
           />
@@ -207,13 +217,11 @@ const RoomRegister: React.FC<{
       <div>
         <label>
           객실 사진 업로드:
-          <input type="file" onChange={handleFileChange} multiple />
+          <input type="file" onChange={onRoomImageFilesChangeHandler} multiple />
         </label>
-        {roomImageError && (
-          <p style={{ color: "red" }}>{roomImageError}</p>
-        )}
+        {roomImageError && <p style={{ color: "red" }}>{roomImageError}</p>}
         <div className="image-wrapper">
-          {roomImagePreviews.map((preview, index) => (
+          {room.roomImagesPreview.map((preview, index) => (
             <div key={index}>
               <img
                 src={preview}
@@ -222,14 +230,11 @@ const RoomRegister: React.FC<{
               />
               <button
                 type="button"
-                onClick={() => handleSelectRoomImage(room.roomImages[index])}
+                onClick={() => handleSelectRoomImage(room.roomImageFiles[index])}
               >
                 대표 이미지로 선택
               </button>
-              <button
-                type="button"
-                onClick={() => handleDeleteImage(index)}
-              >
+              <button type="button" onClick={() => onImageDeleteHandler(index)}>
                 삭제
               </button>
             </div>

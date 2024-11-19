@@ -19,7 +19,5 @@ export interface PostAccommodationRequestDto{
     categoryCarPark: boolean;
     categoryPool: boolean;
     useInformations:UseInformations[];
-    rooms:Rooms[]
-    roomImages:string[];
-    
+    rooms:Rooms[];
 }

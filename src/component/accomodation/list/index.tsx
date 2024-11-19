@@ -12,9 +12,6 @@ import { useFilterStore } from "src/stores";
 import { ResponseDto } from "src/apis/guestmypage";
 
 
-
-
-
 const List = () => {
   
   const originalAallAccommodationListRef = useRef<Accommodations[]>([]);
