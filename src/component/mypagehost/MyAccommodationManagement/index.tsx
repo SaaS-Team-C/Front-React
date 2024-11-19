@@ -87,7 +87,7 @@ const AccommodationManagementPage: React.FC = () => {
   return (
     <div className="accommodation-management-page">
       <h2 className="page-title">내 숙소 정보 관리</h2>
-      <p className="page-subtitle">• 호스트님의 숙소 현황을 확인해보세요!</p>
+      <p className="page-subtitle"> {signInHost?.hostName}호스트님의 숙소 현황을 확인해보세요!</p>
       <div className="tab-container">
         <button
           className={`tab-button ${selectedTab === "운영중" ? "active" : ""}`}
@@ -193,9 +193,8 @@ const AccommodationCard: React.FC<AccommodationCardProps> = ({ accommodations })
 export function MyAccommodationManagement() {
   return (
     <>
-      <Topbar />
+      
       <div className="test">
-        <HostMypageLayout />
         <div id="host-accommodation-register-wrapper">
           <AccommodationManagementPage />
         </div>

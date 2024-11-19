@@ -3,6 +3,7 @@ import { ResponseDto } from "src/apis/accommodation/dto/response";
 
 import { UseInformation } from "./UseInformation";
 import Room from "./Room";
+import UseInformations from "src/types/accommodation/use-informaion.interface";
 
 
 export default interface GetAccommodationResponseDto extends ResponseDto {
@@ -15,7 +16,6 @@ export default interface GetAccommodationResponseDto extends ResponseDto {
   accommodationIntroduce: string;
   useInformations: UseInformation[];
   roomList: Room[];
-  roomSubList: string[]
   categoryArea: string;
   categoryPet: boolean;
   categoryNonSmokingArea: boolean;

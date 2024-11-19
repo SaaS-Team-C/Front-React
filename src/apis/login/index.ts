@@ -74,4 +74,3 @@ export const getGuestSignInRequest = async(accessToken: string) => {
         .catch(responseErrorHandler)
     return responseBody;
 }
-

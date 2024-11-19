@@ -3,18 +3,13 @@ import { useNavigate } from 'react-router'
 import './style.css'
 import { LsisuerImage } from 'src/resources/images/leisure';
 
-export default function HostList() {
+export default function ReservationStatusList() {
 
     const today: Date = new Date();
 
     const todaytext: string = today.toString();
 
     const navigator = useNavigate();
-
-
-
-
-
 
     /** 
      * event handler: 클릭시 관련된 숙소 상세 페이지로 이동  
@@ -29,29 +24,33 @@ export default function HostList() {
 
 
     return (
-        <div id='hostlist-warpper'>
-            <div className='hostlist-box'>
-                <div className='hostlist-list-top-deatail'>
-                    <div className='hostlist-date'>{todaytext}</div>
+        <div id='reservationstatus2-warpper'>
+            <div className='reservationstatus2-box'>
+                <div className='reservationstatus2-list-top-deatail'>
+                    <div className='reservationstatus2-date'>{todaytext}</div>
                 </div>
-                <div className='hostlist-list-main-detail'>
-                    <img className='hostlist-list-image' src={LsisuerImage[1]} onClick={onClickListComponent} />
-                    <div className='hostlist-hotel-detail'>
-                        <div className='hostlist-hotel-title'>제주신라호텔 서귀포점</div>
-                        <div className='hostlist-hotel-room'>DELUXE | Double Room</div>
+                <div className='reservationstatus2-list-main-detail'>
+                    <img className='reservationstatus2-list-image' src={LsisuerImage[1]} onClick={onClickListComponent} />
+                    <div className='reservationstatus2-hotel-detail'>
+                        <div className='reservationstatus2-hotel-title'>제주신라호텔 서귀포점</div>
+                        <div className='reservationstatus2-hotel-room'>DELUXE | Double Room</div>
                     </div>
-                    <div className='hostlist-detail-list'>
-                        <div className='hostlist-stay'>몇박인지</div>
-                        <div className='hostlist-start-end-time'>
-                            <div className='hostlist-start'>입실시간:00:00</div>
-                            <div className='hostlist-end'>퇴실시간:00:00</div>
+                    <div className='reservationstatus2-detail-list'>
+                        <div className='reservationstatus2-stay'>몇박인지</div>
+                        <div className='reservationstatus2-start-end-time'>
+                            <div className='reservationstatus2-start'>입실시간:00:00</div>
+                            <div className='reservationstatus2-end'>퇴실시간:00:00</div>
                         </div>
-                        <div className='hostlist-count-reviewbox'>
-                            <div className='hostlist-count'>인원:0</div>
-                        </div>
+                        <div className='reservationstatus2-count'>인원:0</div>
+                    </div>
+                    <div className='reservationstatus2-guestinfo'>
+                        <div className='reservationstatus2-guestinfo-roomId'>룸번호 : </div>
+                        <div className='reservationstatus2-guestinfo-guestId'>아이디 :</div>
+                        <div className='reservationstatus2-guestinfo-name'>이름 :</div>
                     </div>
                 </div>
             </div>
         </div>
+
     )
 }
