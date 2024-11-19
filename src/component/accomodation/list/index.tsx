@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useEffect, useMemo, useRef, useState } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import "./style.css";
 import { GUEST_ACCESS_TOKEN, ACCOMMODATION_LIST_DETAIL_PATH, HOST_ACCESS_TOKEN } from "src/constants";
@@ -8,6 +8,7 @@ import { useCookies } from "react-cookie";
 
 import { Accommodations } from "src/types";
 import { GetAccommodationListResponseDto } from "src/apis/hostmypage/dto/response/get-accommodation-list.response.dto";
+import { useFilterStore } from "src/stores";
 import { ResponseDto } from "src/apis/guestmypage";
 
 
@@ -16,11 +17,18 @@ import { ResponseDto } from "src/apis/guestmypage";
 
 const List = () => {
   
+  const originalAallAccommodationListRef = useRef<Accommodations[]>([]);
   // state: 숙소 리스트 불러오기 상태 관리
   const [callAccommodationList, SetCallAccommodationList] = useState<Accommodations[]>([]);
 
   // variable: 승인된 숙소 갯수 //
   const trueApplyStatusCount =  callAccommodationList.filter(accommodation => accommodation.applyStatus).length;
+
+  const {priceRange, setPriceRange} = useFilterStore();
+  const {reviewScore, setReviewScore} = useFilterStore();
+  const {accommodationType, setAccommodationType} = useFilterStore();
+  const {categoryArea, setCategoryArea} = useFilterStore();
+  const {facilities, setFacilities} = useFilterStore();
 
   // state: url 값 저장 //
   const [searchParams] = useSearchParams("");
@@ -54,6 +62,7 @@ const List = () => {
         const { accommodations } = responseBody as GetAccommodationListResponseDto;
 
         SetCallAccommodationList(accommodations);
+        originalAallAccommodationListRef.current = accommodations;
 
   }
 
@@ -63,6 +72,42 @@ const List = () => {
     if (!guestAccessToken) return;
     getAccommodationListRequest(guestAccessToken).then(getAccommodaitonListResponse);
   }, []);
+
+  useEffect(() => {
+    let callAccommodationList = [...originalAallAccommodationListRef.current];
+
+    callAccommodationList = callAccommodationList.filter(item => item.minRoomPrice >= priceRange.min && item.minRoomPrice <= priceRange.max);
+
+    if (accommodationType.length)
+      callAccommodationList = callAccommodationList.filter(item => accommodationType.includes(item.accommodationType));
+
+    if (categoryArea.length)
+      callAccommodationList = callAccommodationList.filter(item => categoryArea.includes(item.categoryArea));
+
+    if (facilities.length) {
+      const wifi = facilities.includes('무료 와이파이');
+      const park = facilities.includes('주차장');
+      const pool = facilities.includes('수영장');
+      const pet = facilities.includes('펫 동반 가능');
+      const noSmoking = facilities.includes('금연 객실');
+      const spa = facilities.includes('실내 스파');
+      const bbq = facilities.includes('바베큐');
+      callAccommodationList = callAccommodationList.filter(item =>
+        wifi ? item.categoryWifi : 
+        park ? item.categoryCarPark : 
+        pool ? item.categoryPool : 
+        pet ? item.categoryPet : 
+        noSmoking ? item.categoryNonSmokingArea : 
+        spa ? item.categoryIndoorSpa : 
+        bbq ? item.categoryDinnerParty : false
+      )
+    }
+      
+
+    SetCallAccommodationList(callAccommodationList);
+
+
+  }, [priceRange, reviewScore, accommodationType, categoryArea, facilities]);
 
 
   // function: url 값 가져오기 //

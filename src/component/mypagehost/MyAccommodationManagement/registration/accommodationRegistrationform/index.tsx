@@ -213,6 +213,7 @@ const HostAccommodationRegisterForm: React.FC = () => {
     const updatedRooms = accommodation.rooms.filter((_, i) => i !== index);
     setAccommodation((prev) => ({ ...prev, rooms: updatedRooms }));
   };
+  
   // 룸타입 복사
   const handleCopyRoom = (index: number) => {
     const roomToCopy = accommodation.rooms[index];

@@ -159,8 +159,8 @@ useEffect(()=>{
       <Route path='/payment' element={<Payment onPathChange={() => { } }/>} />
       <Route path={FINDID_PATH} element={<FindId />} />
       <Route path='/roomly-company' element={<Roomly />} />
-      <Route path='/adminHost' element={<HostEnrollmentapproval/>}/>
-      <Route path='/adminAccommodation' element={<Accommodationenrollmentapproval/>}/>
+      <Route path='/adminhost' element={<HostEnrollmentapproval/>}/>
+      <Route path='/adminaccommodation' element={<Accommodationenrollmentapproval/>}/>
       <Route path='/faq' element={<FAQ/>}/>
 
       <Route path="/mypagehost" element={<HostMypageLayout />}>
@@ -184,7 +184,7 @@ useEffect(()=>{
       <Route path='/mypagehost/accommodations' element={<MyAccommodationManagementView/>}/>    
       <Route path='/mypagehost/accommodations/register' element={<HostAccommodationRegister/>}/>
       <Route path='/mypagehost/accommodations/edit' element={<HostAccommodationRegister/>}/>
-      <Route path='/mypagehost/accommodations/showDetailList' element={<ShowDetailList/>}/>
+      <Route path='/mypagehost/accommodations/showdetaillist' element={<ShowDetailList/>}/>
 
 
 
