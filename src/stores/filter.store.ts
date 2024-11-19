@@ -15,7 +15,7 @@ interface FilterStore {
 }
 
 const useStore = create<FilterStore>(set => ({
-    priceRange: { min: 0, max: 5000000 },
+    priceRange: { min: 0, max: 200000 },
     reviewScore: [false, false, false, false, false],
     accommodationType: [],
     categoryArea: [],
