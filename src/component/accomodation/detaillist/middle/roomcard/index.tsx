@@ -94,7 +94,7 @@ const RoomCard = ({ accommodation, room }: Props) => {
       ) : (
         <>
         <div id='room-card-image-container'>
-         
+
             <img className='room-card-image'
               src={accommodation.accSubImages[0]} // 첫 번째 이미지만 표시
               alt={room.roomName}
@@ -104,7 +104,7 @@ const RoomCard = ({ accommodation, room }: Props) => {
               <div className='image-icon'></div>
               <div className="image-count">{accommodation.accSubImages.length}+</div>
             </div>
-         
+
           </div>
 
           <div id="room-card-info">

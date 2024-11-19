@@ -7,7 +7,7 @@ import disableStar from './disablestar.png'
 import { GUEST_ACCESS_TOKEN } from 'src/constants';
 import { SignInUser } from 'src/stores';
 import { useCookies } from 'react-cookie';
-import { getReservationListRequest } from 'src/apis';
+// import { getReservationListRequest } from 'src/apis';
 import { ResponseDto } from "src/apis/accommodation/dto/response";
 import { GetReservationListResponseDto } from 'src/apis/guestmypage/dto/response/ReservationList.response.dto';
 

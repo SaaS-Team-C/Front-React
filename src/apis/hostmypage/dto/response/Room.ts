@@ -9,7 +9,5 @@ export default interface Room {
   roomCheckOut: string;
   roomInfo: string;
   roomImages: string[];
-  
-  // 삭제 여쭤보기 //
   roomTotalGuest: number;
 }

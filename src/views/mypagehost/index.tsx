@@ -13,22 +13,23 @@ import { SignInHost } from 'src/stores';
 import { hostname } from 'os';
 import MyInfoManagement from 'src/component/mypagehost/myinfo';
 import ReservationStatus from 'src/component/mypagehost/ReservationStatus';
+import { MyAccommodationManagement } from 'src/component/mypagehost/MyAccommodationManagement';
 
 
 
 export default function HostMypage() {
-    
+
     const { signInHost } = SignInHost();
 
     const [hostName, setHostName] = useState<string>('');
     const [hostId, setHostId] = useState<string>('');
 
-        // 게스트 이름 불러오기
-        useEffect(() => {
-            if (!signInHost) return;
-            setHostName(signInHost.hostName)
-            setHostId(signInHost.hostId)
-        }, [signInHost])
+    // 게스트 이름 불러오기
+    useEffect(() => {
+        if (!signInHost) return;
+        setHostName(signInHost.hostName)
+        setHostId(signInHost.hostId)
+    }, [signInHost])
 
     const datail1 = "내정보관리"
     const datail2 = "예약현황"
@@ -71,10 +72,10 @@ export default function HostMypage() {
                     <div className='hostMypage-main'>
                         <MyInfoManagement activite={click === datail1 || click === ''} titletext={datail1} username={hostName} />
                         <ReservationStatus activite={click === datail2 || click === ''} titletext={datail2} username={hostName} />
-                        {/* <BookMark activite={click === datail3 || click === ''} titletext={datail3} username={hostName} /> */}
+                        <ReservationStatus activite={click === datail2 || click === ''} titletext={datail2} username={hostName} />
+                        {/* <AccommodationManagePage /> */}
                     </div>
                 </div>
-
             </div>
         </>
     )

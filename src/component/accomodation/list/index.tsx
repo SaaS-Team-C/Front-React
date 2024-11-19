@@ -10,7 +10,7 @@ import { Accommodations } from "src/types";
 import { GetAccommodationListResponseDto } from "src/apis/hostmypage/dto/response/get-accommodation-list.response.dto";
 import { useFilterStore } from "src/stores";
 import { ResponseDto } from "src/apis/guestmypage";
-
+import AccommodationDetailList from "src/views/accommodationlist";
 
 const List = () => {
   
@@ -34,6 +34,9 @@ const List = () => {
 
   // state: 쿠키 상태 //
   const [cookies] = useCookies();
+  
+  // state: 이미지 상태 //
+  // const [accommodationMainImage, setAccommodationMainImage] = useState<string[]>([]);
 
   const handleBookmarkToggle = (accommodationName: string) => {
     if (bookmarks.includes(accommodationName)) {
@@ -59,15 +62,18 @@ const List = () => {
         const { accommodations } = responseBody as GetAccommodationListResponseDto;
 
         SetCallAccommodationList(accommodations);
+        console.log(accommodations);
         originalAallAccommodationListRef.current = accommodations;
-
   }
 
   // Effect: 백엔드에서 숙소 리스트 데이터 요청 //
   useEffect(() => {
     const guestAccessToken = cookies[GUEST_ACCESS_TOKEN];
+    
+
     if (!guestAccessToken) return;
     getAccommodationListRequest(guestAccessToken).then(getAccommodaitonListResponse);
+
   }, []);
 
   useEffect(() => {
@@ -124,14 +130,8 @@ const List = () => {
 
   // event handler: 숙소 클릭 시 숙소 디테일 페이지로 이동하는 핸들러 //
   const handleDetailClick = (accommodationName: string) => {
-    navigator(
-      `${ACCOMMODATION_LIST_DETAIL_PATH}?Region=${urlRegion}&start=${urlStart}&end=${urlEnd}&count=${urlCount}&accommodationName=${encodeURIComponent(
-        accommodationName
-      )}`
-    );
+    navigator(`/accommodationlist/detail/${accommodationName}?Region=${urlRegion}&start=${urlStart}&end=${urlEnd}&count=${urlCount}`)
   };
-
-
   // function: 각 숙소의 시설 정보를 문자열로 변환하는 함수 //
   const getFacilities = (accommodations: Accommodations) => {
     const facilities = [];
@@ -169,11 +169,12 @@ const List = () => {
             onClick={() => handleDetailClick(accommodations.accommodationName)}
           >
             <div className="image-wrapper">
-              <img
-                src={accommodations.accommodationMainImage}
+              {/* <img
+                src={`${accommodations.accommodationMainImage}`}
                 alt={accommodations.accommodationName}
                 className="accommodation-image"
-              />
+              /> */}
+              <div className="accommodation-image" style={{backgroundImage:`url(${accommodations.accommodationMainImage})`}} />
               <div className={`bookmark ${bookmarks.includes(accommodations.accommodationName)? "active": ""}`}onClick={() => handleBookmarkToggle(accommodations.accommodationName)}>
                 ♥
               </div>

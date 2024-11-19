@@ -53,12 +53,13 @@ const AccommodationDetailTopImages = ({ accommodation }: Props) => {
   return (
     <div id="image-container">
       <div className="large-image-container">
-        <img
+        {/* <img
           src={accommodation.accommodationMainImage}
           alt="Main Accommodation"
           className="large-image"
           onClick={() => handleImageClick(0)}
-        />
+        /> */}
+        <div className="large-image" style={{backgroundImage:`url(${accommodation.accommodationMainImage})`}}/>
       </div>
 
       {/* Small images in a 2x3 grid */}

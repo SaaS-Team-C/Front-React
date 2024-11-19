@@ -1,5 +1,6 @@
 import AccommodationListType from "./accommodation/accommodation-list.interface";
 import AccommodationType from "./accommodation/accommodation-list.interface";
+import Accommodation  from "./accommodation/accommodation.interface";
 import Accommodations from "./accommodation/accommodations.interface";
 
 import Category from "./accommodation/category.interface";
@@ -12,5 +13,6 @@ export type {
   Category,
   SearchedAccommodation,
   Accommodations,
-  SignInUser
+  SignInUser,
+  Accommodation
 };

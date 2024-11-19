@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import './style.css';
 import RoomList from './roomlist'
 import { RoomDTO } from 'src/apis/accommodation/dto/request/room.request.dto';
@@ -54,7 +54,16 @@ const markersData = [
   { id: 3, latitude: 36.1699, longitude: -115.1398, label: 'Las Vegas' },
 ];
 
-const AccommodationHostDetailMiddle: React.FC = () => {
+
+  
+
+
+const AccommodationHostDetailMiddle: React.FC = (AccommodaitonProps) => {
+
+  useEffect(()=>{
+
+    
+  },[])
 
   const latitude = 37.7749; // 임의의 위도 값
   const longitude = -122.4194; // 임의의 경도 값
