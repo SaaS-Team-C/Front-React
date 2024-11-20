@@ -124,22 +124,6 @@ export default function FindId() {
         setCurrentView('host-find-password'); // 호스트 화면으로 변경
     };
 
-    // event handler: 인증번호 전송 버튼 클릭 핸들러
-    // const handleSendVerificationCode = async () => {
-    //     try {
-    //         const response = await fetch('/api/send-verification', {
-    //             method: 'POST',
-    //             body: JSON.stringify({ telNumber }),
-    //             headers: { 'Content-Type': 'application/json' },
-    //         });
-    //         const data = await response.json();
-    //         telAuthResponse(data); // 인증번호 전송 결과 처리
-    //     } catch (error) {
-    //         console.error('인증번호 전송 실패:', error);
-    //         alert('인증번호 전송에 실패했습니다.');
-    //     }
-    // };
-
     // event handler: 이름 변경 이벤트 처리 //
     const onNameChangeHandler = (event: ChangeEvent<HTMLInputElement>) => {
         const { value } = event.target;
