@@ -23,7 +23,6 @@ const Map: React.FC<MapProps> = ({ latitude, longitude, accommodationAddress }) 
       <div className='map-title'>위치</div>
       <LoadScript googleMapsApiKey="AIzaSyCqPhfzQDCxqzMIJNBeMTJuzJ9o71CqRM4">
         <GoogleMap 
-       
           mapContainerStyle={{ width: '100%', height: '400px' }}
           center={{ lat: latitude, lng: longitude }}
           zoom={15}

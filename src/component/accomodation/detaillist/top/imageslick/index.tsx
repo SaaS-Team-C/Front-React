@@ -53,7 +53,7 @@ const AccommodationDetailTopImages = ({ accommodation, room, onClose }: { accomm
     >
       <div className='room-detail-modal-close-btn' onClick={onClose}></div>
       <Slider {...sliderSettings} ref={sliderRef}>
-        {accommodation.accSubImages.map((image, index) => (
+        {room.roomImages.map((image, index) => (
           <div key={index}>
             <img src={image} alt={`Accommodation ${index + 1}`} className="large-modal-image" />
           </div>

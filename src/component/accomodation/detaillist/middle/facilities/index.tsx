@@ -12,7 +12,7 @@ const FacilitiesCard = () => {
       <div className="facilities-middle-card">
         <div className="facilities-middle-item">
           <div className="facility-middle-icon dog-icon"></div>
-           <div className="facility-middle-icon-title">애견 동반</div>
+          <div className="facility-middle-icon-title">애견 동반</div>
           </div>
         <div className="facilities-middle-item">
           <div className="facility-middle-icon smoke-free-icon" ></div>
