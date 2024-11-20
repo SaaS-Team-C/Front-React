@@ -227,7 +227,7 @@ const AccommodationDetailTopCard = ({ accommodation }: Props) => {
           </div>
           <div className="address-container">
             <div className="address-icon"></div>
-            <div className="accommodation-address">{}</div>
+            <div className="accommodation-address">{accommodation.accommodationAddress}</div>
           </div>
           <button className="show-map-detail-button">지도보기</button>
         </div>

@@ -14,8 +14,8 @@ export const FINDID_PATH = "/find";
 export const MODAL3 = "/payment";
 export const HOST_MYPAGE_PATH = (hostId:string)=> `/mypage-host/${hostId}`
 
-export const ACCOMMODATION_LIST_PATH = "/accommodationlist";
-export const ACCOMMODATION_LIST_DETAIL_PATH = (accommodationName:string, checkInday: string, checkOutDay: string)=>`/accommodationlist/detail/${accommodationName}/${checkInday}/${checkOutDay}`;
+export const ACCOMMODATION_LIST_PATH = "/accommodation-list";
+export const ACCOMMODATION_LIST_DETAIL_PATH = (accommodationName:string)=>`/${ACCOMMODATION_LIST_PATH}/detail/${accommodationName}`;
 export const ACCOMMODATION_LIST_DETAIL_ACC_SELECT_PATH = (name: string) =>`${ACCOMMODATION_LIST_DETAIL_ACC_SELECT_PATH}/${name}`;
 
 // variable: HTTP BEARER TOKEN COOKIE NAME(토큰 이름 임시 지정) //
