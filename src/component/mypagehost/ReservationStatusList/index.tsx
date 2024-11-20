@@ -65,7 +65,7 @@ const getHostReservationListResponse = (responseBody: GetReservationStatusListRe
     const hostId = signInHost.hostId;
 
     // getHostReservationListRequest(hostId, hostAccessToken)
-        // .then(getHostReservationListResponse); // 응답 처리
+    //     .then(getHostReservationListResponse); // 응답 처리
 }, [cookies, signInHost]);
 
     return (

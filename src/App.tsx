@@ -45,6 +45,8 @@ import HostMypageLayout from './layout/mypageHost';
 import MyInfoManagement from './component/mypagehost/myinfo';
 import MyAccommodationManagementView from './views/mypagehost/MyAccommodationManagement';
 import HostList from './views/admin/hostenrollmentapproval/index';
+import HostAccommodationRegisterForm from './component/mypagehost/MyAccommodationManagement/registration/accommodationRegistrationform';
+
 
 
 // component: root path 컴포넌트 //
@@ -142,6 +144,7 @@ export default function App() {
       <Route path={MAIN_PATH} element={<Main />} />
       <Route path='/mypageGuest' element={<GuestMypage />} />
       <Route path='/mypagehost' element={<HostMypage />} />
+      <Route path='/mypagehost/enrollment' element={<HostAccommodationRegisterForm />} />
 
 
       <Route path={ACCOMMODATION_LIST_PATH} element={<AccommodationList />} />

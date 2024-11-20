@@ -70,9 +70,9 @@ const RoomCard = ({ accommodation, room }: Props) => {
     if (cookies.guestAccessToken) {
       // 로그인 상태인 경우 예약 페이지로 이동
       navigator(
-        `${PAYMENT_PATH}?Region=${urlRegion}&start=${urlStart}&end=${urlEnd}&count=${urlCount}&name=${encodeURIComponent(accommodation.accommodationName)}&roomType=${urlRoom}`,
-        { state: { imageSrc: room.roomMainImage, price: room.roomPrice, checkInTime: urlStart, checkOutTime: urlEnd, personnelCount: urlCount, roomName: urlName, roomType: urlRoom } }
-      );
+        `${PAYMENT_PATH}?Region=${urlRegion}&start=${urlStart}&end=${urlEnd}&count=${urlCount}&name=${accommodation.accommodationName}&roomType=${urlRoom}`,
+        { state: { imageSrc: accommodation.accommodationMainImage[0], price: room.roomPrice, checkInTime: urlStart, checkOutTime: urlEnd, personnelCount: urlCount, accommodationName:accommodation.accommodationName, roomName: room.roomName, roomType: urlRoom }
+    });
     } else {
       // 로그인 상태가 아닌 경우 alert 표시 후 회원가입 페이지로 이동
       if (window.confirm('Roomly 회원만 숙박 예약이 가능합니다. 로그인/회원가입 페이지로 이동하시겠습니까?')) {
