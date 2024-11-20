@@ -46,6 +46,8 @@ export default function DetailList() {
 
   useEffect(() => {
     const guestAceessToken = cookies[GUEST_ACCESS_TOKEN]
+    console.log(guestAceessToken);
+    console.log(accommodationName);
       if (!guestAceessToken || !accommodationName) return;
       const checkInDay = searchParams.get("start") as string;
       const checkOutDay = searchParams.get("end")as string;

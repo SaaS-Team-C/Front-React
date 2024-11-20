@@ -43,10 +43,7 @@ import HostMypage from './views/mypagehost';
 import ReservationStatus from './component/mypagehost/ReservationStatus';
 import HostMypageLayout from './layout/mypageHost';
 import MyInfoManagement from './component/mypagehost/myinfo';
-
-
-
-
+import HostAccommodationRegisterForm from './component/mypagehost/MyAccommodationManagement/registration/accommodationRegistrationform';
 
 
 
@@ -145,10 +142,11 @@ export default function App() {
       <Route path={MAIN_PATH} element={<Main />} />
       <Route path='/mypageGuest' element={<GuestMypage />} />
       <Route path='/mypagehost' element={<HostMypage />} />
+      <Route path='/mypagehost/enrollment' element={<HostAccommodationRegisterForm />} />
 
 
       <Route path={ACCOMMODATION_LIST_PATH} element={<AccommodationList />} />
-      <Route path={ACCOMMODATION_LIST_DETAIL_PATH(':accommodationName',':checkInDay','checkOutDay')} element={<DetailList />} />
+      <Route path={ACCOMMODATION_LIST_DETAIL_PATH(':accommodationName')} element={<DetailList />} />
       <Route path={AUTH_PATH} element={<SignUp />} />
       <Route path='/payment' element={<Payment onPathChange={() => { }} />} />
       <Route path={FINDID_PATH} element={<FindId />} />

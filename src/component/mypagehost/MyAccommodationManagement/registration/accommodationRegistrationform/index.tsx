@@ -40,8 +40,7 @@ const facilitiesOptions = [
   "실내 온수풀",
 ];
 
-const defaultProfileImageUrl =
-  "https://blog.kakaocdn.net/dn/4CElL/btrQw18lZMc/Q0oOxqQNdL6kZp0iSKLbV1/img.png";
+const defaultProfileImageUrl = "https://blog.kakaocdn.net/dn/4CElL/btrQw18lZMc/Q0oOxqQNdL6kZp0iSKLbV1/img.png";
 
 function HostAccommodationRegisterForm() {
   // state: 상태 관리 //
@@ -54,26 +53,18 @@ function HostAccommodationRegisterForm() {
   const [cookies, setCookies] = useCookies();
   // state: 숙소 정보 입력 상태 //
   const [accommodationName, setAccommodationName] = useState<string>("");
-  const [accommodationMainImagePreview, setAccommodaitonMainImagePreview] =
-    useState<string>("");
-  const [accommodationMainImageFile, setAccommodaitonMainImageFile] =
-    useState<File | null>(null);
+  const [accommodationMainImagePreview, setAccommodaitonMainImagePreview] = useState<string>("");
+  const [accommodationMainImageFile, setAccommodaitonMainImageFile] = useState<File | null>(null);
   const [accommodationType, setAccommodationType] = useState<string>("");
-  const [accommodationIntroduce, setAccommodationIntroduce] =
-    useState<string>("");
-  const [accommodationImagesFile, setAccommodationImagesFile] = useState<
-    File[]
-  >([]);
+  const [accommodationIntroduce, setAccommodationIntroduce] = useState<string>("");
+  const [accommodationImagesFile, setAccommodationImagesFile] = useState<File[]>([]);
   const [accommodationAddress, setAccommodationAddress] = useState<string>("");
-  const [useInformations, setUseInformations] = useState<UseInformations[]>([]);
-
+  const [useInformations, setUseInformations] = useState<string>("");
   const [categoryArea, setCategoryArea] = useState<string>("");
   const [categoryPet, setCategoryPet] = useState<boolean>(false);
-  const [categoryNonSmokingArea, setCategoryNonSmokingArea] =
-    useState<boolean>(false);
+  const [categoryNonSmokingArea, setCategoryNonSmokingArea] = useState<boolean>(false);
   const [categoryIndoorSpa, setCategoryIndoorSpa] = useState<boolean>(false);
-  const [categoryDinnerParty, setCategoryDinnerParty] =
-    useState<boolean>(false);
+  const [categoryDinnerParty, setCategoryDinnerParty] = useState<boolean>(false);
   const [categoryWifi, setCategoryWifi] = useState<boolean>(false);
   const [categoryCarPark, setCategoryCarPark] = useState<boolean>(false);
   const [categoryPool, setCategoryPool] = useState<boolean>(false);
@@ -88,44 +79,36 @@ function HostAccommodationRegisterForm() {
     setAccommodationAddress(value);
   };
 
-  const handleChange = (
+  const handleAccommodationNameChange = (
+      event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
+      const { value } = event.target;
+      setAccommodationName(value);
+  };  
+
+  const handleAccommodationIntroduceChange = (
     event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
-    const { name, value } = event.target;
-    // setAccommodation((prev) => ({ ...prev, [name]: value }));
-    setAccommodationName(name);
+    const { value } = event.target;
+     setAccommodationIntroduce(value);
+  };  
 
-    // setAccommodaitonImages((prevList)=> [...prevList, value])
-    // setAccommodationAddress(value);
-    // setAccommodationIntroduce(value);
-
-    // 숙소명과 설명의 글자 수 제한 및 경고 메시지 표시
-    if (value === "accommodationName") {
-      if (value.length >= 45) {
-        setNameError("숙소명은 최대 45자 까지만 입력 가능합니다.");
-      } else {
-        setNameError("");
-      }
-
-      // setAccommodation((prev) => ({ ...prev, [name]: value }));
-    } else if (value === "description") {
-      if (value.length >= 1500) {
-        setDescriptionError("숙소 설명은 최대 1500자 까지만 입력 가능합니다.");
-        return;
-      } else {
-        setDescriptionError("");
-      }
-    } else if (name === "price" || name === "maxGuests") {
-      const numericValue = Math.max(
-        0,
-        Math.min(parseInt(value) || 0, name === "price" ? 50000000 : 10000)
-      );
-      // setAccommodation((prev) => ({ ...prev, [name]: numericValue }));
-    } else {
-      // setAccommodation((prev) => ({ ...prev, [name]: value }));
-    }
+  const handleUseInformationsChange = (
+    event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
+    const { value } = event.target;
+    setUseInformations(value);
   };
 
+
+
+
+
+
+
+
+
+  
   const handleMainImageChange = (event: ChangeEvent<HTMLInputElement>) => {
     if (!event.target.files || !event.target.files.length) return;
     const file = event.target.files[0];
@@ -179,6 +162,7 @@ function HostAccommodationRegisterForm() {
     setRooms(newRooms);
   };
 
+  // 객실 추가
   const handleAddRoom = () => {
     const room = {
       roomName: "",
@@ -196,19 +180,25 @@ function HostAccommodationRegisterForm() {
     };
 
     setRooms([...rooms, room]);
+    
   };
 
-  const handleDeleteRoom = (index: number) => {};
+    // 숙소 이용정보 추가
+    const handleAddUseInfomation = () => {
+      const useInformation = {
+        useInfomation: ""
+      };
+  
+    setUseInformations(useInformations);
+  };
 
   // event handler: 입력값 변경 이벤트 처리 함수 //
-  // 숙소 이용 정보 추가
-  // const handleAddUseInfomation = (event: ) => {
-  //   setDescriptionFields([])
-  // };
-
   // 룸타입 복사
+  const handleDeleteRoom = (index: number) => {};
+  // 룸 삭제
   const handleCopyRoom = (index: number) => {};
 
+  // 숙소 이용 정보 추가
 
   // function: 관리자 권한을 확인하는 함수 (예시로 localStorage를 사용)
   const checkAdmin = () => {
@@ -287,7 +277,7 @@ function HostAccommodationRegisterForm() {
               type="text"
               name="name"
               value={accommodationName}
-              onChange={handleChange}
+              onChange={handleAccommodationNameChange}
               required
               maxLength={45} // HTML 레벨에서도 제한
             />
@@ -302,7 +292,7 @@ function HostAccommodationRegisterForm() {
             <textarea
               name="description"
               value={accommodationIntroduce}
-              onChange={handleChange}
+              onChange={handleAccommodationIntroduceChange}
               required
               maxLength={1500} // HTML 레벨에서도 제한
             />
@@ -318,8 +308,8 @@ function HostAccommodationRegisterForm() {
             숙소 이용 정보:
             <textarea
               name="description"
-              // value={useInformations}
-              onChange={handleChange}
+              value={useInformations}
+              onChange={handleUseInformationsChange}
               required
               maxLength={1500} // HTML 레벨에서도 제한
             />
@@ -327,15 +317,27 @@ function HostAccommodationRegisterForm() {
           {descriptionError && (
             <p style={{ color: "red" }}>{descriptionError}</p>
           )}
-          {/* <button
-              type="button"
-              onClick={() => {
-              setUseInformations();
-              }
-          }>
-          숙소 이용 정보 추가
-          </button> */}
+        </div>
 
+        {/* 숙소 이용 정보 추가 */}
+          <button type="button" onClick={handleAddUseInfomation}>
+             숙소 이용 정보 추가
+          </button>
+
+          <div>
+            <label>
+              숙소 이용 정보:
+              <textarea
+                name="description"
+                value={useInformations}
+               
+                required
+                maxLength={1500} // HTML 레벨에서도 제한
+              />
+            </label>
+            {descriptionError && (
+              <p style={{ color: "red" }}>{descriptionError}</p>)}
+          {roomErrors && <p style={{ color: "red" }}>{roomErrors}</p>}
         </div>
 
         {/* 위치 입력 필드 */}
@@ -544,6 +546,7 @@ function HostAccommodationRegisterForm() {
           ))}
           {roomErrors && <p style={{ color: "red" }}>{roomErrors}</p>}
         </div>
+
 
         <button type="submit" onClick={handleSubmit}>
           등록하기
