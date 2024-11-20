@@ -28,13 +28,13 @@ export const ROOMLY_API_DOMAIN = process.env.REACT_APP_API_URL;
 
 // variable: 어드민 모듈
 export const ADMIN_MODULE_URL = `${ROOMLY_API_DOMAIN}/api/roomly/admin`;
-// 게스트 정보 리스트
+// 관리자-게스트 정보 리스트
 export const GET_GUEST_INFO_LIST_API_URL = `${ADMIN_MODULE_URL}/guest-info/list`;
-// 호스트 정보 리스트
+// 관리자-호스트 정보 리스트
 export const GET_HOST_INFO_LIST_API_URL = `${ADMIN_MODULE_URL}/host-info/list`; 
-// 호스트 정보 상세보기(어드민이 회원가입시 확인할때 사용)
+// 관리자-호스트 정보 상세보기(어드민이 회원가입시 확인할때 사용)
 export const GET_HOST_INFO_API_URL = (hostId:string)=>`${ADMIN_MODULE_URL}/info/detail/${hostId}`;
-// 호스트 계정 승인상태 변경
+// 관리자-호스트 계정 승인상태 변경
 export const PATCH_HOST_STATUS_API_URL = (hostId:string)=>`${ADMIN_MODULE_URL}/update/status/${hostId}`;
 // 숙소 리스트(숙소 승인 상태에 따라)
 export const GET_ACCOMMODATION_STATUS_LIST_API_URL = `${ADMIN_MODULE_URL}/accommodation-list`;
