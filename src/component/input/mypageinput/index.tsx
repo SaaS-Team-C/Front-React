@@ -38,6 +38,7 @@ export default function MypageInputBox({
                         <div className='mypageinformation-input-inputbox-deactivation'>{value}</div>
                         {messageError && <div className='checkMessageError-deactivation'>{messageError}</div>}
                     </div>
+                    {buttonName && <button className={`mypageinformation-telnumber-change-button-${activboolean ? 'active' : 'disable'}`} onClick={onButtonClick}>{buttonName}</button>}
                 </div>
             )}
 

@@ -10,6 +10,8 @@ import { useNavigate } from 'react-router';
 import { useCookies } from 'react-cookie';
 import { ResponseDto } from 'src/apis/guestmypage';
 import { GUEST_ACCESS_TOKEN } from 'src/constants';
+import { TelAuthRequestDto } from 'src/apis/signUp/dto/request';
+import { telAuthRequest } from 'src/apis/signUp';
 
 interface Props {
     titletext: string;
@@ -41,6 +43,10 @@ export default function Information({ titletext, username, activite }: Props) {
 
     // 내가 새로 넣은 변수들 //
     const [pwButtonBoolean, setPwButtonBoolean] = useState<boolean>(false);
+    const [tnButtonBoolean, setTnButtonBoolean] = useState<boolean>(true);
+    const [telNumberInputActive, setTelNumberInputActive] = useState<boolean>(true);
+    const [telNumberMessage, setTelNumberMessage] = useState<string>('')
+    const [telNumberAuth, setTelNumberAuth] = useState<boolean>(false);
 
     const navigator = useNavigate();
     const [cookies , setCookies, removeCookies] = useCookies();
@@ -123,8 +129,9 @@ export default function Information({ titletext, username, activite }: Props) {
         }
     };
 
-    const handlePhoneNumberChange = (e: ChangeEvent<HTMLInputElement>) => {
-        setTelNumber(e.target.value);
+    const handlePhoneNumberChange = (event: ChangeEvent<HTMLInputElement>) => {
+        const { value } = event.target;
+        setTelNumber(value)
     };
 
     // const handleUpdatePhoneNumber = async () => {
@@ -150,6 +157,17 @@ export default function Information({ titletext, username, activite }: Props) {
     //     }
     // };
 
+
+    const onTelNumberSendClickHandler = () => {
+        if (!telNumber) return;
+    
+        const pattern = /^[0-9]{11}$/;
+        const isMatched = pattern.test(telNumber);
+    
+        if (!isMatched) {
+          setTelNumberMessage('숫자 11자를 입력 해주세요');
+          return;
+        }}
 
     const onGuestPasswordChangeHandler = async () => {
             const guestAccessToken = cookies[GUEST_ACCESS_TOKEN];
@@ -179,7 +197,48 @@ export default function Information({ titletext, username, activite }: Props) {
         };
     
 
+        const onGuestTelNumberChangeHandler = () => {
+            setTelNumberInputActive(false)
+            setTelNumber('')
+        }
 
+        const [telAuthActivite, setTelAuthActivite] = useState<boolean>(false)
+        const [authNumber, setAuthNumber] = useState<string>('')
+
+        const telAuthResponse = (responseBody: ResponseDto | null) => {
+
+            const message =
+    
+                !responseBody ? '서버에 문제가 있습니다.' :
+                    responseBody.code === 'VF' ? '숫자 11자 입력해주세요.' :
+                        responseBody.code === 'DT' ? '중복된 전화번호 입니다.' :
+                            responseBody.code === 'TF' ? '서버에 문제가 있습니다.' :
+                                responseBody.code === 'DBE' ? '서버에 문제가 있습니다.' :
+                                    responseBody.code === 'SU' ? '인증번호가 전송되었습니다.' : '';
+    
+            const isSuccessed = responseBody !== null && responseBody.code === 'SU';
+            setTelNumberMessage(message);
+        };
+
+        const onClickTelnumberAuthHandler = () => {
+            if (!telNumber) return;    
+            const pattern = /^[0-9]{11}$/;
+            const isMatched = pattern.test(telNumber);        
+            if (!isMatched) {
+                setTelNumberMessage('숫자 11자를 입력 해주세요');
+                return;}            
+            setTelAuthActivite(true)
+
+            const requestBody: TelAuthRequestDto = {
+                guestTelNumber: telNumber // 속성의 이름과 담을 변수의 이름이 동일한 경우 하나로 작성
+            }
+            telAuthRequest(requestBody).then(telAuthResponse);
+
+        }
+
+        useEffect (() => { 
+            setTelNumberMessage('')
+        }, [telNumber])
 
     // 게스트 이름 불러오기
     useEffect(() => {
@@ -246,16 +305,44 @@ export default function Information({ titletext, username, activite }: Props) {
                         activboolean={pwButtonBoolean}
                         onButtonClick={onGuestPasswordChangeHandler}
                     />
-                    <MypageInputBox
+                        {telNumberInputActive && <MypageInputBox
                         activation={false}
+                        title="전화번호"
+                        type="text"
+                        value={telNumber}
+                        placeholder=""
+                        buttonName='변경'
+                        activboolean={tnButtonBoolean}
+                        onButtonClick={onGuestTelNumberChangeHandler} />}
+
+                        {!telNumberInputActive && <MypageInputBox
+                        activation={true}
                         title="전화번호"
                         type="text"
                         value={telNumber}
                         placeholder="-를 빼고 입력해 주세요."
                         onChange={handlePhoneNumberChange}
-                        buttonName="변경" />
+                        messageError={telNumberMessage}
+                        buttonName={"인증하기"}
+                        activboolean={tnButtonBoolean}
+                        onButtonClick={onClickTelnumberAuthHandler} />}
+
+                        {telAuthActivite && <MypageInputBox
+                        activation={true}
+                        title="인증번호"
+                        type="text"
+                        value={authNumber}
+                        placeholder="-를 빼고 입력해 주세요."
+                        onChange={handlePhoneNumberChange}
+                        messageError={passwordCheckMessageError ? passwordCheckMessage : ''}
+                        buttonName="변경하기"
+                        activboolean={tnButtonBoolean && tnButtonBoolean}
+                        onButtonClick={onGuestTelNumberChangeHandler} />}
+
+                        
                 </div>
             </div>}
+
         </>
     )
 }

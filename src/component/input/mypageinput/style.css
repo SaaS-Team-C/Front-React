@@ -18,10 +18,11 @@
 
 .mypageinformation-input-inputbox-deactivation {
 
-    width: 300px;
+    width: 200px;
     height: 35px;
     padding: 12px 15px;
     font-size: 23px;
+    margin-right: 35px;
 }
 
 .mypageinformation-input-area-deactivation {
