@@ -19,6 +19,7 @@ import { format } from 'date-fns';
 import 'react-datepicker/dist/react-datepicker.css';
 import { ko } from 'date-fns/locale'; // 한국어 지원
 import BusinessNumberCheckRequestDto from 'src/apis/signUp/dto/request/host/h-business-number-check.request.dto';
+import GuestTelAuthCheckRequestDto from 'src/apis/signUp/dto/request/common/guest-tel-auth-check-request.dto';
 
 type AuthPath = '회원가입' | '로그인';
 type CurrentView = 'host' | 'guest';
@@ -461,8 +462,8 @@ export default function SignUp() {
     if (!authNumber) return;
 
     const requestBody: TelAuthCheckRequestDto = {
-      guestTelNumber: telNumber,
-      guestAuthNumber: authNumber
+      telNumber: telNumber,
+      authNumber: authNumber
     }
     telAuthCheckRequest(requestBody).then(telAuthCheckResponse);
 
