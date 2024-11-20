@@ -1,12 +1,12 @@
-export default interface UseInformations{
-    CreatedAt: string[] ;
-    ReservationId: number ;
-    AccommodationMainImage: string[] ;
-    AccommodationName: string[] ;
-    RoomName: string[] ;
-    RoomCheckIn: string[] ;
-    RoomCheckOut: string[] ;
-    ReservationTotalPeople: string[] ;
-    TotalPrice: number[] ;
-    TotalNight: number[] ;
+export default interface UseInformation{
+    createdAt: string;
+    reservationId: number;
+    accommodationMainImage: string;
+    accommodationName: string;
+    roomName: string;
+    roomCheckIn: string;
+    roomCheckOut: string;
+    reservationTotalPeople: string;
+    totalPrice: number;
+    totalNight: number;
 }

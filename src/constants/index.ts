@@ -14,8 +14,8 @@ export const FINDID_PATH = "/find";
 export const MODAL3 = "/payment";
 export const HOST_MYPAGE_PATH = (hostId:string)=> `/mypage-host/${hostId}`
 
-export const ACCOMMODATION_LIST_PATH = "/accommodationList";
-export const ACCOMMODATION_LIST_DETAIL_PATH = (accommodationName:string)=>`${ACCOMMODATION_LIST_PATH}/detail/${accommodationName}`;
+export const ACCOMMODATION_LIST_PATH = "/accommodationlist";
+export const ACCOMMODATION_LIST_DETAIL_PATH = (accommodationName:string, checkInday: string, checkOutDay: string)=>`/accommodationlist/detail/${accommodationName}/${checkInday}/${checkOutDay}`;
 export const ACCOMMODATION_LIST_DETAIL_ACC_SELECT_PATH = (name: string) =>`${ACCOMMODATION_LIST_DETAIL_ACC_SELECT_PATH}/${name}`;
 
 // variable: HTTP BEARER TOKEN COOKIE NAME(토큰 이름 임시 지정) //
@@ -129,6 +129,8 @@ export const GET_ACCOMMODATION_LIST_API_URL = `${ACCOMMODATION_MODULE_URL}/list`
 export const DELETE_ACCOMMODATION_API_URL = (accommodationName:string) =>`${ACCOMMODATION_MODULE_URL}/delete/${accommodationName}`
 // 호스트가 등록한 숙소 리스트 조회
 export const GET_HOST_ACCOMMODATION_LIST_API_URL = (hostId: string) => `${ACCOMMODATION_MODULE_URL}/${hostId}`;
+// 메인페이지에서 넘어가는 숙소 상세보기
+export const GET_ACCOMMODATION_DETAIL_API_URL = (accommodationName:string, checkInDay:string, checkOutDay:string) =>`${ACCOMMODATION_MODULE_URL}/${accommodationName}/${checkInDay}/${checkOutDay}`
 
 // variable: 객실 모듈 
 export const ROOM_MODULE_URL = `${ROOMLY_API_DOMAIN}/api/roomly/room`;
@@ -173,6 +175,10 @@ export const POST_RESERVATION_API_URL = `${RESERVATION_MODULE_URL}/createReserva
 
 // 게스트 예약 현황 리스트
 export const GET_RESERVATION_LIST_API_URL = (guestId:string)=> `${RESERVATION_MODULE_URL}/reservation-status/${guestId}`;
+
+// 호스트 예약 현황 리스트
+export const GET_RESERVATION_STATUS_LIST_API_URL = (hostId: string) => `${RESERVATION_MODULE_URL}/host-reservation-status/${hostId}`;
+
 // variable: 리뷰 모듈
 export const REVIEW_MODULE_URL = `${ROOMLY_API_DOMAIN}/api/roomly/reviews`
 // 리뷰작성

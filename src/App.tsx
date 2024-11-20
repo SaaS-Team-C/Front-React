@@ -8,7 +8,6 @@ import Payment from './views/payment';
 
 import { GUEST_ACCESS_TOKEN, ACCOMMODATION_LIST_DETAIL_PATH, ACCOMMODATION_LIST_PATH, AUTH_PATH, FINDID_PATH, MAIN_PATH, HOST_ACCESS_TOKEN } from './constants';
 
-import { RegionImages } from './resources/images/region';
 import { useEffect } from 'react';
 import { useCookies } from 'react-cookie';
 
@@ -19,7 +18,7 @@ import FAQ from './views/faq';
 import HostAccommodationRegister from './component/mypagehost/MyAccommodationManagement/registration';
 
 
-import BookingList from './component/mypage/bookinglist';
+import BookingList from './component/mypageguest/bookinglist';
 
 import HostEnrollmentapproval from './views/admin/hostenrollmentapproval/index';
 import FindId from './views/find';
@@ -35,8 +34,6 @@ import { SignInHost, SignInUser } from './stores';
 
 
 import { GetHostSignInResponseDto } from './apis/login/dto';
-
-import List from './component/accomodation/list';
 import { getSignInHostRequest } from './apis/signUp';
 import { getGuestSignInRequest } from './apis/login';
 import GetGuestSignInResponseDto from './apis/login/dto/response/get-guest-sign-in.response.dto';
@@ -151,47 +148,18 @@ export default function App() {
       <Route path='/mypageGuest' element={<GuestMypage />} />
       <Route path='/mypagehost' element={<HostMypage />} />
 
-      {/* <Route path='/mypagehost' element={<HostMypage />}/>
-      <Route path='/mypagehost/reservationStatus' element={<ReservationStatus titletext={''} username={''} activite={false} />}/>
-      <Route path='/mypagehost/accommodationManagement' element={<AcommodationManagement />}/> */}
 
       <Route path={ACCOMMODATION_LIST_PATH} element={<AccommodationList />} />
-      <Route path={ACCOMMODATION_LIST_DETAIL_PATH(':accommodationName')} element={<DetailList />} />
+      <Route path={ACCOMMODATION_LIST_DETAIL_PATH(':accommodationName',':checkInDay','checkOutDay')} element={<DetailList />} />
       <Route path={AUTH_PATH} element={<SignUp />} />
       <Route path='/payment' element={<Payment onPathChange={() => { }} />} />
       <Route path={FINDID_PATH} element={<FindId />} />
       <Route path='/roomly-company' element={<Roomly />} />
       <Route path='/adminhost' element={<HostEnrollmentapproval />}/>
       <Route path='/adminaccommodation' element={<Accommodationenrollmentapproval/>}/>
-      <Route path='/faq' element={<FAQ/>}/>
-
-      <Route path="/mypagehost" element={<HostMypageLayout />}>
-        <Route index element={<MyInfoManagement  titletext=''username='' activite={false} />} />
-      </Route>
-
-      <Route path="/mypagehost/books" element={<HostMypageLayout />}>
-        <Route index element={<ReservationStatus titletext=''username='' activite={false}  />} />
-      </Route>
-      <Route path='/mypagehost' element={<HostMypage />}/>
-      <Route path='/mypagehost/reservationStatus' element={<ReservationStatus titletext={''} username={''} activite={false} />}/>
-      <Route path='/mypagehost/accommodationManagement' element={<MyAccommodationManagementView />}/>
-    
-      // ! 자식 요소로 경로 넣으면 화면이 안뜸. 왜 그런지 아시는 분???
-      {/* <Route path="/mypagehost/accommodations" element={<HostMypageLayout />}> */}
-            {/* <Route index element={<MyAccommodationManagement/>} />
-            <Route path="register" element={<HostAccommodationRegister />} /> */}
-      {/* </Route> */}
-
-
-      <Route path='/mypagehost/accommodations' element={<MyAccommodationManagementView/>}/>    
-      <Route path='/mypagehost/accommodations/register' element={<HostAccommodationRegister/>}/>
-      <Route path='/mypagehost/accommodations/edit' element={<HostAccommodationRegister/>}/>
-      <Route path='/mypagehost/accommodations/showdetaillist' element={<ShowDetailList/>}/>
-
-
+      <Route path='/faq' element={<FAQ/>}/>      
 
       <Route path='*' element={<Index />} />
-      <Route path='/test' element={<BookingList />} />
     </Routes>
 
   );

@@ -69,3 +69,8 @@
     padding: 20px;
     background-color: #f9f9f9;
 }
+
+.main-navigtor-button {
+    cursor: pointer;
+    color: blue;
+}

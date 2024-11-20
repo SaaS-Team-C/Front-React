@@ -35,7 +35,8 @@
 }
 
 .host-input-field {
-    width: 270px;
+    
+    width: 265px;
     padding: 12px 15px;
     border: 1px solid rgba(188, 188, 188, 1);
     border-radius: 4px;
@@ -78,25 +79,23 @@
 }
 
 .HostLogin-button-host {
-    height: 100px;
     flex-direction: column;
-    padding: 20px 83px;
+    padding: 20px 82px;
     background-color: #fa919d;
     color: white;
     border: none;
     font-size: 16px;
+    font-family: 'Pretendard-Regular';
 }
 
 .HostLogin-button-guest {
-    height: 100px;
     flex-direction: column;
-    cursor: pointer;
-    padding: 20px 79px;
+    padding: 20px 76px;
     background-color: rgba(157, 160, 165, 1);
     color: white;
     border: none;
+    cursor: pointer;
     font-size: 16px;
-    font-family: 'Pretendard-Regular';
 }
 
 .HostLogin-button-guest:hover {
@@ -121,7 +120,6 @@
 }
 
 .host-button-container2 {
-    padding: 12px 20px;
     margin-bottom: 10px;
     /* 간격을 조정 */
 }
@@ -130,6 +128,7 @@
     display: flex;
     align-items: center;
     margin-bottom: 1px;
+    margin-left: 8px;
 }
 
 .host-agreeButton {
@@ -152,8 +151,9 @@
     /* 간격을 조정 */
 }
 
-.host-button-clear {
-    width: 100%;
+.host-button-clear-disable {
+    margin-left: 5px;
+    width: 300px;
     padding: 10px;
     background-color: var(--input-solid-color);
     color: white;
@@ -161,7 +161,20 @@
     border-radius: 4px;
     font-size: 16px;
     font-family: 'Pretendard-Regular';
-    color: rgb(73, 73, 73);
+    font-weight: bold;
+}
+
+.host-button-clear-active {
+    cursor: pointer;
+    margin-left: 5px;
+    width: 300px;
+    padding: 10px;
+    background-color: #fa919d;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    font-size: 16px;
+    font-family: 'Pretendard-Regular';
     font-weight: bold;
 }
 

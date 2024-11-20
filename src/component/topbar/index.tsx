@@ -13,7 +13,7 @@ import GuestLogInRequestDto from 'src/apis/login/dto/request/guest/login.request
 
 import InputBox from '../input/login';
 import HostLogInRequestDto from 'src/apis/login/dto/request/host/login.request.dto';
-import HostLogInResponseDto from 'src/apis/login/dto/response/host-sign-in.response.dto';
+
 
 
 import { ResponseDto } from 'src/apis/guestmypage';
@@ -228,7 +228,7 @@ export default function Topbar() {
         };
     // event handler: 로그아웃(게스트) 버튼 클릭 이벤트 처리 //
     const onGuestLogoutButtonClickHandler = () => {
-        if (guestCookies) removeGuestCookies("guestAccessToken");
+        if (guestCookies)  removeGuestCookies("guestAccessToken");
         navigator('main')
     };
 
@@ -362,7 +362,7 @@ export default function Topbar() {
                                 />
                             </div>
                         </div>}
-                        {mode === 'host' && <div>
+                        {mode === 'host' && <div className='input-log-box'>
                             <div className='input-log'>
                                 <div className='log-in-id-icon'></div>
                                 <InputBox

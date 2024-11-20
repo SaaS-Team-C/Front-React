@@ -10,10 +10,8 @@
 }
 
 .GuestLogin-button-host {
-    height: 100px;
-
     flex-direction: column;
-    padding: 20px 83px;
+    padding: 20px 82px;
     background-color: rgba(157, 160, 165, 1);
     color: white;
     border: none;
@@ -24,10 +22,9 @@
 
 /* 로그인하기 버튼을 왼쪽 위에 배치 */
 .GuestLogin-button-guest {
-    height: 100px;
-    flex-direction: column;
 
-    padding: 20px 79px;
+    flex-direction: column;
+    padding: 20px 76px;
     background-color: #fa919d;
     color: white;
     border: none;
@@ -131,16 +128,6 @@
     font-weight: bold;
 }
 
-/* .guest-button-clear {
-    width: 100%;
-    padding: 10px;
-    background-color: var(--input-solid-color);
-    color: white;
-    border: none;
-    border-radius: 4px;
-    font-size: 16px;
-    font-weight: bold;
-} */
 .guest-button-clear :enabled {
     background-color: #fa919d;
     cursor: pointer;

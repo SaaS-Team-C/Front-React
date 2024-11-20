@@ -22,7 +22,7 @@ const RoomCard = ({ accommodation, room }: Props) => {
   const [isImageModalOpen, setIsImageModalOpen] = useState(false);
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const [isDetailModalOpen, setIsDetailModalOpen] = useState(false);
-  const [cookies] = useCookies(['accessToken']);
+  const [cookies] = useCookies(['guestAccessToken']);
 
   // state: url 값 저장 //
   const [searchParams] = useSearchParams('');
@@ -67,7 +67,7 @@ const RoomCard = ({ accommodation, room }: Props) => {
 
   // event handler: 숙소 예약 버튼 클릭 시 예약 페이지로 이동하는 핸들러 //
   const handleChangebooking = () => {
-    if (cookies.accessToken) {
+    if (cookies.guestAccessToken) {
       // 로그인 상태인 경우 예약 페이지로 이동
       navigator(
         `${PAYMENT_PATH}?Region=${urlRegion}&start=${urlStart}&end=${urlEnd}&count=${urlCount}&name=${encodeURIComponent(accommodation.accommodationName)}&roomType=${urlRoom}`,
@@ -94,7 +94,7 @@ const RoomCard = ({ accommodation, room }: Props) => {
       ) : (
         <>
         <div id='room-card-image-container'>
-         
+
             <img className='room-card-image'
               src={accommodation.accSubImages[0]} // 첫 번째 이미지만 표시
               alt={room.roomName}
@@ -104,7 +104,7 @@ const RoomCard = ({ accommodation, room }: Props) => {
               <div className='image-icon'></div>
               <div className="image-count">{accommodation.accSubImages.length}+</div>
             </div>
-         
+
           </div>
 
           <div id="room-card-info">

@@ -13,14 +13,17 @@ import { HOST_ACCESS_TOKEN } from "src/constants";
 import { getAccommodationDetailRequest } from "src/apis";
 import { ResponseDto } from "src/apis/guestmypage";
 import GetAccommodationResponseDto from "src/apis/hostmypage/dto/response/GetAccommodationResponseDto";
+import { useSearchParams } from "react-router-dom";
 
 export default function DetailList() {
 
   const { accommodationName } = useParams();
-  const [cookies] = useCookies();
-  const [accommodation, setAccommodation] = useState<GetAccommodationResponseDto | null>(null);
+  const [searchParams] = useSearchParams();
 
-  const accessToken = cookies[HOST_ACCESS_TOKEN];
+  const [cookies] = useCookies();
+  const [accommodation, setAccommodation] = useState<GetAccommodationResponseDto>();
+
+  const guestAccessToken = cookies[GUEST_ACCESS_TOKEN];
 
   const latitude = 37.7749; // 임의의 위도 값
   const longitude = -122.4194; // 임의의 경도 값
@@ -42,8 +45,11 @@ export default function DetailList() {
   }
 
   useEffect(() => {
-      if (!accessToken || !accommodationName) return;
-      getAccommodationDetailRequest(accommodationName, accessToken).then(getAccommodaitonResponse);
+    const guestAceessToken = cookies[GUEST_ACCESS_TOKEN]
+      if (!guestAceessToken || !accommodationName) return;
+      const checkInDay = searchParams.get("start") as string;
+      const checkOutDay = searchParams.get("end")as string;
+      getAccommodationDetailRequest(accommodationName,checkInDay,checkOutDay, guestAceessToken).then(getAccommodaitonResponse);
   }, [accommodationName])
 
   if (!accommodation) return null;
