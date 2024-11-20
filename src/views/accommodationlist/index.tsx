@@ -15,10 +15,10 @@ export default function AccommodationDetailList() {
 
   // state: 백엔드에서 불러온 숙소 상세 리스트 데이터를 저장할 상태 //
   const [callAccommodationDetail, setCallAccommodationDetail] = useState<GetAccommodationResponseDto[]>([]);
+  
   const [error, setError] = useState<string | null>(null);
   // state: 쿠키 상태 //
   const [cookies, setCookie] = useCookies();
-
 
     // function: get accommodation detail list response 처리 함수 //
     const getAccommodaitonListResponse = (responseBody:  GetAccommodationDetailListResponseDto | ResponseDto | null) =>{

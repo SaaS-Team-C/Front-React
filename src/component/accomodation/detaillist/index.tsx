@@ -23,7 +23,7 @@ export default function DetailList() {
   const [cookies] = useCookies();
   const [accommodation, setAccommodation] = useState<GetAccommodationResponseDto>();
 
-  const guestAccessToken = cookies[GUEST_ACCESS_TOKEN];
+  // const guestAccessToken = cookies[GUEST_ACCESS_TOKEN];
 
   const latitude = 37.7749; // 임의의 위도 값
   const longitude = -122.4194; // 임의의 경도 값
@@ -34,7 +34,9 @@ export default function DetailList() {
     const message = 
         !responseBody ? '서버에 문제가 있습니다. ':
         responseBody.code === 'AF' ? '잘못된 접근입니다. ':
+        responseBody.code === 'NR' ? '객실이 존재하지 않습니다. ':
         responseBody.code === 'DBE' ? '서버에 문제가있습니다. ': '';
+        
         const isSuccessed = responseBody !== null && responseBody.code === 'SU';
         if (!isSuccessed) {
             alert(message);
@@ -45,13 +47,13 @@ export default function DetailList() {
   }
 
   useEffect(() => {
-    const guestAceessToken = cookies[GUEST_ACCESS_TOKEN]
-    console.log(guestAceessToken);
-    console.log(accommodationName);
+    const guestAceessToken = cookies[GUEST_ACCESS_TOKEN];
       if (!guestAceessToken || !accommodationName) return;
+      
       const checkInDay = searchParams.get("start") as string;
       const checkOutDay = searchParams.get("end")as string;
-      getAccommodationDetailRequest(accommodationName,checkInDay,checkOutDay, guestAceessToken).then(getAccommodaitonResponse);
+      getAccommodationDetailRequest(accommodationName,checkInDay,checkOutDay,guestAceessToken).then(getAccommodaitonResponse);
+
   }, [accommodationName])
 
   if (!accommodation) return null;

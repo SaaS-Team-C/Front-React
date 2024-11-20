@@ -37,27 +37,33 @@ export default function HostList() {
     getHostListRequest().then(getHostResponse)
   },[])
 
-      const mockData:  Host[]  = [
-        {
-          hostId: "host456",
-          hostName: "김민수",
-          hostTelNumber: "01012341234",
-          entryStatus: false
+  // useEffect
 
-        },
-        {
-          hostId: "qwer1234",
-          hostName: "안성재",
-          hostTelNumber: "01012123232",
-          entryStatus: false
-        },
-        {
-          hostId: "host456",
-          hostName: "김말자",
-          hostTelNumber: "01099998888",
-          entryStatus: false
-        }
-      ];
+  //      const mockData:  GetHostListResponseDto[]  = [
+  //       {
+
+  //       },
+  //       {
+  //         hostId: "host456",
+  //         hostName: "이영희",
+  //         businessLicenseNumber: "산속의 호텔",
+  //         status: "approved",
+  //         hostTelNumber: "010-9876-5432",
+  //         ownerName: "이영희",
+  //         businessOpenDay: "2024-02-02",
+  //         businessLicenseImg: "image_url2.jpg"
+  //       },
+  //       {
+  //         hostId: "host789",
+  //         hostName: "박민수",
+  //         businessLicenseNumber: "도심의 호스텔",
+  //         status: "pending",
+  //         hostTelNumber: "010-1357-2468",
+  //         ownerName: "박민수",
+  //         businessOpenDay: "2024-03-03",
+  //         businessLicenseImg: "image_url3.jpg"
+  //       }
+  //     ];
 
 
   // function: 호스트 계정 승인 리스트 api 호출 //

@@ -96,13 +96,13 @@ const RoomCard = ({ accommodation, room }: Props) => {
         <div id='room-card-image-container'>
 
             <img className='room-card-image'
-              src={accommodation.accSubImages[0]} // 첫 번째 이미지만 표시
+              src={room.roomMainImage} // 첫 번째 이미지만 표시
               alt={room.roomName}
               onClick={() => handleImageClick(0)} // 이미지를 클릭하면 이미지 모달 열기
             />
             <div className='image-icon-container'>
               <div className='image-icon'></div>
-              <div className="image-count">{accommodation.accSubImages.length}+</div>
+              <div className="image-count">{room.roomImages.length}+</div>
             </div>
 
           </div>

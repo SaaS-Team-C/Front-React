@@ -43,6 +43,8 @@ import HostMypage from './views/mypagehost';
 import ReservationStatus from './component/mypagehost/ReservationStatus';
 import HostMypageLayout from './layout/mypageHost';
 import MyInfoManagement from './component/mypagehost/myinfo';
+import MyAccommodationManagementView from './views/mypagehost/MyAccommodationManagement';
+import HostList from './views/admin/hostenrollmentapproval/index';
 import HostAccommodationRegisterForm from './component/mypagehost/MyAccommodationManagement/registration/accommodationRegistrationform';
 
 
@@ -51,9 +53,9 @@ import HostAccommodationRegisterForm from './component/mypagehost/MyAccommodatio
 function Index() {
   const navigator = useNavigate();
 
-  useEffect(() => {
-    navigator('/main');
-  }, []);
+  // useEffect(() => {
+  //   navigator('/main');
+  // }, []);
 
   return (
     <></>
@@ -151,7 +153,7 @@ export default function App() {
       <Route path='/payment' element={<Payment onPathChange={() => { }} />} />
       <Route path={FINDID_PATH} element={<FindId />} />
       <Route path='/roomly-company' element={<Roomly />} />
-      <Route path='/adminhost' element={<HostEnrollmentapproval/>}/>
+      <Route path='/adminhost' element={<HostEnrollmentapproval />}/>
       <Route path='/adminaccommodation' element={<Accommodationenrollmentapproval/>}/>
       <Route path='/faq' element={<FAQ/>}/>      
 

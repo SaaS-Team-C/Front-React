@@ -1,7 +1,7 @@
 import React, { useEffect, useMemo, useRef, useState } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import "./style.css";
-import { GUEST_ACCESS_TOKEN, ACCOMMODATION_LIST_DETAIL_PATH, HOST_ACCESS_TOKEN } from "src/constants";
+import { GUEST_ACCESS_TOKEN, ACCOMMODATION_LIST_DETAIL_PATH, HOST_ACCESS_TOKEN, ACCOMMODATION_LIST_PATH } from "src/constants";
 import { getAccommodationListRequest } from "src/apis";
 import { useCookies } from "react-cookie";
 
@@ -62,7 +62,6 @@ const List = () => {
         const { accommodations } = responseBody as GetAccommodationListResponseDto;
 
         SetCallAccommodationList(accommodations);
-        console.log(accommodations);
         originalAallAccommodationListRef.current = accommodations;
   }
 
@@ -130,8 +129,9 @@ const List = () => {
 
   // event handler: 숙소 클릭 시 숙소 디테일 페이지로 이동하는 핸들러 //
   const handleDetailClick = (accommodationName: string) => {
-    navigator(`/accommodationlist/detail/${accommodationName}?Region=${urlRegion}&start=${urlStart}&end=${urlEnd}&count=${urlCount}`)
+    navigator(`${ACCOMMODATION_LIST_PATH}/detail/${accommodationName}?Region=${urlRegion}&start=${urlStart}&end=${urlEnd}&count=${urlCount}`)
   };
+
   // function: 각 숙소의 시설 정보를 문자열로 변환하는 함수 //
   const getFacilities = (accommodations: Accommodations) => {
     const facilities = [];
