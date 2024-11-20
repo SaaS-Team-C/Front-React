@@ -47,11 +47,6 @@ import MyAccommodationManagementView from './views/mypagehost/MyAccommodationMan
 import HostList from './views/admin/hostenrollmentapproval/index';
 
 
-
-
-
-
-
 // component: root path 컴포넌트 //
 function Index() {
   const navigator = useNavigate();
@@ -150,8 +145,8 @@ export default function App() {
 
 
       <Route path={ACCOMMODATION_LIST_PATH} element={<AccommodationList />} />
-      <Route path={ACCOMMODATION_LIST_DETAIL_PATH(':accommodationName',':checkInDay','checkOutDay')} element={<DetailList />} />
-      <Route path={AUTH_PATH} element={<SignUp />} />
+      <Route path={ACCOMMODATION_LIST_DETAIL_PATH('accommodationName')} element={<DetailList />} />
+      <Route path={AUTH_PATH} element={<SignUp />} />s
       <Route path='/payment' element={<Payment onPathChange={() => { }} />} />
       <Route path={FINDID_PATH} element={<FindId />} />
       <Route path='/roomly-company' element={<Roomly />} />

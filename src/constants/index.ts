@@ -15,7 +15,7 @@ export const MODAL3 = "/payment";
 export const HOST_MYPAGE_PATH = (hostId:string)=> `/mypage-host/${hostId}`
 
 export const ACCOMMODATION_LIST_PATH = "/accommodationlist";
-export const ACCOMMODATION_LIST_DETAIL_PATH = (accommodationName:string, checkInday: string, checkOutDay: string)=>`/accommodationlist/detail/${accommodationName}/${checkInday}/${checkOutDay}`;
+export const ACCOMMODATION_LIST_DETAIL_PATH = (accommodationName:string)=>`/accommodationlist/detail/${accommodationName}`;
 export const ACCOMMODATION_LIST_DETAIL_ACC_SELECT_PATH = (name: string) =>`${ACCOMMODATION_LIST_DETAIL_ACC_SELECT_PATH}/${name}`;
 
 // variable: HTTP BEARER TOKEN COOKIE NAME(토큰 이름 임시 지정) //
@@ -68,6 +68,10 @@ export const GUEST_TEL_AUTH_CHECK_API_URL = `${GUEST_AUTH_MODULE_URL}/tel-auth-c
 export const GUEST_SIGN_UP_API_URL = `${GUEST_AUTH_MODULE_URL}/sign-up`;
 // 게스트 로그인
 export const GUEST_SIGN_IN_API_URL = `${GUEST_AUTH_MODULE_URL}/sign-in`;
+// 로그인전 게스트 아이디 찾기
+export const GUEST_ID_FIND_API_URL = `${GUEST_AUTH_MODULE_URL}/id-find`;
+// 로그인 전 아이디 찾기에 대한 전화번호 인증확인 및 아이디값 반환
+export const GUEST_ID_FIND_TEL_AUTH_CHECK_API_URL = `${GUEST_AUTH_MODULE_URL}/id-find-tel-auth-check`;
 
 // variable: 호스트 모듈 
 export const HOST_MODULE_URL = `${ROOMLY_API_DOMAIN}/api/roomly/host`;
@@ -100,10 +104,6 @@ export const GUEST_DETAIL_API_URL = (guestId:string)=>`${GUEST_MODULE_URL}/guest
 export const PATCH_GUEST_PASSWORD_API_URL = (guestId:string)=>`${GUEST_MODULE_URL}/pw/${guestId}`;
 // 게스트 인증번호 확인 및 전화번호 수정, 삭제
 export const PATCH_GUEST_TEL_NUMBER_API_URL = (guestId:string)=>`${GUEST_MODULE_URL}/auth-number/${guestId}`;
-// 게스트 아이디 찾기
-export const GUEST_ID_FIND_API_URL = `${GUEST_MODULE_URL}/id-find`;
-// 아이디 찾기에 대한 전화번호 인증확인
-export const GUEST_ID_FIND_TEL_AUTH_CHECK_API_URL = `${GUEST_MODULE_URL}/tel-auth-check`;
 // 게스트 비밀번호 변경(로그인 상태 x)
 export const PATCH_GUEST_PASSWORD_FIND_API_URL = `${GUEST_MODULE_URL}/pw-find`;
 // 게스트 로그인 정보 불러오기

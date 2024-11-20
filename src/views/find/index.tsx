@@ -5,11 +5,14 @@ import ResponseDto from 'src/apis/signUp/dto/response/response.dto';
 import FindComponent from 'src/component/find/find-password';
 import InputBox from 'src/component/find/find-password';
 import axios from 'axios';
-import { telAuthCheckRequest, telAuthRequest } from 'src/apis/signUp';
+import { guestIdFind, guestIdFindAuth, telAuthCheckRequest, telAuthRequest } from 'src/apis/signUp';
 import TelAuthRequestDto from 'src/apis/signUp/dto/request/common/tel-auth.request.dto';
 import TelAuthCheckRequestDto from 'src/apis/signUp/dto/request/common/tel-auth-check.request.dto';
 import React from 'react';
 import Bottombar from 'src/component/bottombar';
+import { GUEST_ID_FIND_API_URL, GUEST_ID_FIND_TEL_AUTH_CHECK_API_URL } from 'src/constants';
+import GuestIdFindRequestDto from 'src/apis/signUp/dto/request/common/guest-id-find-request.dto';
+import GuestIdFindSuccessResponseDto from 'src/apis/login/dto/response/guest-id-find-success-response-dto';
 type CurrentView = 'host-find-id' | 'guest-find-id' | 'host-find-password' | 'guest-find-password';
 
 export default function FindId() {
@@ -20,6 +23,7 @@ export default function FindId() {
     const [guestName, setGuestName] = useState('');
     const [hostName, setHostName] = useState('');
     const [telNumber, setTelNumber] = useState('');
+    const [guestTelNumber, setGuestTelNumber] = useState('');
     const [verificationCode, setVerificationCode] = useState('');
     const [guestId, setGuestId] = useState<string | null>(null);
     const [hostId, setHostId] = useState<string | null>(null);
@@ -83,7 +87,7 @@ export default function FindId() {
     };
 
     // function: 전화번호 인증 확인 Response 처리 함수 //
-    const telAuthCheckResponse = (responseBody: ResponseDto | null) => {
+    const telAuthCheckResponse = (responseBody: ResponseDto | GuestIdFindSuccessResponseDto | null) => {
         const message =
             !responseBody ? '서버에 문제가 있습니다.' :
                 responseBody.code === 'VF' ? '올바른 데이터가 아닙니다.' :
@@ -92,9 +96,12 @@ export default function FindId() {
                             responseBody.code === 'SU' ? '인증번호가 확인되었습니다.' : ''
 
         const isSuccessed = responseBody !== null && responseBody.code === 'SU';
+        const {guestId} = responseBody as GuestIdFindSuccessResponseDto;
+        
         setAuthNumberMessage(message);
         setAuthNumberMessageError(!isSuccessed);
         setCheckedAuthNumber(isSuccessed);
+        setGuestId(guestId);
     };
 
     // event handler: 상단 게스트 버튼 클릭 이벤트 처리
@@ -140,12 +147,12 @@ export default function FindId() {
         setHostName(value);
     };
 
-    // event handler: 전화번호 인증 버튼 클릭 이벤트 처리 //
+    // event handler: Guest Id찾기에 해당하는 전화번호 인증 버튼 클릭 이벤트 처리 //
     const onTelNumberSendClickHandler = () => {
-        if (!telNumber) return;
+        if (!guestTelNumber) return;
 
         const pattern = /^[0-9]{11}$/;
-        const isMatched = pattern.test(telNumber);
+        const isMatched = pattern.test(guestTelNumber);
 
         if (!isMatched) {
             setTelNumberMessage('숫자 11자를 입력 해주세요');
@@ -153,28 +160,39 @@ export default function FindId() {
             return;
         }
 
-        const requestBody: TelAuthRequestDto = {
-            guestTelNumber: telNumber // 속성의 이름과 담을 변수의 이름이 동일한 경우 하나로 작성
+        const requestBody: GuestIdFindRequestDto = {
+            guestName,
+            guestTelNumber // 속성의 이름과 담을 변수의 이름이 동일한 경우 하나로 작성
         }
-        telAuthRequest(requestBody).then(telAuthResponse);
+        guestIdFind(requestBody).then(telAuthResponse);
     };
 
-    // event handler: 인증 확인 버튼 클릭 이벤트 처리 //
+    // event handler: GuestId 인증 확인 버튼 클릭 이벤트 처리 //
     const onAuthNumberCheckClickHandler = () => {
         if (!authNumber) return;
 
         const requestBody: TelAuthCheckRequestDto = {
-            guestTelNumber: telNumber,
-            guestAuthNumber: authNumber
+            telNumber: guestTelNumber,
+            authNumber: authNumber
         }
-        telAuthCheckRequest(requestBody).then(telAuthCheckResponse);
+        guestIdFindAuth(requestBody).then(telAuthCheckResponse);
 
     };
+    
+    
+
+    // event handler: 전화번호 변경 이벤트 처리 //
+    // const onTelNumberChangeHandler = (event: ChangeEvent<HTMLInputElement>) => {
+    //     const { value } = event.target;
+    //     setTelNumber(value);
+    //     setSend(false);
+    //     setTelNumberMessage('');
+    // };
 
     // event handler: 전화번호 변경 이벤트 처리 //
     const onTelNumberChangeHandler = (event: ChangeEvent<HTMLInputElement>) => {
         const { value } = event.target;
-        setTelNumber(value);
+        setGuestTelNumber(value);
         setSend(false);
         setTelNumberMessage('');
     };
@@ -190,22 +208,28 @@ export default function FindId() {
     //event handler: Guest 아이디 찾기 버튼 클릭 핸들러 //
     const onGuestFindIdButtonClickHandler = async () => {
         try {
-            const response = await fetch('/api/guest-find-id', {
-                method: 'POST',
-                body: JSON.stringify({ guestName, telNumber, verificationCode }),
-                headers: { 'Content-Type': 'application/json' },
-            });
-            const data = await response.json();
-            if (data.success) {
-                setGuestId(data.guestId);  // 찾은 아이디 설정
-                setGuestModalOpen(true);  // 아이디를 찾았을 때만 모달 열기
+            // const response = await axios.post(GUEST_ID_FIND_TEL_AUTH_CHECK_API_URL, {
+            //     method: 'POST',
+            //     body: JSON.stringify({ telNumber, authNumber, verificationCode }),
+            //     headers: { 'Content-Type': 'application/json' },
+            // }); 
+            // const data = response.data;
+            // if (data.success) {
+            //     setGuestId(guestId);  // 찾은 아이디 설정
+            //     setGuestModalOpen(true);  // 아이디를 찾았을 때만 모달 열기
+            // } else {
+            //     alert('정보가 일치하지 않습니다.');
+            // }
+            if(guestId){
+                alert('인증에 성공하였습니다. 비밀번호 찾기로 넘어 가시겠습니까?')
+                setGuestModalOpen(true); // 아이디 찾았을 때만 모달 열기
             } else {
                 alert('정보가 일치하지 않습니다.');
             }
         } catch (error) {
             console.error('아이디 찾기 실패:', error);
             alert('존재하지 않는 유저 정보입니다.');
-            setGuestModalOpen(true);
+            setGuestModalOpen(false);
 
         }
     };
@@ -381,7 +405,7 @@ export default function FindId() {
                                     <InputBox
                                         messageError={telNumberMessageError}
                                         message={telNumberMessage}
-                                        value={telNumber}
+                                        value={guestTelNumber}
                                         label="전화번호"
                                         type="text"
                                         placeholder="-빼고 입력해주세요."
