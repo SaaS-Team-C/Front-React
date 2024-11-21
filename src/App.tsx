@@ -53,9 +53,9 @@ import HostAccommodationRegisterForm from './component/mypagehost/MyAccommodatio
 function Index() {
   const navigator = useNavigate();
 
-  // useEffect(() => {
-  //   navigator('/main');
-  // }, []);
+  useEffect(() => {
+    navigator('/main');
+  }, []);
 
   return (
     <></>

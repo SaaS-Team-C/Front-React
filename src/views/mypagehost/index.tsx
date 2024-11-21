@@ -2,18 +2,16 @@ import React, { useEffect, useState } from 'react'
 import "./style.css"
 import Topbar from 'src/component/topbar'
 import MypageCatalogButton from 'src/component/mypageguest/mypagecatalogbutton';
-import Information from 'src/component/mypageguest/mypagemain/information';
 import { useCookies } from 'react-cookie';
 import { MAIN_PATH } from 'src/constants';
 import { useNavigate } from 'react-router';
 import styled from 'styled-components';
-import Booking from 'src/component/mypageguest/mypagemain/booking';
-import BookMark from 'src/component/mypageguest/mypagemain/bookmark';
 import { SignInHost } from 'src/stores';
 import { hostname } from 'os';
 import MyInfoManagement from 'src/component/mypagehost/myinfo';
 import ReservationStatus from 'src/component/mypagehost/ReservationStatus';
 import { MyAccommodationManagement } from 'src/component/mypagehost/MyAccommodationManagement';
+import Add from 'src/component/mypagehost/add';
 
 
 
@@ -34,6 +32,7 @@ export default function HostMypage() {
     const datail1 = "내정보관리"
     const datail2 = "예약현황"
     const datail3 = "내 숙소관리"
+    const datail4 = "숙소 등록하기"
 
     const [click, setClick] = useState<string>(datail1)
     const [cookies, setCookie] = useCookies();
@@ -73,6 +72,7 @@ export default function HostMypage() {
                         <MyInfoManagement activite={click === datail1 || click === ''} titletext={datail1} username={hostName} />
                         <ReservationStatus activite={click === datail2 || click === ''} titletext={datail2} username={hostName} />
                         <ReservationStatus activite={click === datail2 || click === ''} titletext={datail2} username={hostName} />
+                        <Add activite={click === datail3 || click === ''} titletext={datail3} username={hostName} />
                         {/* <AccommodationManagePage /> */}
                     </div>
                 </div>

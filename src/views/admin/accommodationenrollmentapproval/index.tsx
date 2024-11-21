@@ -110,7 +110,7 @@ const Accommodationenrollmentapproval: React.FC = () => {
             <th>요청 상세 보기</th>
           </tr>
         </thead>
-        <tbody>
+        {/* <tbody>
           {pendingRequests.map((request) => (
             <tr key={request.hostId}>
               <td>{request.requestDate}</td>
@@ -129,7 +129,7 @@ const Accommodationenrollmentapproval: React.FC = () => {
               </td>
             </tr>
           ))}
-        </tbody>
+        </tbody> */}
       </table>
 
       <h2>승인 완료</h2>
@@ -155,7 +155,7 @@ const Accommodationenrollmentapproval: React.FC = () => {
             <th>요청 상세 보기</th>
           </tr>
         </thead>
-        <tbody>
+        {/* <tbody>
           {approvedRequests.map((request) => (
             <tr key={request.hostId}>
               <td>{request.requestDate}</td>
@@ -174,7 +174,7 @@ const Accommodationenrollmentapproval: React.FC = () => {
               </td>
             </tr>
           ))}
-        </tbody>
+        </tbody> */}
       </table>
     </div>
   );

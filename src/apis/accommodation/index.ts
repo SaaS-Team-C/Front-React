@@ -58,3 +58,12 @@ export const fetchAccommodationList = async (): Promise<AccommodationDTO[]> => {
     return responseBody;
 
   }
+  
+const multipart = { headers: { 'Content-Type': 'multipart/form-data' } };
+
+  export const fileUploadRequest = async (requestBody: FormData) => {
+    const url = await axios.post("http://localhost:4000/api/roomly/file/upload/accommodationMain", requestBody, multipart)
+        .then(responseDataHandler<string>)
+        .catch(error => null);
+    return url;
+};

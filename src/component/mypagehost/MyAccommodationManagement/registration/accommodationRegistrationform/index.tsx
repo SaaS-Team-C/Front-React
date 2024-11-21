@@ -1,7 +1,7 @@
 import "./style.css";
-import React, { ChangeEvent, FormEvent, useEffect, useState } from "react";
-import RoomRegister from "../roomRegistrationform";
-import { postAccommodationRequest } from "src/apis/accommodation";
+import React, { ChangeEvent, FormEvent, MouseEvent, useEffect, useState } from "react";
+
+import { fileUploadRequest, postAccommodationRequest } from "src/apis/accommodation";
 import { PostAccommodationRequestDto } from "src/apis/accommodation/dto/request/post-accommodation.request.dto";
 import { accommodationMainFileUploadRequest } from "src/apis";
 import UseInformations from "src/types/accommodation/use-informaion.interface";
@@ -15,6 +15,10 @@ import { useNavigate } from "react-router";
 import { ResponseDto } from "src/apis/guestmypage";
 
 import Rooms from "src/types/accommodation/rooms.interface";
+import Accommodation from './../../../../../types/accommodation/accommodation.interface';
+import AccommodationInfo from "src/types/accommodation/accommodationInfo";
+import RoomRegister from "../roomRegistrationform/indexfinal";
+
 // PostAccommodationRequestDto
 
 // interface Rooms {
@@ -59,8 +63,19 @@ function HostAccommodationRegisterForm() {
   const [accommodationIntroduce, setAccommodationIntroduce] = useState<string>("");
   const [accommodationImagesFile, setAccommodationImagesFile] = useState<File[]>([]);
   const [accommodationAddress, setAccommodationAddress] = useState<string>("");
-  const [useInformations, setUseInformations] = useState<string>("");
-  const [categoryArea, setCategoryArea] = useState<string>("");
+
+  const [useAccommodationName, setUseAccommodationName] = useState<string>("")
+
+  const [roomName, setroomName] = useState<string>('')
+  const [roomPrice, setrromPrice] = useState<number>(0)
+  const [roomCheckIn, setroorCheckIn] = useState<string>('')
+  const [roomCheckOut, setroomrheckOut] = useState<string>('')
+  const [roomInfo, setroomInfo] = useState<string>('')
+  const [roomTotalGuest, setroomToralGuest] = useState<number>(0)
+
+
+  const [useInformations, setUseInformations] = useState<UseInformations[]>([{accommodationName:accommodationName, title:"asdf", context:useAccommodationName}]);
+  const [categoryArea, setCategoryArea] = useState<string>("123");
   const [categoryPet, setCategoryPet] = useState<boolean>(false);
   const [categoryNonSmokingArea, setCategoryNonSmokingArea] = useState<boolean>(false);
   const [categoryIndoorSpa, setCategoryIndoorSpa] = useState<boolean>(false);
@@ -97,7 +112,7 @@ function HostAccommodationRegisterForm() {
     event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
     const { value } = event.target;
-    setUseInformations(value);
+    setUseAccommodationName(value)
   };
 
 
@@ -113,6 +128,8 @@ function HostAccommodationRegisterForm() {
     if (!event.target.files || !event.target.files.length) return;
     const file = event.target.files[0];
     setAccommodaitonMainImageFile(file);
+    
+    console.log(accommodationMainImageFile)
 
     const fileReader = new FileReader();
     fileReader.readAsDataURL(file);
@@ -163,20 +180,60 @@ function HostAccommodationRegisterForm() {
   };
 
   // 객실 추가
-  const handleAddRoom = () => {
-    const room = {
-      roomName: "",
-      roomPrice: 0,
-      roomCheckIn: "",
-      roomCheckOut: "",
-      roomTotalGuest: 0,
-      roomMainImage: "",
-      roomMainImagePreview: "",
-      roomMainImageFile: null,
-      roomInfo: "",
-      roomImages: [],
-      roomImagesPreview: [],
-      roomImageFiles: [],
+  const handleAddRoom = async (event:FormEvent<HTMLFormElement> | MouseEvent<HTMLButtonElement>) => {
+    event.preventDefault();
+       if (!accommodationMainImageFile) return;
+    
+    let mainUrl: string | null = null;
+    if (accommodationMainImageFile) {
+        const formData = new FormData();
+        formData.append('file', accommodationMainImageFile);
+        mainUrl = await fileUploadRequest(formData);
+    }
+    
+    mainUrl = mainUrl ? mainUrl : defaultProfileImageUrl;
+
+    
+    let subUrl1: string | null = null;
+    if (accommodationImagesFile) {
+        const formData = new FormData();
+        formData.append('file', accommodationImagesFile[0]);
+        subUrl1 = await fileUploadRequest(formData);
+    }
+    subUrl1 = subUrl1 ? subUrl1 : defaultProfileImageUrl;
+    let subUrl2: string | null = null;
+    if (accommodationImagesFile) {
+        const formData = new FormData();
+        formData.append('file', accommodationImagesFile[1]);
+        subUrl2 = await fileUploadRequest(formData);
+    }
+    subUrl2 = subUrl2 ? subUrl2 : defaultProfileImageUrl;
+    let subUrl3: string | null = null;
+    if (accommodationImagesFile) {
+        const formData = new FormData();
+        formData.append('file', accommodationImagesFile[2]);
+        subUrl3 = await fileUploadRequest(formData);
+    }
+    subUrl3 = subUrl3 ? subUrl3 : defaultProfileImageUrl;
+
+    const subUrl : string[] = [];
+    
+    subUrl[0] =  subUrl1 ;
+    subUrl[1] =  subUrl2 ;
+    subUrl[2] =  subUrl3 ;
+
+
+    const room: Rooms = {
+   
+      roomName ,
+      roomPrice ,
+      roomCheckIn,
+      roomCheckOut,
+      roomTotalGuest,
+      roomMainImage: mainUrl,
+      roomInfo ,
+      roomImages: subUrl    
+  
     };
 
     setRooms([...rooms, room]);
@@ -236,23 +293,84 @@ function HostAccommodationRegisterForm() {
       alert(message);
       return;
     }
+    alert('성공!')
 
-    navigator("/mypagehost/accommodations");
   };
 
   // event handler: 등록 버튼 클릭 이벤트 처리 함수 //
-  const handleSubmit = async (event: FormEvent) => {
+  const handleSubmit = async (event: FormEvent<HTMLFormElement> | MouseEvent<HTMLButtonElement>) => {
     event.preventDefault();
+    const hostAccessToken = cookies[HOST_ACCESS_TOKEN];
+    if (!accommodationMainImageFile) return;
 
-    // 필수 입력 필드 확인
-
-    // 각 Room 객체의 필수 필드 확인
-
-    const confirmSubmit = window.confirm("숙소 등록을 신청하시겠습니까?");
-    if (confirmSubmit) {
-      navigator(`${ACCOMMODATION_MODULE_URL}/register`);
+    let mainUrl: string | null = null;
+    if (accommodationMainImageFile) {
+        const formData = new FormData();
+        formData.append('file', accommodationMainImageFile);
+        mainUrl = await fileUploadRequest(formData);
     }
-  };
+    
+    mainUrl = mainUrl ? mainUrl : defaultProfileImageUrl;
+
+    let subUrl1: string | null = null;
+    if (accommodationImagesFile) {
+        const formData = new FormData();
+        formData.append('file', accommodationImagesFile[0]);
+        subUrl1 = await fileUploadRequest(formData);
+    }
+    subUrl1 = subUrl1 ? subUrl1 : defaultProfileImageUrl;
+    let subUrl2: string | null = null;
+    if (accommodationImagesFile) {
+        const formData = new FormData();
+        formData.append('file', accommodationImagesFile[1]);
+        subUrl2 = await fileUploadRequest(formData);
+    }
+    subUrl2 = subUrl2 ? subUrl2 : defaultProfileImageUrl;
+    let subUrl3: string | null = null;
+    if (accommodationImagesFile) {
+        const formData = new FormData();
+        formData.append('file', accommodationImagesFile[2]);
+        subUrl3 = await fileUploadRequest(formData);
+    }
+    subUrl3 = subUrl3 ? subUrl3 : defaultProfileImageUrl;
+
+    const subUrl : string[] = [];
+    
+    subUrl[0] =  subUrl1 ;
+    subUrl[1] =  subUrl2 ;
+    subUrl[2] =  subUrl3 ;
+
+    const accommodation:AccommodationInfo = {
+      accommodationName, 
+      accommodationMainImage: mainUrl, 
+      accommodationAddress,
+      accommodationType,
+      accommodationIntroduce,
+      accommodationImages: subUrl,
+      categoryArea,
+      categoryPet,
+      categoryNonSmokingArea,
+      categoryIndoorSpa,
+      categoryDinnerParty,
+      categoryWifi,
+      categoryCarPark,
+      categoryPool
+    }
+
+      const requestBody: PostAccommodationRequestDto = {
+
+        accommodation : accommodation,
+        hostId: 'zxcv1234',
+        useInformations: [{accommodationName:accommodationName, title:"asdf", context:useAccommodationName}],
+        rooms 
+      }
+  
+      postAccommodationRequest(requestBody, hostAccessToken).then(postAccommodationResposne)
+ 
+    }
+    
+
+  
 
   // event handler: 등록 취소 버튼 클릭 이벤트 처리 함수 //
   const handleCancel = () => {
@@ -308,7 +426,7 @@ function HostAccommodationRegisterForm() {
             숙소 이용 정보:
             <textarea
               name="description"
-              value={useInformations}
+              value={useAccommodationName}
               onChange={handleUseInformationsChange}
               required
               maxLength={1500} // HTML 레벨에서도 제한
@@ -329,7 +447,7 @@ function HostAccommodationRegisterForm() {
               숙소 이용 정보:
               <textarea
                 name="description"
-                value={useInformations}
+                value={useAccommodationName}
                
                 required
                 maxLength={1500} // HTML 레벨에서도 제한
@@ -541,7 +659,10 @@ function HostAccommodationRegisterForm() {
               room={room}
               onChange={(updatedRoom) => handleRoomChange(index, updatedRoom)}
               onDelete={() => handleDeleteRoom(index)}
-              onCopy={() => handleCopyRoom(index)} // 복사 기능 추가
+              onCopy={() => handleCopyRoom(index)}
+
+
+              // 복사 기능 추가
             />
           ))}
           {roomErrors && <p style={{ color: "red" }}>{roomErrors}</p>}

@@ -2,9 +2,10 @@ import Topbar from "src/component/topbar";
 import "./style.css";
 import React, { useState } from "react";
 import HostMypageLayout from "src/layout/mypageHost";
-import RoomRegister from "./roomRegistrationform";
-import HostAccommodationRegisterForm from "./accommodationRegistrationform";
+
+
 import { SignInHost } from "src/stores";
+import HostAccommodationRegisterForm from "./accommodationRegistrationform";
 
 
 export default function HostAccommodationRegister() {

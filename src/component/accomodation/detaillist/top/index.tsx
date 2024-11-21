@@ -53,18 +53,18 @@ const AccommodationDetailTopImages = ({ accommodation }: Props) => {
   return (
     <div id="image-container">
       <div className="large-image-container">
-        {/* <img
+        <img
           src={accommodation.accommodationMainImage}
           alt="Main Accommodation"
           className="large-image"
           onClick={() => handleImageClick(0)}
-        /> */}
+        />
         <div className="large-image" style={{backgroundImage:`url(${accommodation.accommodationMainImage})`}}/>
       </div>
 
       {/* Small images in a 2x3 grid */}
       <div className="small-image-grid-container">
-          {accommodation.accSubImages.length > 5 && (
+          {accommodation.accommodationMainImage.length > 4 && (
           <button className="button-box" onClick={() => setIsModalOpen(true)}>
             <div className="image-icon"></div>
             <div className="view-all-btn"> 전체보기 </div>
@@ -77,6 +77,7 @@ const AccommodationDetailTopImages = ({ accommodation }: Props) => {
             <img
               src={image}
               key={index}
+              alt="sub Accommodation"
               className="small-image"
               onClick={() => handleImageClick(index + 1)}
             />
