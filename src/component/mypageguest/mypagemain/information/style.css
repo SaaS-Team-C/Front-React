@@ -82,4 +82,5 @@
 .checkMessageError {
     color: red;
     font-size: 13px;
+    background-color: rgb(245, 187, 208);
 }

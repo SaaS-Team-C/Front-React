@@ -169,11 +169,11 @@ const List = () => {
             onClick={() => handleDetailClick(accommodations.accommodationName)}
           >
             <div className="image-wrapper">
-              {/* <img
+              <img
                 src={`${accommodations.accommodationMainImage}`}
                 alt={accommodations.accommodationName}
                 className="accommodation-image"
-              /> */}
+              />
               <div className="accommodation-image" style={{backgroundImage:`url(${accommodations.accommodationMainImage})`}} />
               <div className={`bookmark ${bookmarks.includes(accommodations.accommodationName)? "active": ""}`}onClick={() => handleBookmarkToggle(accommodations.accommodationName)}>
                 ♥

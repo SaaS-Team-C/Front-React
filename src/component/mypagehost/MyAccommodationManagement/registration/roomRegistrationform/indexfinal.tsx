@@ -54,15 +54,15 @@ const RoomRegister: React.FC<{
     const fileReader = new FileReader();
     fileReader.readAsDataURL(file);
     fileReader.onloadend = () => {
-      onChange({ ...room, roomMainImageFile: file, roomMainImagePreview: fileReader.result as string });
+      // onChange({ ...room, roomMainImageFile: file, roomMainImagePreview: fileReader.result as string });
     };
   };
 
-  const onImageDeleteHandler = (index: number) => {
-    const updatedImages = room.roomImageFiles.filter((_, i) => i !== index);
-    const updatedPreivews = room.roomImagesPreview.filter((_, i) => i !== index);
-    onChange({ ...room, roomImageFiles: updatedImages, roomImagesPreview: updatedPreivews });
-  };
+  // const onImageDeleteHandler = (index: number) => {
+  //   const updatedImages = room.roomImageFiles.filter((_, i) => i !== index);
+  //   const updatedPreivews = room.roomImagesPreview.filter((_, i) => i !== index);
+  //   onChange({ ...room, roomImageFiles: updatedImages, roomImagesPreview: updatedPreivews });
+  // };
 
   const onPriceChangeHandler = (event: ChangeEvent<HTMLInputElement>) => {
     const { value } = event.target;
@@ -91,7 +91,7 @@ const RoomRegister: React.FC<{
     const fileReader = new FileReader();
     fileReader.readAsDataURL(file);
     fileReader.onloadend = () => {
-      onChange({ ...room, roomMainImageFile: file, roomMainImagePreview: fileReader.result as string });
+      // onChange({ ...room, roomMainImageFile: file, roomMainImagePreview: fileReader.result as string });
     };
   };
 
@@ -117,7 +117,7 @@ const RoomRegister: React.FC<{
       });
 
       Promise.all(previews).then((results) => {
-        onChange({ ...room, roomImageFiles: selectedFiles, roomImagesPreview: results });
+        // onChange({ ...room, roomImageFiles: selectedFiles, roomImagesPreview: results });
       });
     }
   };
@@ -151,8 +151,9 @@ const RoomRegister: React.FC<{
           />
         </label>
       </div>
+      <div  className="checkIntime-Outime-box">
       <div>
-        <label>
+      <label className="checkcheck1">  
           입실 시간:
           <input
             type="time"
@@ -203,12 +204,13 @@ const RoomRegister: React.FC<{
       </div>
       <div>
         <label>
-          객실 대표 이미지:
+        <div className="kikiki">
+          객실 대표 이미지</div>
           <input type="file" onChange={onRoomMainImageChangeHandler} />
         </label>
         {room.roomImages && (
           <img
-            src={room.roomMainImagePreview}
+            src={room.roomMainImage}
             alt="객실 대표 이미지"
             style={{ width: "100px", height: "100px" }}
           />
@@ -216,12 +218,13 @@ const RoomRegister: React.FC<{
       </div>
       <div>
         <label>
-          객실 사진 업로드:
+        <div className="kikiki">
+          객실 사진 업로드</div>
           <input type="file" onChange={onRoomImageFilesChangeHandler} multiple />
         </label>
         {roomImageError && <p style={{ color: "red" }}>{roomImageError}</p>}
         <div className="image-wrapper">
-          {room.roomImagesPreview.map((preview, index) => (
+          {room.roomImages.map((preview, index) => (
             <div key={index}>
               <img
                 src={preview}
@@ -230,11 +233,13 @@ const RoomRegister: React.FC<{
               />
               <button
                 type="button"
-                onClick={() => handleSelectRoomImage(room.roomImageFiles[index])}
+                // onClick={() => handleSelectRoomImage(room.roomMainImage[index])}
               >
                 대표 이미지로 선택
               </button>
-              <button type="button" onClick={() => onImageDeleteHandler(index)}>
+              <button type="button" 
+              // onClick={() => onImageDeleteHandler(index)}
+              >
                 삭제
               </button>
             </div>
@@ -247,6 +252,7 @@ const RoomRegister: React.FC<{
       <button type="button" onClick={onCopy}>
         복사하여 추가
       </button>
+    </div>
     </div>
   );
 };
